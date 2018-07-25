@@ -31,11 +31,15 @@ public class InputManager : MonoBehaviour {
     }
 
     // ** Methods :
-    public bool GetFire (string playerID) {
-        return playerInputs[playerID].GetFire();
+    public Vector2 GetMoveDirection(string playerID) {
+        return playerInputs[playerID].GetMoveDirection();
     }
 
-    public Vector2 GetMoveDirection (string playerID) {
-        return playerInputs[playerID].GetMoveDirection();
+    public Vector2 GetAimDirection(string playerID) {
+        return playerInputs[playerID].GetAimDirection();
+    }
+
+    public bool GetAttack(string playerID) {
+        return playerInputs[playerID].GetAttack();
     }
 }

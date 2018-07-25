@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel : MonoBehaviour {
+[System.Serializable]
+public class PlayerModel {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public string playerID = "-1";
+    public float moveAcceleration = 1f; 
+    public float moveDeceleration = 0.1f; // Range between 0 and 1, with one being instant stop.
+    public float moveMaxSpeed = 5f;
+
+    public Weapon equippedWeapon;
+    public Weapon secondaryWeapon;
+
+
 }

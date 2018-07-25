@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	// Use this for initialization
+    public PlayerModel model;
+    public PlayerActor actor;
 	void Start () {
-		
+
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		
-	}
+        actor.Move(InputManager.instance.GetMoveDirection(model.playerID));
+        actor.Aim(InputManager.instance.GetAimDirection(model.playerID));
+        if(InputManager.instance.GetAttack(model.playerID)) {
+            actor.Attack();
+        }
+    }
 }

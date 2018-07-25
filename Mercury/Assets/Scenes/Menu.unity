@@ -228,6 +228,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611a4d629b3381145bf2283f75437947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1099578750907240, guid: 46958e7dab4b6604fafed9a7e344e405,
+    type: 2}
+  pistolPrefab: {fileID: 1706891086766056, guid: 56a8ca703ece0274fb1aba995bc2b867,
+    type: 2}
+  bulletPrefab: {fileID: 1006602874372144, guid: 40d1b469ddcbaf34db3e01b24da81d5d,
+    type: 2}
 --- !u!1 &261938930
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 261938931}
+  - component: {fileID: 261938932}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -256,6 +263,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &261938932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 261938930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f8eebfc2bbd752479aa6072a7808454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &384341659
 GameObject:
   m_ObjectHideFlags: 0

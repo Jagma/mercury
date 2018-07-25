@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInput { 
+public class PlayerInput {
     // A player input is a mapping between a player and a device.
     // The device can be a TableRealms device or a controller.
 
-    public enum InputType { TableRealms, Controller}
+    public enum InputType {TableRealms, Controller, Keyboard}
 
     public InputType inputType = InputType.TableRealms;
     public string playerID = "-1";
@@ -19,15 +19,66 @@ public class PlayerInput {
     // ** Methods :
     public Vector2 GetMoveDirection () {
         if (inputType == InputType.TableRealms) {
-            return TableRealmsManager.instance.GetDevice(playerID).GetLeftStick();
+            Debug.LogError("Not implemented");
         }
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+
+            Vector2 moveDir = Vector2.zero;
+            
+            if (Input.GetKey(KeyCode.W)) {
+                moveDir += Vector2.up;
+            }
+            if (Input.GetKey(KeyCode.S)) {
+                moveDir += Vector2.down;
+            }
+            if (Input.GetKey(KeyCode.A)) {
+                moveDir += Vector2.left;
+            }
+            if (Input.GetKey(KeyCode.D)) {
+                moveDir += Vector2.right;
+            }
+
+            return moveDir.normalized;
+        }
+
         return Vector2.zero;
     }
 
-    public bool GetFire () {
+    public Vector2 GetAimDirection () {
         if (inputType == InputType.TableRealms) {
-            return TableRealmsManager.instance.GetDevice(playerID).GetFire();
+            Debug.LogError("Not implemented");
         }
-        return false; 
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+            if (Game.instance) {
+                Vector2 playerPosition = Game.instance.GetPlayerActor(playerID).transform.position;
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                
+                return (mousePosition - playerPosition).normalized;                
+            }
+        }
+
+        return Vector2.zero;
+    }
+
+    public bool GetAttack () {
+        if (inputType == InputType.Controller || inputType == InputType.TableRealms) {
+            if (GetAimDirection().magnitude > 0.5f) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (inputType == InputType.Keyboard) {
+            return Input.GetKey(KeyCode.Mouse0);
+        }
+
+        return false;
     }
 }
