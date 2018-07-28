@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerActor : MonoBehaviour {
 
     public PlayerModel model;
-
+    public static float bulletAmount = 0;
     Rigidbody2D rigid;
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
@@ -31,17 +31,28 @@ public class PlayerActor : MonoBehaviour {
     }
 
     public void Attack () {
-        if (model.equippedWeapon) {
-            model.equippedWeapon.Use();
+        if (model.equippedWeapon)   {
+            if (bulletAmount > 0) {
+                bulletAmount -= 1;
+                model.equippedWeapon.Use();
+            }
+            else { Debug.Log("Weapon clip empty!"); }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
-        Weapon weapon = col.GetComponent<Weapon>();
-        if (weapon) {
-            model.equippedWeapon = weapon;
-        }        
-    }
 
+        if (col.GetComponent<MachineGun>() == true) {
+                model.equippedWeapon = col.GetComponent<MachineGun>();
+                bulletAmount = 60;
+        }
+        else if (col.GetComponent<Pistol>() == true)
+        {
+            model.equippedWeapon = col.GetComponent<Pistol>();
+            bulletAmount = 25;
+        }
+
+
+    }
 
 }

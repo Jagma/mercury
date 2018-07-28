@@ -26,6 +26,12 @@ public class Factory : MonoBehaviour {
         return pistol;
     }
 
+    public GameObject CreateMachineGun()
+    {
+        GameObject machineGun = GameObject.Instantiate(machineGunPrefab);
+        return machineGun;
+    }
+
     public GameObject CreateBullet() {
         GameObject bullet = GameObject.Instantiate(bulletPrefab);
         return bullet;
@@ -34,5 +40,6 @@ public class Factory : MonoBehaviour {
     // Factory objects
     public GameObject playerPrefab;
     public GameObject pistolPrefab;
+    public GameObject machineGunPrefab;
     public GameObject bulletPrefab;
 }

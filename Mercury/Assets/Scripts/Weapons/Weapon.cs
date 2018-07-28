@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour {
-
     public virtual void Use () {
-        Debug.Log("awe weapon base");
+        Debug.Log("Weapon in use.");
     }
 }
