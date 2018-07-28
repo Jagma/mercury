@@ -56,10 +56,21 @@ public class PlayerInput {
         }
         if (inputType == InputType.Keyboard) {
             if (Game.instance) {
-                Vector2 playerPosition = Game.instance.GetPlayerActor(playerID).transform.position;
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 playerPosition = Game.instance.GetPlayerActor(playerID).transform.position;
                 
-                return (mousePosition - playerPosition).normalized;                
+                // Get world position of mouse
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Plane plane = new Plane(Vector3.up, playerPosition);
+                float distance = 0;
+                Vector3 worldPosition = Vector3.zero;
+                if (plane.Raycast(ray, out distance)) {
+                    worldPosition = ray.GetPoint(distance);
+                }
+
+                Vector3 delta = (worldPosition - playerPosition).normalized;
+
+                // Return result in 2d space
+                return new Vector2(delta.x, delta.z);                
             }
         }
 

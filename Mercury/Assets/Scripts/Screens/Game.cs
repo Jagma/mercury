@@ -12,9 +12,16 @@ public class Game : MonoBehaviour {
     List<PlayerActor> playerActorList = new List<PlayerActor>();
 
 	void Start () {
+
+        LevelGeneration.instance.Generate();
+
+        if (InputManager.instance == null) {
+            return;
+        }
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary) {
             GameObject playerGO = Factory.instance.CreatePlayer();
+            playerGO.transform.position = new Vector3(5, 5, 5);
 
             PlayerModel playerModel = new PlayerModel();
             playerModel.playerID = playerInputKVP.Value.playerID;
@@ -27,7 +34,12 @@ public class Game : MonoBehaviour {
             playerController.actor = playerActor;
 
             playerActorList.Add(playerActor);
+
+            CameraSystem.instance.SubscribeToTracking(playerGO.transform);
         }
+
+        GameObject pistolGO = Factory.instance.CreatePistol();
+        pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere* 3f;
 	}
 
     public PlayerActor GetPlayerActor (string playerID) {

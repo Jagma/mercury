@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114463757709645022}
   - component: {fileID: 61426682281374078}
   m_Layer: 0
-  m_Name: MachineGun
+  m_Name: MachineGunPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

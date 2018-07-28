@@ -37,9 +37,15 @@ public class Factory : MonoBehaviour {
         return bullet;
     }
 
+    public GameObject CreateWall () {
+        GameObject wall = GameObject.Instantiate(wallPrefab);
+        return wall;
+    }
+
     // Factory objects
     public GameObject playerPrefab;
     public GameObject pistolPrefab;
     public GameObject machineGunPrefab;
     public GameObject bulletPrefab;
+    public GameObject wallPrefab;
 }
