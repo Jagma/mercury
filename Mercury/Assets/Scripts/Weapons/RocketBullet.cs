@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class RocketBullet : MonoBehaviour
 {
     Transform visual;
     public float speed = 5;
-
     private void Awake()
     {
         visual = transform.Find("Visual");
@@ -17,7 +16,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 5f);
     }
 
-    void Update ()
+    void Update()
     {
         transform.position += transform.right * Time.deltaTime * speed;
         visual.eulerAngles = new Vector3(45, 45, Mathf.Atan2(transform.right.z, transform.right.x) * Mathf.Rad2Deg + 45);
@@ -31,4 +30,5 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 }

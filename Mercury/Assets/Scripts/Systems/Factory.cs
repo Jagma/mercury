@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Factory : MonoBehaviour {
+public class Factory : MonoBehaviour
+{
 
     // The factory is a singleton
     public static Factory instance;
-    private void Awake() {
-        if (instance == null) {
+    private void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
@@ -16,12 +19,14 @@ public class Factory : MonoBehaviour {
     }
 
     // Factory methods
-    public GameObject CreatePlayer () {
+    public GameObject CreatePlayer ()
+    {
         GameObject player = GameObject.Instantiate(playerPrefab);
         return player;
     }
 
-    public GameObject CreatePistol () {
+    public GameObject CreatePistol ()
+    {
         GameObject pistol = GameObject.Instantiate(pistolPrefab);
         return pistol;
     }
@@ -32,12 +37,26 @@ public class Factory : MonoBehaviour {
         return machineGun;
     }
 
-    public GameObject CreateBullet() {
+    public GameObject CreateRocketLauncher()
+    {
+        GameObject rocketLauncher = GameObject.Instantiate(rocketLauncherPrefab);
+        return rocketLauncher;
+    }
+
+    public GameObject CreateRocketBullet()
+    {
+        GameObject rocketBullet = GameObject.Instantiate(rocketBulletPrefab);
+        return rocketBullet;
+    }
+
+    public GameObject CreateBullet()
+    {
         GameObject bullet = GameObject.Instantiate(bulletPrefab);
         return bullet;
     }
 
-    public GameObject CreateWall () {
+    public GameObject CreateWall ()
+    {
         GameObject wall = GameObject.Instantiate(wallPrefab);
         return wall;
     }
@@ -46,6 +65,8 @@ public class Factory : MonoBehaviour {
     public GameObject playerPrefab;
     public GameObject pistolPrefab;
     public GameObject machineGunPrefab;
+    public GameObject rocketLauncherPrefab;
+    public GameObject rocketBulletPrefab;
     public GameObject bulletPrefab;
     public GameObject wallPrefab;
 }
