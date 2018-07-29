@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: mercury
+  m_Text: Mercury
 --- !u!222 &47702970
 CanvasRenderer:
   m_ObjectHideFlags: 0

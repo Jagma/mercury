@@ -38,14 +38,14 @@ public class Game : MonoBehaviour {
             CameraSystem.instance.SubscribeToTracking(playerGO.transform);
         }
 
-        GameObject pistolGO = Factory.instance.CreatePistol();
-        pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere* 3f;
+       // GameObject pistolGO = Factory.instance.CreatePistol();
+       // pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere* 3f;
 
         GameObject machineGO = Factory.instance.CreateMachineGun();
-        machineGO.transform.position = new Vector3(12, 12, 12) + Random.onUnitSphere * 3f;
+        machineGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
 
-        GameObject rocketGO = Factory.instance.CreateRocketLauncher();
-        rocketGO.transform.position = new Vector3(15, 15, 15) + Random.onUnitSphere * 3f;
+      //  GameObject rocketGO = Factory.instance.CreateRocketLauncher();
+      //  rocketGO.transform.position = new Vector3(15, 15, 15) + Random.onUnitSphere * 3f;
     }
 
     public PlayerActor GetPlayerActor (string playerID) {

@@ -57,6 +57,10 @@ MonoBehaviour:
     type: 2}
   machineGunPrefab: {fileID: 1376302932468082, guid: a4b88c5a814a5b347b237bb1df146920,
     type: 2}
+  rocketLauncherPrefab: {fileID: 1264371969043162, guid: 1c17cf376fca58b42a512fc1e84d426a,
+    type: 2}
+  rocketBulletPrefab: {fileID: 1507261230374070, guid: b5db8708f7a6bb04597d9492d2aacf7e,
+    type: 2}
   bulletPrefab: {fileID: 1006602874372144, guid: 40d1b469ddcbaf34db3e01b24da81d5d,
     type: 2}
   wallPrefab: {fileID: 1990793011837550, guid: 7e21aeff817436841920c09b347ae3a3, type: 2}
