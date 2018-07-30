@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponRanged : Weapon {
-    
-    public override void Use() {
+
+    protected override void Start() {
+        base.Start();
+    }
+
+    protected override void Use() {
         base.Use();
     }
 }

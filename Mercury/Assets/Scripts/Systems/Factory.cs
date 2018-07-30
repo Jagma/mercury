@@ -21,6 +21,17 @@ public class Factory : MonoBehaviour {
         return player;
     }
 
+    public GameObject CreateDropShadow() {
+        GameObject dropShadow = GameObject.Instantiate(dropShadowPrefab);
+        return dropShadow;
+    }
+
+
+    public GameObject CreateBullet() {
+        GameObject bullet = GameObject.Instantiate(bulletPrefab);
+        return bullet;
+    }
+
     public GameObject CreatePistol () {
         GameObject pistol = GameObject.Instantiate(pistolPrefab);
         return pistol;
@@ -31,10 +42,11 @@ public class Factory : MonoBehaviour {
         GameObject machineGun = GameObject.Instantiate(machineGunPrefab);
         return machineGun;
     }
+    
 
-    public GameObject CreateBullet() {
-        GameObject bullet = GameObject.Instantiate(bulletPrefab);
-        return bullet;
+    public GameObject CreateFloor() {
+        GameObject floor = GameObject.Instantiate(floorPrefab);
+        return floor;
     }
 
     public GameObject CreateWall () {
@@ -42,10 +54,21 @@ public class Factory : MonoBehaviour {
         return wall;
     }
 
+    public GameObject CreateEnemyWalker () {
+        GameObject enemyWalker = GameObject.Instantiate(enemyWalkerPrefab);
+        return enemyWalker;
+    }
+
     // Factory objects
     public GameObject playerPrefab;
+    public GameObject dropShadowPrefab;
+
+    public GameObject bulletPrefab;
     public GameObject pistolPrefab;
     public GameObject machineGunPrefab;
-    public GameObject bulletPrefab;
+
+    public GameObject floorPrefab;
     public GameObject wallPrefab;
+
+    public GameObject enemyWalkerPrefab;
 }

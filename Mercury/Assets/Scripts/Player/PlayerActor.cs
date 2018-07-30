@@ -6,12 +6,20 @@ public class PlayerActor : MonoBehaviour {
 
     public PlayerModel model;
 
+    public Sprite forward;
+    public Sprite facing;
+
     Transform visual;
+    Transform dropShadow;
     Rigidbody rigid;
 
     private void Awake() {
         rigid = GetComponent<Rigidbody>();
         visual = transform.Find("Visual");
+        dropShadow = Factory.instance.CreateDropShadow().transform;
+        dropShadow.parent = transform;
+        dropShadow.localPosition = new Vector3(0, 0, -0.1f);
+        dropShadow.localScale = new Vector3(0.6f, 0.2f, 1);
     }
 
     void Start () {        
@@ -45,11 +53,22 @@ public class PlayerActor : MonoBehaviour {
         if (model.equippedWeapon) {
             model.equippedWeapon.transform.right = new Vector3(direction.x, 0, direction.y);
         }
+
+        Vector3 norm = Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(direction.x, 0, direction.y);
+        if (norm.x < 0) {
+            Vector3 x = Quaternion.AngleAxis(180, visual.up) * visual.forward;
+            visual.forward = x;
+        }
+        if (norm.z > 0) {
+            visual.Find("Body").GetComponent<SpriteRenderer>().sprite = forward;
+        } else {
+            visual.Find("Body").GetComponent<SpriteRenderer>().sprite = facing;
+        }
     }
 
     public void Attack () {
         if (model.equippedWeapon)   {
-            model.equippedWeapon.Use();
+            model.equippedWeapon.UseWeapon();
         }
     }
 

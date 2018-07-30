@@ -40,7 +40,10 @@ public class Game : MonoBehaviour {
 
         GameObject pistolGO = Factory.instance.CreatePistol();
         pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere* 3f;
-	}
+
+        GameObject machineGunGO = Factory.instance.CreateMachineGun();
+        machineGunGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
+    }
 
     public PlayerActor GetPlayerActor (string playerID) {
         for (int i=0; i < playerActorList.Count; i++) {
