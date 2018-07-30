@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Factory : MonoBehaviour {
+public class Factory : MonoBehaviour
+{
 
     // The factory is a singleton
     public static Factory instance;
-    private void Awake() {
-        if (instance == null) {
+    private void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
@@ -16,11 +19,12 @@ public class Factory : MonoBehaviour {
     }
 
     // Factory methods
-    public GameObject CreatePlayer () {
+    public GameObject CreatePlayer ()
+    {
         GameObject player = GameObject.Instantiate(playerPrefab);
         return player;
     }
-
+    
     public GameObject CreateDropShadow() {
         GameObject dropShadow = GameObject.Instantiate(dropShadowPrefab);
         return dropShadow;
@@ -42,14 +46,25 @@ public class Factory : MonoBehaviour {
         GameObject machineGun = GameObject.Instantiate(machineGunPrefab);
         return machineGun;
     }
-    
+
+    public GameObject CreateRocketLauncher() {
+        GameObject rocketLauncher = GameObject.Instantiate(rocketLauncherPrefab);
+        return rocketLauncher;
+    }
+
+    public GameObject CreateRocketBullet() {
+        GameObject rocketBullet = GameObject.Instantiate(rocketBulletPrefab);
+        return rocketBullet;
+    }
 
     public GameObject CreateFloor() {
         GameObject floor = GameObject.Instantiate(floorPrefab);
         return floor;
     }
+ 
 
-    public GameObject CreateWall () {
+    public GameObject CreateWall ()
+    {
         GameObject wall = GameObject.Instantiate(wallPrefab);
         return wall;
     }
@@ -66,6 +81,8 @@ public class Factory : MonoBehaviour {
     public GameObject bulletPrefab;
     public GameObject pistolPrefab;
     public GameObject machineGunPrefab;
+    public GameObject rocketLauncherPrefab;
+    public GameObject rocketBulletPrefab;
 
     public GameObject floorPrefab;
     public GameObject wallPrefab;

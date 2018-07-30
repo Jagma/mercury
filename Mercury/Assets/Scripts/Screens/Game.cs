@@ -37,7 +37,7 @@ public class Game : MonoBehaviour {
 
             CameraSystem.instance.SubscribeToTracking(playerGO.transform);
         }
-
+        
         GameObject pistolGO = Factory.instance.CreatePistol();
         pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere* 3f;
 
@@ -56,7 +56,8 @@ public class Game : MonoBehaviour {
     }
 	
 
-	void Update () {
+	void Update ()
+    {
 		
 	}
 }
