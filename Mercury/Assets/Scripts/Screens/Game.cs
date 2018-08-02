@@ -12,7 +12,7 @@ public class Game : MonoBehaviour {
     List<PlayerActor> playerActorList = new List<PlayerActor>();
 
 	void Start () {
-
+        /*
         LevelGeneration.instance.Generate();
 
         GameObject pistolGO = Factory.instance.CreatePistol();
@@ -22,15 +22,18 @@ public class Game : MonoBehaviour {
         machineGunGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
 
         GameObject rocketLauncherGO = Factory.instance.CreateRocketLauncher();
-        rocketLauncherGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
+        rocketLauncherGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f; */
 
         if (InputManager.instance == null) {
             return;
         }
+        LevelGeneration.instance.Generate();
+
+
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary) {
             GameObject playerGO = Factory.instance.CreatePlayer();
-            playerGO.transform.position = new Vector3(5, 5, 5);
+            playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition + Random.onUnitSphere;
 
             PlayerModel playerModel = new PlayerModel();
             playerModel.playerID = playerInputKVP.Value.playerID;
