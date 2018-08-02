@@ -15,6 +15,15 @@ public class Game : MonoBehaviour {
 
         LevelGeneration.instance.Generate();
 
+        GameObject pistolGO = Factory.instance.CreatePistol();
+        pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
+
+        GameObject machineGunGO = Factory.instance.CreateMachineGun();
+        machineGunGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
+
+        GameObject rocketLauncherGO = Factory.instance.CreateRocketLauncher();
+        rocketLauncherGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
+
         if (InputManager.instance == null) {
             return;
         }
@@ -37,12 +46,6 @@ public class Game : MonoBehaviour {
 
             CameraSystem.instance.SubscribeToTracking(playerGO.transform);
         }
-        
-        GameObject pistolGO = Factory.instance.CreatePistol();
-        pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere* 3f;
-
-        GameObject machineGunGO = Factory.instance.CreateMachineGun();
-        machineGunGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
     }
 
     public PlayerActor GetPlayerActor (string playerID) {

@@ -494,18 +494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611a4d629b3381145bf2283f75437947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1099578750907240, guid: 46958e7dab4b6604fafed9a7e344e405,
-    type: 2}
-  dropShadowPrefab: {fileID: 1504325758264340, guid: 534dc52ca9fea114d82bffc6e0394685,
-    type: 2}
-  bulletPrefab: {fileID: 1006602874372144, guid: 40d1b469ddcbaf34db3e01b24da81d5d,
-    type: 2}
-  pistolPrefab: {fileID: 1706891086766056, guid: 56a8ca703ece0274fb1aba995bc2b867,
-    type: 2}
-  machineGunPrefab: {fileID: 1376302932468082, guid: a4b88c5a814a5b347b237bb1df146920,
-    type: 2}
-  rocketLauncherPrefab: {fileID: 1264371969043162, guid: 1c17cf376fca58b42a512fc1e84d426a,
-    type: 2}
   rocketBulletPrefab: {fileID: 1507261230374070, guid: b5db8708f7a6bb04597d9492d2aacf7e,
     type: 2}
   floorPrefab: {fileID: 1637538861056834, guid: f1436ef34ee1bf840bc9b2a80deed632,

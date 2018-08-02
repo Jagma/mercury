@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-    /* We will need to abstract this class once we add more enemy types. Similar to weapons.     * 
-    */
+    // TODO : We will need to abstract this class once we add more enemy types. Similar to weapons. 
 
     public int health = 2;
     Transform visual;
@@ -24,15 +23,15 @@ public class Enemy : MonoBehaviour {
         visual.eulerAngles = new Vector3(45, 45, 0);
     }
 	
-	// Update is called once per frame
+
 	void Update () {
-		
+		// TODO : Move code
 	}
 
     private void OnTriggerEnter(Collider col) {
-        Bullet bullet = col.GetComponent<Bullet>();
-        if (bullet != null) {
-            Damage(bullet.damage);
+        Projectile projectile = col.GetComponent<Projectile>();
+        if (projectile != null) {
+            Damage(projectile.damage);
         }
     }
 

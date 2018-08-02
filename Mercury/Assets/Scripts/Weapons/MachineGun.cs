@@ -16,5 +16,8 @@ public class MachineGun : WeaponRanged {
         GameObject bullet = Factory.instance.CreateBullet();
         bullet.transform.position = transform.position + transform.right * 0.2f;
         bullet.transform.right = transform.right;
+
+        // TODO: screenshake
+        // example : CameraSystem.instance.Shake (-transform.right * 0.2f);
     }
 }
