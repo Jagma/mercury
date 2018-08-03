@@ -13,7 +13,8 @@ public class PlayerActor : MonoBehaviour
     Transform visual;
     Transform dropShadow;
     Rigidbody rigid;
-
+    Weapon weapon;
+    bool weaponCol = false;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -60,7 +61,7 @@ public class PlayerActor : MonoBehaviour
     {
         if (keyValue == KeyCode.E)
         {
-            Debug.Log("I am working as intended...");
+            equipWeapon(keyValue);
         }
 
         if (keyValue == KeyCode.F11)
@@ -98,12 +99,24 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
+    public void equipWeapon(KeyCode key)
+    {
+        if (key == KeyCode.E && weaponCol)
+        {
+            model.equippedWeapon = weapon;
+        }
+    }
+
     private void OnTriggerEnter(Collider col)
     {
-        Weapon weapon = col.GetComponent<Weapon>();
-            if (weapon != null && weapon != model.equippedWeapon)
-            {
-               model.equippedWeapon = weapon;      
-            }     
+       weapon = col.GetComponent<Weapon>();
+       if (weapon != null && weapon != model.equippedWeapon)
+        {
+          weaponCol = true;      
+        } 
+       else
+        {
+          weaponCol = false;
+        }
     }
 }
