@@ -17,7 +17,6 @@ public class MachineGun : WeaponRanged {
         bullet.transform.position = transform.position + transform.right * 0.2f;
         bullet.transform.right = transform.right;
 
-        // TODO: screenshake
-        // example : CameraSystem.instance.Shake (-transform.right * 0.2f);
+        CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 }

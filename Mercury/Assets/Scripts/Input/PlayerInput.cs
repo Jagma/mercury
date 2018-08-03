@@ -47,6 +47,25 @@ public class PlayerInput {
         return Vector2.zero;
     }
 
+    public KeyCode getInteractionKey()
+    {
+        if (Input.GetKey(KeyCode.F12))
+        {
+            return KeyCode.F12;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            return KeyCode.E;
+        }
+
+        if (Input.GetKey(KeyCode.F11))
+        {
+            return KeyCode.F11;
+        }
+        return KeyCode.None;
+    }
+
     public Vector2 GetAimDirection () {
         if (inputType == InputType.TableRealms) {
             Debug.LogError("Not implemented");
