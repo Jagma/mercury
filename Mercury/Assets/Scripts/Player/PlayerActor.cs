@@ -13,7 +13,8 @@ public class PlayerActor : MonoBehaviour
     Transform visual;
     Transform dropShadow;
     Rigidbody rigid;
-
+    Weapon weapon;
+    bool weaponCol = false;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -59,7 +60,7 @@ public class PlayerActor : MonoBehaviour
     public void Interact()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
-        for (int i=0; i < colliders.Length; i ++) {
+        for (int i = 0; i < colliders.Length; i++) {
             Weapon weapon = colliders[i].GetComponent<Weapon>();
             if (weapon != null && weapon != model.equippedWeapon) {
                 // Dequip current weapon
@@ -67,7 +68,7 @@ public class PlayerActor : MonoBehaviour
                     model.equippedWeapon.Dequip();
                     model.equippedWeapon = null;
                 }
-                
+
                 // Equip new weapon
                 weapon.Equip();
                 model.equippedWeapon = weapon;
@@ -101,4 +102,28 @@ public class PlayerActor : MonoBehaviour
             model.equippedWeapon.UseWeapon();
         }
     }
+<<<<<<< HEAD
+=======
+
+    public void equipWeapon(KeyCode key)
+    {
+        if (key == KeyCode.E && weaponCol)
+        {
+            model.equippedWeapon = weapon;
+        }
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+       weapon = col.GetComponent<Weapon>();
+       if (weapon != null && weapon != model.equippedWeapon)
+        {
+          weaponCol = true;      
+        } 
+       else
+        {
+          weaponCol = false;
+        }
+    }
+>>>>>>> 6022425cfd726661cc44df9bd16ba0776c7f53e8
 }
