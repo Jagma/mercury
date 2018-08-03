@@ -16,6 +16,13 @@ public class Weapon : MonoBehaviour {
         // startup code
     }
 
+    public void Equip () {
+        GetComponent<Rigidbody>().useGravity = false;
+    }
+    public void Dequip() {
+        GetComponent<Rigidbody>().useGravity = true;
+    }
+
     public void UseWeapon () {
         if (cooldownRemaining > 0) {
             return;

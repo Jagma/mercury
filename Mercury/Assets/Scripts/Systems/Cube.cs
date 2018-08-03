@@ -125,9 +125,4 @@ public class Cube : MonoBehaviour {
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

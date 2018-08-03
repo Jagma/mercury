@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput {
     // A player input is a mapping between a player and a device.
-    // The device can be a TableRealms device or a controller.
+    // The device can be a TableRealms device or a controller or mouse and keyboard.
 
     public enum InputType {TableRealms, Controller, Keyboard}
 
@@ -45,25 +45,6 @@ public class PlayerInput {
         }
 
         return Vector2.zero;
-    }
-
-    public KeyCode getInteractionKey()
-    {
-        if (Input.GetKey(KeyCode.F12))
-        {
-            return KeyCode.F12;
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            return KeyCode.E;
-        }
-
-        if (Input.GetKey(KeyCode.F11))
-        {
-            return KeyCode.F11;
-        }
-        return KeyCode.None;
     }
 
     public Vector2 GetAimDirection () {
@@ -110,5 +91,33 @@ public class PlayerInput {
         }
 
         return false;
+    }
+
+    public bool GetInteract() {
+        if (inputType == InputType.TableRealms) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+            if (Input.GetKey(KeyCode.E)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool interactPressedCache = false;
+    public bool GetInteractPressed () {
+        bool result = false;
+        if (interactPressedCache == false && GetInteract() == true) {
+            result = true;
+        }
+
+        interactPressedCache = GetInteract();
+
+        return result;
     }
 }

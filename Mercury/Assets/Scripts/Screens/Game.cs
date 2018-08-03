@@ -12,17 +12,6 @@ public class Game : MonoBehaviour {
     List<PlayerActor> playerActorList = new List<PlayerActor>();
 
 	void Start () {
-        /*
-        LevelGeneration.instance.Generate();
-
-        GameObject pistolGO = Factory.instance.CreatePistol();
-        pistolGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
-
-        GameObject machineGunGO = Factory.instance.CreateMachineGun();
-        machineGunGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f;
-
-        GameObject rocketLauncherGO = Factory.instance.CreateRocketLauncher();
-        rocketLauncherGO.transform.position = new Vector3(5, 5, 5) + Random.onUnitSphere * 3f; */
 
         if (InputManager.instance == null) {
             return;
@@ -60,10 +49,4 @@ public class Game : MonoBehaviour {
 
         return null;
     }
-	
-
-	void Update ()
-    {
-		
-	}
 }

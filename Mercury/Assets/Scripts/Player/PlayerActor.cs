@@ -56,21 +56,24 @@ public class PlayerActor : MonoBehaviour
         rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
     }
 
-    public void Interact(KeyCode keyValue)
+    public void Interact()
     {
-        if (keyValue == KeyCode.E)
-        {
-            Debug.Log("I am working as intended...");
-        }
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+        for (int i=0; i < colliders.Length; i ++) {
+            Weapon weapon = colliders[i].GetComponent<Weapon>();
+            if (weapon != null && weapon != model.equippedWeapon) {
+                // Dequip current weapon
+                if (model.equippedWeapon != null) {
+                    model.equippedWeapon.Dequip();
+                    model.equippedWeapon = null;
+                }
+                
+                // Equip new weapon
+                weapon.Equip();
+                model.equippedWeapon = weapon;
 
-        if (keyValue == KeyCode.F11)
-        {
-            CameraSystem.instance.setCamShakeStatus(true);
-        }
-
-        if (keyValue == KeyCode.F12)
-        {
-            CameraSystem.instance.setCamShakeStatus(false);
+                return;
+            }
         }
     }
 
@@ -92,18 +95,10 @@ public class PlayerActor : MonoBehaviour
             visual.Find("Body").GetComponent<SpriteRenderer>().sprite = facing;
         }
     }
+
     public void Attack () {
         if (model.equippedWeapon)   {
             model.equippedWeapon.UseWeapon();
         }
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-        Weapon weapon = col.GetComponent<Weapon>();
-            if (weapon != null && weapon != model.equippedWeapon)
-            {
-               model.equippedWeapon = weapon;      
-            }     
     }
 }

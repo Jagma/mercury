@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
-    bool camShakeStatus = true;
     public static CameraSystem instance;
     private void Awake()
     {
@@ -16,28 +15,29 @@ public class CameraSystem : MonoBehaviour
 
     void Update ()
     {
+        // Sanitize list
+        for (int i = 0; i < trackedList.Count; i++) {
+            if (trackedList[i] == null) 
+            {
+                trackedList.RemoveAt(i);
+                i--;
+            }
+        }
+
+        // Get the center point between all tracked objects
         Vector3 targetPos = Vector3.zero;
         for (int i=0; i < trackedList.Count; i ++)
         {
-            if (trackedList[i] == null)
-            {
-                trackedList.RemoveAt(i);
-                i--;                
-            } else
-            {
-                targetPos += trackedList[i].position;
-            }            
+            targetPos += trackedList[i].position;          
         }
-        targetPos -= transform.forward * 10;
+
+        // adjust camera backwards
+        targetPos -= transform.forward * 10; 
 
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 10f);
         transform.localEulerAngles = cameraAngle;
     }
 
-    public void setCamShakeStatus(bool status)
-    {
-        camShakeStatus = status;
-    }
     public void SubscribeToTracking (Transform t)
     {
         if (trackedList.Contains(t) == false)
@@ -53,11 +53,9 @@ public class CameraSystem : MonoBehaviour
             trackedList.Remove(t);
         }
     }
+
     public void ShakePosition(Vector3 direction)
     {
-        if (camShakeStatus)
-        {
-            transform.position += direction;
-        }
+        transform.position += direction;
     }
 }
