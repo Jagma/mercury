@@ -102,28 +102,4 @@ public class PlayerActor : MonoBehaviour
             model.equippedWeapon.UseWeapon();
         }
     }
-<<<<<<< HEAD
-=======
-
-    public void equipWeapon(KeyCode key)
-    {
-        if (key == KeyCode.E && weaponCol)
-        {
-            model.equippedWeapon = weapon;
-        }
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-       weapon = col.GetComponent<Weapon>();
-       if (weapon != null && weapon != model.equippedWeapon)
-        {
-          weaponCol = true;      
-        } 
-       else
-        {
-          weaponCol = false;
-        }
-    }
->>>>>>> 6022425cfd726661cc44df9bd16ba0776c7f53e8
 }
