@@ -34,6 +34,10 @@ public class InputManager : MonoBehaviour {
     public Vector2 GetMoveDirection(string playerID) {
         return playerInputs[playerID].GetMoveDirection();
     }
+    public KeyCode GetInteractionKey(string playerID)
+    {
+        return playerInputs[playerID].getInteractionKey();
+    }
 
     public Vector2 GetAimDirection(string playerID) {
         return playerInputs[playerID].GetAimDirection();

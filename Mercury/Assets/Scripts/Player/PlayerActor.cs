@@ -56,6 +56,24 @@ public class PlayerActor : MonoBehaviour
         rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
     }
 
+    public void Interact(KeyCode keyValue)
+    {
+        if (keyValue == KeyCode.E)
+        {
+            Debug.Log("I am working as intended...");
+        }
+
+        if (keyValue == KeyCode.F11)
+        {
+            CameraSystem.instance.setCamShakeStatus(true);
+        }
+
+        if (keyValue == KeyCode.F12)
+        {
+            CameraSystem.instance.setCamShakeStatus(false);
+        }
+    }
+
     public void Aim (Vector2 direction)
     {
         if (model.equippedWeapon)
@@ -83,12 +101,9 @@ public class PlayerActor : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         Weapon weapon = col.GetComponent<Weapon>();
-        if (weapon != null && weapon != model.equippedWeapon)
-        {
-            if (model.equippedWeapon) {
-                model.equippedWeapon.GetComponent<Rigidbody>().AddForce(model.equippedWeapon.transform.right * 10, ForceMode.Impulse);
-            }           
-            model.equippedWeapon = weapon;
-        }
+            if (weapon != null && weapon != model.equippedWeapon)
+            {
+               model.equippedWeapon = weapon;      
+            }     
     }
 }
