@@ -53,8 +53,7 @@ public class ClientConnectionListenerSocket : MonoBehaviour, IClientConnectionLi
         }
 #endif
     }
-
-#if (UNITY_WSA || UNITY_EDITOR)
+    
     public static string GetIP4Address(){
         string IP4Address = String.Empty;
         foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
@@ -67,7 +66,6 @@ public class ClientConnectionListenerSocket : MonoBehaviour, IClientConnectionLi
         }
         return IP4Address;
     }
-#endif
 
 #if (!UNITY_WEBGL || UNITY_EDITOR)
     private bool IsPortAvailable(int port) {

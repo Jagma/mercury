@@ -29,7 +29,7 @@ public class PlayerActor : MonoBehaviour
     {
         if (model.equippedWeapon)
         {
-            model.equippedWeapon.transform.position = transform.position + model.equippedWeapon.transform.right * 0.5f;
+            model.equippedWeapon.transform.position = transform.position + model.equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
         }
 
         // Visual look at camera

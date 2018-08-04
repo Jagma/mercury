@@ -60,8 +60,9 @@ public class LevelGeneration : MonoBehaviour {
         }
 
         pickups[minerList[0].posX, minerList[0].posZ] = "Pistol";
+        pickups[minerList[0].posX, minerList[0].posZ+1] = "MachineGun";
+        pickups[minerList[0].posX, minerList[0].posZ+2] = "RocketLauncher";
         playerSpawnPosition = new Vector3(minerList[0].posX, 4, minerList[0].posZ);
-
 
         // Build floor
         GameObject floor = Factory.instance.CreateFloor();
@@ -94,6 +95,11 @@ public class LevelGeneration : MonoBehaviour {
                     GameObject machineGunGO = Factory.instance.CreateMachineGun();
                     machineGunGO.transform.parent = levelRoot;
                     machineGunGO.transform.position = new Vector3(x, 2, z);
+                }
+                if (pickups[x, z] == "RocketLauncher") {
+                    GameObject rocketLauncherGO = Factory.instance.CreateRocketLauncher();
+                    rocketLauncherGO.transform.parent = levelRoot;
+                    rocketLauncherGO.transform.position = new Vector3(x, 2, z);
                 }
             }
         }
@@ -130,9 +136,10 @@ public class Miner {
         if (posX <= 1 || posX >= levelGen.mapWidth-2 ||
             posZ <= 1 || posZ >= levelGen.mapDepth-2) {
             lifetime = 0;
-            CreateRoom(Random.Range(5, 8), Random.Range(5, 8));
         }
+
         if (lifetime <= 0) {
+            CreateRoom(2, 2);
             return;
         }
 
@@ -141,7 +148,7 @@ public class Miner {
 
         // Create rooms
         if (Random.Range(0, 100) > roomChance) {
-            CreateRoom(Random.Range(5, 10), Random.Range(5, 10));
+            CreateRoom(Random.Range(1, 5), Random.Range(1, 5));
         }
 
         // Enemies 
@@ -151,13 +158,19 @@ public class Miner {
 
         // Pickups
         if (Random.Range(0, 10000) > 9990) {
+            levelGen.pickups[posX, posZ] = "Pistol";
+        }
+        if (Random.Range(0, 10000) > 9990) {
             levelGen.pickups[posX, posZ] = "MachineGun";
+        }
+        if (Random.Range(0, 10000) > 9990) {
+            levelGen.pickups[posX, posZ] = "RocketLauncher";
         }
     }
 
     void CreateRoom (int sizeX, int sizeZ) {
-        for (int x=0; x < sizeX; x ++) {
-            for (int z = 0; z < sizeZ; z++) {
+        for (int x= -sizeX; x < sizeX; x ++) {
+            for (int z= -sizeZ; z < sizeZ; z++) {
                 int compositeX = Mathf.Clamp(posX +x, 1, levelGen.mapWidth-2);
                 int compositeZ = Mathf.Clamp(posZ +z, 1, levelGen.mapDepth-2);
 

@@ -22,7 +22,7 @@ public class Game : MonoBehaviour {
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary) {
             GameObject playerGO = Factory.instance.CreatePlayer();
-            playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition + Random.onUnitSphere;
+            playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
 
             PlayerModel playerModel = new PlayerModel();
             playerModel.playerID = playerInputKVP.Value.playerID;
