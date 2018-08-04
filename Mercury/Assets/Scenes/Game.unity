@@ -207,11 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611a4d629b3381145bf2283f75437947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPrefab: {fileID: 1637538861056834, guid: f1436ef34ee1bf840bc9b2a80deed632,
-    type: 2}
-  wallPrefab: {fileID: 1990793011837550, guid: 7e21aeff817436841920c09b347ae3a3, type: 2}
-  enemyWalkerPrefab: {fileID: 1354257874220728, guid: fa17afb0fc887654993030e0e32d3a37,
-    type: 2}
 --- !u!4 &302512603
 Transform:
   m_ObjectHideFlags: 0
@@ -235,6 +230,7 @@ GameObject:
   - component: {fileID: 869991081}
   - component: {fileID: 869991080}
   - component: {fileID: 869991079}
+  - component: {fileID: 869991082}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -307,6 +303,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
+--- !u!114 &869991082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 869991078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 730927724862644478c87f5b6b55fe5c, type: 2}
 --- !u!1 &1244943643
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,3 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a38aa3136af6b4685d4b1d6adc9469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSpawnPosition: {x: 3, y: 3, z: 3}
+  mapWidth: 64
+  mapDepth: 64
