@@ -9,11 +9,15 @@ public class RocketLauncher : WeaponRanged
 
         // Stats
         cooldown = 1f;
-        projectileOffset = 0.2f;
+        projectileOffset = 1f;
     }
 
     protected override void Use()
     {
+        GameObject flash = Factory.instance.CreateMuzzleFlash();
+        flash.transform.position = transform.position + transform.right * projectileOffset;
+        Destroy(flash, 1);
+
         base.Use();
         GameObject bullet = Factory.instance.CreateRocket();
         bullet.transform.position = transform.position + transform.right * projectileOffset;

@@ -66,7 +66,8 @@ public class Factory : MonoBehaviour
     }
 
 
-    public GameObject CreateBullet() {
+    public GameObject CreateBullet()
+    {
         GameObject bulletGO = new GameObject("Bullet");
 
         SphereCollider bulletCollider = bulletGO.AddComponent<SphereCollider>();
@@ -89,12 +90,25 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
-    public GameObject CreateBulletHit () {
+    public GameObject CreateBulletHit ()
+    {
         GameObject bulletHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
         return bulletHit;
     }
 
-    public GameObject CreateMuzzleFlash() {
+    public GameObject CreateRocketHit()
+    {
+        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketHit"));
+        return rocketHit;
+    }
+    public GameObject CreateRocketSmokeFlash()
+    {
+        GameObject smokeFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketSmokeFlash"));
+        return smokeFlash;
+    }
+
+    public GameObject CreateMuzzleFlash()
+    {
         GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
         return muzzleFlash;
     }
@@ -190,7 +204,7 @@ public class Factory : MonoBehaviour
         GameObject bulletVisualBodyGO = new GameObject("Body");
         bulletVisualBodyGO.transform.parent = bulletVisualGO.transform;
         SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_1");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_Rocket");
 
         rocketGO.AddComponent<RPG>();
         return rocketGO;
