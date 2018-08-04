@@ -5,6 +5,7 @@ using UnityEngine;
 public class Game : MonoBehaviour {
 
     public static Game instance;
+    public GameObject temp;
     private void Awake() {
         instance = this;
     }
@@ -35,6 +36,7 @@ public class Game : MonoBehaviour {
             playerController.actor = playerActor;
 
             playerActorList.Add(playerActor);
+            temp = playerGO;
 
             CameraSystem.instance.SubscribeToTracking(playerGO.transform);
         }
@@ -49,4 +51,5 @@ public class Game : MonoBehaviour {
 
         return null;
     }
+
 }

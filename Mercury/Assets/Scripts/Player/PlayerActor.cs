@@ -6,7 +6,7 @@ public class PlayerActor : MonoBehaviour
 {
 
     public PlayerModel model;
-
+    public static PlayerActor instance;
     public Sprite forward;
     public Sprite facing;
 
@@ -23,6 +23,7 @@ public class PlayerActor : MonoBehaviour
     void Start ()
     {        
         transform.eulerAngles = new Vector3(0, 45, 0);
+        instance = this;
     }
 
 	void Update ()

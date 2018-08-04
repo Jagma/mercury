@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour {
     public int health = 2;
     Transform visual;
     Transform dropShadow;
-
+    public GameObject target = Game.instance.temp;
+    public float moveSpeed = 1f;
     private void Awake() {
         visual = transform.Find("Visual");
 
@@ -24,10 +25,24 @@ public class Enemy : MonoBehaviour {
     }
 	
 
-	void Update () {
-		// TODO : Move code
-	}
+	void Update ()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            PlayerActor playerActor = colliders[i].GetComponent<PlayerActor>();
+            if (playerActor != null)
+            {
+                moveToPlayer(playerActor);
+            }
+        }
 
+    }
+
+    void moveToPlayer(PlayerActor currentPlayer)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, currentPlayer.transform.position, moveSpeed * Time.deltaTime);
+    }
     private void OnTriggerEnter(Collider col) {
         Projectile projectile = col.GetComponent<Projectile>();
         if (projectile != null) {
