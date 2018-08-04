@@ -34,6 +34,11 @@ public class Factory : MonoBehaviour
         playerRigid.interpolation = RigidbodyInterpolation.Interpolate;
         playerRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
+        GameObject playerDropShadowGO = Factory.instance.CreateDropShadow();
+        playerDropShadowGO.transform.parent = playerGO.transform;
+        playerDropShadowGO.transform.localPosition = new Vector3(0, 0, -0.3f);
+        playerDropShadowGO.transform.localScale = new Vector3(0.6f, 0.2f, 1);
+
         GameObject playerVisualGO = new GameObject("Visual");
         playerVisualGO.transform.parent = playerGO.transform;
 
@@ -53,7 +58,7 @@ public class Factory : MonoBehaviour
         GameObject dropShadowGO = new GameObject("Drop Shadow");
 
         SpriteRenderer sr = dropShadowGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/DropShadow");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Random/DropShadow");
         sr.color = new Color(0, 0, 0, 0.5f);
 
         dropShadowGO.AddComponent<DropShadow>();
@@ -79,8 +84,19 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_1");
 
-        bulletGO.AddComponent<Round>();
+        Projectile p = bulletGO.AddComponent<Round>();
+        p.Init();
         return bulletGO;
+    }
+
+    public GameObject CreateBulletHit () {
+        GameObject bulletHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
+        return bulletHit;
+    }
+
+    public GameObject CreateMuzzleFlash() {
+        GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
+        return muzzleFlash;
     }
 
     public GameObject CreatePistol () {
@@ -181,24 +197,55 @@ public class Factory : MonoBehaviour
     }
 
     public GameObject CreateFloor() {
-        GameObject floor = GameObject.Instantiate(floorPrefab);
+        GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        floor.name = "Floor";
+
+        Material mf = new Material(Shader.Find("Mobile/Diffuse"));
+        mf.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Floor"));
+
+        floor.GetComponent<Renderer>().material = mf;
         return floor;
     }
- 
 
+    Material m = null;
     public GameObject CreateWall ()
     {
-        GameObject wall = GameObject.Instantiate(wallPrefab);
+        GameObject wall = new GameObject("Wall");
+        wall.AddComponent<BoxCollider>();
+        wall.AddComponent<Wall>();
+
+        if (m == null) {
+            m = new Material(Shader.Find("Mobile/Diffuse"));
+            m.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Voxel"));
+        }
+
+        Voxel wallVoxel = wall.AddComponent<Voxel>();
+        wallVoxel.material = m;
+        wallVoxel.Init();
         return wall;
     }
 
     public GameObject CreateEnemyWalker () {
-        GameObject enemyWalker = GameObject.Instantiate(enemyWalkerPrefab);
-        return enemyWalker;
-    }
-    
-    public GameObject floorPrefab;
-    public GameObject wallPrefab;
+        GameObject enemyWalkerGO = new GameObject("Enemy Walker");
 
-    public GameObject enemyWalkerPrefab;
+        CapsuleCollider enemyWalkerCollider = enemyWalkerGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyWalkerGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyWalkerGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Walker");
+
+        enemyWalkerGO.AddComponent<Enemy>();
+        return enemyWalkerGO;
+    }
 }

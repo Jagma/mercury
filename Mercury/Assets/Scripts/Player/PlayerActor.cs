@@ -11,7 +11,6 @@ public class PlayerActor : MonoBehaviour
     public Sprite facing;
 
     Transform visual;
-    Transform dropShadow;
     Rigidbody rigid;
     Weapon weapon;
     bool weaponCol = false;
@@ -19,10 +18,6 @@ public class PlayerActor : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         visual = transform.Find("Visual");
-        dropShadow = Factory.instance.CreateDropShadow().transform;
-        dropShadow.parent = transform;
-        dropShadow.localPosition = new Vector3(0, 0, -0.1f);
-        dropShadow.localScale = new Vector3(0.6f, 0.2f, 1);
     }
 
     void Start ()

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cube : MonoBehaviour {
+public class Voxel : MonoBehaviour {
 
-    public Material cubeMaterial;
+    public Material material;
 
     Mesh mesh;
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
-	void Start () {
+
+    public void Init () {
         mesh = new Mesh();
 
         float length = 1f;
@@ -121,7 +122,7 @@ public class Cube : MonoBehaviour {
         mesh.RecalculateBounds();
         
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshRenderer.material = cubeMaterial;
+        meshRenderer.material = material;
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
     }

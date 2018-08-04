@@ -230,4 +230,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2841787b03003438dc1550282e21ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeMaterial: {fileID: 2100000, guid: 2b678c941c336a243a0741dfacebea26, type: 2}
+  material: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RPG : Projectile {
-    protected override void Start() {
-        base.Start();
+    public override void Init() {
+        base.Init();
 
         // Stats
         speed = 10f;

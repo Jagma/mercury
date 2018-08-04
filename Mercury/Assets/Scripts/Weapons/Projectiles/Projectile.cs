@@ -9,15 +9,13 @@ public class Projectile : MonoBehaviour {
 
     protected Transform visual;
     
-    private void Awake() {
+    public virtual void Init() {
         visual = transform.Find("Visual");
-    }
-
-    protected virtual void Start() {
         Destroy(gameObject, 5f);
+        Update();
     }
 
-    void Update() {
+    public void Update() {
         transform.position += transform.right * Time.deltaTime * speed;
         visual.eulerAngles = new Vector3(45, 45, Mathf.Atan2(transform.right.z, transform.right.x) * Mathf.Rad2Deg + 45);
     }
@@ -25,12 +23,16 @@ public class Projectile : MonoBehaviour {
     private void OnTriggerEnter(Collider col) {
         Wall wall = col.GetComponent<Wall>();
         if (wall != null) {
-            Destroy(gameObject);
+            Destroy();
         }
 
         Enemy enemy = col.GetComponent<Enemy>();
         if (enemy != null) {
-            Destroy(gameObject);
+            Destroy();
         }
+    }
+
+    public virtual void Destroy () {
+        Destroy(gameObject);
     }
 }

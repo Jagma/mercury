@@ -68,6 +68,7 @@ public class LevelGeneration : MonoBehaviour {
         floor.transform.parent = levelRoot;
         floor.transform.localScale = new Vector3(mapWidth, 1, mapDepth);
         floor.transform.position = new Vector3(mapWidth / 2.0f, 0, mapDepth / 2.0f);
+        floor.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(mapWidth, mapDepth));
 
         // Build level from arrays
         for (int z = 0; z < terrain.GetLength(1); z++) {
