@@ -98,4 +98,8 @@ public class PlayerActor : MonoBehaviour
             model.equippedWeapon.UseWeapon();
         }
     }
+
+    public void UseAbility () {
+        model.ability.Use();
+    }
 }

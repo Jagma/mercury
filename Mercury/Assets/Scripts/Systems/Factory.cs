@@ -17,7 +17,7 @@ public class Factory : MonoBehaviour
     }
 
     // Factory methods
-    public GameObject CreatePlayer () {
+    public GameObject CreatePlayerBase () {
         GameObject playerGO = new GameObject("Player");
 
         CapsuleCollider playerCollider = playerGO.AddComponent<CapsuleCollider>();
@@ -50,7 +50,24 @@ public class Factory : MonoBehaviour
         playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1");
         playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1B");
 
-        playerGO.AddComponent<PlayerController>();
+        PlayerController playerController = playerGO.AddComponent<PlayerController>();
+        playerController.actor = playerActor;
+
+        PlayerModel playerModel = new PlayerModel();
+        playerActor.model = playerModel;
+
+        return playerGO;
+    }
+
+    public GameObject CreatePlayerTrump () {
+        GameObject playerGO = CreatePlayerBase();
+
+        AbilityTrump abilityTrump = new AbilityTrump();
+        abilityTrump.playerActor = playerGO.GetComponent<PlayerActor>();
+
+        // Set all trump specific stats
+        playerGO.GetComponent<PlayerActor>().model.ability = abilityTrump;
+
         return playerGO;
     }
     

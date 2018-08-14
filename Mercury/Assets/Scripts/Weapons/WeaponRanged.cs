@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponRanged : Weapon {
 
-    protected float projectileOffset = 0.2f;
+    protected float muzzleOffset = 0.2f;
     protected override void Start() {
         base.Start();
     }

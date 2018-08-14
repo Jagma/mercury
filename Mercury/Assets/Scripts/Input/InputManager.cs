@@ -50,4 +50,8 @@ public class InputManager : MonoBehaviour {
     public bool GetInteractPressed(string playerID) {
         return playerInputs[playerID].GetInteractPressed();
     }
+
+    public bool GetUseAbility(string playerID) {
+        return playerInputs[playerID].GetUseAbility();
+    }
 }

@@ -22,18 +22,11 @@ public class Game : MonoBehaviour {
 
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary) {
-            GameObject playerGO = Factory.instance.CreatePlayer();
+            GameObject playerGO = Factory.instance.CreatePlayerTrump();
             playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
 
-            PlayerModel playerModel = new PlayerModel();
-            playerModel.playerID = playerInputKVP.Value.playerID;
-
             PlayerActor playerActor = playerGO.GetComponent<PlayerActor>();
-            playerActor.model = playerModel;
-
-            PlayerController playerController = playerGO.GetComponent<PlayerController>();
-            playerController.model = playerModel;
-            playerController.actor = playerActor;
+            playerActor.model.playerID = playerInputKVP.Value.playerID; ;
 
             playerActorList.Add(playerActor);
             temp = playerGO;

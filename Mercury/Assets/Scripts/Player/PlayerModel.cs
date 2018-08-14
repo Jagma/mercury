@@ -11,4 +11,5 @@ public class PlayerModel {
 
     public Weapon equippedWeapon;
     public Weapon secondaryWeapon;
+    public Ability ability;
 }

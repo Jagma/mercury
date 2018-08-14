@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-
-    public PlayerModel model;
+    
     public PlayerActor actor;
 
 	void Update () {
-        actor.Move(InputManager.instance.GetMoveDirection(model.playerID));
-        actor.Aim(InputManager.instance.GetAimDirection(model.playerID));
+        actor.Move(InputManager.instance.GetMoveDirection(actor.model.playerID));
+        actor.Aim(InputManager.instance.GetAimDirection(actor.model.playerID));
 
-        if (InputManager.instance.GetInteractPressed(model.playerID)) {
+        if (InputManager.instance.GetInteractPressed(actor.model.playerID)) {
             actor.Interact();
         }
-        if(InputManager.instance.GetAttack(model.playerID)) {
+        if(InputManager.instance.GetAttack(actor.model.playerID)) {
             actor.Attack();
+        }
+        if (InputManager.instance.GetUseAbility(actor.model.playerID)) {
+            actor.UseAbility();
         }
     }
 }

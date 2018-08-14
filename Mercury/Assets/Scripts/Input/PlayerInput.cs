@@ -120,4 +120,20 @@ public class PlayerInput {
 
         return result;
     }
+
+    public bool GetUseAbility() {
+        if (inputType == InputType.TableRealms) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+            if (Input.GetKey(KeyCode.R)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
