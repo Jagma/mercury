@@ -6,12 +6,16 @@ public class Enemy : MonoBehaviour {
     // TODO : We will need to abstract this class once we add more enemy types. Similar to weapons. 
 
     public int health = 2;
+    public float moveSpeed = 1f;
+
     Transform visual;
     Transform dropShadow;
-    public GameObject target = Game.instance.temp;
-    public float moveSpeed = 1f;
+    Rigidbody rigid;
+
+
     private void Awake() {
         visual = transform.Find("Visual");
+        rigid = GetComponent<Rigidbody>();
 
         dropShadow = Factory.instance.CreateDropShadow().transform;
         dropShadow.parent = transform;
@@ -25,7 +29,7 @@ public class Enemy : MonoBehaviour {
     }
 	
 
-	void Update ()
+	void FixedUpdate ()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
         for (int i = 0; i < colliders.Length; i++)
@@ -33,16 +37,20 @@ public class Enemy : MonoBehaviour {
             PlayerActor playerActor = colliders[i].GetComponent<PlayerActor>();
             if (playerActor != null)
             {
-                moveToPlayer(playerActor);
+                MoveToPosition(playerActor.transform.position);
             }
         }
 
     }
 
-    void moveToPlayer(PlayerActor currentPlayer)
+    void MoveToPosition(Vector3 target)
     {
-        transform.position = Vector3.MoveTowards(transform.position, currentPlayer.transform.position, moveSpeed * Time.deltaTime);
+        Vector3 vec = (target - transform.position).normalized * moveSpeed;
+        vec.y = rigid.velocity.y; // preserves physics Y movement
+
+        rigid.velocity = vec;
     }
+
     private void OnTriggerEnter(Collider col) {
         Projectile projectile = col.GetComponent<Projectile>();
         if (projectile != null) {

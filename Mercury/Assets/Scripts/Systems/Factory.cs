@@ -6,7 +6,8 @@ public class Factory : MonoBehaviour
 {
     // The factory is a singleton
     public static Factory instance;
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null)
         {
             instance = this;
@@ -71,7 +72,8 @@ public class Factory : MonoBehaviour
         return playerGO;
     }
     
-    public GameObject CreateDropShadow() {
+    public GameObject CreateDropShadow()
+    {
         GameObject dropShadowGO = new GameObject("Drop Shadow");
 
         SpriteRenderer sr = dropShadowGO.AddComponent<SpriteRenderer>();
@@ -81,7 +83,6 @@ public class Factory : MonoBehaviour
         dropShadowGO.AddComponent<DropShadow>();
         return dropShadowGO;
     }
-
 
     public GameObject CreateBullet()
     {
@@ -107,15 +108,40 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
-    public GameObject CreateBulletHit ()
+    public GameObject CreateBeamNeon()
+    {
+        GameObject neonBeamGO = new GameObject("BeamNeon");
+
+        GameObject neonBeamVisualGO = new GameObject("Visual");
+        neonBeamVisualGO.transform.parent = neonBeamGO.transform;
+
+        GameObject neonBeamVisualMainGO = new GameObject("MainBeam");
+        neonBeamVisualMainGO.transform.parent = neonBeamVisualGO.transform;
+
+        LineRenderer mainLR = neonBeamVisualMainGO.AddComponent<LineRenderer>();
+        //TODO: Add material
+       
+        Beam beam = neonBeamGO.AddComponent<BeamNeon>();
+        beam.Init();
+        return neonBeamGO;
+    }
+
+    public GameObject CreateBulletHit()
     {
         GameObject bulletHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
         return bulletHit;
     }
 
-    public GameObject CreateRocketHit()
+    //still need to do the beam hit effect.
+    public GameObject CreateBeamHit()
     {
-        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketHit"));
+        GameObject beamHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
+        return beamHit;
+    }
+
+    public GameObject CreateRocketHit() //need to fix.
+    {
+        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
         return rocketHit;
     }
     public GameObject CreateRocketSmokeFlash()
@@ -130,7 +156,8 @@ public class Factory : MonoBehaviour
         return muzzleFlash;
     }
 
-    public GameObject CreatePistol () {
+   public GameObject CreatePistol()
+    {
         GameObject pistolGO = new GameObject("Pistol");
 
         SphereCollider pistolCollider = pistolGO.AddComponent<SphereCollider>();
@@ -155,7 +182,8 @@ public class Factory : MonoBehaviour
         return pistolGO;
     }
 
-    public GameObject CreateMachineGun() {
+    public GameObject CreateMachineGun()
+    {
         GameObject machineGunGO = new GameObject("Machine Gun");
 
         SphereCollider machineGunCollider = machineGunGO.AddComponent<SphereCollider>();
@@ -180,7 +208,34 @@ public class Factory : MonoBehaviour
         return machineGunGO;
     }
 
-    public GameObject CreateRocketLauncher() {
+    public GameObject CreateLaserRifle()
+    {
+        GameObject laserRifleGO = new GameObject("Laser Rifle");
+
+        SphereCollider laserRifleCollider = laserRifleGO.AddComponent<SphereCollider>();
+        laserRifleCollider.radius = 0.1f;
+
+        SphereCollider laserRifleColliderT = laserRifleGO.AddComponent<SphereCollider>();
+        laserRifleColliderT.isTrigger = true;
+
+        LineRenderer laserRifleLineRend = laserRifleGO.AddComponent<LineRenderer>();
+        Rigidbody laserRifleRigid = laserRifleGO.AddComponent<Rigidbody>();
+        laserRifleRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject laserRifleVisualGO = new GameObject("Visual");
+        laserRifleVisualGO.transform.parent = laserRifleGO.transform;
+
+        GameObject laserRifleVissualBodyGO = new GameObject("Body");
+        laserRifleVissualBodyGO.transform.parent = laserRifleVisualGO.transform;
+        SpriteRenderer sr = laserRifleVissualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserRifle");
+
+        laserRifleGO.AddComponent<LaserRifle>();
+
+        return laserRifleGO;
+    }
+    public GameObject CreateRocketLauncher()
+    {
         GameObject rocketLauncherGO = new GameObject("Rocket Launcher");
 
         SphereCollider rocketLauncherCollider = rocketLauncherGO.AddComponent<SphereCollider>();
@@ -205,7 +260,8 @@ public class Factory : MonoBehaviour
         return rocketLauncherGO;
     }
 
-    public GameObject CreateRocket() {
+    public GameObject CreateRocket()
+    {
         GameObject rocketGO = new GameObject("Rocket");
 
         SphereCollider rocketCollider = rocketGO.AddComponent<SphereCollider>();
@@ -227,7 +283,8 @@ public class Factory : MonoBehaviour
         return rocketGO;
     }
 
-    public GameObject CreateFloor() {
+    public GameObject CreateFloor()
+    {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
         floor.name = "Floor";
 
@@ -256,7 +313,8 @@ public class Factory : MonoBehaviour
         return wall;
     }
 
-    public GameObject CreateEnemyWalker () {
+    public GameObject CreateEnemyWalker ()
+    {
         GameObject enemyWalkerGO = new GameObject("Enemy Walker");
 
         CapsuleCollider enemyWalkerCollider = enemyWalkerGO.AddComponent<CapsuleCollider>();

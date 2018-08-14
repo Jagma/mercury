@@ -8,18 +8,18 @@ public class MachineGun : WeaponRanged {
 
         // Stats
         cooldown = 0.1f;
-        muzzleOffset = 0.6f;
+        ammoOffset = 0.6f;
     }
 
     protected override void Use() {
         base.Use();
 
         GameObject flash = Factory.instance.CreateMuzzleFlash();
-        flash.transform.position = transform.position + transform.right * muzzleOffset;
+        flash.transform.position = transform.position + transform.right * ammoOffset;
         Destroy(flash, 1);
 
         GameObject bullet = Factory.instance.CreateBullet();
-        bullet.transform.position = transform.position + transform.right * muzzleOffset;
+        bullet.transform.position = transform.position + transform.right * ammoOffset;
         bullet.transform.right = transform.right;
         bullet.GetComponent<Projectile>().Update();
 
