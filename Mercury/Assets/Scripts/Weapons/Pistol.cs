@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : WeaponRanged {
+public class Pistol : WeaponRanged
+{
 
-    protected override void Start() {
+    protected override void Start()
+    {
         base.Start();
 
         // Stats
@@ -12,7 +14,8 @@ public class Pistol : WeaponRanged {
         projectileOffset = 0.2f;
     }
 
-    protected override void Use() {
+    protected override void Use()
+    {
         base.Use();
 
         GameObject flash = Factory.instance.CreateMuzzleFlash();

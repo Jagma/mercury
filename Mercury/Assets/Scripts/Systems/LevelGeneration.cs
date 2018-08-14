@@ -62,6 +62,7 @@ public class LevelGeneration : MonoBehaviour {
         pickups[minerList[0].posX, minerList[0].posZ] = "Pistol";
         pickups[minerList[0].posX, minerList[0].posZ+1] = "MachineGun";
         pickups[minerList[0].posX, minerList[0].posZ+2] = "RocketLauncher";
+        pickups[minerList[0].posX, minerList[0].posZ + 3] = "LaserRifle";
         playerSpawnPosition = new Vector3(minerList[0].posX, 4, minerList[0].posZ);
 
         // Build floor
@@ -86,11 +87,11 @@ public class LevelGeneration : MonoBehaviour {
                     enemyGO.transform.position = new Vector3(x, 2, z);
                 }
 
-                if (pickups[x, z] == "Pistol") {
+               /* if (pickups[x, z] == "Pistol") {
                     GameObject pistolGO = Factory.instance.CreatePistol();
                     pistolGO.transform.parent = levelRoot;
                     pistolGO.transform.position = new Vector3(x, 2, z);
-                }
+                }*/
                 if (pickups[x, z] == "MachineGun") {
                     GameObject machineGunGO = Factory.instance.CreateMachineGun();
                     machineGunGO.transform.parent = levelRoot;
@@ -100,6 +101,12 @@ public class LevelGeneration : MonoBehaviour {
                     GameObject rocketLauncherGO = Factory.instance.CreateRocketLauncher();
                     rocketLauncherGO.transform.parent = levelRoot;
                     rocketLauncherGO.transform.position = new Vector3(x, 2, z);
+                }
+                if (pickups[x, z] == "LaserRifle")
+                {
+                    GameObject laserRifleGGO = Factory.instance.CreateLaserRifle();
+                    laserRifleGGO.transform.parent = levelRoot;
+                    laserRifleGGO.transform.position = new Vector3(x, 2, z);
                 }
             }
         }
@@ -165,6 +172,10 @@ public class Miner {
         }
         if (Random.Range(0, 10000) > 9990) {
             levelGen.pickups[posX, posZ] = "RocketLauncher";
+        }
+        if (Random.Range(0, 10000) > 9990)
+        {
+            levelGen.pickups[posX, posZ] = "LaserRifle";
         }
     }
 

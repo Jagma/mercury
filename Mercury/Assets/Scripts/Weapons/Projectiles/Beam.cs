@@ -2,25 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Beam : MonoBehaviour
 {
-    
-    public float speed = 20;
+    public float speed = 100;
     public int damage = 1;
-
+    public RaycastHit2D hitEffect;
+    LineRenderer lineRend;
     protected Transform visual;
-    
+
     public virtual void Init()
     {
         visual = transform.Find("Visual");
+        lineRend = this.GetComponent<LineRenderer>();
+        lineRend.useWorldSpace = true;
+        lineRend.enabled = true;
         Destroy(gameObject, 5f);
         Update();
     }
 
     public void Update()
     {
-        transform.position += transform.right * Time.deltaTime * speed;
-        visual.eulerAngles = new Vector3(45, 45, Mathf.Atan2(transform.right.z, transform.right.x) * Mathf.Rad2Deg + 45);
+        lineRend.SetPosition(0, transform.position);
+        lineRend.SetPosition(1, visual.position);
+
+        hitEffect = Physics2D.Raycast(transform.position, transform.right * Time.deltaTime * speed);
+        visual.position = hitEffect.point;
     }
 
     private void OnTriggerEnter(Collider col)
@@ -38,7 +44,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public virtual void Destroy ()
+    public virtual void Destroy()
     {
         Destroy(gameObject);
     }
