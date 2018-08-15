@@ -146,7 +146,7 @@ public class Factory : MonoBehaviour
 
         LineRenderer mainLR = neonBeamVisualMainGO.AddComponent<LineRenderer>();
         Material beamLine = new Material(Shader.Find("Particles/Additive"));
-        beamLine.SetTexture("BeamColour", Resources.Load<Texture>("Sprites/Weapons/laserBeamMiddle")); // HOEKOM WERK DIE LYN NIE?!?!?!
+        beamLine.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamMiddle"));
         mainLR.material = beamLine;
 
         Beam beam = neonBeamGO.AddComponent<BeamNeon>();
