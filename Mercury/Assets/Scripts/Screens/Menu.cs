@@ -14,7 +14,13 @@ public class Menu : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Return)) {
             PlayerInput pi = new PlayerInput("Keyboard|0001", PlayerInput.InputType.Keyboard);
             InputManager.instance.AddPlayerInput(pi);
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("GameCOOP");
         }
-	}
+
+        if (Input.GetKeyDown(KeyCode.M)) {
+            PlayerInput pi = new PlayerInput("Keyboard|0001", PlayerInput.InputType.Keyboard);
+            InputManager.instance.AddPlayerInput(pi);
+            SceneManager.LoadScene("Multiplayer");
+        }
+    }
 }

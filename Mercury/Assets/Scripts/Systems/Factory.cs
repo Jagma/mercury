@@ -337,4 +337,26 @@ public class Factory : MonoBehaviour
         enemyWalkerGO.AddComponent<Enemy>();
         return enemyWalkerGO;
     }
+
+
+    /* New stuff
+     * ********************************************************
+     * ********************************************************
+     */
+
+    public class ObjectConstructor {
+        public virtual GameObject Construct() {
+            return null;
+        }
+    }
+
+    public class PlayerConstructorServer : ObjectConstructor {
+        public override GameObject Construct() {
+            base.Construct();
+            GameObject playerGO = Factory.instance.CreatePlayerTrump();
+            playerGO.AddComponent<NetworkIdentity>();
+            playerGO.AddComponent<NetworkPlayerController>();
+            return playerGO;
+        }
+    }
 }

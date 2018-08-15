@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 9c1c2a73154d1f64da417a522a55f81d
+  - enabled: 1
+    path: Assets/Plugins/KNet/LobbyManager.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Plugins/KNet/Lobby.unity
+    guid: c0aa25f166da6dc4c97cb4549d3cef3b
   m_configObjects: {}
