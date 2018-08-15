@@ -7,10 +7,9 @@ public class RPG : Projectile
     public override void Init()
     {
         base.Init();
-
         // Stats
         speed = 10f;
-        damage = 5;
+        damage = 100;
     }
 
     public override void Destroy()

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LaserRifle : WeaponRanged
 {
-    GameObject beam;    
+    GameObject beam;
     protected override void Start()
     {
         base.Start();
@@ -21,16 +21,18 @@ public class LaserRifle : WeaponRanged
         base.Use();
         beam.transform.position = transform.position + transform.right * ammoOffset;
         beam.transform.right = transform.right;
-        
+
         beam.SetActive(true);
         framesSinceUse = 0;
     }
 
     int framesSinceUse = 0;
-    private void Update() {
+    private void Update()
+    {
         // This is to disable the beam once the weapon stops being used
         framesSinceUse++;
-        if (framesSinceUse > 2) {
+        if (framesSinceUse > 2)
+        {
             beam.SetActive(false);
         }
     }

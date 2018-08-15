@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
-{
-    
+{  
     public float speed = 20;
     public int damage = 1;
-
     protected Transform visual;
     
     public virtual void Init()
@@ -16,7 +14,6 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, 5f);
         Update();
     }
-
     public void Update()
     {
         transform.position += transform.right * Time.deltaTime * speed;
@@ -38,7 +35,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public virtual void Destroy ()
+    public virtual void Destroy()
     {
         Destroy(gameObject);
     }

@@ -2,20 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall : MonoBehaviour {
-    public int health = 2;
+public class Wall : MonoBehaviour
+{
+    public int health = 100;
 
-    private void OnTriggerEnter(Collider col) {
+    private void OnTriggerEnter(Collider col)
+    {
         Projectile p = col.GetComponent<Projectile>();
-        if (p != null) {
+        Beam b = col.GetComponent<Beam>();
+        if (p != null)
+        {
             Damage(p.damage);
+        }
+        else if (b != null)
+        {
+            Damage(b.damage);
         }
     }
 
-    public void Damage (int damage) {
+    public void Damage (int damage)
+    {
         health -= damage;
 
-        if (health <= 0) {
+        if (health <= 0)
+        {
             Destroy(gameObject);
         }
     }

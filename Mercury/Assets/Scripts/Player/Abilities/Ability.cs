@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability {
+public class Ability
+{
     public PlayerActor playerActor;
-    public virtual void Use() {
+    public virtual void Use()
+    {
 
     }
 }
