@@ -18,7 +18,8 @@ public class Factory : MonoBehaviour
     }
 
     // Factory methods
-    public GameObject CreatePlayerBase () {
+    public GameObject CreatePlayerBase ()
+    {
         GameObject playerGO = new GameObject("Player");
 
         CapsuleCollider playerCollider = playerGO.AddComponent<CapsuleCollider>();
@@ -60,7 +61,8 @@ public class Factory : MonoBehaviour
         return playerGO;
     }
 
-    public GameObject CreatePlayerTrump () {
+    public GameObject CreatePlayerTrump ()
+    {
         GameObject playerGO = CreatePlayerBase();
 
         AbilityTrump abilityTrump = new AbilityTrump();
@@ -108,6 +110,30 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
+    public GameObject CreateRocket()
+    {
+        GameObject rocketGO = new GameObject("Rocket");
+
+        SphereCollider rocketCollider = rocketGO.AddComponent<SphereCollider>();
+        rocketCollider.isTrigger = true;
+        rocketCollider.radius = 0.2f;
+
+        Rigidbody bulletRigid = rocketGO.AddComponent<Rigidbody>();
+        bulletRigid.isKinematic = true;
+
+        GameObject bulletVisualGO = new GameObject("Visual");
+        bulletVisualGO.transform.parent = rocketGO.transform;
+
+        GameObject bulletVisualBodyGO = new GameObject("Body");
+        bulletVisualBodyGO.transform.parent = bulletVisualGO.transform;
+        SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_Rocket");
+
+        Projectile rock = rocketGO.AddComponent<RPG>();
+        rock.Init();
+        return rocketGO;
+    }
+
     public GameObject CreateBeamNeon()
     {
         GameObject neonBeamGO = new GameObject("BeamNeon");
@@ -119,8 +145,10 @@ public class Factory : MonoBehaviour
         neonBeamVisualMainGO.transform.parent = neonBeamVisualGO.transform;
 
         LineRenderer mainLR = neonBeamVisualMainGO.AddComponent<LineRenderer>();
-        //TODO: Add material
-       
+        Material beamLine = new Material(Shader.Find("Particles/Additive"));
+        beamLine.SetTexture("BeamColour", Resources.Load<Texture>("Sprites/Weapons/laserBeamMiddle")); // HOEKOM WERK DIE LYN NIE?!?!?!
+        mainLR.material = beamLine;
+
         Beam beam = neonBeamGO.AddComponent<BeamNeon>();
         beam.Init();
         return neonBeamGO;
@@ -132,14 +160,13 @@ public class Factory : MonoBehaviour
         return bulletHit;
     }
 
-    //still need to do the beam hit effect.
     public GameObject CreateBeamHit()
     {
         GameObject beamHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
         return beamHit;
     }
 
-    public GameObject CreateRocketHit() //need to fix.
+    public GameObject CreateRocketHit()
     {
         GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
         return rocketHit;
@@ -185,7 +212,6 @@ public class Factory : MonoBehaviour
     public GameObject CreateMachineGun()
     {
         GameObject machineGunGO = new GameObject("Machine Gun");
-
         SphereCollider machineGunCollider = machineGunGO.AddComponent<SphereCollider>();
         machineGunCollider.radius = 0.1f;
 
@@ -218,7 +244,6 @@ public class Factory : MonoBehaviour
         SphereCollider laserRifleColliderT = laserRifleGO.AddComponent<SphereCollider>();
         laserRifleColliderT.isTrigger = true;
 
-        LineRenderer laserRifleLineRend = laserRifleGO.AddComponent<LineRenderer>();
         Rigidbody laserRifleRigid = laserRifleGO.AddComponent<Rigidbody>();
         laserRifleRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
@@ -260,29 +285,6 @@ public class Factory : MonoBehaviour
         return rocketLauncherGO;
     }
 
-    public GameObject CreateRocket()
-    {
-        GameObject rocketGO = new GameObject("Rocket");
-
-        SphereCollider rocketCollider = rocketGO.AddComponent<SphereCollider>();
-        rocketCollider.isTrigger = true;
-        rocketCollider.radius = 0.2f;
-
-        Rigidbody bulletRigid = rocketGO.AddComponent<Rigidbody>();
-        bulletRigid.isKinematic = true;
-
-        GameObject bulletVisualGO = new GameObject("Visual");
-        bulletVisualGO.transform.parent = rocketGO.transform;
-
-        GameObject bulletVisualBodyGO = new GameObject("Body");
-        bulletVisualBodyGO.transform.parent = bulletVisualGO.transform;
-        SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_Rocket");
-
-        rocketGO.AddComponent<RPG>();
-        return rocketGO;
-    }
-
     public GameObject CreateFloor()
     {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -296,13 +298,14 @@ public class Factory : MonoBehaviour
     }
 
     Material m = null;
-    public GameObject CreateWall ()
+    public GameObject CreateWall()
     {
         GameObject wall = new GameObject("Wall");
         wall.AddComponent<BoxCollider>();
         wall.AddComponent<Wall>();
 
-        if (m == null) {
+        if (m == null)
+        {
             m = new Material(Shader.Find("Mobile/Diffuse"));
             m.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Voxel"));
         }
@@ -313,7 +316,7 @@ public class Factory : MonoBehaviour
         return wall;
     }
 
-    public GameObject CreateEnemyWalker ()
+    public GameObject CreateEnemyWalker()
     {
         GameObject enemyWalkerGO = new GameObject("Enemy Walker");
 

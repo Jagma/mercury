@@ -11,51 +11,63 @@ public class PlayerInput {
     public InputType inputType = InputType.TableRealms;
     public string playerID = "-1";
 
-    public PlayerInput(string playerID, InputType inputType) {
+    public PlayerInput(string playerID, InputType inputType)
+    {
         this.playerID = playerID;
         this.inputType = inputType;
     }
 
     // ** Methods :
-    public Vector2 GetMoveDirection () {
-        if (inputType == InputType.TableRealms) {
+    public Vector2 GetMoveDirection ()
+    {
+        if (inputType == InputType.TableRealms)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Controller) {
+        if (inputType == InputType.Controller)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Keyboard) {
-
+        if (inputType == InputType.Keyboard)
+        {
             Vector2 moveDir = Vector2.zero;
             
-            if (Input.GetKey(KeyCode.W)) {
+            if (Input.GetKey(KeyCode.W))
+            {
                 moveDir += Vector2.up;
             }
-            if (Input.GetKey(KeyCode.S)) {
+            if (Input.GetKey(KeyCode.S))
+            {
                 moveDir += Vector2.down;
             }
-            if (Input.GetKey(KeyCode.A)) {
+            if (Input.GetKey(KeyCode.A))
+            {
                 moveDir += Vector2.left;
             }
-            if (Input.GetKey(KeyCode.D)) {
+            if (Input.GetKey(KeyCode.D))
+            {
                 moveDir += Vector2.right;
             }
-
             return moveDir.normalized;
         }
 
         return Vector2.zero;
     }
 
-    public Vector2 GetAimDirection () {
-        if (inputType == InputType.TableRealms) {
+    public Vector2 GetAimDirection ()
+    {
+        if (inputType == InputType.TableRealms)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Controller) {
+        if (inputType == InputType.Controller)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Keyboard) {
-            if (Game.instance) {
+        if (inputType == InputType.Keyboard)
+        {
+            if (Game.instance)
+            {
                 Vector3 playerPosition = Game.instance.GetPlayerActor(playerID).transform.position;
                 
                 // Get world position of mouse
@@ -63,7 +75,8 @@ public class PlayerInput {
                 Plane plane = new Plane(Vector3.up, playerPosition);
                 float distance = 0;
                 Vector3 worldPosition = Vector3.zero;
-                if (plane.Raycast(ray, out distance)) {
+                if (plane.Raycast(ray, out distance))
+                {
                     worldPosition = ray.GetPoint(distance);
                 }
 
@@ -77,31 +90,41 @@ public class PlayerInput {
         return Vector2.zero;
     }
 
-    public bool GetAttack () {
-        if (inputType == InputType.Controller || inputType == InputType.TableRealms) {
-            if (GetAimDirection().magnitude > 0.5f) {
+    public bool GetAttack ()
+    {
+        if (inputType == InputType.Controller || inputType == InputType.TableRealms)
+        {
+            if (GetAimDirection().magnitude > 0.5f)
+            {
                 return true;
             }
-            else {
+            else
+            {
                 return false;
             }
         }
-        if (inputType == InputType.Keyboard) {
+        if (inputType == InputType.Keyboard)
+        {
             return Input.GetKey(KeyCode.Mouse0);
         }
 
         return false;
     }
 
-    public bool GetInteract() {
-        if (inputType == InputType.TableRealms) {
+    public bool GetInteract()
+    {
+        if (inputType == InputType.TableRealms)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Controller) {
+        if (inputType == InputType.Controller)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Keyboard) {
-            if (Input.GetKey(KeyCode.E)) {
+        if (inputType == InputType.Keyboard)
+        {
+            if (Input.GetKey(KeyCode.E))
+            {
                 return true;
             }
         }
@@ -110,9 +133,11 @@ public class PlayerInput {
     }
 
     bool interactPressedCache = false;
-    public bool GetInteractPressed () {
+    public bool GetInteractPressed ()
+    {
         bool result = false;
-        if (interactPressedCache == false && GetInteract() == true) {
+        if (interactPressedCache == false && GetInteract() == true)
+        {
             result = true;
         }
 
@@ -121,15 +146,20 @@ public class PlayerInput {
         return result;
     }
 
-    public bool GetUseAbility() {
-        if (inputType == InputType.TableRealms) {
+    public bool GetUseAbility()
+    {
+        if (inputType == InputType.TableRealms)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Controller) {
+        if (inputType == InputType.Controller)
+        {
             Debug.LogError("Not implemented");
         }
-        if (inputType == InputType.Keyboard) {
-            if (Input.GetKey(KeyCode.R)) {
+        if (inputType == InputType.Keyboard)
+        {
+            if (Input.GetKey(KeyCode.R))
+            {
                 return true;
             }
         }

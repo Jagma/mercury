@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineGun : WeaponRanged {
-    protected override void Start() {
+public class MachineGun : WeaponRanged
+{
+    protected override void Start()
+    {
         base.Start();
 
         // Stats
@@ -11,7 +13,8 @@ public class MachineGun : WeaponRanged {
         ammoOffset = 0.6f;
     }
 
-    protected override void Use() {
+    protected override void Use()
+    {
         base.Use();
 
         GameObject flash = Factory.instance.CreateMuzzleFlash();

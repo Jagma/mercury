@@ -9,12 +9,12 @@ public class Beam : MonoBehaviour
 
     public float width;
     public int damage = 1;
-
     protected Transform visual;
 
     public virtual void Init()
     {
         visual = transform.Find("Visual");
+        Update();
     }
 
     public void Update()
@@ -22,33 +22,42 @@ public class Beam : MonoBehaviour
         CollisionCheck();
     }
 
-    public void OnEnable() {
+    public void OnEnable()
+    {
         CollisionCheck();
     }
 
-    private void CollisionCheck () {
+    private void CollisionCheck()
+    {
         RaycastHit[] hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
 
-        if (hits.Length <= 0) {
+        if (hits.Length <= 0)
+        {
             return;
         }
 
         RaycastHit closest = hits[0];
-        for (int i=0; i < hits.Length; i ++) {
+        for (int i=0; i < hits.Length; i ++)
+        {
+            //damage += 1;
             Wall wall = hits[i].collider.GetComponent<Wall>();
             Enemy enemy = hits[i].collider.GetComponent<Enemy>();
-            
+
             // TODO: Implement damage on walls and enemies
-            if (wall != null) {
-
-            }            
-            if (enemy != null) {
-
+            if (wall != null)
+            {
+                wall.Damage(damage);
+            }
+            if (enemy != null)
+            {
+                enemy.Damage(damage);
             }
 
             // This is for selecting the closest qualifying collider. Since the RaycastHit[] array isn't ordered.
-            if (wall != null || enemy != null) {
-                if (Vector3.Distance(transform.position, hits[i].point) <= Vector3.Distance(transform.position, closest.point)) {
+            if (wall != null || enemy != null)
+            {
+                if (Vector3.Distance(transform.position, hits[i].point) <= Vector3.Distance(transform.position, closest.point))
+                {
                     closest = hits[i];
                 }
             }
@@ -57,11 +66,10 @@ public class Beam : MonoBehaviour
         UpdateVisual(transform.position, closest.point);
     }
 
-    public void UpdateVisual (Vector3 startPos, Vector3 endPos) {
+    public void UpdateVisual (Vector3 startPos, Vector3 endPos)
+    {
         LineRenderer mainLR = visual.transform.Find("MainBeam").GetComponent<LineRenderer>();
-
         Vector3[] positions = {startPos, endPos};
-
         mainLR.positionCount = 2;
         mainLR.SetPositions(positions);
         mainLR.widthMultiplier = width;

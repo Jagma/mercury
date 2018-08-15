@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RocketLauncher : WeaponRanged
 {
-    protected override void Start() {
+    protected override void Start()
+    {
         base.Start();
 
         // Stats
@@ -19,9 +20,9 @@ public class RocketLauncher : WeaponRanged
         Destroy(flash, 1);
 
         base.Use();
-        GameObject bullet = Factory.instance.CreateRocket();
-        bullet.transform.position = transform.position + transform.right * ammoOffset;
-        bullet.transform.right = transform.right;
+        GameObject rocket = Factory.instance.CreateRocket();
+        rocket.transform.position = transform.position + transform.right * ammoOffset;
+        rocket.transform.right = transform.right;
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 }
