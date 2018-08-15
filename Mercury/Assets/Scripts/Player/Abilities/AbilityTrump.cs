@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityTrump : Ability
-{
-    public override void Use()
-    {
+public class AbilityTrump : Ability {
+    private int offset = 2;
+    float abilityCooldown = 10; // Seconds
+    public override void Use() {
         base.Use();
+        this.SetCooldownTime(abilityCooldown);
         GameObject wall = Factory.instance.CreateWall();
-        wall.transform.position = playerActor.transform.position + playerActor.transform.forward;
+        wall.transform.position = playerActor.transform.position +
+            new Vector3(InputManager.instance.GetAimDirection(playerActor.model.playerID).x, 0, InputManager.instance.GetAimDirection(playerActor.model.playerID).y) * offset;
     }
 }
