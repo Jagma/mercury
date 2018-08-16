@@ -24,7 +24,13 @@ public class Game : MonoBehaviour
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {
-            GameObject playerGO = Factory.instance.CreatePlayerTrump();
+            //Trump character
+            //GameObject playerGO = Factory.instance.CreatePlayerTrump();
+
+            //Oprah character
+            GameObject playerGO = Factory.instance.CreatePlayerOprah();
+
+            //Set starting position
             playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
 
             PlayerActor playerActor = playerGO.GetComponent<PlayerActor>();

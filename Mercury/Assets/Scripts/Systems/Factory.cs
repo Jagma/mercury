@@ -73,7 +73,21 @@ public class Factory : MonoBehaviour
 
         return playerGO;
     }
-    
+
+    public GameObject CreatePlayerOprah()
+    {
+        GameObject playerGO = CreatePlayerBase();
+
+        AbilityOprah abilityOprah = new AbilityOprah();
+        abilityOprah.playerActor = playerGO.GetComponent<PlayerActor>();
+
+        // Set all oprah specific stats
+        playerGO.GetComponent<PlayerActor>().model.ability = abilityOprah;
+
+        return playerGO;
+    }
+
+
     public GameObject CreateDropShadow()
     {
         GameObject dropShadowGO = new GameObject("Drop Shadow");
