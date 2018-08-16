@@ -59,16 +59,9 @@ public class Enemy : MonoBehaviour
         Projectile projectile = col.GetComponent<Projectile>();
         if (projectile != null)
         {
-            Debug.Log("Being hitted. PROJECTILE");
             Damage(projectile.damage);
         }
 
-        Beam beamRay = col.GetComponent<Beam>();
-        if (beamRay != null)
-        {
-            Debug.Log("Being hitted.");
-            Damage(beamRay.damage);
-        }
     }
 
     public void Damage (double damage)
