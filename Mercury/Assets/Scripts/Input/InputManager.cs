@@ -65,6 +65,6 @@ public class InputManager : MonoBehaviour
 
     public bool GetUseAbility(string playerID)
     {
-        return playerInputs[playerID].GetUseAbility();
+        return playerInputs[playerID].GetUseAbilityPressed();
     }
 }

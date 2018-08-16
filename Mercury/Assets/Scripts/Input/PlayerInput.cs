@@ -166,4 +166,18 @@ public class PlayerInput {
 
         return false;
     }
+
+    bool useAbilityPressedCache = false;
+    public bool GetUseAbilityPressed()
+    {
+        bool result = false;
+        if (useAbilityPressedCache == false && GetUseAbility() == true)
+        {
+            result = true;
+        }
+
+        useAbilityPressedCache = GetUseAbility();
+
+        return result;
+    }
 }

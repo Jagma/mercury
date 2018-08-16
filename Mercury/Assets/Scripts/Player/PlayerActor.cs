@@ -111,7 +111,7 @@ public class PlayerActor : MonoBehaviour
         }
         else
         {
-            Debug.Log("Ability Cooldown Remaining: " + model.ability.CoolDownTimeLeft());
+            //Debug.Log("Ability Cooldown Remaining: " + model.ability.CoolDownTimeLeft());
         }
     }
 }

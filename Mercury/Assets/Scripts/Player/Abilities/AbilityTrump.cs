@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class AbilityTrump : Ability {
     private int offset = 2;
-    float abilityCooldown = 10; // Seconds
+    private float abilityCooldown = 5; // Seconds cooldown
+
     public override void Use() {
         base.Use();
         this.SetCooldownTime(abilityCooldown);
