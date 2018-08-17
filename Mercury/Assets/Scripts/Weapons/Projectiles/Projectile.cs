@@ -33,6 +33,12 @@ public class Projectile : MonoBehaviour
         {
             Destroy();
         }
+
+        PlayerActor player = col.GetComponent<PlayerActor>();
+        if (player != null)
+        {
+            Destroy();
+        }
     }
 
     public virtual void Destroy()

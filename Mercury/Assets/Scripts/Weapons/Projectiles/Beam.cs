@@ -39,11 +39,9 @@ public class Beam : MonoBehaviour
         RaycastHit closest = hits[0];
         for (int i=0; i < hits.Length; i ++)
         {
-            //damage += 1;
             Wall wall = hits[i].collider.GetComponent<Wall>();
             Enemy enemy = hits[i].collider.GetComponent<Enemy>();
 
-            // TODO: Implement damage on walls and enemies
             if (wall != null)
             {
                 wall.Damage(damage);

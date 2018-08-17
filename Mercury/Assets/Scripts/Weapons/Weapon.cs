@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public float cooldown = 0.1f;
-
+    public bool equipped = false;
     protected Transform visual;
     protected float cooldownRemaining = 0f;
 
@@ -22,10 +22,12 @@ public class Weapon : MonoBehaviour
     public void Equip ()
     {
         GetComponent<Rigidbody>().useGravity = false;
+        equipped = true;
     }
     public void Dequip()
     {
         GetComponent<Rigidbody>().useGravity = true;
+        equipped = false;
     }
 
     public void UseWeapon ()

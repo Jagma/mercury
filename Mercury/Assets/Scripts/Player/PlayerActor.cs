@@ -73,7 +73,6 @@ public class PlayerActor : MonoBehaviour
                 // Equip new weapon
                 weapon.Equip();
                 model.equippedWeapon = weapon;
-
                 return;
             }
         }
