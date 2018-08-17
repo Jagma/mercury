@@ -4,14 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityTrump : Ability {
-    private int offset = 2;
-    private float abilityCooldown = 5; // Seconds cooldown
+    public override void Init() {
+        base.Init();
 
-    public override void Use() {
-        base.Use();
-        this.SetCooldownTime(abilityCooldown);
+        // Stats
+        cooldown = 5f;
+    }
+
+    protected override void Use() {
+        base.Use();        
+
         GameObject wall = Factory.instance.CreateWall();
-        wall.transform.position = playerActor.transform.position +
-            new Vector3(InputManager.instance.GetAimDirection(playerActor.model.playerID).x, 0, InputManager.instance.GetAimDirection(playerActor.model.playerID).y) * offset;
+        wall.GetComponent<Wall>().health = int.MaxValue;
+        Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        wall.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 1f;
+
+        GameObject.Destroy(wall, 10f);
     }
 }

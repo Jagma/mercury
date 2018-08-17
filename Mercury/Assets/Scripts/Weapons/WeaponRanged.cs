@@ -15,4 +15,8 @@ public class WeaponRanged : Weapon
     {
         base.Use();
     }
+
+    protected override void Update () {
+        base.Update();
+    }
 }

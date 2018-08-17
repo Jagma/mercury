@@ -10,10 +10,16 @@ public class AbilityOprah : Ability {
     System.Random ran = new System.Random(91142069);
     List<string> spawnableItems;
 
-    public override void Use()
+    public override void Init() {
+        base.Init();
+
+        // Stats
+        cooldown = 5f;
+    }
+
+    protected override void Use()
     {
         base.Use();
-        this.SetCooldownTime(cooldownTime);
         GameObject freeItem = ChooseRandomItem();
         if (!isProjectile)
         {

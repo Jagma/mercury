@@ -20,7 +20,7 @@ public class NetworkManager : MonoBehaviour {
     public List<ReceiveMessage> listeners = new List<ReceiveMessage>();
 
     WebSocket webSocket;
-    string serverAddress = "ws://127.0.0.1:12000/lobby";
+    string serverAddress = "ws://sleepy-brushlands-15753.herokuapp.com/lobby";
     ConnectionStatus connectionStatus = ConnectionStatus.Disconnected;
     
     JsonSerializerSettings jsonSettings;
@@ -133,7 +133,7 @@ public class NetworkManager : MonoBehaviour {
         if (connected == true && connectionAlive == false) {
             connected = false;
             Debug.Log("Disconected");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyManager");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Multiplayer");
         }
 
         // TODO: Add more status such as timeout

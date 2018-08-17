@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerActor : MonoBehaviour
 {
-
     public PlayerModel model;
     public static PlayerActor instance;
     public Sprite forward;
@@ -21,7 +20,7 @@ public class PlayerActor : MonoBehaviour
     }
 
     void Start ()
-    {        
+    {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
     }
@@ -31,11 +30,6 @@ public class PlayerActor : MonoBehaviour
         if (model.equippedWeapon)
         {
             model.equippedWeapon.transform.position = transform.position + model.equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
-        }
-
-        if (model.ability.IsOnCooldown())
-        {
-            model.ability.Update();
         }
 
         // Visual look at camera
@@ -86,6 +80,8 @@ public class PlayerActor : MonoBehaviour
             model.equippedWeapon.transform.right = new Vector3(direction.x, 0, direction.y);
         }
 
+        // TODO: Move this to a seperate animation script
+        // This is for setting the sprites based on the aim/look direction
         Vector3 norm = Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(direction.x, 0, direction.y);
         if (norm.x < 0) {
             Vector3 x = Quaternion.AngleAxis(180, visual.up) * visual.forward;
@@ -105,13 +101,7 @@ public class PlayerActor : MonoBehaviour
     }
 
     public void UseAbility () {
-        if (!model.ability.IsOnCooldown())
-        {
-            model.ability.Use();
-        }
-        else
-        {
-            //Debug.Log("Ability Cooldown Remaining: " + model.ability.CoolDownTimeLeft());
-        }
+        model.ability.UseAbility();
+        Debug.Log("used");
     }
 }

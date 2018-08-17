@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public float cooldown = 0.1f;
-
     protected Transform visual;
+
+    public float cooldown = 0.1f;
     protected float cooldownRemaining = 0f;
 
     private void Awake()
@@ -45,7 +45,7 @@ public class Weapon : MonoBehaviour
     {
     }
     
-    private void Update()
+    protected virtual void Update()
     {
         // Cooldown
         if (cooldownRemaining >= 0)

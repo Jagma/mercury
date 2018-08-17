@@ -6,39 +6,24 @@ using UnityEngine;
 public class Ability {
 
     public PlayerActor playerActor;
+    float lastUseTime = 0f;
+    public float cooldown = 1f;
 
-    //CoolDowns
-    private float cooldownTime;
-    private bool onCooldown = false;
-
-    public virtual void Use() {
+    public virtual void Init () {
 
     }
 
-    public void SetCooldownTime(float aSeconds)//Add CoolDownTime to ability
-    {
-        this.cooldownTime = aSeconds;
-        onCooldown = true;
-    }
-    public void Update()
-    {
-        if(cooldownTime > 0)
-        {
-            cooldownTime -= Time.deltaTime;
+    
+    public void UseAbility () {
+        if (Time.time <= lastUseTime + cooldown) {
+            return;
         }
-        if(cooldownTime <= 0)
-        {
-            onCooldown = false;
+        else {
+            lastUseTime = Time.time;
+            Use();
         }
     }
 
-    public float CoolDownTimeLeft()
-    {
-        return cooldownTime;
-    }
-
-    public bool IsOnCooldown()
-    {
-        return onCooldown;
-    }
+    protected virtual void Use() {
+    }    
 }

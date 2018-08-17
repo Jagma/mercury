@@ -37,33 +37,32 @@ public class Beam : MonoBehaviour
         }
 
         RaycastHit closest = hits[0];
+        GameObject closestGO = hits[0].collider.gameObject;
         for (int i=0; i < hits.Length; i ++)
         {
-            //damage += 1;
-            Wall wall = hits[i].collider.GetComponent<Wall>();
-            Enemy enemy = hits[i].collider.GetComponent<Enemy>();
-
-            // TODO: Implement damage on walls and enemies
-            if (wall != null)
-            {
-                wall.Damage(damage);
-            }
-            if (enemy != null)
-            {
-                enemy.Damage(damage);
-            }
-
             // This is for selecting the closest qualifying collider. Since the RaycastHit[] array isn't ordered.
-            if (wall != null || enemy != null)
+            if (hits[i].collider.GetComponent<Wall>() ||
+                hits[i].collider.GetComponent<Enemy>())
             {
                 if (Vector3.Distance(transform.position, hits[i].point) <= Vector3.Distance(transform.position, closest.point))
                 {
                     closest = hits[i];
+                    closestGO = hits[i].collider.gameObject;
                 }
             }
         }
 
         UpdateVisual(transform.position, closest.point);
+
+        Wall wall = closestGO.GetComponent<Wall>();
+        Enemy enemy = closestGO.GetComponent<Enemy>();
+
+        if (wall != null) {
+            wall.Damage(damage);
+        }
+        if (enemy != null) {
+            enemy.Damage(damage);
+        }
     }
 
     public void UpdateVisual (Vector3 startPos, Vector3 endPos)

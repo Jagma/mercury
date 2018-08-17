@@ -67,6 +67,7 @@ public class Factory : MonoBehaviour
 
         AbilityTrump abilityTrump = new AbilityTrump();
         abilityTrump.playerActor = playerGO.GetComponent<PlayerActor>();
+        abilityTrump.Init();
 
         // Set all trump specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityTrump;

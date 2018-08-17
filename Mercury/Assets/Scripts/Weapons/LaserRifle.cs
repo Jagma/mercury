@@ -27,8 +27,9 @@ public class LaserRifle : WeaponRanged
     }
 
     int framesSinceUse = 0;
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         // This is to disable the beam once the weapon stops being used
         framesSinceUse++;
         if (framesSinceUse > 2)
