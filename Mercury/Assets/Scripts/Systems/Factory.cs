@@ -111,6 +111,7 @@ public class Factory : MonoBehaviour
 
         Rigidbody bulletRigid = bulletGO.AddComponent<Rigidbody>();
         bulletRigid.isKinematic = true;
+        bulletRigid.useGravity = false;
 
         GameObject bulletVisualGO = new GameObject("Visual");
         bulletVisualGO.transform.parent = bulletGO.transform;
@@ -352,7 +353,7 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Walker");
 
-        enemyWalkerGO.AddComponent<Enemy>();
+        enemyWalkerGO.AddComponent<Walker>();
         return enemyWalkerGO;
     }
 
