@@ -43,6 +43,19 @@ public class Enemy : MonoBehaviour
             PlayerActor playerActor = colliders[i].GetComponent<PlayerActor>();
 
             Weapon weapon = colliders[i].GetComponent<Weapon>();
+
+            // Ek het gedink dat die walker moet eers hardloop vir 'n weapon voor hy na die player to beweeg en skiet.
+            if (weapon != null && weapon.equipped == false)
+            {
+                //float distance = Vector3.Distance(weapon.transform.position, transform.position); - wou die gebruik om die afstand te vind tussen die weapon en die enemy sodat hy so deur determine om op te tel.
+                if (weapon.transform.position.z == this.transform.position.z)
+                {
+                    weapon.Equip();
+                    equippedWeapon = weapon;
+                    Debug.Log("Walker equipped weapon.");
+                }
+                MoveToPosition(weapon.transform.position);
+            }
             if (playerActor != null)
             {
                 float distance = Vector3.Distance(playerActor.transform.position, transform.position);
@@ -50,22 +63,10 @@ public class Enemy : MonoBehaviour
                 AimOnPlayer(playerActor.transform.position); //aims weapon towards player.
                 AttackPlayer(); //shoots player.
             }
-            /* TODO: Fix Weapon Pickup & Shoot
-             * if (weapon != null && weapon.equipped == false)
-            {
-                //float distance = Vector3.Distance(weapon.transform.position, transform.position); - wou diie gebruik om die afstand te vind tussen die weapon en die enemy sodat hy so deur determine om op te tel.
-                if (weapon.transform.position.z < this.transform.position.z)
-                {
-                  weapon.Equip();
-                  equippedWeapon = weapon;
-                  Debug.Log("I am working.");
-                }
-                MoveToPosition(weapon.transform.position);
-            }*/
         }
     }
 
-    public void AimOnPlayer(Vector2 direction)
+    public void AimOnPlayer(Vector3 direction)
     {
         if (equippedWeapon)
         {

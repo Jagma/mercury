@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour
         // startup code
     }
 
-    public void Equip ()
+    public void Equip()
     {
         GetComponent<Rigidbody>().useGravity = false;
         equipped = true;
@@ -30,7 +30,7 @@ public class Weapon : MonoBehaviour
         equipped = false;
     }
 
-    public void UseWeapon ()
+    public void UseWeapon()
     {
         if (cooldownRemaining > 0)
         {
