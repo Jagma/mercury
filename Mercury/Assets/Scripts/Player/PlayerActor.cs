@@ -9,6 +9,7 @@ public class PlayerActor : MonoBehaviour
     public Sprite forward;
     public Sprite facing;
     public double health = 100;
+    private Vector3 startPos;
     Transform visual;
     Rigidbody rigid;
     Weapon weapon;
@@ -23,6 +24,7 @@ public class PlayerActor : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
+        startPos = transform.position;
     }
 
 	void Update ()

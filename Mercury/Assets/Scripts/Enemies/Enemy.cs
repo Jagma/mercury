@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public double health = 100;
     public float moveSpeed = 1f;
+    public bool allowWalk = false;
     public Weapon equippedWeapon;
     Transform visual;
     Transform dropShadow;
@@ -65,6 +66,7 @@ public class Enemy : MonoBehaviour
     public void Damage (double damage)
     {
         health -= damage;
+        allowWalk = true;
         if (health <= 0)
         {
             Death();

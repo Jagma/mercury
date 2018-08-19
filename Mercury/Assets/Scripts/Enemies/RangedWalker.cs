@@ -24,6 +24,33 @@ public class RangedWalker : Enemy
         {
             equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
         }
+        RaycastHit[] hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
+
+        /*if (hits.Length <= 0)
+        {
+            allowWalk = false;      
+        }*/
+        RaycastHit closest = hits[0];
+        GameObject closestPlayerGO = hits[0].collider.gameObject;
+        for (int i = 0; i < hits.Length; i++)
+        {
+            PlayerActor player = hits[i].collider.GetComponent<PlayerActor>();
+            if (player != null)
+            {
+                allowWalk = true;
+            }
+            else
+            {
+                //allowWalk = false;
+            }
+        }
+
+        PlayerActor playerC = closestPlayerGO.GetComponent<PlayerActor>();
+
+        if (playerC != null)
+        {
+            allowWalk = true;
+        }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, 7.5f);
 
@@ -49,7 +76,7 @@ public class RangedWalker : Enemy
         }
 
         // If we found a player move towards it
-        if (closestPlayerActor != null)
+        if (closestPlayerActor != null && allowWalk)
         {
             float playerRange = Vector3.Distance(closestPlayerActor.transform.position, transform.position);
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);
@@ -76,7 +103,7 @@ public class RangedWalker : Enemy
 
     void MoveRandomDir()
     {
-        base.FaceDirection(Quaternion.AngleAxis(Random.Range(-70.0f, 70.0f), Vector3.forward) * transform.position);
+        //base.FaceDirection(Quaternion.AngleAxis(Random.Range(-70.0f, 70.0f), Vector3.forward) * transform.position);
         equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
     }
 
