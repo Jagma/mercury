@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInput {
+public class PlayerInput
+{
     // A player input is a mapping between a player and a device.
     // The device can be a TableRealms device or a controller or mouse and keyboard.
 

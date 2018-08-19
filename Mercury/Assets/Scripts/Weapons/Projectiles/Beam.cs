@@ -54,8 +54,7 @@ public class Beam : MonoBehaviour
             }
 
             // This is for selecting the closest qualifying collider. Since the RaycastHit[] array isn't ordered.
-            if (hits[i].collider.GetComponent<Wall>() ||
-                hits[i].collider.GetComponent<Enemy>())
+            if (hits[i].collider.GetComponent<Wall>() ||hits[i].collider.GetComponent<Enemy>())
             {
                 if (Vector3.Distance(transform.position, hits[i].point) <= Vector3.Distance(transform.position, closest.point))
                 {

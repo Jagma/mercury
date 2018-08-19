@@ -8,7 +8,7 @@ public class PlayerActor : MonoBehaviour
     public static PlayerActor instance;
     public Sprite forward;
     public Sprite facing;
-
+    public double health = 100;
     Transform visual;
     Rigidbody rigid;
     Weapon weapon;
@@ -111,6 +111,38 @@ public class PlayerActor : MonoBehaviour
     public void UseAbility ()
     {
         model.ability.UseAbility();
-        Debug.Log("used");
+        Debug.Log("Ability used");
+    }
+
+
+    // Damage, health, and death
+    private void OnTriggerEnter(Collider col)
+    {
+        Projectile projectile = col.GetComponent<Projectile>();
+        if (projectile != null)
+        {
+            Damage(projectile.damage);
+            Debug.Log("Player took damage.");
+        }
+    }
+
+    public void Damage(double damage)
+    {
+        //health -= damage;
+        if (health <= 0)
+        {
+            Death();
+        }
+    }
+
+    protected virtual void Death()
+    {
+        Destroy(gameObject);
+        if (model.equippedWeapon)
+        {
+            model.equippedWeapon.Dequip();
+            model.equippedWeapon = null;
+        }
+        Debug.Log("Player is dead.");
     }
 }

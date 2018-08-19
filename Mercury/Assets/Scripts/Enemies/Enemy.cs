@@ -6,11 +6,10 @@ public class Enemy : MonoBehaviour
 {
     public double health = 100;
     public float moveSpeed = 1f;
-
+    public Weapon equippedWeapon;
     Transform visual;
     Transform dropShadow;
     Rigidbody rigid;
-
     public Vector3 forwardDirection = Vector3.forward;
 
     private void Awake()
@@ -25,6 +24,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
+
     }
 
     protected virtual void FixedUpdate()
@@ -34,11 +34,14 @@ public class Enemy : MonoBehaviour
     }
 
     // This method needs to be overriden for each enemy
-    protected virtual void Attack() {
+    protected virtual void Attack()
+    {
+
     }
 
     // AI interface methods
-    protected void FaceDirection(Vector3 directionVector) {
+    protected void FaceDirection(Vector3 directionVector)
+    {
         forwardDirection = directionVector;
     }
 
@@ -68,7 +71,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected virtual void Death () {
+    protected virtual void Death ()
+    {
         Destroy(gameObject);
+        if (equippedWeapon)
+        {
+            equippedWeapon.Dequip();
+            equippedWeapon = null;
+        }
     }
 }
