@@ -6,100 +6,80 @@ public class Enemy : MonoBehaviour
 {
     public double health = 100;
     public float moveSpeed = 1f;
+    public bool allowWalk = false;
     public Weapon equippedWeapon;
     Transform visual;
     Transform dropShadow;
     Rigidbody rigid;
-    public Sprite forward;
-    public Sprite facing;
+    public Vector3 forwardDirection = Vector3.forward;
 
     private void Awake()
     {
         visual = transform.Find("Visual");
         rigid = GetComponent<Rigidbody>();
         dropShadow = Factory.instance.CreateDropShadow().transform;
-        dropShadow.parent = transform;
-        dropShadow.localPosition = new Vector3(0, 0, -0.3f);
+        dropShadow.parent = visual;
+        dropShadow.localPosition = new Vector3(0, 0, 0);
         dropShadow.localScale = new Vector3(0.6f, 0.2f, 1);
     }
 
     protected virtual void Start()
     {
-        transform.eulerAngles = new Vector3(0, 45, 0);
+
+    }
+
+    protected virtual void FixedUpdate()
+    {
         visual.eulerAngles = new Vector3(45, 45, 0);
-    }
-	
-	void FixedUpdate()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            PlayerActor playerActor = colliders[i].GetComponent<PlayerActor>();
-            Weapon weapon = colliders[i].GetComponent<Weapon>();
-            if (playerActor != null)
-            {
-                MoveToPosition(playerActor.transform.position);
-                AimOnPlayer(playerActor.transform.position);
-                AttackPlayer();
-            }
-            else if (weapon != null && weapon.equipped == false)
-            {
-                //float distance = Vector3.Distance(weapon.transform.position, transform.position); - wou diie gebruik om die afstand te vind tussen die weapon en die enemy sodat hy so deur determine om op te tel.
-                if (weapon.transform.position.z < this.transform.position.z)
-                {
-                  weapon.Equip();
-                  equippedWeapon = weapon;
-                  Debug.Log("I am working.");
-                }
-                MoveToPosition(weapon.transform.position);
-            }
-        }
-    }
-    public void AimOnPlayer(Vector2 direction)
-    {
-        if (equippedWeapon)
-        {
-            equippedWeapon.transform.right = new Vector3(direction.x, 0, direction.y);
-        }
+        dropShadow.localPosition = new Vector3(0, 0, -0.5f);
     }
 
-    public void AttackPlayer()
+    // This method needs to be overriden for each enemy
+    protected virtual void Attack()
     {
-        if (equippedWeapon)
-        {
-            equippedWeapon.UseWeapon();
-        }
+
     }
 
-    void MoveToPosition(Vector3 target)
+    // AI interface methods
+    protected void FaceDirection(Vector3 directionVector)
     {
-        Vector3 vec = (target - transform.position).normalized * moveSpeed;
-        vec.y = rigid.velocity.y; // preserves physics Y movement
-        rigid.velocity = vec;
+        forwardDirection = directionVector;
     }
 
+    protected void MoveForward()
+    {
+        Vector3 moveDir = new Vector3(forwardDirection.x, Mathf.Clamp(rigid.velocity.y, -100, 0), forwardDirection.z);
+        rigid.velocity = moveDir * moveSpeed;
+    }
+    
+
+    // Damage, health, and death
     private void OnTriggerEnter(Collider col)
     {
         Projectile projectile = col.GetComponent<Projectile>();
-        Weapon weapon = col.GetComponent<Weapon>();
         if (projectile != null)
         {
             Damage(projectile.damage);
         }
-    }
+    } 
 
     public void Damage (double damage)
     {
         health -= damage;
+        allowWalk = true;
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Death();
+        }
+    }
 
-            if (equippedWeapon)
-            {
-                equippedWeapon.Dequip();
-                equippedWeapon = null;
-            }
+    protected virtual void Death ()
+    {
+        Destroy(gameObject);
+        if (equippedWeapon)
+        {
+            equippedWeapon.Dequip();
+            equippedWeapon = null;
         }
     }
 }

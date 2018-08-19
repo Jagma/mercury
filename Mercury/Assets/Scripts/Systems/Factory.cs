@@ -111,6 +111,7 @@ public class Factory : MonoBehaviour
 
         Rigidbody bulletRigid = bulletGO.AddComponent<Rigidbody>();
         bulletRigid.isKinematic = true;
+        bulletRigid.useGravity = false;
 
         GameObject bulletVisualGO = new GameObject("Visual");
         bulletVisualGO.transform.parent = bulletGO.transform;
@@ -352,24 +353,53 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Walker");
 
-        enemyWalkerGO.AddComponent<Enemy>();
+        enemyWalkerGO.AddComponent<Walker>();
         return enemyWalkerGO;
     }
 
+
+    public GameObject CreateRangedWalker()
+    {
+        GameObject enemyRangedGO = new GameObject("Ranged Enemy");
+
+        CapsuleCollider enemyWalkerCollider = enemyRangedGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyRangedGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyRangedGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Ranged Walker");
+
+        enemyRangedGO.AddComponent<RangedWalker>();
+        return enemyRangedGO;
+    }
 
     /* New stuff
      * ********************************************************
      * ********************************************************
      */
 
-    public class ObjectConstructor {
-        public virtual GameObject Construct() {
+    public class ObjectConstructor
+    {
+        public virtual GameObject Construct()
+        {
             return null;
         }
     }
 
-    public class PlayerConstructorServer : ObjectConstructor {
-        public override GameObject Construct() {
+    public class PlayerConstructorServer : ObjectConstructor
+    {
+        public override GameObject Construct()
+        {
             base.Construct();
             GameObject playerGO = Factory.instance.CreatePlayerTrump();
             playerGO.AddComponent<NetworkIdentity>();

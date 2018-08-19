@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-<<<<<<< HEAD
     public float cooldown = 0.1f;
     public bool equipped = false;
-=======
->>>>>>> ba4a18346e28c4df3c1d033594a6e3798539f248
     protected Transform visual;
-
-    public float cooldown = 0.1f;
     protected float cooldownRemaining = 0f;
 
     private void Awake()
@@ -24,7 +19,7 @@ public class Weapon : MonoBehaviour
         // startup code
     }
 
-    public void Equip ()
+    public void Equip()
     {
         GetComponent<Rigidbody>().useGravity = false;
         equipped = true;
@@ -35,7 +30,7 @@ public class Weapon : MonoBehaviour
         equipped = false;
     }
 
-    public void UseWeapon ()
+    public void UseWeapon()
     {
         if (cooldownRemaining > 0)
         {

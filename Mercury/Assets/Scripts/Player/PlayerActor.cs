@@ -8,11 +8,12 @@ public class PlayerActor : MonoBehaviour
     public static PlayerActor instance;
     public Sprite forward;
     public Sprite facing;
-
+    public double health = 100;
+    private Vector3 startPos;
     Transform visual;
     Rigidbody rigid;
     Weapon weapon;
-    bool weaponCol = false;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -23,6 +24,7 @@ public class PlayerActor : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
+        startPos = transform.position;
     }
 
 	void Update ()
@@ -55,11 +57,14 @@ public class PlayerActor : MonoBehaviour
     public void Interact()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
-        for (int i = 0; i < colliders.Length; i++) {
+        for (int i = 0; i < colliders.Length; i++)
+        {
             Weapon weapon = colliders[i].GetComponent<Weapon>();
-            if (weapon != null && weapon != model.equippedWeapon) {
+            if (weapon != null && weapon != model.equippedWeapon)
+            {
                 // Dequip current weapon
-                if (model.equippedWeapon != null) {
+                if (model.equippedWeapon != null)
+                {
                     model.equippedWeapon.Dequip();
                     model.equippedWeapon = null;
                 }
@@ -82,25 +87,64 @@ public class PlayerActor : MonoBehaviour
         // TODO: Move this to a seperate animation script
         // This is for setting the sprites based on the aim/look direction
         Vector3 norm = Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(direction.x, 0, direction.y);
-        if (norm.x < 0) {
+        if (norm.x < 0)
+        {
             Vector3 x = Quaternion.AngleAxis(180, visual.up) * visual.forward;
             visual.forward = x;
         }
-        if (norm.z > 0) {
+
+        if (norm.z > 0)
+        {
             visual.Find("Body").GetComponent<SpriteRenderer>().sprite = forward;
-        } else {
+        } else
+        {
             visual.Find("Body").GetComponent<SpriteRenderer>().sprite = facing;
         }
     }
 
-    public void Attack () {
-        if (model.equippedWeapon)   {
+    public void Attack ()
+    {
+        if (model.equippedWeapon)
+        {
             model.equippedWeapon.UseWeapon();
         }
     }
 
-    public void UseAbility () {
+    public void UseAbility ()
+    {
         model.ability.UseAbility();
-        Debug.Log("used");
+        Debug.Log("Ability used");
+    }
+
+
+    // Damage, health, and death
+    private void OnTriggerEnter(Collider col)
+    {
+        Projectile projectile = col.GetComponent<Projectile>();
+        if (projectile != null)
+        {
+            Damage(projectile.damage);
+            Debug.Log("Player took damage.");
+        }
+    }
+
+    public void Damage(double damage)
+    {
+        //health -= damage;
+        if (health <= 0)
+        {
+            Death();
+        }
+    }
+
+    protected virtual void Death()
+    {
+        Destroy(gameObject);
+        if (model.equippedWeapon)
+        {
+            model.equippedWeapon.Dequip();
+            model.equippedWeapon = null;
+        }
+        Debug.Log("Player is dead.");
     }
 }
