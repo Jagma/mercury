@@ -51,7 +51,7 @@ public class Factory : MonoBehaviour
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
         playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1");
         playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1B");
-
+        playerActor.death = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/ded");
         PlayerController playerController = playerGO.AddComponent<PlayerController>();
         playerController.actor = playerActor;
 

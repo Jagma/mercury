@@ -8,6 +8,7 @@ public class PlayerActor : MonoBehaviour
     public static PlayerActor instance;
     public Sprite forward;
     public Sprite facing;
+    public Sprite death;
     public double health = 100;
     private Vector3 startPos;
     Transform visual;
@@ -130,7 +131,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Damage(double damage)
     {
-        //health -= damage;
+        health -= damage;
         if (health <= 0)
         {
             Death();
@@ -139,12 +140,14 @@ public class PlayerActor : MonoBehaviour
 
     protected virtual void Death()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
         if (model.equippedWeapon)
         {
             model.equippedWeapon.Dequip();
             model.equippedWeapon = null;
         }
+        visual.Find("Body").GetComponent<SpriteRenderer>().sprite = death;
         Debug.Log("Player is dead.");
+        GameProgressionManager.instance.GameOver();
     }
 }

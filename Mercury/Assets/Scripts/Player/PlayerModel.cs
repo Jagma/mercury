@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel {
+public class PlayerModel
+{
 
     public string playerID = "-1";
     public float moveAcceleration = 1.2f; 
