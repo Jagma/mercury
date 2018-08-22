@@ -88,6 +88,19 @@ public class Factory : MonoBehaviour
         return playerGO;
     }
 
+    public GameObject CreatePlayerBinLaden()
+    {
+        GameObject playerGO = CreatePlayerBase();
+
+        AbilityBinLaden abilityBinLaden = new AbilityBinLaden();
+        abilityBinLaden.playerActor = playerGO.GetComponent<PlayerActor>();
+
+        // Set all oprah specific stats
+        playerGO.GetComponent<PlayerActor>().model.ability = abilityBinLaden;
+
+        return playerGO;
+    }
+
 
     public GameObject CreateDropShadow()
     {
@@ -99,6 +112,31 @@ public class Factory : MonoBehaviour
 
         dropShadowGO.AddComponent<DropShadow>();
         return dropShadowGO;
+    }
+
+    public GameObject CreateTNTBag()
+    {
+        GameObject bagGO = new GameObject("TNTBag");
+
+        SphereCollider bagCollider = bagGO.AddComponent<SphereCollider>();
+        bagCollider.isTrigger = false;
+        bagCollider.radius = 0.0f;
+
+        Rigidbody bagRigid = bagGO.AddComponent<Rigidbody>();
+        bagRigid.isKinematic = true;
+        bagRigid.useGravity = false;
+
+        GameObject bagVisualGO = new GameObject("Visual");
+        bagVisualGO.transform.parent = bagGO.transform;
+
+        GameObject bagVisualBodyGO = new GameObject("Body");
+        bagVisualBodyGO.transform.parent = bagVisualGO.transform;
+        SpriteRenderer sr = bagVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Random/TNTBag");
+
+        Projectile p = bagGO.AddComponent<TNTBag>();
+        p.Init();
+        return bagGO;
     }
 
     public GameObject CreateBullet()

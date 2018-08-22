@@ -25,10 +25,13 @@ public class Game : MonoBehaviour
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {
             //Trump character
-            GameObject playerGO = Factory.instance.CreatePlayerTrump();
+            //GameObject playerGO = Factory.instance.CreatePlayerTrump();
 
             //Oprah character
             //GameObject playerGO = Factory.instance.CreatePlayerOprah();
+
+            //Bin Laden character
+            GameObject playerGO = Factory.instance.CreatePlayerBinLaden();
 
             //Set starting position
             playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
