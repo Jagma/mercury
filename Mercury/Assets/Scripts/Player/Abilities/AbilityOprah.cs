@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class AbilityOprah : Ability {
 
-    float cooldownTime = 0;
     bool isProjectile = false;
-    float ammoOffset = 0f;
+    bool isLazer = false;
     System.Random ran = new System.Random(91142069);
     List<string> spawnableItems;
 
@@ -14,22 +13,32 @@ public class AbilityOprah : Ability {
         base.Init();
 
         // Stats
-        cooldown = 5f;
+        cooldown = 0f;
     }
 
     protected override void Use()
     {
         base.Use();
         GameObject freeItem = ChooseRandomItem();
-        if (!isProjectile)
+        Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+
+        if (!isProjectile && !isLazer)
         {
-            freeItem.transform.position = playerActor.transform.position +
-             new Vector3(InputManager.instance.GetAimDirection(playerActor.model.playerID).x,
-                0, InputManager.instance.GetAimDirection(playerActor.model.playerID).y);
+            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 1f;
+
+        }
+        else if (isLazer)
+        {
+            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y,aimDirection.z ) * 1f;
+            GameObject.Destroy(freeItem,1f);
+            isLazer = false;
         }
         else
         {
-            FireProjectile(freeItem);
+            freeItem.GetComponent<Projectile>().speed *= 2;
+            freeItem.transform.position = playerActor.transform.position;
+            freeItem.transform.right = new Vector3(aimDirection.x, 0 , aimDirection.y);
+            freeItem.GetComponent<Projectile>().Update();
             isProjectile = false;
         }
     }
@@ -40,19 +49,19 @@ public class AbilityOprah : Ability {
         spawnableItems = new List<string>();
         //ITEMS
         spawnableItems.Add("Enemy Walker");
-        spawnableItems.Add("Wall");
-        spawnableItems.Add("Rocket Launcher");
-        spawnableItems.Add("Laser Rifle");
-        spawnableItems.Add("Machine Gun");
-        spawnableItems.Add("Pistol");
-        spawnableItems.Add("Beam");
-        spawnableItems.Add("Rocket");
-        spawnableItems.Add("Bullet");
-        spawnableItems.Add("Muzzle Flash");
+        //spawnableItems.Add("Wall");
+        //spawnableItems.Add("Rocket Launcher");
+        //spawnableItems.Add("Laser Rifle");
+        //spawnableItems.Add("Machine Gun");
+        //spawnableItems.Add("Pistol");
+        //spawnableItems.Add("Beam");
+        //spawnableItems.Add("Rocket");
+        //spawnableItems.Add("Bullet");
+        //spawnableItems.Add("Muzzle Flash");
         //spawnableItems.Add("Rocket Smoke Flash");
-        spawnableItems.Add("Rocket Hit");
-        spawnableItems.Add("Bullet Hit");
-        spawnableItems.Add("Beam Hit");
+        //spawnableItems.Add("Rocket Hit");
+        //spawnableItems.Add("Bullet Hit");
+        //spawnableItems.Add("Beam Hit");
 
 
         int randomNum = ran.Next(0, spawnableItems.Count);
@@ -72,7 +81,7 @@ public class AbilityOprah : Ability {
             case "Pistol":
                 return Factory.instance.CreatePistol();
             case "Beam":
-                isProjectile = true;
+                isLazer = true;
                 return Factory.instance.CreateBeamNeon();
             case "Rocket":
                 isProjectile = true;
@@ -96,11 +105,4 @@ public class AbilityOprah : Ability {
 
     }
 
-    public void FireProjectile(GameObject aProjectile)
-    {
-        aProjectile.GetComponent<Projectile>().speed *= 2;
-        aProjectile.transform.position = playerActor.transform.position;
-        aProjectile.transform.right = new Vector3(InputManager.instance.GetAimDirection(playerActor.model.playerID).x, 0, InputManager.instance.GetAimDirection(playerActor.model.playerID).y);
-        aProjectile.GetComponent<Projectile>().Update();
-    }
 }
