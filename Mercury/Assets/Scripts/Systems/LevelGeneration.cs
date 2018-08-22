@@ -69,7 +69,7 @@ public class LevelGeneration : MonoBehaviour
             }
         }
 
-        pickups[minerList[0].posX, minerList[0].posZ] = "Pistol";
+        pickups[minerList[0].posX, minerList[0].posZ] = "Pistol"; //index out of array bug occurs here.
         pickups[minerList[0].posX, minerList[0].posZ+1] = "MachineGun";
         pickups[minerList[0].posX, minerList[0].posZ+2] = "RocketLauncher";
         pickups[minerList[0].posX, minerList[0].posZ + 3] = "LaserRifle";
@@ -98,6 +98,7 @@ public class LevelGeneration : MonoBehaviour
                     GameObject enemyGO = Factory.instance.CreateEnemyWalker();
                     enemyGO.transform.parent = levelRoot;
                     enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
                 }
 
                 if (enemies[x, z] == "Ranged Walker")
@@ -105,6 +106,7 @@ public class LevelGeneration : MonoBehaviour
                     GameObject enemyGO = Factory.instance.CreateRangedWalker();
                     enemyGO.transform.parent = levelRoot;
                     enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
                 }
                 if (pickups[x, z] == "Pistol")
                 {

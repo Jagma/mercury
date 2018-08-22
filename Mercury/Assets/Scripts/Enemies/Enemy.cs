@@ -81,5 +81,7 @@ public class Enemy : MonoBehaviour
             equippedWeapon.Dequip();
             equippedWeapon = null;
         }
+        GameProgressionManager.instance.EnemyDead();
+
     }
 }

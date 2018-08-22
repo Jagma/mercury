@@ -383,6 +383,29 @@ public class Factory : MonoBehaviour
         return enemyRangedGO;
     }
 
+    public GameObject CreatePortal()
+    {
+        GameObject portalGO = new GameObject("Portal");
+        portalGO.AddComponent<BoxCollider>();
+
+
+        Rigidbody portalRigid = portalGO.AddComponent<Rigidbody>();
+        portalRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        portalRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject portalVisualGO = new GameObject("Visual");
+        portalVisualGO.transform.parent = portalGO.transform;
+
+        GameObject portalBodyVisualGO = new GameObject("Body");
+        portalBodyVisualGO.transform.parent = portalVisualGO.transform;
+
+        SpriteRenderer sr = portalBodyVisualGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Portal");
+
+        portalGO.AddComponent<Portal>();
+        return portalGO;
+    }
+
     /* New stuff
      * ********************************************************
      * ********************************************************

@@ -24,29 +24,62 @@ public class GameProgressionManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        //else
-            //Destroy(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     // Use this for initialization
     void Start ()
     {
-		
-	}
+        numEnemiesLeft = 0;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-		
+
 	}
 
     public void GameOver()
     {
-        //GameCOOP scene is index 0
+        //GameCOOP scene is index 1 on current build
         SceneManager.UnloadSceneAsync("GameCOOP");
         Destroy(InputManager.instance);
         Destroy(Game.instance);
         Destroy(Factory.instance);
         SceneManager.LoadScene("GameOver");
+    }
+
+    public void LevelComplete()
+    {
+        Debug.Log("Level complete.");
+        //GameCOOP scene is index 1 on current build
+        /*SceneManager.UnloadSceneAsync("GameCOOP");
+        Destroy(InputManager.instance);
+        Destroy(Game.instance);
+        Destroy(Factory.instance);
+        SceneManager.LoadScene("GameOver");*/
+    }
+    public void EnemyDead()
+    {
+        numEnemiesLeft -= 1;
+        if (numEnemiesLeft == 0)
+        {
+            GameObject portal = Factory.instance.CreatePortal();
+
+            Vector3 playerPos = PlayerActor.instance.transform.position;
+            Vector3 playerDirection = PlayerActor.instance.transform.forward;
+            Quaternion playerRotation = PlayerActor.instance.transform.rotation;
+            float spawnDistance = 10;  
+            Vector3 spawnPos = playerPos + playerDirection * spawnDistance;
+            portal.transform.position = spawnPos;
+
+            Debug.Log("portal spawned.");
+        }
+    }
+    
+    public void IncreaseEnemyCount()
+    {
+        numEnemiesLeft += 1;
     }
 }

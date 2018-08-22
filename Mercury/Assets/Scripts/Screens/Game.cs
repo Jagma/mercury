@@ -21,6 +21,7 @@ public class Game : MonoBehaviour
         LevelGeneration.instance.Generate();
 
 
+
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {

@@ -9,7 +9,7 @@ public class PlayerActor : MonoBehaviour
     public Sprite forward;
     public Sprite facing;
     public Sprite death;
-    public double health = 100;
+    public double health = 11111100;
     private Vector3 startPos;
     Transform visual;
     Rigidbody rigid;

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: ba6925d9e93d91a428817bd524fb5b34
+  - enabled: 1
     path: Assets/Scenes/GameCOOP.unity
     guid: 9c1c2a73154d1f64da417a522a55f81d
   - enabled: 1
@@ -14,9 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: c0aa25f166da6dc4c97cb4549d3cef3b
-  - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: ba6925d9e93d91a428817bd524fb5b34
   - enabled: 1
     path: Assets/Scenes/Multiplayer.unity
     guid: 2cda990e2423bbf4892e6590ba056729
