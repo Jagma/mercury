@@ -145,12 +145,6 @@ public class PlayerActor : MonoBehaviour
 
     protected virtual void Death()
     {
-        /*Destroy(gameObject);
-        if (model.equippedWeapon)
-        {
-            model.equippedWeapon.Dequip();
-            model.equippedWeapon = null;
-        }*/
         Debug.Log("Player is dead.");
         GameProgressionManager.instance.GameOver();
     }

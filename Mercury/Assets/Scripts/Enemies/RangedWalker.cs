@@ -15,6 +15,7 @@ public class RangedWalker : Enemy
 
     protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         /*TODO: Re-do enemy behaviour:
         - Walk 2-5 Seconds in random direction, then change direction (also change if collide with a wall)
         - If Player damages enemy, enemy should become aware of it and start travelling into the direction of the damage for a few seconds if Player detected follow player and attack, otherise random walking behaviour
@@ -23,7 +24,7 @@ public class RangedWalker : Enemy
         - If nearby enemies (close proximate) hears/detects a enemy being damage they should also lock onto the player, aim follow + shoot
         */
 
-        base.FixedUpdate();
+
 
         // Weapon position
         if (equippedWeapon)

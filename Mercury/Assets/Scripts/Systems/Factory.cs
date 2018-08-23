@@ -18,7 +18,7 @@ public class Factory : MonoBehaviour
     }
 
     // Factory methods
-    public GameObject CreatePlayerBase ()
+    public GameObject CreatePlayerBase()
     {
         GameObject playerGO = new GameObject("Player");
 
@@ -424,12 +424,18 @@ public class Factory : MonoBehaviour
     public GameObject CreatePortal()
     {
         GameObject portalGO = new GameObject("Portal");
-        portalGO.AddComponent<BoxCollider>();
+
+        CapsuleCollider portalCollider = portalGO.AddComponent<CapsuleCollider>();
+        portalCollider.radius = 0.25f;
+        portalCollider.height = 0.8f;
 
 
         Rigidbody portalRigid = portalGO.AddComponent<Rigidbody>();
         portalRigid.interpolation = RigidbodyInterpolation.Interpolate;
         portalRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        //alternative method to clamp the portal to the ground:
+        //portalRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
 
         GameObject portalVisualGO = new GameObject("Visual");
         portalVisualGO.transform.parent = portalGO.transform;

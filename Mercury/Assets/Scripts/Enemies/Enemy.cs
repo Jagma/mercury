@@ -73,15 +73,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected virtual void Death ()
+    protected virtual void Death()
     {
-        Destroy(gameObject);
         if (equippedWeapon)
         {
             equippedWeapon.Dequip();
             equippedWeapon = null;
         }
         GameProgressionManager.instance.EnemyDead();
-
+        Destroy(gameObject);
     }
 }
