@@ -32,13 +32,29 @@ public class GameProgressionManager : MonoBehaviour
     void Start ()
     {
         numEnemiesLeft = 0;
+        numOfBulletsUsed = 0;
+        enemiesKilled = 0;
+        wallsDestroyed = 0;
+        damageTaken = 0;
+        currentStageTime = null;
+        totalTimePlayed = null;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
 
-	}
+    }
+
+    public void RestartLevel()
+    {
+        numEnemiesLeft = 0;
+        numOfBulletsUsed = 0;
+        enemiesKilled = 0;
+        wallsDestroyed = 0;
+        damageTaken = 0;
+        currentStageTime = null;
+    }
 
     public void GameOver()
     {
@@ -51,20 +67,13 @@ public class GameProgressionManager : MonoBehaviour
         Debug.Log("Level complete.");
         SceneManager.LoadScene("LevelComplete");
     }
+
     public void EnemyDead()
     {
         numEnemiesLeft -= 1;
         if (numEnemiesLeft == 0)
         {
             GameObject portal = Factory.instance.CreatePortal();
-
-            Vector3 playerPos = PlayerActor.instance.transform.position;
-            Vector3 playerDirection = PlayerActor.instance.transform.forward;
-            Quaternion playerRotation = PlayerActor.instance.transform.rotation;
-            float spawnDistance = 10;  
-            Vector3 spawnPos = playerPos + playerDirection * spawnDistance;
-            portal.transform.position = spawnPos;
-
             Debug.Log("Portal spawned.");
         }
     }

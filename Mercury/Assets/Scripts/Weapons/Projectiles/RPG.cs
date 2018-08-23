@@ -47,22 +47,11 @@ public class RPG : Projectile
 
 
         Wall wallCheck = col.GetComponent<Wall>();
-        if (wallCheck != null)
-        {
-            Destroy();
-        }
-
         Enemy enemy = col.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            Destroy();
-        }
-
         PlayerActor playerA = col.GetComponent<PlayerActor>();
-        if (playerA != null)
+        if (wallCheck != null || playerA != null || enemy != null)
         {
             Destroy();
         }
-
     }
 }

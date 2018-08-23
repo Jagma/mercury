@@ -144,15 +144,23 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
-    protected virtual void Death()
+    public void Revive(double hp)
     {
-        /*Destroy(gameObject);
-        if (model.equippedWeapon)
+        if(health <= 0)
         {
+<<<<<<< HEAD
             model.equippedWeapon.Dequip();
             model.equippedWeapon = null;
         }*/
         AudioManager.instance.PlayAudio("death1",1,false);
+=======
+            health = hp;
+        }
+    }
+
+    protected virtual void Death()
+    {
+>>>>>>> 846b424684765c047840c459bf518ab2f034e1bd
         Debug.Log("Player is dead.");
         GameProgressionManager.instance.GameOver();
     }
