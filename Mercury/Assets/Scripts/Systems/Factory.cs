@@ -101,6 +101,19 @@ public class Factory : MonoBehaviour
         return playerGO;
     }
 
+    public GameObject CreatePlayerPope()
+    {
+        GameObject playerGO = CreatePlayerBase();
+
+        AbilityPope abilityPope = new AbilityPope();
+        abilityPope.playerActor = playerGO.GetComponent<PlayerActor>();
+
+        // Set all oprah specific stats
+        playerGO.GetComponent<PlayerActor>().model.ability = abilityPope;
+
+        return playerGO;
+    }
+
 
     public GameObject CreateDropShadow()
     {

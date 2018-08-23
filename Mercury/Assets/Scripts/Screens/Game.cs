@@ -34,6 +34,9 @@ public class Game : MonoBehaviour
             //Bin Laden character
             GameObject playerGO = Factory.instance.CreatePlayerBinLaden();
 
+            //Pope character
+            //GameObject playerGO = Factory.instance.CreatePlayerPope();
+
             //Set starting position
             playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
 
