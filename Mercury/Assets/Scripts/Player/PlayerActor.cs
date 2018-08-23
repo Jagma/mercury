@@ -143,6 +143,14 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
+    public void Revive(double hp)
+    {
+        if(health <= 0)
+        {
+            health = hp;
+        }
+    }
+
     protected virtual void Death()
     {
         Debug.Log("Player is dead.");
