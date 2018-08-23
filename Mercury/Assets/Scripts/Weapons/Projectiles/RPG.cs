@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class RPG : Projectile
 {
+    float blastRadius;
     public override void Init()
     {
         base.Init();
         // Stats
         speed = 10f;
         damage = 100;
+        blastRadius = 1f;
     }
 
     public override void Destroy()
@@ -18,5 +20,49 @@ public class RPG : Projectile
         GameObject a = Factory.instance.CreateBulletHit();
         a.transform.position = transform.position;
         Destroy(a, 1f);
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        Collider[] hits = Physics.OverlapSphere(this.transform.position, blastRadius);
+        foreach (Collider hit in hits)
+        {
+            Debug.Log(hit.gameObject.name);
+            if (hit.gameObject.name.Equals("Enemy Walker") || hit.gameObject.name.Equals("Ranged Enemy"))
+            {
+                Enemy enemyHit = hit.GetComponent<Enemy>();
+                enemyHit.Damage(damage);
+            }
+           if (hit.gameObject.name.Equals("Player"))
+            {
+                PlayerActor player = hit.GetComponent<PlayerActor>();
+                player.Damage(damage);
+            }
+            if (hit.gameObject.name.Equals("Wall"))
+            {
+                Wall wall = hit.GetComponent<Wall>();
+                wall.Damage((int)damage);
+            }
+        }
+
+
+        Wall wallCheck = col.GetComponent<Wall>();
+        if (wallCheck != null)
+        {
+            Destroy();
+        }
+
+        Enemy enemy = col.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            Destroy();
+        }
+
+        PlayerActor playerA = col.GetComponent<PlayerActor>();
+        if (playerA != null)
+        {
+            Destroy();
+        }
+
     }
 }

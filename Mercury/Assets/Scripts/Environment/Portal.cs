@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-
-	// Use this for initialization
-	void Start ()
+    public static Portal instance;
+    // Use this for initialization
+    void Awake ()
     {
-		
-	}
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -19,11 +25,11 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        PlayerActor player = col.GetComponent<PlayerActor>();
-        if (player != null)
-        {
-            GameProgressionManager.instance.LevelComplete();
-        }
 
+    }
+
+    public void EnterPortal()
+    {
+       GameProgressionManager.instance.LevelComplete();
     }
 }

@@ -5,14 +5,12 @@ using UnityEngine;
 public class RangedWalker : Enemy
 {
     private float timer = 0;
-    private Vector3 startPos;
     protected override void Start()
     {
         base.Start();
         CreateWeapon();
         health = 100;
         moveSpeed = 1f;
-        startPos = transform.position;
     }
 
     protected override void FixedUpdate()
@@ -38,7 +36,7 @@ public class RangedWalker : Enemy
         {
             allowWalk = false;      
         }*/
-        RaycastHit closest = hits[0];
+
         GameObject closestPlayerGO = hits[0].collider.gameObject;
         for (int i = 0; i < hits.Length; i++)
         {

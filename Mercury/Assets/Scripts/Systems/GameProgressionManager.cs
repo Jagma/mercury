@@ -42,23 +42,14 @@ public class GameProgressionManager : MonoBehaviour
 
     public void GameOver()
     {
-        //GameCOOP scene is index 1 on current build
-        SceneManager.UnloadSceneAsync("GameCOOP");
-        Destroy(InputManager.instance);
-        Destroy(Game.instance);
-        Destroy(Factory.instance);
+        Debug.Log("Game over.");
         SceneManager.LoadScene("GameOver");
     }
 
     public void LevelComplete()
     {
         Debug.Log("Level complete.");
-        //GameCOOP scene is index 1 on current build
-        /*SceneManager.UnloadSceneAsync("GameCOOP");
-        Destroy(InputManager.instance);
-        Destroy(Game.instance);
-        Destroy(Factory.instance);
-        SceneManager.LoadScene("GameOver");*/
+        SceneManager.LoadScene("LevelComplete");
     }
     public void EnemyDead()
     {
@@ -74,7 +65,7 @@ public class GameProgressionManager : MonoBehaviour
             Vector3 spawnPos = playerPos + playerDirection * spawnDistance;
             portal.transform.position = spawnPos;
 
-            Debug.Log("portal spawned.");
+            Debug.Log("Portal spawned.");
         }
     }
     

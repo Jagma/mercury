@@ -29,9 +29,15 @@ public class AbilityOprah : Ability {
         }
         else if (isLazer)
         {
-            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y,aimDirection.z ) * 1f;
+            //freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y,aimDirection.z ) * 1f;
+
+            freeItem.transform.position = playerActor.transform.position + playerActor.transform.right * 1f;
+            freeItem.transform.right = playerActor.transform.right;
+            freeItem.SetActive(true);
+
             GameObject.Destroy(freeItem,1f);
             isLazer = false;
+            
         }
         else
         {
