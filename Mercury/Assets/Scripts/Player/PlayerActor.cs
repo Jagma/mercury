@@ -70,6 +70,7 @@ public class PlayerActor : MonoBehaviour
 
                 // Equip new weapon
                 weapon.Equip();
+                AudioManager.instance.PlayAudio("dsdbload",1,false);
                 model.equippedWeapon = weapon;
                 return;
             }
@@ -151,6 +152,7 @@ public class PlayerActor : MonoBehaviour
             model.equippedWeapon.Dequip();
             model.equippedWeapon = null;
         }*/
+        AudioManager.instance.PlayAudio("death1",1,false);
         Debug.Log("Player is dead.");
         GameProgressionManager.instance.GameOver();
     }

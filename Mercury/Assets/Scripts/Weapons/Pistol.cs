@@ -28,6 +28,8 @@ public class Pistol : WeaponRanged
         bullet.transform.right = transform.right;
         bullet.GetComponent<Projectile>().Update();
 
+        AudioManager.instance.PlayAudio("dspistol", 1f, false);
+
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 }
