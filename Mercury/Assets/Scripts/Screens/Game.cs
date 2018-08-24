@@ -29,10 +29,10 @@ public class Game : MonoBehaviour
             //GameObject playerGO = Factory.instance.CreatePlayerTrump();
 
             //Oprah character
-            //GameObject playerGO = Factory.instance.CreatePlayerOprah();
+            GameObject playerGO = Factory.instance.CreatePlayerOprah();
 
             //Bin Laden character
-            GameObject playerGO = Factory.instance.CreatePlayerBinLaden();
+            //GameObject playerGO = Factory.instance.CreatePlayerBinLaden();
 
             //Pope character
             //GameObject playerGO = Factory.instance.CreatePlayerPope();

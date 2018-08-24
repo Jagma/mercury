@@ -45,6 +45,7 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Use()
     {
+
     }
     
     protected virtual void Update()
