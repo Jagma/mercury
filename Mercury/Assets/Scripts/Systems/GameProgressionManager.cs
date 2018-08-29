@@ -24,29 +24,62 @@ public class GameProgressionManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        //else
-            //Destroy(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     // Use this for initialization
     void Start ()
     {
-		
-	}
+        numEnemiesLeft = 0;
+        numOfBulletsUsed = 0;
+        enemiesKilled = 0;
+        wallsDestroyed = 0;
+        damageTaken = 0;
+        currentStageTime = null;
+        totalTimePlayed = null;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+
+    }
+
+    public void RestartLevel()
+    {
+        numEnemiesLeft = 0;
+        numOfBulletsUsed = 0;
+        enemiesKilled = 0;
+        wallsDestroyed = 0;
+        damageTaken = 0;
+        currentStageTime = null;
+    }
 
     public void GameOver()
     {
-        //GameCOOP scene is index 0
-        SceneManager.UnloadSceneAsync("GameCOOP");
-        Destroy(InputManager.instance);
-        Destroy(Game.instance);
-        Destroy(Factory.instance);
+        Debug.Log("Game over.");
         SceneManager.LoadScene("GameOver");
+    }
+
+    public void LevelComplete()
+    {
+        Debug.Log("Level complete.");
+        SceneManager.LoadScene("LevelComplete");
+    }
+
+    public void EnemyDead()
+    {
+        numEnemiesLeft -= 1;
+        if (numEnemiesLeft == 0)
+        {
+            GameObject portal = Factory.instance.CreatePortal();
+            Debug.Log("Portal spawned.");
+        }
+    }
+    
+    public void IncreaseEnemyCount()
+    {
+        numEnemiesLeft += 1;
     }
 }

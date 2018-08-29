@@ -18,7 +18,7 @@ public class Factory : MonoBehaviour
     }
 
     // Factory methods
-    public GameObject CreatePlayerBase ()
+    public GameObject CreatePlayerBase()
     {
         GameObject playerGO = new GameObject("Player");
 
@@ -97,6 +97,19 @@ public class Factory : MonoBehaviour
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityBinLaden;
+
+        return playerGO;
+    }
+
+    public GameObject CreatePlayerPope()
+    {
+        GameObject playerGO = CreatePlayerBase();
+
+        AbilityPope abilityPope = new AbilityPope();
+        abilityPope.playerActor = playerGO.GetComponent<PlayerActor>();
+
+        // Set all oprah specific stats
+        playerGO.GetComponent<PlayerActor>().model.ability = abilityPope;
 
         return playerGO;
     }
@@ -419,6 +432,35 @@ public class Factory : MonoBehaviour
 
         enemyRangedGO.AddComponent<RangedWalker>();
         return enemyRangedGO;
+    }
+
+    public GameObject CreatePortal()
+    {
+        GameObject portalGO = new GameObject("Portal");
+
+        CapsuleCollider portalCollider = portalGO.AddComponent<CapsuleCollider>();
+        portalCollider.radius = 0.25f;
+        portalCollider.height = 0.8f;
+
+
+        Rigidbody portalRigid = portalGO.AddComponent<Rigidbody>();
+        portalRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        portalRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        //alternative method to clamp the portal to the ground:
+        //portalRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+
+        GameObject portalVisualGO = new GameObject("Visual");
+        portalVisualGO.transform.parent = portalGO.transform;
+
+        GameObject portalBodyVisualGO = new GameObject("Body");
+        portalBodyVisualGO.transform.parent = portalVisualGO.transform;
+
+        SpriteRenderer sr = portalBodyVisualGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Portal");
+
+        portalGO.AddComponent<Portal>();
+        return portalGO;
     }
 
     /* New stuff

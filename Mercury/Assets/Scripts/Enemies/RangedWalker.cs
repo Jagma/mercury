@@ -5,19 +5,26 @@ using UnityEngine;
 public class RangedWalker : Enemy
 {
     private float timer = 0;
-    private Vector3 startPos;
     protected override void Start()
     {
         base.Start();
         CreateWeapon();
         health = 100;
         moveSpeed = 1f;
-        startPos = transform.position;
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        /*TODO: Re-do enemy behaviour:
+        - Walk 2-5 Seconds in random direction, then change direction (also change if collide with a wall)
+        - If Player damages enemy, enemy should become aware of it and start travelling into the direction of the damage for a few seconds if Player detected follow player and attack, otherise random walking behaviour
+        - If close proximate of the player start firing weapon
+        - Line of Sight of player - follow + aim + shoot (try to make a radius)
+        - If nearby enemies (close proximate) hears/detects a enemy being damage they should also lock onto the player, aim follow + shoot
+        */
+
+
 
         // Weapon position
         if (equippedWeapon)
@@ -30,7 +37,7 @@ public class RangedWalker : Enemy
         {
             allowWalk = false;      
         }*/
-        RaycastHit closest = hits[0];
+
         GameObject closestPlayerGO = hits[0].collider.gameObject;
         for (int i = 0; i < hits.Length; i++)
         {

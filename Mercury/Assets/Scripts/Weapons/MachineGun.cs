@@ -26,6 +26,8 @@ public class MachineGun : WeaponRanged
         bullet.transform.right = transform.right;
         bullet.GetComponent<Projectile>().Update();
 
+        AudioManager.instance.PlayAudio("dspistol",1,false);
+
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
 
         AudioManager.instance.PlayAudio("ric1", 1, false);

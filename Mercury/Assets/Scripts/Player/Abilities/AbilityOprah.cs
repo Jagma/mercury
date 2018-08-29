@@ -6,6 +6,8 @@ public class AbilityOprah : Ability {
 
     bool isProjectile = false;
     bool isLazer = false;
+    float count = 0;
+    GameObject freeItem;
     System.Random ran = new System.Random(91142069);
     List<string> spawnableItems;
 
@@ -19,7 +21,7 @@ public class AbilityOprah : Ability {
     protected override void Use()
     {
         base.Use();
-        GameObject freeItem = ChooseRandomItem();
+        freeItem = ChooseRandomItem();
         Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
 
         if (!isProjectile && !isLazer)
@@ -29,9 +31,14 @@ public class AbilityOprah : Ability {
         }
         else if (isLazer)
         {
-            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y,aimDirection.z ) * 1f;
-            GameObject.Destroy(freeItem,1f);
+            // Visual look at camera
+            freeItem.transform.eulerAngles = new Vector3(45, 45, -freeItem.transform.eulerAngles.y + 45);
+            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y, aimDirection.z) * 1f; 
+
+            //Beam(); - crashes unity.
+            GameObject.Destroy(freeItem, 1f);
             isLazer = false;
+            
         }
         else
         {
@@ -42,19 +49,29 @@ public class AbilityOprah : Ability {
             isProjectile = false;
         }
     }
-    
 
+    void Beam()
+    {
+        count += Time.deltaTime;
+        while (count < 4)
+        {
+            Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+            freeItem.transform.position = playerActor.transform.position;
+            freeItem.transform.right = new Vector3(aimDirection.x, 0, aimDirection.y);
+            freeItem.GetComponent<Beam>().UpdateVisual(freeItem.transform.position, aimDirection);
+        }
+    }
     public GameObject ChooseRandomItem()
     {
         spawnableItems = new List<string>();
         //ITEMS
-        spawnableItems.Add("Enemy Walker");
+        //spawnableItems.Add("Enemy Walker");
         //spawnableItems.Add("Wall");
         //spawnableItems.Add("Rocket Launcher");
         //spawnableItems.Add("Laser Rifle");
         //spawnableItems.Add("Machine Gun");
         //spawnableItems.Add("Pistol");
-        //spawnableItems.Add("Beam");
+        spawnableItems.Add("Beam");
         //spawnableItems.Add("Rocket");
         //spawnableItems.Add("Bullet");
         //spawnableItems.Add("Muzzle Flash");

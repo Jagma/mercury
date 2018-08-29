@@ -21,6 +21,7 @@ public class Game : MonoBehaviour
         LevelGeneration.instance.Generate();
 
 
+
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {
@@ -28,10 +29,13 @@ public class Game : MonoBehaviour
             //GameObject playerGO = Factory.instance.CreatePlayerTrump();
 
             //Oprah character
-            //GameObject playerGO = Factory.instance.CreatePlayerOprah();
+            GameObject playerGO = Factory.instance.CreatePlayerOprah();
 
             //Bin Laden character
-            GameObject playerGO = Factory.instance.CreatePlayerBinLaden();
+            //GameObject playerGO = Factory.instance.CreatePlayerBinLaden();
+
+            //Pope character
+            //GameObject playerGO = Factory.instance.CreatePlayerPope();
 
             //Set starting position
             playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;

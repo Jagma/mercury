@@ -8,7 +8,7 @@ public class PlayerModel
     public string playerID = "-1";
     public float moveAcceleration = 1.2f; 
     public float moveDeceleration = 0.2f;
-    public float moveMaxSpeed = 5f;
+    public float moveMaxSpeed = 8f;
 
     public Weapon equippedWeapon;
     public Weapon secondaryWeapon;

@@ -16,12 +16,21 @@ public class GameOver : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene("Menu");
+            DestroyInstances();
+            SceneManager.LoadScene("GameCOOP");
         }
     }
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("Menu");
+        DestroyInstances();
+        SceneManager.LoadScene("GameCOOP");
+    }
+
+    private void DestroyInstances()
+    {
+        Destroy(Game.instance);
+        Destroy(Factory.instance);
+        Destroy(Portal.instance);
     }
 }

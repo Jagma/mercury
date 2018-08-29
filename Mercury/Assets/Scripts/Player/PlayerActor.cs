@@ -9,8 +9,7 @@ public class PlayerActor : MonoBehaviour
     public Sprite forward;
     public Sprite facing;
     public Sprite death;
-    public double health = 100;
-    private Vector3 startPos;
+    public double health = 99999;
     Transform visual;
     Rigidbody rigid;
     Weapon weapon;
@@ -25,7 +24,6 @@ public class PlayerActor : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
-        startPos = transform.position;
     }
 
 	void Update ()
@@ -72,6 +70,7 @@ public class PlayerActor : MonoBehaviour
 
                 // Equip new weapon
                 weapon.Equip();
+                AudioManager.instance.PlayAudio("dsdbload",1,false);
                 model.equippedWeapon = weapon;
                 return;
             }
@@ -122,11 +121,18 @@ public class PlayerActor : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         Projectile projectile = col.GetComponent<Projectile>();
+        Portal portal = col.GetComponent<Portal>();
         if (projectile != null)
         {
             Damage(projectile.damage);
             Debug.Log("Player took damage.");
         }
+        if (portal != null)
+        {
+            Debug.Log("portal enter.");
+            Portal.instance.EnterPortal();
+        }
+
     }
 
     public void Damage(double damage)
@@ -138,15 +144,16 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
-    protected virtual void Death()
+    public void Revive(double hp)
     {
-        //Destroy(gameObject);
-        if (model.equippedWeapon)
-        {
-            model.equippedWeapon.Dequip();
-            model.equippedWeapon = null;
-        }
-        visual.Find("Body").GetComponent<SpriteRenderer>().sprite = death;
+
+        health = hp;
+
+    }
+
+    public void Death()
+    {
+        AudioManager.instance.PlayAudio("death1", 1, false);
         Debug.Log("Player is dead.");
         GameProgressionManager.instance.GameOver();
     }
