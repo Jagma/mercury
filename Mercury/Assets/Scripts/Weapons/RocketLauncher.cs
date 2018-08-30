@@ -18,8 +18,9 @@ public class RocketLauncher : WeaponRanged
         GameObject flash = Factory.instance.CreateMuzzleFlash();
         flash.transform.position = transform.position + transform.right * ammoOffset;
         Destroy(flash, 1);
-
+        AudioManager.instance.PlayAudio("dsrlaunc", 1, false);
         base.Use();
+        
         GameObject rocket = Factory.instance.CreateRocket();
         rocket.transform.position = transform.position + transform.right * ammoOffset;
         rocket.transform.right = transform.right;
