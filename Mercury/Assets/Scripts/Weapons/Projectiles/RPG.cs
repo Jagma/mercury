@@ -18,6 +18,7 @@ public class RPG : Projectile
     {
         base.Destroy();
         GameObject a = Factory.instance.CreateBulletHit();
+        AudioManager.instance.PlayAudio("r_exp3", .5f, false);
         a.transform.position = transform.position;
         Destroy(a, 1f);
     }

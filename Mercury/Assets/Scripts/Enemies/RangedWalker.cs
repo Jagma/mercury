@@ -87,6 +87,7 @@ public class RangedWalker : Enemy
         {
             float playerRange = Vector3.Distance(closestPlayerActor.transform.position, transform.position);
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);
+            
             AimAtPlayer(closestPlayerActor.transform.position);
 
             if (playerRange < 5.5f) //checks if player is close enough to shoot.
