@@ -69,6 +69,17 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopAllAudio()
+    {
+        for (int i = 0; i < audioSourceList.Count; i++)
+        {
+           if (audioSourceList[i].isPlaying)
+           {
+             audioSourceList[i].Stop();
+           }
+        }
+    }
+
     public bool IsPlaying (string name)
     {
         for (int i=0; i < audioSourceList.Count; i ++)

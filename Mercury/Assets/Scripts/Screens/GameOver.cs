@@ -19,12 +19,14 @@ public class GameOver : MonoBehaviour
     public void RestartGame()
     {
         DestroyInstances();
+        AudioManager.instance.StopAllAudio();
         SceneManager.LoadScene("GameCOOP");
     }
 
     public void MainMenu()
     {
         DestroyInstances();
+        AudioManager.instance.StopAllAudio();
         SceneManager.LoadScene("Menu");
     }
 
