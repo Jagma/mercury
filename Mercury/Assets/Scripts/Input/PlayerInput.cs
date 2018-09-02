@@ -2,23 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInput
-{
+public class PlayerInput {
     // A player input is a mapping between a player and a device.
     // The device can be a TableRealms device or a controller or mouse and keyboard.
 
-    public enum InputType {TableRealms, Controller, Keyboard}
+    public enum InputType { TableRealms, Controller, Keyboard }
 
     public InputType inputType = InputType.TableRealms;
     public string playerID = "-1";
 
-    public PlayerInput(string playerID, InputType inputType)
-    {
+    public PlayerInput(string playerID, InputType inputType) {
         this.playerID = playerID;
         this.inputType = inputType;
     }
 
     // ** Methods :
+
+    public bool GetUpPressed(string playerID) {
+        if (inputType == InputType.TableRealms) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool GetDownPressed(string playerID) {
+        if (inputType == InputType.TableRealms) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+            if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool GetSelectPressed(string playerID) {
+        if (inputType == InputType.TableRealms) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+            if (Input.GetKeyDown(KeyCode.Return)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool GetBackPressed(string playerID) {
+        if (inputType == InputType.TableRealms) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Controller) {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public Vector2 GetMoveDirection ()
     {
         if (inputType == InputType.TableRealms)

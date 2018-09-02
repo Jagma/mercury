@@ -46,6 +46,22 @@ public class InputManager : MonoBehaviour
     }
 
     // ** Methods :
+    public bool GetUpPressed (string playerID) {
+        return playerInputDictionary[playerID].GetUpPressed(playerID);
+    }
+
+    public bool GetDownPressed(string playerID) {
+        return playerInputDictionary[playerID].GetDownPressed(playerID);
+    }
+
+    public bool GetSelectPressed(string playerID) {
+        return playerInputDictionary[playerID].GetSelectPressed(playerID);
+    }
+
+    public bool GetBackPressed(string playerID) {
+        return playerInputDictionary[playerID].GetBackPressed(playerID);
+    }
+
     public Vector2 GetMoveDirection(string playerID)
     {
         return playerInputDictionary[playerID].GetMoveDirection();

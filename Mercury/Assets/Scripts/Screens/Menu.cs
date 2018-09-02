@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 public class Menu : MonoBehaviour {
+    
+    public EventSystem eventSystem;
 
-    // Use this for initialization
-    EventSystem eventSystem;
     GameObject previousSelection;
     void Start () {
         AudioManager.instance.PlayAudio("soviet-anthem", 1, false);
-        eventSystem = EventSystemManager.instance.GetComponent<EventSystem>();
     }
 
     private void Update() {
