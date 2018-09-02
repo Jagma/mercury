@@ -59,4 +59,9 @@ public class LevelComplete : MonoBehaviour
         DestroyInstances();
         SceneManager.LoadScene("Menu");
     }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }
