@@ -139,6 +139,11 @@ public class CampaignLobby : MonoBehaviour {
             }
         }
 
+        // TODO: Add controller leave
+
+        // TODO: Add table realms leave
+
+
         // Selectors update
         for (int i=0; i < characterSelectors.Count; i++) {
             characterSelectors[i].Update();
@@ -221,8 +226,15 @@ public class CampaignLobby : MonoBehaviour {
         GameObject p = Instantiate(portraitPrefab);
         p.transform.SetParent(portraitPrefab.transform.parent, false);
 
-        p.GetComponent<Outline>().effectColor = playerColors[characterSelectors.Count];
-        p.transform.Find("Text").GetComponent<Text>().color = playerColors[characterSelectors.Count];
+        Color col = playerColors[characterSelectors.Count];
+        p.GetComponent<Outline>().effectColor = col;
+        p.transform.Find("Text").GetComponent<Text>().color = col;
+
+        col *= 0.8f;
+        col.a = 1;
+
+        p.GetComponent<Image>().color = col;
+
         p.SetActive(true);
 
         CharacterSelect cs = new CharacterSelect(playerID, p, this);

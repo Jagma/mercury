@@ -11,6 +11,8 @@ public class Menu : MonoBehaviour {
     GameObject previousSelection;
     void Start () {
         AudioManager.instance.PlayAudio("soviet-anthem", 1, false);
+
+        InputManager.instance.GetPlayerInputDictionary().Clear();
     }
 
     private void Update() {
