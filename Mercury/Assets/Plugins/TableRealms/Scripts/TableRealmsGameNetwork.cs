@@ -24,15 +24,11 @@ public class TableRealmsGameNetwork : MonoBehaviour {
     public TextAsset tableRealmsDesign;
     public byte[] designBytes;
     public Texture2D joinQRCodeTexture;
-    private bool embedded = false;
 
     public string playerCommandScriptName;
     public Type playerCommandScript;
 
     private string serverUrl;
-
-    public bool p2p = false;
-    public bool host = false;
 
     private IClientConnectionListener clientConnectionListener;
     private Queue<IClientConnection> pendingClientConnections = new Queue<IClientConnection>();
@@ -87,14 +83,6 @@ public class TableRealmsGameNetwork : MonoBehaviour {
         while (pendingClientConnections.Count > 0) {
             AddClient(pendingClientConnections.Dequeue());
         }
-    }
-
-    public bool IsEmbedded() {
-        return embedded;
-    }
-
-    public void SetEmbedded(bool embedded) {
-        this.embedded=embedded;
     }
 
     private Texture2D GenerateQR(string text) {
@@ -305,18 +293,11 @@ public class TableRealmsGameNetwork : MonoBehaviour {
             }
             // Send to all
             if (updateModelMessage == null) {
-                updateModelMessage = new UpdateModelMessage(true, key, type, value.ToString());
+                updateModelMessage = new UpdateModelMessage(false, key, type, value.ToString());
                 foreach (TableRealmsClientConnection connection in connections) {
                     connection.SendClientMessage(updateModelMessage);
                 }
             }
         }
     }
-
-    public void SendAllClientsP2PMessage(string message) {
-        foreach (TableRealmsClientConnection connection in connections) {
-            connection.SendClientP2PMessage(message);
-        }
-    }
-
 }

@@ -9,12 +9,10 @@ public class TableRealmsClientConnection : MonoBehaviour  {
     const float SEND_HEARTBEAT_AT_LEAST_EVERY_N_SECONDS = 5;
     const float SEND_HEARTBEAT_IF_IDLE_FOR_N_SECONDS = 1;
 
-    private static string PEER2PEER_MESSAGE = "Peer2Peer";
-
     private IClientConnection clientConnection;
     private StringBuilder messageBuilder = new StringBuilder();
     private bool closed = false;
-	public bool debugMessages = true;
+	public bool debugMessages = false;
     public string id;
 
     public enum State {
@@ -25,14 +23,7 @@ public class TableRealmsClientConnection : MonoBehaviour  {
         Disconnected
     }
 
-#if UNITY_WEBGL
     private Queue<string> messagesRecieved = new Queue<string>();
-    private Queue<string> messagesToSend = new Queue<string>();
-#else
-    private BlockingQueue<string> messagesRecieved = new BlockingQueue<string>();
-    private BlockingQueue<string> messagesToSend = new BlockingQueue<string>();
-#endif
-
     private float lastMessageSendOrRecieved;
     private float lastHeartbeat;
 
@@ -44,30 +35,20 @@ public class TableRealmsClientConnection : MonoBehaviour  {
     public State state = State.Connecting;
 
     private Thread unityThread = null;
-    private Thread sendThread = null;
 
     void Start() {
         unityThread = Thread.CurrentThread;
 
         lastMessageSendOrRecieved = Time.realtimeSinceStartup;
         lastHeartbeat = Time.realtimeSinceStartup - SEND_HEARTBEAT_AT_LEAST_EVERY_N_SECONDS;
-        InitTables();
 
-#if !UNITY_WEBGL
-        sendThread = new Thread(SendMessageThread);
-        sendThread.Start();
-#endif
-
-    }
-
-    public void InitTables() {
-        if (messageTypesMap.Count == 0) {
+        if (messageTypesMap.Count == 0) { 
             List<Type> messageTypes = new List<Type>();
             messageTypes.Add(typeof(HeartbeatMessage));
             messageTypes.Add(typeof(CommandMessage));
             messageTypes.Add(typeof(UpdateModelMessage));
             messageTypes.Add(typeof(DesignMessage));
-
+            
             foreach (Type type in messageTypes) {
                 messageTypesMap.Add(type.Name, type);
             }
@@ -78,28 +59,16 @@ public class TableRealmsClientConnection : MonoBehaviour  {
             messageCommands.Add(typeof(CommandMessage), new CommandCommand());
         }
     }
-
+    
     public void SetPlayerCommandScript(Type playerCommandScript) {
         this.playerCommandScript = playerCommandScript;
     }
 
     void Update() {
-#if UNITY_WEBGL
-        while (messagesRecieved.Count > 0) {
+        while (messagesRecieved.Count > 0){
             lastMessageSendOrRecieved = Time.realtimeSinceStartup;
             ProcessMessage(messagesRecieved.Dequeue());
         }
-        while (messagesToSend.Count > 0) {
-            SendMessageOverWire(messagesToSend.Dequeue());
-        }
-#else
-        while (messagesRecieved.Count() > 0){
-            lastMessageSendOrRecieved = Time.realtimeSinceStartup;
-            ProcessMessage(messagesRecieved.Dequeue());
-        }
-
-#endif
-
 
         if (!clientConnection.IsConnected()) {
             Debug.Log("TableRealms: local client disconected from " + clientConnection.GetRemoteEndPoint());
@@ -174,10 +143,6 @@ public class TableRealmsClientConnection : MonoBehaviour  {
         TableRealmsModel.instance.SetData(id + "." + key, value);
     }
 
-    public void SetModelData(string key, string value) {
-        TableRealmsModel.instance.SetData(id + "." + key, value);
-    }
-
     public oftype GetModelData<oftype>(string key) {
         return TableRealmsModel.instance.GetData<oftype>(id + "." + key);
     }
@@ -187,8 +152,6 @@ public class TableRealmsClientConnection : MonoBehaviour  {
         if (!clientConnection.IsConnected()) {
             try {
                 clientConnection.Close();
-                // This will unblock thread so it can exit.
-                messagesToSend.Enqueue("");
             } catch (Exception e) {
                 Debug.LogError("TableRealms: "+e.Message);
             }
@@ -202,14 +165,10 @@ public class TableRealmsClientConnection : MonoBehaviour  {
     }
 
     public string GetMessageName(Message message) {
-        InitTables();
-
         return message.GetType().Name;
     }
 
     public void SendClientMessage(Message message) {
-        InitTables();
-
         if (Thread.CurrentThread == unityThread) {
             lastMessageSendOrRecieved = Time.realtimeSinceStartup;
         }
@@ -217,46 +176,25 @@ public class TableRealmsClientConnection : MonoBehaviour  {
     }
 
     public void SendClientMessage(string message) {
-        if (debugMessages && !message.StartsWith("HeartbeatMessage|")) {
+        if (debugMessages && !message.StartsWith("HeartbeatMessage|") && !message.StartsWith("DesignMessage|")) {
             Debug.Log("TableRealms: Sending " + message);
         }
 
-        messagesToSend.Enqueue(message);
-    }
-
-    public void SendClientP2PMessage(string message) {
-        messagesToSend.Enqueue(PEER2PEER_MESSAGE + "|" + message);
-    }
-
-    private void SendMessageOverWire(string message) {
-        if (message != null && message != "" && clientConnection.IsConnected()) {
-            clientConnection.Write(message);
-        }
-    }
-
-    private void SendMessageThread() {
-        while (clientConnection.IsConnected()) {
-            SendMessageOverWire(messagesToSend.Dequeue());
-        }
+        clientConnection.Write(message);
     }
 
     private void ProcessMessage(string message) {
-        InitTables();
-
-        if (debugMessages && !message.StartsWith("HeartbeatMessage|")) {
+        if (debugMessages && !message.StartsWith("HeartbeatMessage|") && !message.StartsWith("DesignMessage|")) {
             Debug.Log("TableRealms: Recieved " + message);
         }
 
         int idx = message.IndexOf("|");
         if (idx != -1) {
-            string messageKey = message.Substring(0, idx);
-            if (messageTypesMap.ContainsKey(messageKey)) {
-                Type messageType = messageTypesMap[messageKey];
+            Type messageType = messageTypesMap[message.Substring(0, idx)];
+            if (messageType != null) {
                 ProcessMessage((Message)JsonUtility.FromJson(message.Substring(idx + 1), messageType));
-            } else if (PEER2PEER_MESSAGE == messageKey) {
-                TableRealmsPeerToPeerNetwork.instance.RecieveMessageString(message.Substring(idx + 1));
             } else {
-                Debug.LogError("TableRealms:  Unable to read message unknown type '" + message + "'");
+                Debug.LogError("TableRealms: Unable to read message unknown type '" + message + "'");
             }
         } else {
             Debug.LogError("TableRealms: Unable to read message badly formated '" + message + "'");
@@ -265,7 +203,6 @@ public class TableRealmsClientConnection : MonoBehaviour  {
     }
 
     private void ProcessMessage(Message message) {
-        InitTables();
         CommandInterface commandInterface = messageCommands[message.GetType()];
         if (commandInterface != null) {
             commandInterface.ProcessMessage(message,this);
@@ -281,19 +218,14 @@ public class TableRealmsClientConnection : MonoBehaviour  {
         clientConnection.ReadAndDeliverTo(RecieveBytes);
     }
 
-    private bool firstDesignMessage = true;
-
     private bool RecieveBytes(string newText) {
         for (int cr = newText.IndexOf("\n"); cr != -1; cr = newText.IndexOf("\n")) {
             messageBuilder.Append(newText, 0, cr);
 
             string message = messageBuilder.ToString();
-            if (message.StartsWith("DesignMessage|") && !firstDesignMessage) {
+            if (message.StartsWith("DesignMessage|")) {
                 ProcessMessage(message);
             } else {
-                if (message.StartsWith("DesignMessage|")) {
-                    firstDesignMessage = false;
-                }
                 messagesRecieved.Enqueue(message);
             }
 
