@@ -9,7 +9,7 @@ public class PlayerActor : MonoBehaviour
     public Sprite forward;
     public Sprite facing;
     public Sprite death;
-    public double health = 99999;
+    public double health = 100;
     Transform visual;
     Rigidbody rigid;
     Weapon weapon;
