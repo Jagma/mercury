@@ -15,11 +15,14 @@ public class AudioManager : MonoBehaviour
         } else
         {
             Destroy(gameObject);
+            return;
         }
 
         for (int i=0; i < audioClips.Length; i ++)
         {
-            audioClipDictionary.Add(audioClips[i].name, audioClips[i]);
+            if (audioClips[i] != null) {
+                audioClipDictionary.Add(audioClips[i].name, audioClips[i]);
+            }           
         }
     }
 
