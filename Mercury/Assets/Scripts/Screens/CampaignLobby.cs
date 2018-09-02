@@ -82,18 +82,22 @@ public class CampaignLobby : MonoBehaviour {
             lobby.PlayerLeave(playerID);
         }
 
-        void Up () {            
-            if (characterIndex < 3) {
-                characterIndex ++;
-                UpdatePortrait();
-            }            
+        void Up () {
+            characterIndex++;
+            if (characterIndex == 4) {
+                characterIndex = 0;
+            }
+            
+            UpdatePortrait();
         }
 
         void Down () {
-            if (characterIndex > 0) {
-                characterIndex--;
-                UpdatePortrait();
+            characterIndex--;
+            if (characterIndex == -1) {
+                characterIndex = 3;
             }
+
+            UpdatePortrait();
         }
 
         void UpdatePortrait () {
@@ -115,13 +119,18 @@ public class CampaignLobby : MonoBehaviour {
 
     List<CharacterSelect> characterSelectors = new List<CharacterSelect>();
     GameObject portraitPrefab;
+    GameObject joinPanel;
+    GameObject countdownPanel;
 
     private void Awake() {
-
         portraitPrefab = GameObject.Find("Portrait_Prefab");
+        joinPanel = GameObject.Find("Join_Panel");
+        countdownPanel = GameObject.Find("Countdown_Panel");
+
         portraitPrefab.SetActive(false);
     }
-	
+
+    float countdown = 5;
 	void Update () {
         // Leave
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -130,9 +139,37 @@ public class CampaignLobby : MonoBehaviour {
             }
         }
 
-        // Selectors update        
+        // Selectors update
         for (int i=0; i < characterSelectors.Count; i++) {
             characterSelectors[i].Update();
+        }
+
+        // Game start
+        bool ready = true;
+        if (characterSelectors.Count <= 0) {
+            ready = false;
+        }
+        for (int i=0; i < characterSelectors.Count; i ++) {
+            if (characterSelectors[i].status != CharacterSelect.Status.Ready) {
+                ready = false;
+            }
+        }
+
+        if (ready) {
+            joinPanel.SetActive(false);
+            countdownPanel.SetActive(true);
+
+            countdown -= Time.deltaTime;
+
+            countdownPanel.transform.Find("Timer_Text").GetComponent<Text>().text = countdown.ToString("F1");
+            if (countdown <= 0) {
+                StartGame();
+            }
+        } else {
+            joinPanel.SetActive(true);
+            countdownPanel.SetActive(false);
+
+            countdown = 5;
         }
 
         // Join
