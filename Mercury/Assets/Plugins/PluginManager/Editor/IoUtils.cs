@@ -68,6 +68,7 @@ public class IoUtils {
 
             foreach (ZipEntry entry in zipFile) {
                 string targetFile = Path.Combine(targetDirectory, entry.Name);
+                Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
 
                 using (FileStream outputFile = File.Create(targetFile)) {
                     if (entry.Size > 0) {

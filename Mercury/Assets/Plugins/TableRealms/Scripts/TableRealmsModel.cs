@@ -11,14 +11,11 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
     public HashSet<string> globalKeys = new HashSet<string>();
 
     public void Awake() {
-        if (instance == null)
-        {
+        if (instance == null) {
             instance = this;
             Tokenizer.AddTokenizerSource(this);
             GameObject.DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
+        } else {
             GameObject.Destroy(gameObject);
         }
     }
@@ -91,6 +88,9 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
         if (typeof(oftype) == typeof(long) && currentObject.GetType() == typeof(double)) {
             currentObject = (long)(double)currentObject;
         }
+        if (typeof(oftype) == typeof(bool) && currentObject == null) {
+            currentObject = false;
+        }
 
         try {
             if (currentObject == null) {
@@ -106,6 +106,15 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
     }
 
     public void SetDataLocalOnly(string key, object value) {
+        SetDataLocalOnly(key, value, false);
+    }
+
+    public void SetDataLocalOnly(string key, object value, bool forceNew) {
+        object oldvalue = null;
+        if (globalData.ContainsKey(key)) {
+            oldvalue = globalData[key];
+        }
+
         if (globalData.ContainsKey(key)) {
             globalData.Remove(key);
         }
@@ -127,10 +136,14 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
             globalDataType.Add(key, value.GetType());
         }
 
+        if (oldvalue != value || forceNew) {
+            Tokenizer.DataChanged(GetKey(), key, value);
+        }
+
     }
 
     public void SetData(string key, object value) {
-	    SetData(key, value, false);
+        SetData(key, value, false);
     }
 
     public void SetData(string key, object value, bool forceNew) {
@@ -139,7 +152,7 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
             oldvalue = globalData[key];
         } else {
             if (key.IndexOf(".") == -1 || !TableRealmsGameNetwork.instance.IsClientConnected(key.Substring(0, key.IndexOf(".")))) {
-                globalData.Add(key,value);
+                globalData.Add(key, value);
                 globalKeys.Add(key);
                 oldvalue = value;
             }
@@ -147,13 +160,12 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
 
         SetDataLocalOnly(key, value);
 
-        if (oldvalue != value || forceNew) {
-            Tokenizer.DataChanged(GetKey(), key, value);
+        if ((oldvalue != value || forceNew) && (TableRealmsPeerToPeerNetwork.instance==null || TableRealmsPeerToPeerNetwork.instance.AmITheHost())) {
             TableRealmsGameNetwork.instance.SendData(key, value);
         }
-	    
-	    if (key.Contains(".page")) {
-	    	SetData(key.Replace(".page", ".lastpage"), value, true);
-	    }
+
+        if (key.Contains(".page")) {
+            SetData(key.Replace(".page", ".lastpage"), value, true);
+        }
     }
 }

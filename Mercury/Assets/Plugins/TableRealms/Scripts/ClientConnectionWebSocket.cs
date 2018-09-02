@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 #if UNITY_WEBGL
@@ -14,11 +15,11 @@ public class ClientConnectionWebSocket : IClientConnection {
     private SocketRecieveState socketRecieveState = new SocketRecieveState();
     private Boolean closed = false;
     private string gameObjectName;
+    private List<string> storedMessages = new List<string>();
 
     public ClientConnectionWebSocket(string url, string gameObjectName) {
         this.url = url;
         this.gameObjectName = gameObjectName;
-        BeginRead();
     }
 
     public string GetRemoteEndPoint() {
@@ -37,18 +38,27 @@ public class ClientConnectionWebSocket : IClientConnection {
         TableRealmsSendToClient(url, message);
     }
 
-    private void BeginRead() {
+    public void BeginRead() {
         TableRealmsConnectToClient(gameObjectName,url);
     }
 
     public void RecieveMessage(string message) {
-        if (!incommingMessageCallBack(message)) {
+        if (incommingMessageCallBack == null) {
+            storedMessages.Add(message);
+        } else if (!incommingMessageCallBack(message)) {
             Close();
         }
     }
 
     public void ReadAndDeliverTo(Func<string, bool> incommingMessageCallBack) {
         this.incommingMessageCallBack = incommingMessageCallBack;
+        List<string> oldStoredMessages = storedMessages;
+        storedMessages = null;
+        foreach (string message in oldStoredMessages) {
+            if (!incommingMessageCallBack(message)) {
+                Close();
+            }
+        }
     }
 }
 #endif

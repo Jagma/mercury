@@ -12,6 +12,9 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
     [DllImport("__Internal")]
     private static extern void TableRealmsStarted();
 
+    [DllImport("__Internal")]
+    private static extern int IsTableRealmsEmbedded();
+
     static private bool initialized = false;
 
     private Func<IClientConnection, bool> callback;
@@ -22,6 +25,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
 
     private float lastConnectOrDisconected;
     private float nextTestTime = 0;
+    private bool setStarted = false;
 
     private Dictionary<string, ClientConnectionWebSocket> clientConnections=new Dictionary<string, ClientConnectionWebSocket>();
 
@@ -30,12 +34,17 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
             initialized = true;
             this.gameName = gameName;
             lastConnectOrDisconected = Time.realtimeSinceStartup;
-            TableRealmsStarted();
+        }
+        if (IsTableRealmsEmbedded()==1) {
+            TableRealmsGameNetwork.instance.SetEmbedded(true);
         }
     }
   
     public void Update() {
         if (nextTestTime < Time.realtimeSinceStartup && initialized) {
+            if (!setStarted) {
+                TableRealmsStarted();
+            }
             PollForConnections();
             float timeGap = Math.Min(10,((Time.realtimeSinceStartup - lastConnectOrDisconected) /60)+2);
             nextTestTime = Time.realtimeSinceStartup + timeGap;
@@ -61,6 +70,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
             clientConnections.Remove(url);
         }
         clientConnections.Add(url,clientConnectionWebSocket);
+        clientConnectionWebSocket.BeginRead();
     }
 
     public void SetSessionId(string sessionId) {
@@ -85,6 +95,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
         if (clientConnections.ContainsKey(url)){
             ClientConnectionWebSocket clientConnectionWebSocket = clientConnections[url];
             if (clientConnectionWebSocket.IsConnected()) {
+                //Debug.Log("TableRealms: Recieving staored message '"+message+"'");
                 clientConnectionWebSocket.RecieveMessage(message);
             } else {
                 clientConnections.Remove(url);

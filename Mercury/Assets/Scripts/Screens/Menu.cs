@@ -11,7 +11,7 @@ public class Menu : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Return)) {
+	/*	if (Input.GetKeyDown(KeyCode.Return)) {
             PlayerInput pi = new PlayerInput("Keyboard|0001", PlayerInput.InputType.Keyboard);
             InputManager.instance.AddPlayerInput(pi);
             AudioManager.instance.StopAudio("soviet-anthem");
@@ -23,6 +23,19 @@ public class Menu : MonoBehaviour {
             InputManager.instance.AddPlayerInput(pi);
             AudioManager.instance.StopAudio("soviet-anthem");
             SceneManager.LoadScene("Multiplayer");
-        }
+        } */
+    }
+
+    public void NavigateCampaign () {
+        SceneManager.LoadScene("CampaignLobby");
+    }
+
+    public void NavigateTeamDeathmatch () {
+        // SceneManager.LoadScene("");
+        Debug.LogError("Not implemented");
+    }
+
+    public void NavigateExit () {
+        Application.Quit();
     }
 }
