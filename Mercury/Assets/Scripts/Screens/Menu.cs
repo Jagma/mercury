@@ -12,6 +12,7 @@ public class Menu : MonoBehaviour
     GameObject previousSelection;
     void Start ()
     {
+        AudioManager.instance.PlayAudio("main_menu_loop", 1, true);
         InputManager.instance.GetPlayerInputDictionary().Clear();
     }
 
@@ -32,6 +33,7 @@ public class Menu : MonoBehaviour
 
     public void NavigateCampaign ()
     {
+        AudioManager.instance.StopAudio("main_menu_loop");
         SceneManager.LoadScene("CampaignLobby");
     }
 
