@@ -31,6 +31,9 @@ public class CampaignLobby : MonoBehaviour {
             characterSelectGO = portrait.transform.Find("CharacterSelect_Panel").gameObject;
             characterSelectedGO = portrait.transform.Find("CharacterSelected_Panel").gameObject;
 
+            characterSelectGO.transform.Find("UpArrow_Image").GetComponent<Button>().onClick.AddListener(Up);
+            characterSelectGO.transform.Find("DownArrow_Image").GetComponent<Button>().onClick.AddListener(Down);
+
             characterSelectGO.SetActive(true);
             characterSelectedGO.SetActive(false);
 
