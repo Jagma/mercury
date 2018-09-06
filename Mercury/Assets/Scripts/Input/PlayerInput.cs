@@ -23,7 +23,8 @@ public class PlayerInput {
             Debug.LogError("Not implemented");
         }
         if (inputType == InputType.Controller) {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.LeftStickUp.WasPressed;
         }
         if (inputType == InputType.Keyboard) {
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
@@ -38,7 +39,8 @@ public class PlayerInput {
             Debug.LogError("Not implemented");
         }
         if (inputType == InputType.Controller) {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.LeftStickDown.WasPressed;
         }
         if (inputType == InputType.Keyboard) {
             if (Input.GetKeyDown(KeyCode.DownArrow)) {
@@ -53,7 +55,8 @@ public class PlayerInput {
             Debug.LogError("Not implemented");
         }
         if (inputType == InputType.Controller) {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.Action1.WasPressed;
         }
         if (inputType == InputType.Keyboard) {
             if (Input.GetKeyDown(KeyCode.Return)) {
@@ -68,7 +71,8 @@ public class PlayerInput {
             Debug.LogError("Not implemented");
         }
         if (inputType == InputType.Controller) {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.Action2.WasPressed;
         }
         if (inputType == InputType.Keyboard) {
             if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -79,6 +83,7 @@ public class PlayerInput {
     }
 
 
+    
     public Vector2 GetMoveDirection ()
     {
         if (inputType == InputType.TableRealms)
@@ -87,7 +92,8 @@ public class PlayerInput {
         }
         if (inputType == InputType.Controller)
         {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.LeftStick.Value;
         }
         if (inputType == InputType.Keyboard)
         {
@@ -115,6 +121,7 @@ public class PlayerInput {
         return Vector2.zero;
     }
 
+    Vector2 controllerAimDir = Vector2.up;
     public Vector2 GetAimDirection ()
     {
         if (inputType == InputType.TableRealms)
@@ -123,7 +130,13 @@ public class PlayerInput {
         }
         if (inputType == InputType.Controller)
         {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+
+            if (d.RightStick.Value.magnitude > 0.1f) {
+                controllerAimDir = d.RightStick.Value;
+            }
+
+            return controllerAimDir;
         }
         if (inputType == InputType.Keyboard)
         {
@@ -153,7 +166,7 @@ public class PlayerInput {
 
     public bool GetAttack ()
     {
-        if (inputType == InputType.Controller || inputType == InputType.TableRealms)
+        if (inputType == InputType.TableRealms)
         {
             if (GetAimDirection().magnitude > 0.5f)
             {
@@ -164,6 +177,12 @@ public class PlayerInput {
                 return false;
             }
         }
+
+        if (inputType == InputType.Controller) {
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.RightTrigger.IsPressed;
+        }
+
         if (inputType == InputType.Keyboard)
         {
             return Input.GetKey(KeyCode.Mouse0);
@@ -180,7 +199,8 @@ public class PlayerInput {
         }
         if (inputType == InputType.Controller)
         {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.Action4.IsPressed;
         }
         if (inputType == InputType.Keyboard)
         {
@@ -215,7 +235,8 @@ public class PlayerInput {
         }
         if (inputType == InputType.Controller)
         {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.Action1.IsPressed;
         }
         if (inputType == InputType.Keyboard)
         {

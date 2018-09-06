@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using InControl;
 
 public class CampaignLobby : MonoBehaviour {
     public class CharacterSelect {
@@ -167,6 +168,12 @@ public class CampaignLobby : MonoBehaviour {
         }
 
         // TODO: Add controller leave
+        if (InControl.InputManager.ActiveDevice.Action2.WasPressed) {
+            string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
+            if (InputManager.instance.GetPlayerInput(controllerID) == null) {
+                SceneManager.LoadScene("Menu");
+            }
+        }
 
         // TODO: Add table realms leave
 
@@ -210,9 +217,11 @@ public class CampaignLobby : MonoBehaviour {
         }
 
         // TODO: Reposition portraits each frame
-        
 
-        // TODO: Add controller join
+        if (InControl.InputManager.ActiveDevice.Action1.WasPressed) {
+            string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
+            PlayerJoin(controllerID, PlayerInput.InputType.Controller);
+        }
 
         // TODO: Add table realms join
 

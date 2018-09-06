@@ -182,6 +182,9 @@ public class Miner
         if (posX <= 1 || posX >= levelGen.mapWidth-2 ||
             posZ <= 1 || posZ >= levelGen.mapDepth-2)
         {
+            posX = Mathf.Clamp(posX, 2, levelGen.mapWidth - 2);
+            posZ = Mathf.Clamp(posZ, 2, levelGen.mapDepth - 2);
+
             lifetime = 0;
         }
 
