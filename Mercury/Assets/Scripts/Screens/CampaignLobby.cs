@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using InControl;
 
 public class CampaignLobby : MonoBehaviour {
+
+
     public class CharacterSelect {
         public enum Status {
             Selecting,
@@ -140,12 +142,23 @@ public class CampaignLobby : MonoBehaviour {
         }
     }
 
-    public Color[] playerColors;
 
+
+
+
+
+
+
+
+
+
+
+    public Color[] playerColors;
     public string[] characterNames;
     public Sprite[] characterPortraits;    
-
+    
     List<CharacterSelect> characterSelectors = new List<CharacterSelect>();
+
     GameObject portraitPrefab;
     GameObject joinPanel;
     GameObject countdownPanel;
@@ -166,8 +179,7 @@ public class CampaignLobby : MonoBehaviour {
                 SceneManager.LoadScene("Menu");
             }
         }
-
-        // TODO: Add controller leave
+        
         if (InControl.InputManager.ActiveDevice.Action2.WasPressed) {
             string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
             if (InputManager.instance.GetPlayerInput(controllerID) == null) {
@@ -215,16 +227,34 @@ public class CampaignLobby : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Return)) {
             PlayerJoin("Keyboard|0001", PlayerInput.InputType.Keyboard);
         }
-
-        // TODO: Reposition portraits each frame
-
         if (InControl.InputManager.ActiveDevice.Action1.WasPressed) {
             string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
             PlayerJoin(controllerID, PlayerInput.InputType.Controller);
         }
-
         // TODO: Add table realms join
 
+
+        // Portrait updates
+        float panelWidth = 230;
+        float totalWidth = characterSelectors.Count * panelWidth;
+        for (int i = 0; i < characterSelectors.Count; i++) {
+            RectTransform rt = characterSelectors[i].portrait.GetComponent<RectTransform>();
+            Vector2 targetPos = new Vector2(-totalWidth * 0.5f + i * panelWidth + panelWidth * 0.5f, 0);
+            rt.anchoredPosition = Vector2.Lerp(rt.anchoredPosition, targetPos, Time.deltaTime * 20f);
+
+            GameObject p = characterSelectors[i].portrait;
+
+            Color col = playerColors[i];
+
+            p.GetComponent<Outline>().effectColor = col;
+
+            col *= 0.8f;
+            col.a = 1;
+
+            p.GetComponent<Image>().color = col;
+            p.transform.Find("Text").GetComponent<Text>().text = "Player " + (i + 1).ToString();
+            p.transform.Find("Text").GetComponent<Text>().color = col;
+        }
     }
 
     void PlayerJoin (string playerID, PlayerInput.InputType type) {
@@ -261,15 +291,8 @@ public class CampaignLobby : MonoBehaviour {
         
         GameObject p = Instantiate(portraitPrefab);
         p.transform.SetParent(portraitPrefab.transform.parent, false);
-
-        Color col = playerColors[characterSelectors.Count];
-        p.GetComponent<Outline>().effectColor = col;
-        p.transform.Find("Text").GetComponent<Text>().color = col;
-
-        col *= 0.8f;
-        col.a = 1;
-
-        p.GetComponent<Image>().color = col;
+        
+        
 
         p.SetActive(true);
 

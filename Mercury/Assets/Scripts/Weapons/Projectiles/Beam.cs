@@ -44,15 +44,6 @@ public class Beam : MonoBehaviour
             Wall walls = hits[i].collider.GetComponent<Wall>();
             Enemy enemies = hits[i].collider.GetComponent<Enemy>();
 
-            if (walls != null)
-            {
-                walls.Damage(damage);
-            }
-            if (enemies != null)
-            {
-                enemies.Damage(damage);
-            }
-
             // This is for selecting the closest qualifying collider. Since the RaycastHit[] array isn't ordered.
             if (hits[i].collider.GetComponent<Wall>() ||hits[i].collider.GetComponent<Enemy>())
             {
@@ -77,7 +68,6 @@ public class Beam : MonoBehaviour
         {
             enemy.Damage(damage);
         }
-
     }
 
     public void UpdateVisual (Vector3 startPos, Vector3 endPos)
