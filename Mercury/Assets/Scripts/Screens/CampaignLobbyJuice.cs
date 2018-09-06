@@ -8,11 +8,9 @@ public class CampaignLobbyJuice : MonoBehaviour {
     public Text titleText;
     public AnimationCurve titleCurve;
 	void Start () {
-       // StartCoroutine(ETitleJuice());
 	}
 	
 	void Update () {
-        //  titleText.transform.localScale = Vector3.Lerp(titleText.transform.localScale, Vector3.one, Time.deltaTime * 10);
         titleText.transform.localScale = Vector3.one * titleCurve.Evaluate(Time.time);
     }
 
