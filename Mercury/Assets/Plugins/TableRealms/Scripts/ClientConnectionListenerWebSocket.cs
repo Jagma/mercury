@@ -6,11 +6,16 @@ using System.Runtime.InteropServices;
 #if UNITY_WEBGL
 public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectionListener {
 
+#if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void TableRealmsProxyList(string gameObjectName,string sessionId,string serviceUrl);
 
     [DllImport("__Internal")]
     private static extern void TableRealmsStarted();
+
+    [DllImport("__Internal")]
+    private static extern int IsTableRealmsEmbedded();
+#endif
 
     static private bool initialized = false;
 
@@ -22,6 +27,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
 
     private float lastConnectOrDisconected;
     private float nextTestTime = 0;
+    private bool setStarted = false;
 
     private Dictionary<string, ClientConnectionWebSocket> clientConnections=new Dictionary<string, ClientConnectionWebSocket>();
 
@@ -30,12 +36,21 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
             initialized = true;
             this.gameName = gameName;
             lastConnectOrDisconected = Time.realtimeSinceStartup;
-            TableRealmsStarted();
         }
+#if UNITY_WEBGL && !UNITY_EDITOR
+        if (IsTableRealmsEmbedded()==1) {
+            TableRealmsGameNetwork.instance.SetEmbedded(true);
+        }
+#endif
     }
   
     public void Update() {
         if (nextTestTime < Time.realtimeSinceStartup && initialized) {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (!setStarted) {
+                TableRealmsStarted();
+            }
+#endif
             PollForConnections();
             float timeGap = Math.Min(10,((Time.realtimeSinceStartup - lastConnectOrDisconected) /60)+2);
             nextTestTime = Time.realtimeSinceStartup + timeGap;
@@ -43,7 +58,9 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
     }
 
     private void PollForConnections() {
+#if UNITY_WEBGL && !UNITY_EDITOR
         TableRealmsProxyList(gameObject.name, sessionId, "http://"+serviceUrl);
+#endif
     }
 
     public void ClientUrlOpen(string url) {
@@ -61,6 +78,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
             clientConnections.Remove(url);
         }
         clientConnections.Add(url,clientConnectionWebSocket);
+        clientConnectionWebSocket.BeginRead();
     }
 
     public void SetSessionId(string sessionId) {
@@ -85,6 +103,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
         if (clientConnections.ContainsKey(url)){
             ClientConnectionWebSocket clientConnectionWebSocket = clientConnections[url];
             if (clientConnectionWebSocket.IsConnected()) {
+                //Debug.Log("TableRealms: Recieving staored message '"+message+"'");
                 clientConnectionWebSocket.RecieveMessage(message);
             } else {
                 clientConnections.Remove(url);

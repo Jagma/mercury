@@ -272,6 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 261938931}
   - component: {fileID: 261938932}
+  - component: {fileID: 261938933}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -304,6 +305,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 1148904856}
+  buttonList:
+  - {fileID: 1722082921}
+  - {fileID: 1767466376}
+  - {fileID: 1056626070}
+--- !u!114 &261938933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 261938930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3ec88333f51ec418dff8d1efbcba65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &384341659
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,6 +490,63 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 529678630}
   m_CullTransparentMesh: 0
+--- !u!1 &627698911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 627698913}
+  - component: {fileID: 627698912}
+  m_Layer: 0
+  m_Name: InControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &627698912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 627698911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logDebugInfo: 0
+  invertYAxis: 0
+  useFixedUpdate: 0
+  dontDestroyOnLoad: 0
+  suspendInBackground: 0
+  enableICade: 0
+  enableXInput: 0
+  xInputOverrideUpdateRate: 0
+  xInputUpdateRate: 0
+  xInputOverrideBufferSize: 0
+  xInputBufferSize: 0
+  enableNativeInput: 0
+  nativeInputEnableXInput: 1
+  nativeInputPreventSleep: 0
+  nativeInputOverrideUpdateRate: 0
+  nativeInputUpdateRate: 0
+  customProfiles: []
+--- !u!4 &627698913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 627698911}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &678187180
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,11 +589,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1885e694d9661a84eb3aebeb01f3fcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameName: Mercury
-  tableRealmsDesign: {fileID: 4900000, guid: e7cf3c28e9543404e9d30b9ca66be0a4, type: 3}
+  gameName: Project Mercury
+  tableRealmsDesign: {fileID: 4900000, guid: 9d5a23d8fd3b9c849a6e5de8e85a6f63, type: 3}
   designBytes: 
   joinQRCodeTexture: {fileID: 0}
-  playerCommandScriptName: 
+  playerCommandScriptName: TableRealmsDevice
 --- !u!114 &678187183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,6 +616,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49e9b1a3d1b12342b341004e992159e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &990637607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 990637608}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &990637608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 990637607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.6690247, y: -0.132721, z: -0.0703125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1056626070
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,17 +825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04607fe3c74cbcd4980f7da5b6b3587f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClips:
-  - {fileID: 8300000, guid: 62cf011e16ce2924c919ae0d53105dec, type: 3}
-  - {fileID: 8300000, guid: fe377c53e8714a540902794c5911ff78, type: 3}
-  - {fileID: 8300000, guid: b421a606486dfa042a7323bd070928ab, type: 3}
-  - {fileID: 8300000, guid: 20b7382852d3333459febf5c628d3ea4, type: 3}
-  - {fileID: 8300000, guid: b5644c1e883782a42a7c9ba353cf3106, type: 3}
-  - {fileID: 8300000, guid: cf664af033593d74d8ace57036018621, type: 3}
-  - {fileID: 8300000, guid: 5e483173cc5968446a1f90119c119780, type: 3}
-  - {fileID: 8300000, guid: ae39867309959aa43812f8a60601d9eb, type: 3}
-  - {fileID: 8300000, guid: 19050cf104b84cc48a187018a36ea146, type: 3}
-  - {fileID: 0}
 --- !u!4 &1094294515
 Transform:
   m_ObjectHideFlags: 0

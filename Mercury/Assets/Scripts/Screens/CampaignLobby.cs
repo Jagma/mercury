@@ -16,7 +16,12 @@ public class CampaignLobby : MonoBehaviour {
         public GameObject portrait;
 
         GameObject characterSelectGO;
-        GameObject characterSelectedGO;
+        GameObject characterSelectImageGO;
+        GameObject characterSelectUpArrowGO;
+        GameObject characterSelectDownArrowGO;
+
+        GameObject characterSelectedGO;        
+
         Sprite characterImage;
         string characterName = "no name";
         int characterIndex = 0;
@@ -28,16 +33,22 @@ public class CampaignLobby : MonoBehaviour {
             this.portrait = portrait;
             this.lobby = lobby;
 
-            characterSelectGO = portrait.transform.Find("CharacterSelect_Panel").gameObject;
+            characterSelectGO = portrait.transform.Find("CharacterSelect_Panel").gameObject;            
             characterSelectedGO = portrait.transform.Find("CharacterSelected_Panel").gameObject;
+
+            characterSelectImageGO = characterSelectGO.transform.Find("Character_Image").gameObject;
+            characterSelectUpArrowGO = characterSelectGO.transform.Find("UpArrow_Image").gameObject;
+            characterSelectDownArrowGO = characterSelectGO.transform.Find("DownArrow_Image").gameObject;
 
             characterSelectGO.transform.Find("UpArrow_Image").GetComponent<Button>().onClick.AddListener(Up);
             characterSelectGO.transform.Find("DownArrow_Image").GetComponent<Button>().onClick.AddListener(Down);
-
+            
             characterSelectGO.SetActive(true);
             characterSelectedGO.SetActive(false);
 
             UpdatePortrait();
+
+            portrait.transform.localScale = Vector3.zero;
         }
 
         public void Update() {
@@ -54,8 +65,15 @@ public class CampaignLobby : MonoBehaviour {
                 if (InputManager.instance.GetBackPressed(playerID)) {
                     Leave();
                 }
-            }            
-            
+
+                portrait.transform.localScale = Vector3.Lerp(portrait.transform.localScale, Vector3.one, Time.deltaTime * 10);
+
+                characterSelectImageGO.transform.localScale = Vector3.Lerp(characterSelectImageGO.transform.localScale, Vector3.one, Time.deltaTime * 10);
+                characterSelectUpArrowGO.transform.localScale = Vector3.Lerp(characterSelectUpArrowGO.transform.localScale, Vector3.one, Time.deltaTime * 10);
+                characterSelectDownArrowGO.transform.localScale = Vector3.Lerp(characterSelectDownArrowGO.transform.localScale, Vector3.one, Time.deltaTime * 10);
+
+            }
+
             if (status == Status.Ready) {
                 if (InputManager.instance.GetBackPressed(playerID)) {
                     DeSelect();
@@ -86,6 +104,8 @@ public class CampaignLobby : MonoBehaviour {
         }
 
         void Up () {
+            characterSelectUpArrowGO.transform.localScale *= 2f;
+
             characterIndex++;
             if (characterIndex == 4) {
                 characterIndex = 0;
@@ -95,6 +115,8 @@ public class CampaignLobby : MonoBehaviour {
         }
 
         void Down () {
+            characterSelectDownArrowGO.transform.localScale *= 2f;
+
             characterIndex--;
             if (characterIndex == -1) {
                 characterIndex = 3;
@@ -112,6 +134,8 @@ public class CampaignLobby : MonoBehaviour {
 
             characterSelectGO.transform.Find("CharacterName_Text").GetComponent<Text>().text = characterName;
             characterSelectedGO.transform.Find("CharacterName_Text").GetComponent<Text>().text = characterName;
+
+            characterSelectImageGO.transform.localScale *= 1.2f;
         }
     }
 

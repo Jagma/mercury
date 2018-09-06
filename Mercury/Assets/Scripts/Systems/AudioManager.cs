@@ -18,23 +18,29 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        for (int i=0; i < audioClips.Length; i ++)
+        AudioClip[] clips =  Resources.LoadAll<AudioClip>("Audio/");
+
+        for (int i=0; i < clips.Length; i ++)
         {
-            if (audioClips[i] != null) {
-                audioClipDictionary.Add(audioClips[i].name, audioClips[i]);
+            if (clips[i] != null) {
+                audioClipDictionary.Add(clips[i].name, clips[i]);
+                Debug.Log("Audio clip loaded : " + clips[i].name);
             }           
         }
     }
 
-    public AudioClip[] audioClips;
     Dictionary<string, AudioClip> audioClipDictionary = new Dictionary<string, AudioClip>();
     List<AudioSource> audioSourceList = new List<AudioSource>();
     float masterVolume = 1;
-
-    AudioSource a;
+    
     public void PlayAudio(string name, float volume, bool loop)
     {
-        a = null;
+        if (audioClipDictionary.ContainsKey(name) == false) {
+            Debug.LogError("Audio clip not found. Check name and ensure the clip is located in Resources/Audio");
+            return;
+        }
+
+        AudioSource a = null;
         for (int i = 0; i < audioSourceList.Count; i++)
         {
             if (audioSourceList[i].isPlaying == false)
