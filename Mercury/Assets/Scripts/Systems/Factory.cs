@@ -32,6 +32,7 @@ public class Factory : MonoBehaviour
         pm.staticFriction = 0;
         playerCollider.material = pm;
 
+        
         Rigidbody playerRigid = playerGO.AddComponent<Rigidbody>();
         playerRigid.interpolation = RigidbodyInterpolation.Interpolate;
         playerRigid.constraints = RigidbodyConstraints.FreezeRotation;
@@ -48,6 +49,17 @@ public class Factory : MonoBehaviour
         playerVisualBodyGO.transform.parent = playerVisualGO.transform;
         SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
 
+
+        /* GameObject playerHealthBarGO = new GameObject("Health Bar");
+         playerHealthBarGO.transform.parent = playerVisualGO.transform;
+         playerHealthBarGO.transform.localPosition = new Vector3(0,0.5f, -0.3f); // (-2.15f, 3, -0.3f);
+         playerHealthBarGO.transform.localScale = new Vector3(1f, 0.1f, 1);
+         SpriteRenderer srHB = playerHealthBarGO.AddComponent<SpriteRenderer>();
+         playerHealthBarGO.AddComponent<HealthBar>();*/
+
+
+        GameObject health = GameObject.FindGameObjectWithTag("HealthBars");
+        health.transform.parent = playerGO.transform;
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
         playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1");
         playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1B");
