@@ -94,9 +94,17 @@ public class LevelGeneration : MonoBehaviour
                     wallGO.transform.position = new Vector3(x, 1, z);
                 }
 
+                if (enemies[x, z] == "Martian Boss")
+                {
+                   GameObject enemyGO = Factory.instance.CreateMartianBoss();
+                   enemyGO.transform.parent = levelRoot;
+                   enemyGO.transform.position = new Vector3(x, 2, z);
+                   GameProgressionManager.instance.IncreaseEnemyCount();
+                }
+
                 if (enemies[x, z] == "Walker")
                 {
-                    GameObject enemyGO = Factory.instance.CreateEnemyWalker();
+                    GameObject enemyGO = Factory.instance.CreateMartianBoss();
                     enemyGO.transform.parent = levelRoot;
                     enemyGO.transform.position = new Vector3(x, 2, z);
                     GameProgressionManager.instance.IncreaseEnemyCount();
@@ -196,6 +204,10 @@ public class Miner
         if (Random.Range(0, 1000) > 995)
         {
             levelGen.enemies[posX, posZ] = "Walker";
+        }
+        if (Random.Range(0, 1000) > 995)
+        {
+            levelGen.enemies[posX, posZ] = "Martian Boss";
         }
         if (Random.Range(0, 1000) > 995)
         {

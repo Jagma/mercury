@@ -12,7 +12,7 @@ public class Menu : MonoBehaviour
     GameObject previousSelection;
     void Start ()
     {
-        AudioManager.instance.PlayAudio("main_menu_loop", 1, true);
+        //AudioManager.instance.PlayAudio("main_menu_loop", 1, true);
         InputManager.instance.GetPlayerInputDictionary().Clear();
     }
 
