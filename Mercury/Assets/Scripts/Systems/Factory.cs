@@ -420,6 +420,30 @@ public class Factory : MonoBehaviour
         return enemyWalkerGO;
     }
 
+    public GameObject CreateMartianBoss()
+    {
+         GameObject martianBossGO = new GameObject("Martian Boss");
+
+         CapsuleCollider martianBossCollider = martianBossGO.AddComponent<CapsuleCollider>();
+         martianBossCollider.radius = 0.25f;
+         martianBossCollider.height = 0.8f;
+
+         Rigidbody martianBossRigid = martianBossGO.AddComponent<Rigidbody>();
+         martianBossRigid.interpolation = RigidbodyInterpolation.Interpolate;
+         martianBossRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+         GameObject martianBossrVisualGO = new GameObject("Visual");
+         martianBossrVisualGO.transform.parent = martianBossGO.transform;
+
+         GameObject martianBossVisualBodyGO = new GameObject("Body");
+         martianBossVisualBodyGO.transform.parent = martianBossrVisualGO.transform;
+
+         SpriteRenderer sr = martianBossVisualBodyGO.AddComponent<SpriteRenderer>();
+         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MartianBoss");
+
+         martianBossGO.AddComponent<MartianBoss>();
+         return martianBossGO;
+    }
 
     public GameObject CreateRangedWalker()
     {
