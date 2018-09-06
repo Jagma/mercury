@@ -213,6 +213,42 @@ public class PlayerInput {
         return false;
     }
 
+    public bool GetSwitchWeapons()
+    {
+        if (inputType == InputType.TableRealms)
+        {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Controller)
+        {
+            Debug.LogError("Not implemented");
+        }
+        if (inputType == InputType.Keyboard)
+        {
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                Debug.Log("Switch Weapons");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool switchWeaponsPressedCache = false;
+    public bool GetSwitchWeaponsPressed()
+    {
+        bool result = false;
+        if (switchWeaponsPressedCache == false && GetSwitchWeapons() == true)
+        {
+            result = true;
+        }
+
+        switchWeaponsPressedCache = GetSwitchWeapons();
+
+        return result;
+    }
+
     bool interactPressedCache = false;
     public bool GetInteractPressed ()
     {

@@ -87,6 +87,11 @@ public class InputManager : MonoBehaviour
         return playerInputDictionary[playerID].GetInteractPressed();
     }
 
+    public bool GetSwitchWeaponsPressed(string playerID)
+    {
+        return playerInputDictionary[playerID].GetSwitchWeaponsPressed();
+    }
+
     public bool GetUseAbility(string playerID)
     {
         return playerInputDictionary[playerID].GetUseAbilityPressed();

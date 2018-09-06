@@ -23,5 +23,9 @@ public class PlayerController : MonoBehaviour
         {
             actor.UseAbility();
         }
+        if (InputManager.instance.GetSwitchWeaponsPressed(actor.model.playerID))
+        {
+            actor.SwitchWeapons();
+        }
     }
 }

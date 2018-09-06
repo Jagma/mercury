@@ -17,6 +17,7 @@ public class PlayerActor : MonoBehaviour
     Transform visual;
     Rigidbody rigid;
     Weapon weapon;
+    Weapon inventoryWeapon;
 
     private void Awake()
     {
@@ -28,6 +29,8 @@ public class PlayerActor : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
+        model.equippedWeapon = null;
+        model.secondaryWeapon = null;
     }
 
 	void Update ()
@@ -35,6 +38,11 @@ public class PlayerActor : MonoBehaviour
         if (model.equippedWeapon)
         {
             model.equippedWeapon.transform.position = transform.position + model.equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
+        }
+        if (model.secondaryWeapon)
+        {
+            model.secondaryWeapon.transform.position = transform.position + new Vector3(0.4f,0,0.5f);
+
         }
 
         // Visual look at camera
@@ -56,6 +64,17 @@ public class PlayerActor : MonoBehaviour
         rigid.velocity += transform.forward * moveDir.y * model.moveAcceleration;
         rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
     }
+    
+    public void SwitchWeapons()
+    {
+        Weapon sw = model.equippedWeapon;
+        model.equippedWeapon.Dequip();
+        model.secondaryWeapon.Equip();
+
+        model.equippedWeapon = model.secondaryWeapon;
+        model.secondaryWeapon = sw;
+        model.secondaryWeapon.transform.rotation = Quaternion.Euler(0,90f,0);
+    }
 
     public void Interact()
     {
@@ -63,19 +82,32 @@ public class PlayerActor : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             Weapon weapon = colliders[i].GetComponent<Weapon>();
-            if (weapon != null && weapon != model.equippedWeapon)
+            if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon)
             {
                 // Dequip current weapon
-                if (model.equippedWeapon != null)
+                //Both slots full
+                if (model.equippedWeapon != null && model.secondaryWeapon != null)
                 {
                     model.equippedWeapon.Dequip();
-                    model.equippedWeapon = null;
+                    weapon.Equip();
+                    model.equippedWeapon = weapon;
+                }
+                //Inventory empty
+                if(model.equippedWeapon != null && model.secondaryWeapon == null)
+                {
+                    model.equippedWeapon.Dequip();
+                    model.secondaryWeapon = model.equippedWeapon;
+                    weapon.Equip();
+                    model.equippedWeapon = weapon;
                 }
 
                 // Equip new weapon
-                weapon.Equip();
-                AudioManager.instance.PlayAudio("dsdbload",1,false);
-                model.equippedWeapon = weapon;
+                if(model.equippedWeapon == null && model.secondaryWeapon == null)
+                {
+                    weapon.Equip();
+                    AudioManager.instance.PlayAudio("dsdbload", 1, false);
+                    model.equippedWeapon = weapon;
+                }
                 return;
             }
         }
@@ -117,7 +149,6 @@ public class PlayerActor : MonoBehaviour
     public void UseAbility ()
     {
         model.ability.UseAbility();
-        Debug.Log("Ability used");
     }
 
     public float GetHealthInformation()
