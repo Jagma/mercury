@@ -516,11 +516,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1885e694d9661a84eb3aebeb01f3fcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameName: Mercury
-  tableRealmsDesign: {fileID: 4900000, guid: e7cf3c28e9543404e9d30b9ca66be0a4, type: 3}
+  gameName: Project Mercury
+  tableRealmsDesign: {fileID: 4900000, guid: 9d5a23d8fd3b9c849a6e5de8e85a6f63, type: 3}
   designBytes: 
   joinQRCodeTexture: {fileID: 0}
-  playerCommandScriptName: 
+  playerCommandScriptName: TableRealmsDevice
 --- !u!114 &678187183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,17 +724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04607fe3c74cbcd4980f7da5b6b3587f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClips:
-  - {fileID: 8300000, guid: 62cf011e16ce2924c919ae0d53105dec, type: 3}
-  - {fileID: 8300000, guid: fe377c53e8714a540902794c5911ff78, type: 3}
-  - {fileID: 8300000, guid: b421a606486dfa042a7323bd070928ab, type: 3}
-  - {fileID: 8300000, guid: 20b7382852d3333459febf5c628d3ea4, type: 3}
-  - {fileID: 8300000, guid: b5644c1e883782a42a7c9ba353cf3106, type: 3}
-  - {fileID: 8300000, guid: cf664af033593d74d8ace57036018621, type: 3}
-  - {fileID: 8300000, guid: 5e483173cc5968446a1f90119c119780, type: 3}
-  - {fileID: 8300000, guid: ae39867309959aa43812f8a60601d9eb, type: 3}
-  - {fileID: 8300000, guid: 19050cf104b84cc48a187018a36ea146, type: 3}
-  - {fileID: 0}
 --- !u!4 &1094294515
 Transform:
   m_ObjectHideFlags: 0
