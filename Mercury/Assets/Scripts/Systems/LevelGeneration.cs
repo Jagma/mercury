@@ -104,7 +104,7 @@ public class LevelGeneration : MonoBehaviour
 
                 if (enemies[x, z] == "Walker")
                 {
-                    GameObject enemyGO = Factory.instance.CreateMartianBoss();
+                    GameObject enemyGO = Factory.instance.CreateEnemyWalker();
                     enemyGO.transform.parent = levelRoot;
                     enemyGO.transform.position = new Vector3(x, 2, z);
                     GameProgressionManager.instance.IncreaseEnemyCount();
