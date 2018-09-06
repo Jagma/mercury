@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerActor : MonoBehaviour
 {
@@ -8,8 +9,11 @@ public class PlayerActor : MonoBehaviour
     public static PlayerActor instance;
     public Sprite forward;
     public Sprite facing;
+ 
     public Sprite death;
-    public double health = 100;
+
+    private float startHealth = 100;
+    public float health = 100;
     Transform visual;
     Rigidbody rigid;
     Weapon weapon;
@@ -116,6 +120,10 @@ public class PlayerActor : MonoBehaviour
         Debug.Log("Ability used");
     }
 
+    public float GetHealthInformation()
+    {
+        return health;
+    }
 
     // Damage, health, and death
     private void OnTriggerEnter(Collider col)
@@ -135,16 +143,17 @@ public class PlayerActor : MonoBehaviour
 
     }
 
-    public void Damage(double damage)
+    public void Damage(float damage)
     {
         health -= damage;
+
         if (health <= 0)
         {
             Death();
         }
     }
 
-    public void Revive(double hp)
+    public void Revive(float hp)
     {
 
         health = hp;
