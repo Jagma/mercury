@@ -27,7 +27,7 @@ public class CampaignLobby : MonoBehaviour {
 
         Sprite characterImage;
         string characterName = "no name";
-        int characterIndex = 0;
+        public int characterIndex = 0;
 
         CampaignLobby lobby;
 
@@ -283,6 +283,13 @@ public class CampaignLobby : MonoBehaviour {
 
     void StartGame () {
         if (InputManager.instance.GetPlayerInputDictionary().Count >= 1) {
+            
+            foreach (CharacterSelect player in characterSelectors)
+            {
+
+                PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
+                Debug.Log(player.portrait.name);
+            }
             SceneManager.LoadScene("GameCOOP");
         }
     }

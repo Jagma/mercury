@@ -48,7 +48,7 @@ public class Factory : MonoBehaviour
         GameObject playerVisualBodyGO = new GameObject("Body");
         playerVisualBodyGO.transform.parent = playerVisualGO.transform;
         SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
-
+        playerGO.AddComponent<SpriteRenderer>();
 
         /* GameObject playerHealthBarGO = new GameObject("Health Bar");
          playerHealthBarGO.transform.parent = playerVisualGO.transform;
@@ -61,8 +61,8 @@ public class Factory : MonoBehaviour
         GameObject health = GameObject.FindGameObjectWithTag("HealthBars");
         health.transform.parent = playerGO.transform;
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
-        playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1");
-        playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_1B");
+        playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
+        playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
         playerActor.death = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/ded");
         PlayerController playerController = playerGO.AddComponent<PlayerController>();
         playerController.actor = playerActor;
@@ -84,6 +84,9 @@ public class Factory : MonoBehaviour
         // Set all trump specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityTrump;
 
+        playerGO.GetComponent<PlayerActor>().facing = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
+        playerGO.GetComponent<PlayerActor>().forward = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
+
         return playerGO;
     }
 
@@ -96,6 +99,9 @@ public class Factory : MonoBehaviour
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityOprah;
+
+        playerGO.GetComponent<PlayerActor>().facing = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_Oprah");
+        playerGO.GetComponent<PlayerActor>().forward = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_OprahB");
 
         return playerGO;
     }
@@ -110,6 +116,9 @@ public class Factory : MonoBehaviour
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityBinLaden;
 
+        playerGO.GetComponent<PlayerActor>().facing = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_Bin_Laden");
+        playerGO.GetComponent<PlayerActor>().forward = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_Bin_LadenB");
+
         return playerGO;
     }
 
@@ -122,6 +131,9 @@ public class Factory : MonoBehaviour
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityPope;
+
+        playerGO.GetComponent<PlayerActor>().facing = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_The_Pope");
+        playerGO.GetComponent<PlayerActor>().forward = playerGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Characters/character_The_PopeB");
 
         return playerGO;
     }

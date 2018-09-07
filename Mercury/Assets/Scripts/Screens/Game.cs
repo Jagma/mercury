@@ -25,23 +25,31 @@ public class Game : MonoBehaviour
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {
-            //Trump character
-            //GameObject playerGO = Factory.instance.CreatePlayerTrump();
+            Debug.Log(PlayerData.GetCharacterName(playerInputKVP.Value.playerID));
+            GameObject playerGO = new GameObject();
+            if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Trump"))
+            {
+                playerGO = Factory.instance.CreatePlayerTrump();
+            }
 
-            //Oprah character
-            GameObject playerGO = Factory.instance.CreatePlayerOprah();
+            if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("The Pope"))
+            {
+                playerGO = Factory.instance.CreatePlayerPope();
+            }
 
-            //Bin Laden character
-            //GameObject playerGO = Factory.instance.CreatePlayerBinLaden();
+            if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Oprah"))
+            {
+                playerGO = Factory.instance.CreatePlayerOprah();
+            }
+            if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Bin Laden"))
+            {
+                playerGO = Factory.instance.CreatePlayerBinLaden();
+            }
 
-            //Pope character
-            //GameObject playerGO = Factory.instance.CreatePlayerPope();
-
-            //Set starting position
             playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
 
             PlayerActor playerActor = playerGO.GetComponent<PlayerActor>();
-            playerActor.model.playerID = playerInputKVP.Value.playerID; ;
+            playerActor.model.playerID = playerInputKVP.Value.playerID;
 
             playerActorList.Add(playerActor);
 

@@ -65,20 +65,20 @@ public class AbilityOprah : Ability {
     {
         spawnableItems = new List<string>();
         //ITEMS
-        //spawnableItems.Add("Enemy Walker");
-        //spawnableItems.Add("Wall");
-        //spawnableItems.Add("Rocket Launcher");
-        //spawnableItems.Add("Laser Rifle");
-        //spawnableItems.Add("Machine Gun");
-        //spawnableItems.Add("Pistol");
+        spawnableItems.Add("Enemy Walker");
+        spawnableItems.Add("Wall");
+        spawnableItems.Add("Rocket Launcher");
+        spawnableItems.Add("Laser Rifle");
+        spawnableItems.Add("Machine Gun");
+        spawnableItems.Add("Pistol");
         spawnableItems.Add("Beam");
-        //spawnableItems.Add("Rocket");
-        //spawnableItems.Add("Bullet");
-        //spawnableItems.Add("Muzzle Flash");
-        //spawnableItems.Add("Rocket Smoke Flash");
-        //spawnableItems.Add("Rocket Hit");
-        //spawnableItems.Add("Bullet Hit");
-        //spawnableItems.Add("Beam Hit");
+        spawnableItems.Add("Rocket");
+        spawnableItems.Add("Bullet");
+        spawnableItems.Add("Muzzle Flash");
+        spawnableItems.Add("Rocket Smoke Flash");
+        spawnableItems.Add("Rocket Hit");
+        spawnableItems.Add("Bullet Hit");
+        spawnableItems.Add("Beam Hit");
 
 
         int randomNum = ran.Next(0, spawnableItems.Count);
