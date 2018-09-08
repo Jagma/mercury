@@ -47,5 +47,6 @@ public class Walker : Enemy
             base.MoveForward();
         }
 
+
     }
 }
