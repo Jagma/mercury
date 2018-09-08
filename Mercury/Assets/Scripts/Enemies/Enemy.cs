@@ -11,7 +11,14 @@ public class Enemy : MonoBehaviour
     Transform visual;
     Transform dropShadow;
     Rigidbody rigid;
+    Material temp;
     public Vector3 forwardDirection = Vector3.forward;
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.15f);
+        transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material = temp;
+    }
 
     private void Awake()
     {
@@ -25,7 +32,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        temp = transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material;
     }
 
     protected virtual void FixedUpdate()
@@ -51,26 +58,30 @@ public class Enemy : MonoBehaviour
         Vector3 moveDir = new Vector3(forwardDirection.x, Mathf.Clamp(rigid.velocity.y, -100, 0), forwardDirection.z);
         rigid.velocity = moveDir * moveSpeed;
     }
-    
+
 
     // Damage, health, and death
     private void OnTriggerEnter(Collider col)
     {
+
         Projectile projectile = col.GetComponent<Projectile>();
         if (projectile != null)
-        {
+        {        
             Damage(projectile.damage);
         }
-    } 
+    }
 
-    public void Damage (double damage)
+    public void Damage(double damage)
     {
         health -= damage;
+        Material hit = Factory.instance.CreateHitFlash();
+        transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material = hit;
         allowWalk = true;
         if (health <= 0)
         {
             Death();
         }
+        StartCoroutine(Wait());
     }
 
     protected virtual void Death()
@@ -83,4 +94,6 @@ public class Enemy : MonoBehaviour
         GameProgressionManager.instance.EnemyDead();
         Destroy(gameObject);
     }
+
+
 }

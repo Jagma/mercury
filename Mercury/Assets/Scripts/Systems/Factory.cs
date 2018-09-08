@@ -251,6 +251,14 @@ public class Factory : MonoBehaviour
         return bulletHit;
     }
 
+    public Material CreateHitFlash()
+    {
+        Material hitflash = new Material(Shader.Find("Particles/Additive"));
+        hitflash.SetTexture("_MainTex", Resources.Load<Texture>("Materials/Flash"));
+
+        return hitflash;
+    }
+
     public GameObject CreateBeamHit()
     {
         GameObject beamHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
@@ -431,6 +439,8 @@ public class Factory : MonoBehaviour
         enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
         enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
+      
+        
         GameObject enemyWalkerVisualGO = new GameObject("Visual");
         enemyWalkerVisualGO.transform.parent = enemyWalkerGO.transform;
 
