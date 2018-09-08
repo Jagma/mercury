@@ -22,8 +22,8 @@ public class RocketLauncher : WeaponRanged
         Destroy(flash, 1);
         AudioManager.instance.PlayAudio("dsrlaunc", 1, false);
         base.Use();
-        
-        rocket = Factory.instance.CreateRocket();
+
+        rocket =  Factory.instance.CreateRocket();
         rocket.transform.position = transform.position + transform.right * ammoOffset;
         rocket.transform.right = transform.right;
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
@@ -31,9 +31,9 @@ public class RocketLauncher : WeaponRanged
 
     protected override void Update()
     {
+        base.Update();
         if (rocket != null)
         {
-            base.Update();
             GameObject smoke = Factory.instance.CreateRocketTrail();
             smoke.transform.position = rocket.transform.position;
             Destroy(smoke, 0.4f);
