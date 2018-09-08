@@ -276,6 +276,12 @@ public class Factory : MonoBehaviour
         return smokeFlash;
     }
 
+    public GameObject CreateRocketTrail()
+    {
+        GameObject smokeTrail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketTrail"));
+        return smokeTrail;
+    }
+
     public GameObject CreateMuzzleFlash()
     {
         GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
