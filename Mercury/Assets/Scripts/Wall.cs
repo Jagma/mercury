@@ -27,6 +27,9 @@ public class Wall : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            GameObject wallBreak = Factory.instance.CreateBrokenWallEffect();
+            wallBreak.transform.position = gameObject.transform.position; 
+            Destroy(wallBreak, 0.7f);
         }
     }
 }

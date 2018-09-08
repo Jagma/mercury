@@ -274,6 +274,12 @@ public class Factory : MonoBehaviour
         return smokeTrail;
     }
 
+    public GameObject CreateBrokenWallEffect()
+    {
+        GameObject brokenWall = GameObject.Instantiate(Resources.Load<GameObject>("Effects/WallBreak"));
+        return brokenWall;
+    }
+
     public GameObject CreateMuzzleFlash()
     {
         GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
