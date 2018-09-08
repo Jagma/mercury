@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelComplete : MonoBehaviour
 {
-
+    public Text titleText;
+    public AnimationCurve titleCurve;
     // Use this for initialization
     void Start()
     {
@@ -14,24 +16,7 @@ public class LevelComplete : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GameProgressionManager.instance.RestartLevel();
-            DestroyInstances();
-            SceneManager.LoadScene("GameCOOP");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            DestroyInstances();
-            Destroy(InputManager.instance);
-            SceneManager.LoadScene("Menu");
-        }
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            //SceneManager.LoadScene("GameCOOP"); 
-        }
+        titleText.transform.localScale = Vector3.one * titleCurve.Evaluate(Time.time);
     }
 
     private void DestroyInstances()
@@ -63,5 +48,12 @@ public class LevelComplete : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    IEnumerator ETitleJuice()
+    {
+        titleText.transform.localScale += new Vector3(0.1f, 0.15f, 0);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(ETitleJuice());
     }
 }

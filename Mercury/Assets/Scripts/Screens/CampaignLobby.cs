@@ -7,6 +7,7 @@ using InControl;
 
 public class CampaignLobby : MonoBehaviour {
 
+    public static CampaignLobby instance;
 
     public class CharacterSelect {
         public enum Status {
@@ -164,6 +165,17 @@ public class CampaignLobby : MonoBehaviour {
     GameObject countdownPanel;
 
     private void Awake() {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         portraitPrefab = GameObject.Find("Portrait_Prefab");
         joinPanel = GameObject.Find("Join_Panel");
         countdownPanel = GameObject.Find("Countdown_Panel");
