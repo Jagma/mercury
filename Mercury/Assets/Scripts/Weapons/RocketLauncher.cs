@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RocketLauncher : WeaponRanged
 {
+    private GameObject rocket;
+
     protected override void Start()
     {
         base.Start();
@@ -21,9 +23,20 @@ public class RocketLauncher : WeaponRanged
         AudioManager.instance.PlayAudio("dsrlaunc", 1, false);
         base.Use();
         
-        GameObject rocket = Factory.instance.CreateRocket();
+        rocket = Factory.instance.CreateRocket();
         rocket.transform.position = transform.position + transform.right * ammoOffset;
         rocket.transform.right = transform.right;
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
+    }
+
+    protected override void Update()
+    {
+        if (rocket != null)
+        {
+            base.Update();
+            GameObject smoke = Factory.instance.CreateRocketTrail();
+            smoke.transform.position = rocket.transform.position;
+            Destroy(smoke, 0.4f);
+        }
     }
 }
