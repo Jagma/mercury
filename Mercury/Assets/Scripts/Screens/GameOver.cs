@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
-
+    public Text titleText;
+    public AnimationCurve titleCurve;
     // Use this for initialization
     void Start()
     {
@@ -14,6 +16,10 @@ public class GameOver : MonoBehaviour
 
     void Update()
     {
+        if (titleText != null)
+        {
+            titleText.transform.localScale = Vector3.one * titleCurve.Evaluate(Time.time);
+        }
     }
 
     public void RestartGame()
@@ -40,5 +46,12 @@ public class GameOver : MonoBehaviour
         Destroy(Game.instance);
         Destroy(Factory.instance);
         Destroy(Portal.instance);
+    }
+
+    IEnumerator ETitleJuice()
+    {
+        titleText.transform.localScale += new Vector3(0.1f, 0.15f, 0);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(ETitleJuice());
     }
 }
