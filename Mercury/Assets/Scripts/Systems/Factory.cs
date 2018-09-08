@@ -267,7 +267,9 @@ public class Factory : MonoBehaviour
 
     public GameObject CreateRocketHit()
     {
-        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
+        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Explosion"));
+        ParticleSystem.ShapeModule shape = rocketHit.GetComponent<ParticleSystem>().shape;
+        shape.radius = 0.4f;
         return rocketHit;
     }
     public GameObject CreateRocketSmokeFlash()
