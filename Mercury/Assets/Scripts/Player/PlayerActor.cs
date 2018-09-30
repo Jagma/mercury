@@ -73,7 +73,8 @@ public class PlayerActor : MonoBehaviour
 
         model.equippedWeapon = model.secondaryWeapon;
         model.secondaryWeapon = sw;
-        model.secondaryWeapon.transform.rotation = Quaternion.Euler(0,90f,0);
+        model.secondaryWeapon.gameObject.SetActive(false);
+        model.equippedWeapon.gameObject.SetActive(true);
     }
 
     public void Interact()
@@ -99,6 +100,7 @@ public class PlayerActor : MonoBehaviour
                     model.secondaryWeapon = model.equippedWeapon;
                     weapon.Equip();
                     model.equippedWeapon = weapon;
+                    model.secondaryWeapon.gameObject.SetActive(false);
                 }
 
                 // Equip new weapon
