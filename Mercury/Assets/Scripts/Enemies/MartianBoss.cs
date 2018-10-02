@@ -28,7 +28,7 @@ public class MartianBoss : Enemy
 
     private void CollisionDetection()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.2f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
 
         for (int i = 0; i < colliders.Length; i++)
         {
