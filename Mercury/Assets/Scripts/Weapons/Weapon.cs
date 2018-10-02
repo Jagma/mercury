@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Start()
     {
-        ammo = new Ammo();
+        //ammo = new Ammo();
         // startup code
     }
 
@@ -47,15 +47,7 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Use()
     {
-        if (ammo.GetCurrentAmmoAmount() < 1)
-        {
-            return;
-        }
-        else
-        {
-
-        }
-            //ammo -= 1;
+       //ammo -= 1;
     }
     
     protected virtual void Update()

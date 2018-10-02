@@ -69,10 +69,7 @@ public class LevelGeneration : MonoBehaviour
             }
         }
 
-        pickups[minerList[0].posX, minerList[0].posZ] = "Pistol"; //index out of array bug occurs here.
-        pickups[minerList[0].posX, minerList[0].posZ+1] = "MachineGun";
-        pickups[minerList[0].posX, minerList[0].posZ+2] = "RocketLauncher";
-        pickups[minerList[0].posX, minerList[0].posZ + 3] = "LaserRifle";
+        pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
         playerSpawnPosition = new Vector3(minerList[0].posX, 4, minerList[0].posZ);
 
         // Build floor
@@ -117,39 +114,21 @@ public class LevelGeneration : MonoBehaviour
                     enemyGO.transform.position = new Vector3(x, 2, z);
                     GameProgressionManager.instance.IncreaseEnemyCount();
                 }
-                if (pickups[x, z] == "Pistol")
+
+                if (pickups[x, z] == "Normal Chest")
                 {
-                     GameObject pistolGO = Factory.instance.CreatePistol();
-                     pistolGO.transform.parent = levelRoot;
-                     pistolGO.transform.position = new Vector3(x, 2, z);
-                 }
-                if (pickups[x, z] == "MachineGun")
-                {
-                    GameObject machineGunGO = Factory.instance.CreateMachineGun();
-                    machineGunGO.transform.parent = levelRoot;
-                    machineGunGO.transform.position = new Vector3(x, 2, z);
+                    GameObject chestGO = Factory.instance.CreateNormalChest();
+                    chestGO.transform.parent = levelRoot;
+                    chestGO.transform.position = new Vector3(x, 2, z);
                 }
-                if (pickups[x, z] == "RocketLauncher")
-                {
-                    GameObject rocketLauncherGO = Factory.instance.CreateRocketLauncher();
-                    rocketLauncherGO.transform.parent = levelRoot;
-                    rocketLauncherGO.transform.position = new Vector3(x, 2, z);
-                }
-                if (pickups[x, z] == "LaserRifle")
-                {
-                    GameObject laserRifleGGO = Factory.instance.CreateLaserRifle();
-                    laserRifleGGO.transform.parent = levelRoot;
-                    laserRifleGGO.transform.position = new Vector3(x, 2, z);
-                }
+
             }
         }
     }
 }
 
-
 public class Miner
 {
-
     public LevelGeneration levelGen;
     public int posX = 3;
     public int posZ = 3;
@@ -219,19 +198,7 @@ public class Miner
         // Pickups
         if (Random.Range(0, 10000) > 9990)
         {
-            levelGen.pickups[posX, posZ] = "Pistol";
-        }
-        if (Random.Range(0, 10000) > 9990)
-        {
-            levelGen.pickups[posX, posZ] = "MachineGun";
-        }
-        if (Random.Range(0, 10000) > 9990)
-        {
-            levelGen.pickups[posX, posZ] = "RocketLauncher";
-        }
-        if (Random.Range(0, 10000) > 9990)
-        {
-            levelGen.pickups[posX, posZ] = "LaserRifle";
+            levelGen.pickups[posX, posZ] = "Normal Chest";
         }
     }
 

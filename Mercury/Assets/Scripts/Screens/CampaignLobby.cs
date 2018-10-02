@@ -143,17 +143,6 @@ public class CampaignLobby : MonoBehaviour {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
     public Color[] playerColors;
     public string[] characterNames;
     public Sprite[] characterPortraits;    

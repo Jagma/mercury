@@ -31,8 +31,7 @@ public class Factory : MonoBehaviour
         pm.dynamicFriction = 0;
         pm.staticFriction = 0;
         playerCollider.material = pm;
-
-        
+    
         Rigidbody playerRigid = playerGO.AddComponent<Rigidbody>();
         playerRigid.interpolation = RigidbodyInterpolation.Interpolate;
         playerRigid.constraints = RigidbodyConstraints.FreezeRotation;
@@ -56,7 +55,6 @@ public class Factory : MonoBehaviour
          playerHealthBarGO.transform.localScale = new Vector3(1f, 0.1f, 1);
          SpriteRenderer srHB = playerHealthBarGO.AddComponent<SpriteRenderer>();
          playerHealthBarGO.AddComponent<HealthBar>();*/
-
 
         GameObject health = GameObject.FindGameObjectWithTag("HealthBars");
         health.transform.parent = playerGO.transform;
@@ -397,6 +395,31 @@ public class Factory : MonoBehaviour
 
         return rocketLauncherGO;
     }
+    public GameObject CreateNormalChest()
+    {
+        GameObject chestGO = new GameObject("Normal Chest");
+
+        SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
+        chestCollider.radius = 0.1f;
+
+        SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
+        chestColliderT.isTrigger = true;
+
+        Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+     
+        GameObject chestVisualGO = new GameObject("Visual");
+        chestVisualGO.transform.parent = chestGO.transform;
+
+        GameObject chestVisualBodyGO = new GameObject("Body");
+        chestVisualBodyGO.transform.parent = chestVisualGO.transform;
+        SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/NormalChest");
+
+        chestGO.AddComponent<NormalChest>();
+
+        return chestGO;
+    }
 
     public GameObject CreateFloor()
     {
@@ -440,9 +463,7 @@ public class Factory : MonoBehaviour
         Rigidbody enemyWalkerRigid = enemyWalkerGO.AddComponent<Rigidbody>();
         enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
         enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
-
-      
-        
+         
         GameObject enemyWalkerVisualGO = new GameObject("Visual");
         enemyWalkerVisualGO.transform.parent = enemyWalkerGO.transform;
 
@@ -514,7 +535,6 @@ public class Factory : MonoBehaviour
         portalCollider.radius = 0.25f;
         portalCollider.height = 0.8f;
 
-
         Rigidbody portalRigid = portalGO.AddComponent<Rigidbody>();
         portalRigid.interpolation = RigidbodyInterpolation.Interpolate;
         portalRigid.constraints = RigidbodyConstraints.FreezeRotation;
@@ -534,6 +554,8 @@ public class Factory : MonoBehaviour
         portalGO.AddComponent<Portal>();
         return portalGO;
     }
+
+
 
     /* New stuff
      * ********************************************************

@@ -83,6 +83,7 @@ public class PlayerActor : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             Weapon weapon = colliders[i].GetComponent<Weapon>();
+            Chest chest = colliders[i].GetComponent<Chest>();
             if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon)
             {
                 // Dequip current weapon
@@ -111,6 +112,11 @@ public class PlayerActor : MonoBehaviour
                     model.equippedWeapon = weapon;
                 }
                 return;
+            }
+
+            if (chest != null)
+            {
+                chest.OpenChest();
             }
         }
     }
