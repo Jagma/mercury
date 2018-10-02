@@ -169,6 +169,7 @@ public class PlayerActor : MonoBehaviour
     {
         Projectile projectile = col.GetComponent<Projectile>();
         Portal portal = col.GetComponent<Portal>();
+        MartianBoss martianBoss = col.GetComponent<MartianBoss>();
         if (projectile != null)
         {
             Damage(projectile.damage);
@@ -178,6 +179,10 @@ public class PlayerActor : MonoBehaviour
         {
             Debug.Log("portal enter.");
             Portal.instance.EnterPortal();
+        }
+        if (martianBoss != null)
+        { 
+            rigid.AddExplosionForce(martianBoss.moveSpeed, transform.position, 0.5f);
         }
 
     }

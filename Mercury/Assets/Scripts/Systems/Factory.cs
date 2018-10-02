@@ -482,8 +482,9 @@ public class Factory : MonoBehaviour
          GameObject martianBossGO = new GameObject("Martian Boss");
 
          CapsuleCollider martianBossCollider = martianBossGO.AddComponent<CapsuleCollider>();
-         martianBossCollider.radius = 0.25f;
-         martianBossCollider.height = 0.8f;
+         //Collider is double the size of a regular enemy
+         martianBossCollider.radius = 0.5f;
+         martianBossCollider.height = 1.6f;
 
          Rigidbody martianBossRigid = martianBossGO.AddComponent<Rigidbody>();
          martianBossRigid.interpolation = RigidbodyInterpolation.Interpolate;
@@ -494,6 +495,8 @@ public class Factory : MonoBehaviour
 
          GameObject martianBossVisualBodyGO = new GameObject("Body");
          martianBossVisualBodyGO.transform.parent = martianBossrVisualGO.transform;
+         //Boss is double the size of a regular enemy 64x64
+         martianBossVisualBodyGO.transform.localScale = new Vector3(2, 2);
 
          SpriteRenderer sr = martianBossVisualBodyGO.AddComponent<SpriteRenderer>();
          sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MartianBoss");
