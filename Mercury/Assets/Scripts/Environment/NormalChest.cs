@@ -5,13 +5,18 @@ using UnityEngine;
 public class NormalChest : Chest
 {
     GameObject randomWeapon;
+    int count = 1;
     protected override void Use()
     {
-        Debug.Log("Chest opened.");
-        Vector3 spawnPos = transform.position;
-        randomWeapon = ChooseRandomWeapon();
-        randomWeapon.transform.position = spawnPos;
-        base.Delete();
+        if (count >= 1)
+        {
+            count--;
+            Debug.Log("Chest opened.");
+            Vector3 spawnPos = transform.position;
+            randomWeapon = ChooseRandomWeapon();
+            randomWeapon.transform.position = spawnPos;
+            base.Delete();
+        }
     }
 
     public GameObject ChooseRandomWeapon()
