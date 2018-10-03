@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class NormalChest : Chest
 {
-    GameObject freeItem;
-    System.Random ran = new System.Random(91142069);
-    List<string> spawnableItems;
-
-
+    GameObject randomWeapon;
     public override void Init()
     {
         base.Init();
@@ -16,37 +12,32 @@ public class NormalChest : Chest
 
     protected override void Use()
     {
-        freeItem = ChooseRandomItem();
+        randomWeapon = ChooseRandomWeapon();
         Vector3 spawnPos = transform.position;
-        freeItem.transform.position = spawnPos;
-        base.Use();
+        randomWeapon.transform.position = spawnPos;
+        base.Delete();
     }
 
-    public GameObject ChooseRandomItem()
+    public GameObject ChooseRandomWeapon()
     {
-        spawnableItems = new List<string>();
+        int percentageValue = Random.Range(0, 100);
 
-        spawnableItems.Add("Rocket Launcher");
-        spawnableItems.Add("Laser Rifle");
-        spawnableItems.Add("Machine Gun");
-        spawnableItems.Add("Pistol");
-
-        int randomNum = ran.Next(0, spawnableItems.Count);
-
-        switch (spawnableItems[randomNum])
+        if (percentageValue < 50) //0-49 - common item
         {
-            case "Rocket Launcher":
-                return Factory.instance.CreateRocketLauncher();
-            case "Laser Rifle":
-                return Factory.instance.CreateLaserRifle();
-            case "Machine Gun":
-                return Factory.instance.CreateMachineGun();
-            case "Pistol":
-                return Factory.instance.CreatePistol();
-            default:
-                return null;
+            return Factory.instance.CreatePistol();
         }
-
+        else if (percentageValue < 50 + 20) //50-69 - uncommen item
+        {
+            return Factory.instance.CreateMachineGun();
+        }
+        else if (percentageValue < 50 + 20 +5) //70-74 -rare item
+        {
+            return Factory.instance.CreateLaserRifle();
+        }
+        else //anything else. - extremely rare item
+        {
+            return Factory.instance.CreateRocketLauncher();
+        }
     }
 
 }

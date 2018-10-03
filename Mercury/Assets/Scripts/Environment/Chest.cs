@@ -10,7 +10,7 @@ public class Chest : MonoBehaviour
     private Vector3 targetPos;
     IEnumerator ChestDespawn()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Delete();
     }
 
