@@ -19,14 +19,8 @@ public class Chest : MonoBehaviour
         visual = transform.Find("Visual");
     }
 
-    public virtual void Init()
-    { 
-       //targetPos = transform.position;
-    }
-
     public void OpenChest()
     {
-       Debug.Log("Chest opened.");
        Use();
     }
 
@@ -37,7 +31,7 @@ public class Chest : MonoBehaviour
 
     protected virtual void Use()
     {
-        StartCoroutine(ChestDespawn());
+        //StartCoroutine(ChestDespawn());
     }
 
     protected virtual void Delete()
