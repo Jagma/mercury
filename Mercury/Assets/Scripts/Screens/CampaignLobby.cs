@@ -7,8 +7,6 @@ using InControl;
 
 public class CampaignLobby : MonoBehaviour {
 
-    public static CampaignLobby instance;
-
     public class CharacterSelect {
         public enum Status {
             Selecting,
@@ -165,17 +163,6 @@ public class CampaignLobby : MonoBehaviour {
     GameObject countdownPanel;
 
     private void Awake() {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         portraitPrefab = GameObject.Find("Portrait_Prefab");
         joinPanel = GameObject.Find("Join_Panel");
         countdownPanel = GameObject.Find("Countdown_Panel");
@@ -298,9 +285,7 @@ public class CampaignLobby : MonoBehaviour {
             
             foreach (CharacterSelect player in characterSelectors)
             {
-
                 PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
-                Debug.Log(player.portrait.name);
             }
             SceneManager.LoadScene("GameCOOP");
         }

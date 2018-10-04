@@ -59,7 +59,7 @@ public class Factory : MonoBehaviour
 
 
         GameObject health = GameObject.FindGameObjectWithTag("HealthBars");
-        health.transform.parent = playerGO.transform;
+        health.transform.SetParent(playerGO.transform, true);
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
         playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
         playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");

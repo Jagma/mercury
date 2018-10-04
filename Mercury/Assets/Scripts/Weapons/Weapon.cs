@@ -8,7 +8,6 @@ public class Weapon : MonoBehaviour
     public bool equipped = false;
     protected Transform visual;
     protected float cooldownRemaining = 0f;
-    private Ammo ammo;
 
     private void Awake()
     {
@@ -17,7 +16,6 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Start()
     {
-        ammo = new Ammo();
         // startup code
     }
 
@@ -47,15 +45,7 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Use()
     {
-        if (ammo.GetCurrentAmmoAmount() < 1)
-        {
-            return;
-        }
-        else
-        {
-
-        }
-            //ammo -= 1;
+       
     }
     
     protected virtual void Update()

@@ -25,7 +25,6 @@ public class Game : MonoBehaviour
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {
-            Debug.Log(PlayerData.GetCharacterName(playerInputKVP.Value.playerID));
             GameObject playerGO = new GameObject();
             if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Trump"))
             {
