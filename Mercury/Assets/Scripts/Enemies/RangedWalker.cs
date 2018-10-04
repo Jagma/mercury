@@ -5,6 +5,7 @@ using UnityEngine;
 public class RangedWalker : Enemy
 {
     private float timer = 0;
+    private Vector3 prevdirection;
     protected override void Start()
     {
         base.Start();
@@ -121,13 +122,27 @@ public class RangedWalker : Enemy
         equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
+        equippedWeapon.equipped = true;
     }
 
     public void AimAtPlayer(Vector3 direction)
     {
-        if (equippedWeapon)
+        if (prevdirection == direction) //if player is standing still.
         {
-            equippedWeapon.transform.right = (direction - transform.position).normalized;
+            if (equippedWeapon)
+            {
+                equippedWeapon.transform.right = (direction - transform.position).normalized;
+            }
+        }
+        else //if player is moving around.
+        {
+            float missChance = 0.35f;
+
+            if (equippedWeapon)
+            {
+                equippedWeapon.transform.right = (direction - transform.position).normalized + Random.insideUnitSphere * missChance;
+            }
+            prevdirection = direction;
         }
     }
 

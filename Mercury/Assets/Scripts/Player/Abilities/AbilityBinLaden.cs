@@ -35,7 +35,6 @@ public class AbilityBinLaden : Ability {
         Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
 
         bag = Factory.instance.CreateTNTBag();
-
         //bag.GetComponent<Projectile>().speed += 1f;
         bag.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 1f;
         bag.GetComponent<TNTBag>().Move(aimDirection);

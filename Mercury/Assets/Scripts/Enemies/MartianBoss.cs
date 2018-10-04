@@ -26,10 +26,28 @@ public class MartianBoss : Enemy
         timer.Stop();  
     }
 
+    private void CollisionDetection()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            PlayerActor playerActor = colliders[i].GetComponent<PlayerActor>();
+
+            // Is this collider a player
+            if (playerActor != null)
+            {
+                Debug.Log("Player collide with boss");
+            }
+
+        }
+    }
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
         Collider[] colliders = Physics.OverlapSphere(transform.position, 7.5f);
+        CollisionDetection();
 
         PlayerActor closestPlayerActor = null;
         for (int i = 0; i < colliders.Length; i++)

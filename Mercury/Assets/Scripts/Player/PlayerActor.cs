@@ -29,7 +29,8 @@ public class PlayerActor : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
-        model.equippedWeapon = null;
+        model.equippedWeapon = Factory.instance.CreateRocketLauncher().GetComponent<Weapon>();
+        model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
     }
 
@@ -56,6 +57,24 @@ public class PlayerActor : MonoBehaviour
         rigid.velocity = new Vector3(velocityMinusY.x, rigid.velocity.y, velocityMinusY.z);
 
         rigid.velocity = Vector3.Lerp(rigid.velocity, new Vector3(0, rigid.velocity.y, 0), model.moveDeceleration);
+        CollisionDetection();
+    }
+
+    private void CollisionDetection()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            MartianBoss playerActor = colliders[i].GetComponent<MartianBoss>();
+
+            // Is this collider a player
+            if (playerActor != null)
+            {
+                rigid.AddExplosionForce(70, transform.position,0.5f);
+                Damage(2.5f);
+            }
+        }
     }
 
     public void Move (Vector2 direction)
@@ -69,11 +88,13 @@ public class PlayerActor : MonoBehaviour
     {
         Weapon sw = model.equippedWeapon;
         model.equippedWeapon.Dequip();
+        model.equippedWeapon.equipped = false;
         model.secondaryWeapon.Equip();
-
+        model.secondaryWeapon.equipped = true;
         model.equippedWeapon = model.secondaryWeapon;
         model.secondaryWeapon = sw;
-        model.secondaryWeapon.transform.rotation = Quaternion.Euler(0,90f,0);
+        model.secondaryWeapon.gameObject.SetActive(false);
+        model.equippedWeapon.gameObject.SetActive(true);
     }
 
     public void Interact()
@@ -82,33 +103,45 @@ public class PlayerActor : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             Weapon weapon = colliders[i].GetComponent<Weapon>();
-            if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon)
+            Chest chest = colliders[i].GetComponent<Chest>();
+            if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon && weapon.equipped == false)
             {
                 // Dequip current weapon
                 //Both slots full
                 if (model.equippedWeapon != null && model.secondaryWeapon != null)
                 {
                     model.equippedWeapon.Dequip();
+                    model.equippedWeapon.equipped = false;
                     weapon.Equip();
+                    weapon.equipped = true;
                     model.equippedWeapon = weapon;
                 }
                 //Inventory empty
                 if(model.equippedWeapon != null && model.secondaryWeapon == null)
                 {
                     model.equippedWeapon.Dequip();
+                    model.equippedWeapon.equipped = false;
                     model.secondaryWeapon = model.equippedWeapon;
                     weapon.Equip();
+                    weapon.equipped = true;
                     model.equippedWeapon = weapon;
+                    model.secondaryWeapon.gameObject.SetActive(false);
                 }
 
                 // Equip new weapon
                 if(model.equippedWeapon == null && model.secondaryWeapon == null)
                 {
                     weapon.Equip();
+                    weapon.equipped = true;
                     AudioManager.instance.PlayAudio("dsdbload", 1, false);
                     model.equippedWeapon = weapon;
                 }
                 return;
+            }
+
+            if (chest != null)
+            {
+                chest.OpenChest();
             }
         }
     }
@@ -161,6 +194,7 @@ public class PlayerActor : MonoBehaviour
     {
         Projectile projectile = col.GetComponent<Projectile>();
         Portal portal = col.GetComponent<Portal>();
+        MartianBoss martianBoss = col.GetComponent<MartianBoss>();
         if (projectile != null)
         {
             Damage(projectile.damage);
@@ -171,7 +205,6 @@ public class PlayerActor : MonoBehaviour
             Debug.Log("portal enter.");
             Portal.instance.EnterPortal();
         }
-
     }
 
     public void Damage(float damage)
@@ -193,6 +226,8 @@ public class PlayerActor : MonoBehaviour
 
     public void Death()
     {
+        //model.equippedWeapon.Dequip();
+        //model.equippedWeapon.equipped = false;
         AudioManager.instance.PlayAudio("death1", 1, false);
         Debug.Log("Player is dead.");
         GameProgressionManager.instance.GameOver();

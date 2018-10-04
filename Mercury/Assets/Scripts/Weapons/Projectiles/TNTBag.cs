@@ -7,6 +7,7 @@ public class TNTBag : Projectile
 
     float blastRadius, timer, height, distance;
     Vector3 aimDirection, initPosition;
+<<<<<<< HEAD
     public override void Init()
     {
         base.Init();
@@ -17,6 +18,18 @@ public class TNTBag : Projectile
         timer = 3f;
         height = 0;
         initPosition = this.transform.position;
+=======
+    public override void Init()
+    {
+        base.Init();
+        // Stats
+        speed = 2f;
+        damage = 100;
+        blastRadius = 2f;
+        timer = 2f;
+        height = 0;
+        initPosition = this.transform.position;
+>>>>>>> f3d937bb78395c03ea4bcbc1875c89c8972b3816
     }
 
     void  Update()
@@ -28,21 +41,7 @@ public class TNTBag : Projectile
             {
                 Explode();
             }
-            if(this.transform.position.z <= 0)
-            {
-                height = 1;
-            }
-            else if(this.transform.position.z > 3 )
-            {
-                height = -1;
-            }
-            //float heightPos = Mathf.Abs((Mathf.Pow(distance, 2) / 1000 + (distance) / 5) - transform.position.z);
             this.transform.position += new Vector3(aimDirection.x,0, aimDirection.y) * speed * Time.deltaTime;
-            
-           // Debug.Log("Dist: " + distance + "Height: " + heightPos);
-        }
-        else
-        {
             if (timer <= 0)
             {
                 Explode();
@@ -51,8 +50,7 @@ public class TNTBag : Projectile
             {
                 timer -= Time.deltaTime;
             }
-        }
-            
+        }       
     }
 
     public void Move(Vector3 aAimDirection)
@@ -66,7 +64,7 @@ public class TNTBag : Projectile
         foreach(Collider hit in hits)
         {
             Debug.Log(hit.gameObject.name);
-            if(hit.gameObject.name.Equals("Enemy Walker")|| hit.gameObject.name.Equals("Ranged Enemy"))
+            if(hit.GetComponent<Enemy>() != null)
             {
                 Enemy enemyHit = hit.GetComponent<Enemy>();
                 enemyHit.Damage(damage);
@@ -76,12 +74,14 @@ public class TNTBag : Projectile
                 PlayerActor player = hit.GetComponent<PlayerActor>();
                 player.Damage(damage);
             }
-            if (hit.gameObject.name.Equals("Wall"))
+            if (hit.GetComponent<Wall>() != null)
             {
                 Wall wall = hit.GetComponent<Wall>();
                 wall.Damage((int)damage);
             }
         }
+        GameObject explosion = Factory.instance.CreateRocketHit();
+        explosion.transform.position = this.transform.position;
         this.Destroy();
     }
 }

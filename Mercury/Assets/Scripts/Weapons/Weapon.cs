@@ -16,6 +16,10 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Start()
     {
+<<<<<<< HEAD
+=======
+        //ammo = new Ammo();
+>>>>>>> f3d937bb78395c03ea4bcbc1875c89c8972b3816
         // startup code
     }
 
@@ -45,7 +49,11 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Use()
     {
+<<<<<<< HEAD
        
+=======
+       //ammo -= 1;
+>>>>>>> f3d937bb78395c03ea4bcbc1875c89c8972b3816
     }
     
     protected virtual void Update()
