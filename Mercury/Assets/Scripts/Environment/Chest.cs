@@ -8,7 +8,7 @@ public class Chest : MonoBehaviour
     public float destroy =5f;
     protected Transform visual;
     private Vector3 targetPos;
-    int count = 1;
+
     IEnumerator ChestDespawn()
     {
         yield return new WaitForSeconds(0.5f);
