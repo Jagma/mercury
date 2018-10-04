@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -20,6 +21,17 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
+        for (int i=0; i < buttonList.Length; i ++) {
+            if (eventSystem.currentSelectedGameObject == buttonList[i]) {
+                buttonList[i].transform.Find("Text").GetComponent<Text>().color = Color.red;
+                buttonList[i].transform.localScale = new Vector3(1.1f, 1.1f, 1);
+            } else {
+                buttonList[i].transform.Find("Text").GetComponent<Text>().color = new Color(1, 0.7f, 0);
+                buttonList[i].transform.localScale = new Vector3(1f, 1, 1);
+            }
+            
+        }
+
         // This ensures that there is always a selected UI component
         if (eventSystem.currentSelectedGameObject == null)
         {

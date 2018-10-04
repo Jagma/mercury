@@ -7,18 +7,6 @@ public class TNTBag : Projectile
 
     float blastRadius, timer, height, distance;
     Vector3 aimDirection, initPosition;
-<<<<<<< HEAD
-    public override void Init()
-    {
-        base.Init();
-        // Stats
-        speed = 1f;
-        damage = 200;
-        blastRadius = 2f;
-        timer = 3f;
-        height = 0;
-        initPosition = this.transform.position;
-=======
     public override void Init()
     {
         base.Init();
@@ -29,10 +17,9 @@ public class TNTBag : Projectile
         timer = 2f;
         height = 0;
         initPosition = this.transform.position;
->>>>>>> f3d937bb78395c03ea4bcbc1875c89c8972b3816
     }
 
-    void  Update()
+    void Update()
     {
         if(aimDirection != null)
         {
