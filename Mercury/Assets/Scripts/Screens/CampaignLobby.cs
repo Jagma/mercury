@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using InControl;
+using System.Threading;
 
 public class CampaignLobby : MonoBehaviour {
-    
+   
     public static CampaignLobby instance;
 
     public class CharacterSelect {
@@ -152,16 +153,17 @@ public class CampaignLobby : MonoBehaviour {
     GameObject portraitPrefab;
     GameObject joinPanel;
     GameObject countdownPanel;
-    
+    float countdown;
     private void Awake() {
         portraitPrefab = GameObject.Find("Portrait_Prefab");
         joinPanel = GameObject.Find("Join_Panel");
         countdownPanel = GameObject.Find("Countdown_Panel");
 
         portraitPrefab.SetActive(false);
+        countdown = 5;
     }
 
-    float countdown = 5;
+    
 	void Update () {
         // Leave
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -201,9 +203,10 @@ public class CampaignLobby : MonoBehaviour {
             countdownPanel.SetActive(true);
 
             countdown -= Time.deltaTime;
-
+            
             countdownPanel.transform.Find("Timer_Text").GetComponent<Text>().text = countdown.ToString("F1");
-            if (countdown <= 0) {
+            if (countdown <= 0.0f)
+            {
                 StartGame();
             }
         } else {
@@ -272,11 +275,11 @@ public class CampaignLobby : MonoBehaviour {
     }
 
     void StartGame () {
+        PlayerData.ClearDictionary(); //Prevent restart bug
         if (InputManager.instance.GetPlayerInputDictionary().Count >= 1) {
-            
             foreach (CharacterSelect player in characterSelectors)
             {
-                PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
+               PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);       
             }
             SceneManager.LoadScene("GameCOOP");
         }

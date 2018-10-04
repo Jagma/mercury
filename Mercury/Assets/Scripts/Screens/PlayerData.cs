@@ -15,4 +15,9 @@ public static class PlayerData {
     {
         players.Add(aPlayerID, aCharacterName);
     }
+
+    public static void ClearDictionary()
+    {
+        players.Clear();
+    }
 }
