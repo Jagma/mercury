@@ -88,8 +88,9 @@ public class PlayerActor : MonoBehaviour
     {
         Weapon sw = model.equippedWeapon;
         model.equippedWeapon.Dequip();
+        model.equippedWeapon.equipped = false;
         model.secondaryWeapon.Equip();
-
+        model.secondaryWeapon.equipped = true;
         model.equippedWeapon = model.secondaryWeapon;
         model.secondaryWeapon = sw;
         model.secondaryWeapon.gameObject.SetActive(false);
@@ -103,22 +104,26 @@ public class PlayerActor : MonoBehaviour
         {
             Weapon weapon = colliders[i].GetComponent<Weapon>();
             Chest chest = colliders[i].GetComponent<Chest>();
-            if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon)
+            if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon && weapon.equipped == false)
             {
                 // Dequip current weapon
                 //Both slots full
                 if (model.equippedWeapon != null && model.secondaryWeapon != null)
                 {
                     model.equippedWeapon.Dequip();
+                    model.equippedWeapon.equipped = false;
                     weapon.Equip();
+                    weapon.equipped = true;
                     model.equippedWeapon = weapon;
                 }
                 //Inventory empty
                 if(model.equippedWeapon != null && model.secondaryWeapon == null)
                 {
                     model.equippedWeapon.Dequip();
+                    model.equippedWeapon.equipped = false;
                     model.secondaryWeapon = model.equippedWeapon;
                     weapon.Equip();
+                    weapon.equipped = true;
                     model.equippedWeapon = weapon;
                     model.secondaryWeapon.gameObject.SetActive(false);
                 }
@@ -127,6 +132,7 @@ public class PlayerActor : MonoBehaviour
                 if(model.equippedWeapon == null && model.secondaryWeapon == null)
                 {
                     weapon.Equip();
+                    weapon.equipped = true;
                     AudioManager.instance.PlayAudio("dsdbload", 1, false);
                     model.equippedWeapon = weapon;
                 }
@@ -220,6 +226,8 @@ public class PlayerActor : MonoBehaviour
 
     public void Death()
     {
+        //model.equippedWeapon.Dequip();
+        //model.equippedWeapon.equipped = false;
         AudioManager.instance.PlayAudio("death1", 1, false);
         Debug.Log("Player is dead.");
         GameProgressionManager.instance.GameOver();

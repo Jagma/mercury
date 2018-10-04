@@ -89,6 +89,7 @@ public class Enemy : MonoBehaviour
         if (equippedWeapon)
         {
             equippedWeapon.Dequip();
+            equippedWeapon.equipped = false;
             equippedWeapon = null;
         }
         GameProgressionManager.instance.EnemyDead();
