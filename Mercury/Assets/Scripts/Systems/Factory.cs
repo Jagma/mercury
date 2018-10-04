@@ -267,6 +267,13 @@ public class Factory : MonoBehaviour
     {
         GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Explosion"));
         ParticleSystem.ShapeModule shape = rocketHit.GetComponent<ParticleSystem>().shape;
+        ParticleSystemRenderer test = rocketHit.GetComponent<ParticleSystemRenderer>();
+
+        Material beamLine = new Material(Shader.Find("Particles/Additive"));
+       // beamLine.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamMiddle"));
+        test.material = beamLine;
+
+
         shape.radius = 0.4f;
         return rocketHit;
     }
