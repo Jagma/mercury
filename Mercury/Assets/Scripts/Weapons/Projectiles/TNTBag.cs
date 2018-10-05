@@ -21,6 +21,7 @@ public class TNTBag : Projectile
 
     void Update()
     {
+        CollisionCheck();
         if(aimDirection != null)
         {
             distance = Mathf.Abs(Vector3.Distance(initPosition, this.transform.position));
@@ -43,6 +44,18 @@ public class TNTBag : Projectile
     public void Move(Vector3 aAimDirection)
     {
         aimDirection = aAimDirection;
+    }
+
+    private void CollisionCheck()
+    {
+        Collider[] hits = Physics.OverlapSphere(this.transform.position, 0.1f);
+        foreach (Collider hit in hits)
+        {
+            if (hit.gameObject.name.Equals("Wall"))
+            {
+                this.speed = -speed;
+            }
+        }
     }
 
     public void Explode()

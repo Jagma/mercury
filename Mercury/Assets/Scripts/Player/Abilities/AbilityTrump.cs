@@ -14,11 +14,26 @@ public class AbilityTrump : Ability {
     protected override void Use() {
         base.Use();        
 
+        Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        Vector3 placePos = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 1f;
+
+        //Check for other walls at that position
+        Collider[] hits = Physics.OverlapSphere(placePos, 0.2f);
+        foreach(Collider hit in hits)
+        {
+            if(hit.gameObject != null && hit.gameObject.name.Equals("Wall"))
+            {
+                GameObject.Destroy(hit.gameObject, 0.1f);
+            }
+        }
+
+
+        //Create wall and move to position with infinite HP
         GameObject wall = Factory.instance.CreateWall();
         wall.GetComponent<Wall>().health = int.MaxValue;
-        Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
-        wall.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 1f;
-
-        GameObject.Destroy(wall, 10f);
+        wall.transform.position = placePos;
+        BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
+        //Destroy wall after x Seconds
+        GameObject.Destroy(wall, 5f);
     }
 }
