@@ -17,14 +17,14 @@ public class Pistol : WeaponRanged
     protected override void Use()
     {
         base.Use();
-
+            
         GameObject flash = Factory.instance.CreateMuzzleFlash();
         flash.transform.position = transform.position + transform.right * ammoOffset;
         Destroy(flash, 1);
 
         GameObject bullet = Factory.instance.CreateBullet();
         bullet.GetComponent<Projectile>().speed *= 2;
-        bullet.transform.position = transform.position + transform.right * ammoOffset;
+        bullet.transform.position = transform.position + transform.right * ammoOffset + (Random.insideUnitSphere * missChance);
         bullet.transform.right = transform.right;
         bullet.GetComponent<Projectile>().Update();
 

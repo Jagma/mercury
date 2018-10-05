@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public float cooldown = 0.1f;
+    public float missChance = 0f;
     public bool equipped = false;
     protected Transform visual;
     protected float cooldownRemaining = 0f;
@@ -23,6 +24,11 @@ public class Weapon : MonoBehaviour
     {
         GetComponent<Rigidbody>().useGravity = false;
         equipped = true;
+    }
+
+    public void setMissChance(float value)
+    {
+        missChance = value;
     }
     public void Dequip()
     {

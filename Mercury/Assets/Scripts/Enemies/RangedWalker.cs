@@ -17,15 +17,6 @@ public class RangedWalker : Enemy
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        /*TODO: Re-do enemy behaviour:
-        - Walk 2-5 Seconds in random direction, then change direction (also change if collide with a wall)
-        - If Player damages enemy, enemy should become aware of it and start travelling into the direction of the damage for a few seconds if Player detected follow player and attack, otherise random walking behaviour
-        - If close proximate of the player start firing weapon
-        - Line of Sight of player - follow + aim + shoot (try to make a radius)
-        - If nearby enemies (close proximate) hears/detects a enemy being damage they should also lock onto the player, aim follow + shoot
-        */
-
-
 
         // Weapon position
         if (equippedWeapon)
@@ -34,11 +25,6 @@ public class RangedWalker : Enemy
         }
         RaycastHit[] hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
 
-        /*if (hits.Length <= 0)
-        {
-            allowWalk = false;      
-        }*/
-
         GameObject closestPlayerGO = hits[0].collider.gameObject;
         for (int i = 0; i < hits.Length; i++)
         {
@@ -46,10 +32,6 @@ public class RangedWalker : Enemy
             if (player != null)
             {
                 allowWalk = true;
-            }
-            else
-            {
-                //allowWalk = false;
             }
         }
 
@@ -122,19 +104,18 @@ public class RangedWalker : Enemy
         equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
+        equippedWeapon.setMissChance(0.25f);
         equippedWeapon.equipped = true;
     }
 
     public void AimAtPlayer(Vector3 direction)
     {
-        if (prevdirection == direction) //if player is standing still.
-        {
             if (equippedWeapon)
             {
                 equippedWeapon.transform.right = (direction - transform.position).normalized;
             }
-        }
-        else //if player is moving around.
+        
+       /* else //if player is moving around.
         {
             float missChance = 0.35f;
 
@@ -143,7 +124,7 @@ public class RangedWalker : Enemy
                 equippedWeapon.transform.right = (direction - transform.position).normalized + Random.insideUnitSphere * missChance;
             }
             prevdirection = direction;
-        }
+        }*/
     }
 
     public void AttackPlayer()
