@@ -9,7 +9,7 @@ public class AbilityOprah : Ability {
     float count = 0;
     GameObject freeItem;
     System.Random ran = new System.Random(91142069);
-    List<string> spawnableItems;
+    int randomNum;
 
     public override void Init() {
         base.Init();
@@ -24,9 +24,10 @@ public class AbilityOprah : Ability {
         freeItem = ChooseRandomItem();
         Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
 
+        Debug.Log("OPRAH Spawned: " + freeItem.gameObject.name);
         if (!isProjectile && !isLazer)
         {
-            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 1f;
+            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 2f;
 
         }
         else if (isLazer)
@@ -35,7 +36,7 @@ public class AbilityOprah : Ability {
             freeItem.transform.eulerAngles = new Vector3(45, 45, -freeItem.transform.eulerAngles.y + 45);
             freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y, aimDirection.z) * 1f; 
 
-            //Beam(); - crashes unity.
+            Beam(); //- crashes unity.
             GameObject.Destroy(freeItem, 1f);
             isLazer = false;
             
@@ -43,7 +44,7 @@ public class AbilityOprah : Ability {
         else
         {
             freeItem.GetComponent<Projectile>().speed *= 2;
-            freeItem.transform.position = playerActor.transform.position;
+            freeItem.transform.position = playerActor.transform.position + aimDirection *1f;
             freeItem.transform.right = new Vector3(aimDirection.x, 0 , aimDirection.y);
             freeItem.GetComponent<Projectile>().Update();
             isProjectile = false;
@@ -63,63 +64,63 @@ public class AbilityOprah : Ability {
     }
     public GameObject ChooseRandomItem()
     {
-        spawnableItems = new List<string>();
-        //ITEMS
-        spawnableItems.Add("Enemy Walker");
-        spawnableItems.Add("Wall");
-        spawnableItems.Add("Rocket Launcher");
-        spawnableItems.Add("Laser Rifle");
-        spawnableItems.Add("Machine Gun");
-        spawnableItems.Add("Pistol");
-        spawnableItems.Add("Beam");
-        spawnableItems.Add("Rocket");
-        spawnableItems.Add("Bullet");
-        spawnableItems.Add("Muzzle Flash");
-        spawnableItems.Add("Rocket Smoke Flash");
-        spawnableItems.Add("Rocket Hit");
-        spawnableItems.Add("Bullet Hit");
-        spawnableItems.Add("Beam Hit");
-
-
-        int randomNum = ran.Next(0, spawnableItems.Count);
-        Debug.Log("Count: " + spawnableItems.Count +"\n Random Number: "+ randomNum);
-        switch (spawnableItems[randomNum])
+        randomNum = ran.Next(0, 100);
+        Debug.Log("RANDOM ITEM ROLL" + randomNum);
+        if(randomNum >= 0 && randomNum < 11)//10% FLASHES
         {
-            case "Enemy Walker":
+            int roll = ran.Next(0, 4);
+
+            if (roll == 0)
+                return Factory.instance.CreateBeamHit();
+            if (roll == 1)
+                return Factory.instance.CreateBulletHit();
+            if (roll == 2)
+                return Factory.instance.CreateRocketHit();
+            if (roll == 3)
+                return Factory.instance.CreateRocketSmokeFlash();
+            if (roll == 4)
+                return Factory.instance.CreateMuzzleFlash();
+        }
+        if (randomNum > 10 && randomNum < 21)//10% ENEMIES
+        {
+            int roll = ran.Next(0, 1);
+
+            if (roll == 0)
                 return Factory.instance.CreateEnemyWalker();
-            case "Wall":
-                return Factory.instance.CreateWall();
-            case "Rocket Launcher":
-                return Factory.instance.CreateRocketLauncher();
-            case "Laser Rifle":
-                return Factory.instance.CreateLaserRifle();
-            case "Machine Gun":
-                return Factory.instance.CreateMachineGun();
-            case "Pistol":
-                return Factory.instance.CreatePistol();
-            case "Beam":
+            if (roll == 1)
+                return Factory.instance.CreateRangedWalker();
+        }
+        if(randomNum > 20 && randomNum < 61 )//40% BULLETS
+        {
+            int roll = ran.Next(0, 2);
+            isProjectile = true;
+
+            if (roll == 0)
+                return Factory.instance.CreateBullet();
+            if (roll == 1)
+                return Factory.instance.CreateRocket();
+            if (roll == 2)
+            {
+                isProjectile = false;
                 isLazer = true;
                 return Factory.instance.CreateBeamNeon();
-            case "Rocket":
-                isProjectile = true;
-                return Factory.instance.CreateRocket();
-            case "Bullet":
-                isProjectile = true;
-                return Factory.instance.CreateBullet();
-            case "Muzzle Flash":
-                return Factory.instance.CreateMuzzleFlash();
-            case "Rocket Smoke Flash":
-                return Factory.instance.CreateRocketSmokeFlash();
-            case "Rocket Hit":
-                return Factory.instance.CreateRocketHit();
-            case "Bullet Hit":
-                return Factory.instance.CreateBulletHit();
-            case "Beam Hit":
-                return Factory.instance.CreateBeamHit();
-            default:
-                return null;
+            }
+                
         }
+        if(randomNum > 60 && randomNum < 101)//40% WEAPONS
+        {
+            int roll = ran.Next(0, 3);
 
+            if (roll == 0)
+                return Factory.instance.CreateMachineGun();
+            if (roll == 1)
+                return Factory.instance.CreateLaserRifle();
+            if (roll == 2)
+                return Factory.instance.CreateRocketLauncher();
+            if (roll == 3)
+                return Factory.instance.CreatePistol();
+        }
+        return null;
     }
 
 }
