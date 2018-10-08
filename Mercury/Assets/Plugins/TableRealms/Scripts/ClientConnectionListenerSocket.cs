@@ -45,8 +45,7 @@ public class ClientConnectionListenerSocket : MonoBehaviour, IClientConnectionLi
             server.BeginAcceptTcpClient(new AsyncCallback(DoAcceptTcpClientCallback), server);
 
             serverUrl = "";
-
-#if (UNITY_WSA)
+            
             /*foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces()) {
                 if (item.OperationalStatus == OperationalStatus.Up) {
                     foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses) {
@@ -59,9 +58,10 @@ public class ClientConnectionListenerSocket : MonoBehaviour, IClientConnectionLi
                     }
                 }
             }*/
-#endif
+
             //serverUrl="192.168.1.176";
             serverUrl = "http://tbrm.me?i=" + WWW.EscapeURL(GetIP4Address()) + ":" + port + "&n=" + WWW.EscapeURL(gameName) + "&p=S";
+         //   serverUrl = "http://tbrm.me?i=" + WWW.EscapeURL(Network.player.ipAddress) + ":" + port + "&n=" + WWW.EscapeURL(gameName) + "&p=S";
             Debug.Log("TableRealms: listening for clients on " + serverUrl);
         }
 #endif

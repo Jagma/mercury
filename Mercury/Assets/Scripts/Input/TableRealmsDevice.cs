@@ -26,33 +26,106 @@ public class TableRealmsDevice : TableRealmsPlayerActionBehavior {
         TableRealmsModel.instance.SetData(GetDeviceID() + ".page", pageName);
     }
 
-    public void SetPlayerColor(Color c) {
-        TableRealmsModel.instance.SetData(GetDeviceID() + ".playerColor", ToLuaColor(c));
+    // SendAction(model.id .. ".JoinGame")
+
+    // Select Trump
+    long selectTrumpFrame = 0;
+    bool selectTrumpState = false;
+
+    public bool GetSelectTrump() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNSelectTrump.Pressed");
+    }
+    public bool GetSelectTrumpWasPressed() {
+        bool result = false;
+        if (selectTrumpFrame == Time.frameCount && GetSelectTrump()) {
+            result = true;
+        }
+        if (selectTrumpState == false && GetSelectTrump()) {
+            selectTrumpFrame = Time.frameCount;
+            result = true;
+        }
+
+        selectTrumpState = GetSelectTrump();
+        return result;
     }
 
-    string ToLuaColor(Color c) {
-        string colorString =
-            "{" +
-            "red=" + c.r + "," +
-            "green=" + c.g + "," +
-            "blue=" + c.b + "," +
-            "alpha=" + c.a + "," +
-            "}";
-        return colorString;
+    // Select BinLaden
+    long selectBinLadenFrame = 0;
+    bool selectBinLadenState = false;
+
+    public bool GetSelectBinLaden() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNSelectBinLaden.Pressed");
+    }
+    public bool GetSelectBinLadenWasPressed() {
+        bool result = false;
+        if (selectBinLadenFrame == Time.frameCount && GetSelectBinLaden()) {
+            result = true;
+        }
+        if (selectBinLadenState == false && GetSelectBinLaden()) {
+            selectBinLadenFrame = Time.frameCount;
+            result = true;
+        }
+
+        selectBinLadenState = GetSelectBinLaden();
+        return result;
     }
 
-    // Device methods when the console is on the "Menu" screen
-    public void StartGame() {
+    // Select Oprah
+    long selectOprahFrame = 0;
+    bool selectOprahState = false;
+
+    public bool GetSelectOprah() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNSelectOprah.Pressed");
+    }
+    public bool GetSelectOprahWasPressed() {
+        bool result = false;
+        if (selectOprahFrame == Time.frameCount && GetSelectOprah()) {
+            result = true;
+        }
+        if (selectOprahState == false && GetSelectOprah()) {
+            selectOprahFrame = Time.frameCount;
+            result = true;
+        }
+
+        selectOprahState = GetSelectOprah();
+        return result;
     }
 
-    // Device methods when the console is on the "Game" screen
+    // Select Pope
+    long selectPopeFrame = 0;
+    bool selectPopeState = false;
 
-    // Device methods when the console is on the "GameOver" screen
- 
-    public void NavigateMenu() {
+    public bool GetSelectPope() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNSelectPope.Pressed");
+    }
+    public bool GetSelectPopeWasPressed() {
+        bool result = false;
+        if (selectPopeFrame == Time.frameCount && GetSelectPope()) {
+            result = true;
+        }
+        if (selectPopeState == false && GetSelectPope()) {
+            selectPopeFrame = Time.frameCount;
+            result = true;
+        }
+
+        selectPopeState = GetSelectPope();
+        return result;
     }
 
-    // Polling methods
+    public bool GetCharacterSelect() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNCharacterSelect.Pressed");
+    }
+
+    public bool GetJoinLobby() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNJoinLobby.Pressed");
+    }
+    public bool GetLeaveLobby() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNLeaveLobby.Pressed");
+    }
+    public bool GetLeaveReady() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNLeaveReady.Pressed");
+    }
+
     public Vector2 GetLeftStick() {
         Vector2 leftStick = Vector2.zero;
         leftStick.x = TableRealmsModel.instance.GetData<float>(GetDeviceID() + ".ThumbStick.StickLeft.x");

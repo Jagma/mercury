@@ -72,13 +72,13 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
         }
         if (typeof(oftype) == typeof(Color)) {
             if (currentObject == null) {
-                currentObject = 255l;
+                currentObject = 255;
             }
             if (currentObject.GetType() == typeof(double)) {
-                currentObject = (long)((double)currentObject);
+                currentObject = (int)((double)currentObject);
             }
 
-            int colorNumber = (int)((long)currentObject);
+            int colorNumber = (int)currentObject;
             Color32 cc = new Color32((byte)((colorNumber >> 24) & 255), (byte)((colorNumber >> 16) & 255), (byte)((colorNumber >> 8) & 255), (byte)(colorNumber & 255));
             currentObject = (Color)cc;
             //currentObject = new Color(((float)(colorNumber >> 24) / 255f), ((float)(colorNumber >> 16) / 255f), ((float)((colorNumber & 0xff00) >> 8)) / 255f, ((float)(colorNumber & 0xff) / 255f));
@@ -164,7 +164,7 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
 
         if (value.GetType() == typeof(Color)) {
             Color32 color = (Color)value;
-            value = (long)((((int)(color.r)) << 24) + (((int)(color.g)) << 16) + (((int)(color.b)) << 8) + ((int)(color.a)));
+            value = (((int)(color.r)) << 24) + (((int)(color.g)) << 16) + (((int)(color.b)) << 8) + ((int)(color.a));
         }
 
         if (!globalData.ContainsKey(key) && (key.IndexOf(".") == -1 || !TableRealmsGameNetwork.instance.IsClientConnected(key.Substring(0, key.IndexOf("."))))) {

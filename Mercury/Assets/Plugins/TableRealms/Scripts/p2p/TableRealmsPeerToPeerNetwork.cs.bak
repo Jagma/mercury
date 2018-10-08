@@ -11,7 +11,6 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
     public static TableRealmsPeerToPeerNetwork instance = null;
     public bool debugMessages = true;
 
-    private static HashSet<Type> customMessageTypes = new HashSet<Type>();
     private static Dictionary<Type, P2PCommandInterface> messageCommands = new Dictionary<Type, P2PCommandInterface>();
     private static Dictionary<string, Type> messageTypesMap = new Dictionary<string, Type>();
     private Queue<P2PMessage> messagesRecieved = new Queue<P2PMessage>();
@@ -19,11 +18,6 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
     public GameObject[] networkedPrefabs;
     private Dictionary<long, TableRealmsPlayerId> networkedGameObjects = new Dictionary<long, TableRealmsPlayerId>();
     private Dictionary<string, GameObject> networkedPrefabsDictionary = new Dictionary<string, GameObject>();
-
-    virtual public void Awake() {
-        // Since we are a p2p game make the host flag flase it will be set later whent the protocol is learnt.
-        TableRealmsGameNetwork.host = false;
-    }
 
     virtual public void Start() {
         if (instance != null) {
@@ -38,12 +32,6 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
         }
     }
 
-    public virtual void Update() {
-        while (messagesRecieved.Count > 0) {
-            ProcessMessage(messagesRecieved.Dequeue());
-        }
-    }
-
     public void InitTables() {
         if (messageTypesMap.Count == 0) {
             List<Type> messageTypes = new List<Type>();
@@ -51,7 +39,6 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
             messageTypes.Add(typeof(IP2PM));
             messageTypes.Add(typeof(DP2PM));
             messageTypes.Add(typeof(MP2PM));
-            messageTypes.Add(typeof(ScP2PM));
             messageTypes.Add(typeof(SMP2P));
 
             foreach (Type type in messageTypes) {
@@ -62,32 +49,7 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
             messageCommands.Add(typeof(IP2PM), new InstantiateP2PCommand());
             messageCommands.Add(typeof(DP2PM), new DestroyP2PCommand());
             messageCommands.Add(typeof(MP2PM), new MovementP2PCommand());
-            messageCommands.Add(typeof(ScP2PM), new ScaleP2PCommand());
             messageCommands.Add(typeof(SMP2P), new SendMessageP2PCommand());
-        }
-    }
-
-    public void AddCommand(Type type, P2PCommandInterface command) {
-        InitTables();
-        if (customMessageTypes.Contains(type)) {
-            Debug.LogError("TableRealms: Unable to add command for type '"+ type.Name+"' is already mapped.");
-        } else {
-            customMessageTypes.Add(type);
-            messageTypesMap.Add(type.Name, type);
-            messageCommands.Add(type, command);
-        }
-    }
-
-    public void RemoveCommand(P2PCommandInterface command) {
-        List<string> typesToRemove = new List<string>();
-        foreach (Type type in customMessageTypes) {
-            if (messageCommands.ContainsKey(type)){
-                messageCommands.Remove(type);
-                typesToRemove.Add(type.Name);
-            }
-        }
-        foreach (string typeName in typesToRemove) {
-            messageTypesMap.Remove(typeName);
         }
     }
 
@@ -200,22 +162,11 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
 
     public void P2PMovement(MP2PM message) {
         if (networkedGameObjects.ContainsKey(message.g)) {
-            TableRealmsP2PMovementReciever tableRealmsP2PMovementReciever = networkedGameObjects[message.g].GetComponent<TableRealmsP2PMovementReciever>();
+            TableRealmsP2PMovementReciever tableRealmsP2PMovementReciever=networkedGameObjects[message.g].GetComponent<TableRealmsP2PMovementReciever>();
             if (tableRealmsP2PMovementReciever != null) {
                 tableRealmsP2PMovementReciever.RecieveNextTarget(message);
             } else {
-                Debug.LogError("TableRealms: Movement message recieved for guid[" + message.g + "] but the game object '" + networkedGameObjects[message.g].name + "' does not have a ");
-            }
-        }
-    }
-
-    public void P2PScale(ScP2PM message) {
-        if (networkedGameObjects.ContainsKey(message.g)) {
-            TableRealmsP2PMovementReciever tableRealmsP2PMovementReciever = networkedGameObjects[message.g].GetComponent<TableRealmsP2PMovementReciever>();
-            if (tableRealmsP2PMovementReciever != null) {
-                tableRealmsP2PMovementReciever.RecieveNewScale(message);
-            } else {
-                Debug.LogError("TableRealms: Scale message recieved for guid[" + message.g + "] but the game object '" + networkedGameObjects[message.g].name + "' does not have a ");
+                Debug.LogError("TableRealms: Movemenet message recieved for guid["+message.g+"] but the game object '"+ networkedGameObjects[message.g].name+ "' does not have a ");
             }
         }
     }
@@ -306,7 +257,7 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
                 Debug.LogError("TableRealms:  Unable to read message unknown type '" + message + "'");
             } else {
                 Type messageType = messageTypesMap[messageKey];
-                messagesRecieved.Enqueue((P2PMessage)JsonUtility.FromJson(message.Substring(idx + 1), messageType));
+                ProcessMessage((P2PMessage)JsonUtility.FromJson(message.Substring(idx + 1), messageType));
             }
         } else {
             Debug.LogError("TableRealms: Unable to read message badly formated '" + message + "'");
@@ -328,16 +279,8 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
     public void LoadScene(string sceneName) {
         SceneManager.LoadScene(sceneName);
         if (iAmTheHost) {
-            Debug.Log("TableRealms: Scene Change loading to '" + sceneName + "'.");
-            DeliverMessage(new SP2PM(sceneName,false));
-        }
-    }
-
-    public void MergeScene(string sceneName) {
-        SceneManager.LoadScene(sceneName,LoadSceneMode.Additive);
-        if (iAmTheHost) {
-            Debug.Log("TableRealms: Scene Change merging '" + sceneName + "'.");
-            DeliverMessage(new SP2PM(sceneName,true));
+            Debug.Log("TableRealms: Scene Change detected moving to '" + sceneName + "'.");
+            DeliverMessage(new SP2PM(sceneName));
         }
     }
 
@@ -347,15 +290,7 @@ public abstract class TableRealmsPeerToPeerNetwork : MonoBehaviour {
         return message.GetType().Name;
     }
 
-    public void DeliverMessage(P2PMessage message) {
-        if (customMessageTypes.Contains(message.GetType())) {
-            ProcessMessage(message);
-        }
-        DeliverMessageToClients(message);
-    }
-
-
     public abstract string GetSessionId();
-    public abstract void DeliverMessageToClients(P2PMessage message);
+    public abstract void DeliverMessage(P2PMessage message);
 
     }

@@ -23,22 +23,19 @@ public class TableRealmsPeerToPeerNetworkWebSocket : TableRealmsPeerToPeerNetwor
 
     override public void Start() {
         if (instance == null) {
+            GameObject.DontDestroyOnLoad(gameObject);
 #if UNITY_WEBGL && !UNITY_EDITOR
-            string protocol = TableRealmsGetProtocol();
-
-            // Are we running embedded
-            if (protocol != null && protocol.StartsWith("Embedded")) {
-                TableRealmsGameNetwork.embeded = true;
-            }
 
             // Are we running in Peer2Peer mode? If not then remove flag us as the host
-            if ("EmbeddedP2P".Equals(protocol)) {
-                TableRealmsGameNetwork.p2p=true;
-                Debug.Log("TableRealms: P2P Enabled.");
-            } else {
+            if (!"EmbeddedP2P".Equals(TableRealmsGetProtocol())) {
                 TableRealmsGameNetwork.p2p=false;
                 TableRealmsGameNetwork.host=true;
+                Destroy(this);
                 Debug.Log("TableRealms: P2P Not Enabled. Protocol '"+ TableRealmsGetProtocol() + "'");
+            } else {
+                TableRealmsGameNetwork.p2p=true;
+                TableRealmsGameNetwork.host=false; // Default host to false
+                Debug.Log("TableRealms: P2P Enabled.");
             }
 #else
             TableRealmsGameNetwork.p2p = false;
@@ -48,14 +45,12 @@ public class TableRealmsPeerToPeerNetworkWebSocket : TableRealmsPeerToPeerNetwor
         base.Start();
     }
 
-    public override void Update() {
+    public void Update() {
         if (!calledHost) {
             calledHost = true;
 #if UNITY_WEBGL && !UNITY_EDITOR
             TableRealmsAmIHost(gameObject.name);
 #endif
-        } else {
-            base.Update();
         }
     }
 
@@ -72,7 +67,7 @@ public class TableRealmsPeerToPeerNetworkWebSocket : TableRealmsPeerToPeerNetwor
         this.sessionId = sessionId;
     }
 
-    public override void DeliverMessageToClients(P2PMessage message) {
+    public override void DeliverMessage(P2PMessage message) {
         if (TableRealmsGameNetwork.host && TableRealmsGameNetwork.p2p) {
             InitTables();
 

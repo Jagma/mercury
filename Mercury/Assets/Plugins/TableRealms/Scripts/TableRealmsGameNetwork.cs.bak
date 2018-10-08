@@ -33,7 +33,6 @@ public class TableRealmsGameNetwork : MonoBehaviour {
 
     public static bool p2p = false;
     public static bool host = true;
-    public static bool embeded = false;
 
     private IClientConnectionListener clientConnectionListener;
     private Queue<IClientConnection> pendingClientConnections = new Queue<IClientConnection>();
@@ -165,7 +164,7 @@ public class TableRealmsGameNetwork : MonoBehaviour {
             } else if (valueType == typeof(bool)) {
                 updateModelMessage = new UpdateModelMessage(true, key, ModelType.TypeBoolean.ToString(), TableRealmsModel.instance.GetData<bool>(key).ToString());
             } else {
-                Debug.LogError("TableRealms: Global data of type '"+ valueType + "' for key '"+key+"' is not suported, only string, bool, long, and float are.");
+                Debug.LogError("TableRealms: Global data of type '"+ valueType + "' is not suported, only string, bool, long, and float are.");
             }
             if (updateModelMessage != null) {
                 //Debug.LogError("Sending global "+key+"="+updateModelMessage.value);

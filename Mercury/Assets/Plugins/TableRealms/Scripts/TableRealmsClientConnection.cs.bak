@@ -256,7 +256,7 @@ public class TableRealmsClientConnection : MonoBehaviour  {
         InitTables();
 
         if (debugMessages && !message.StartsWith("HeartbeatMessage|")) {
-            Debug.Log("TableRealms: Received " + message);
+            Debug.Log("TableRealms: Recieved " + message);
         }
 
         int idx = message.IndexOf("|");
@@ -320,9 +320,7 @@ public class TableRealmsClientConnection : MonoBehaviour  {
         return true;
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (loadingScene == -1) {
-            loadingScene = 1; // Skip a frame after load scene before continuing with messages. (TODO: We might be able to reduce this to one)
-        }
+        loadingScene = 3; // Skip three frames after load scene before continuing with messages. (TODO: We might be able to reduce this to one)
     }
     /*
     private void ActiveSceneChanged(Scene s1, Scene s2) {

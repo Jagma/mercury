@@ -3,11 +3,11 @@
 namespace tablerealms.comms.message
 {
 
-    public class SceneP2PCommand : P2PCommand<SceneP2PMessage>
+    public class SceneP2PCommand : P2PCommand<SP2PM>
     {
-        protected override void Process(SceneP2PMessage message)
+        protected override void Process(SP2PM message)
         {
-            SceneManager.LoadScene(message.name);
+            TableRealmsPeerToPeerNetwork.instance.LoadScene(message.n);
         }
     }
 }

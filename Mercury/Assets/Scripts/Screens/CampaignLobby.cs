@@ -58,17 +58,42 @@ public class CampaignLobby : MonoBehaviour {
 
         public void Update() {
             if (status == Status.Selecting) {
-                if (InputManager.instance.GetUpPressed(playerID)) {
-                    Up();
-                }
-                if (InputManager.instance.GetDownPressed(playerID)) {
-                    Down();
-                }
-                if (InputManager.instance.GetSelectPressed(playerID)) {
-                    Select();
-                }
-                if (InputManager.instance.GetBackPressed(playerID)) {
-                    Leave();
+                if (InputManager.instance.GetPlayerInput(playerID).inputType == PlayerInput.InputType.TableRealms) {
+                    TableRealmsDevice device = TableRealmsManager.instance.GetDevice(playerID);
+
+                    if (device.GetSelectTrumpWasPressed()) {
+                        Browse(0);
+                    }
+                    if (device.GetSelectBinLadenWasPressed()) {
+                        Browse(1);
+                    }
+                    if (device.GetSelectOprahWasPressed()) {
+                        Browse(2);
+                    }
+                    if (device.GetSelectPopeWasPressed()) {
+                        Browse(3);
+                    }
+                    if (device.GetCharacterSelect()) {
+                        device.DisplayPage("Ready");
+                        Select();
+                    }
+                    if (device.GetLeaveLobby()) {
+                        device.DisplayPage("Join");
+                        Leave();
+                    }
+                } else {
+                    if (InputManager.instance.GetUpPressed(playerID)) {
+                        Up();
+                    }
+                    if (InputManager.instance.GetDownPressed(playerID)) {
+                        Down();
+                    }
+                    if (InputManager.instance.GetSelectPressed(playerID)) {
+                        Select();
+                    }
+                    if (InputManager.instance.GetBackPressed(playerID)) {
+                        Leave();
+                    }
                 }
 
                 portrait.transform.localScale = Vector3.Lerp(portrait.transform.localScale, Vector3.one, Time.deltaTime * 10);
@@ -80,8 +105,18 @@ public class CampaignLobby : MonoBehaviour {
             }
 
             if (status == Status.Ready) {
-                if (InputManager.instance.GetBackPressed(playerID)) {
-                    DeSelect();
+                if (InputManager.instance.GetPlayerInput(playerID).inputType == PlayerInput.InputType.TableRealms) {
+                    TableRealmsDevice device = TableRealmsManager.instance.GetDevice(playerID);
+
+                    if (device.GetLeaveReady()) {
+                        DeSelect();
+                        device.DisplayPage("CharacterSelect");
+                    }
+                }
+                else {
+                    if (InputManager.instance.GetBackPressed(playerID)) {
+                        DeSelect();
+                    }
                 }
             }
 
@@ -106,6 +141,11 @@ public class CampaignLobby : MonoBehaviour {
 
         void Leave () {
             lobby.PlayerLeave(playerID);
+        }
+
+        void Browse (int i) {
+            characterIndex = i;
+            UpdatePortrait();
         }
 
         void Up () {
@@ -170,8 +210,7 @@ public class CampaignLobby : MonoBehaviour {
             if (InputManager.instance.GetPlayerInput("Keyboard|0001") == null) {
                 SceneManager.LoadScene("Menu");
             }
-        }
-        
+        }        
         if (InControl.InputManager.ActiveDevice.Action2.WasPressed) {
             string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
             if (InputManager.instance.GetPlayerInput(controllerID) == null) {
@@ -179,8 +218,16 @@ public class CampaignLobby : MonoBehaviour {
             }
         }
 
-        // TODO: Add table realms leave
 
+        // Table realms specific
+        Dictionary<string, TableRealmsDevice> TRDevices = TableRealmsManager.instance.GetDeviceDictionary();
+        foreach (KeyValuePair<string, TableRealmsDevice> kvp in TRDevices) {
+            TableRealmsDevice device = kvp.Value;
+            if (device.GetJoinLobby()) {
+                PlayerJoin(kvp.Value.GetDeviceID(), PlayerInput.InputType.TableRealms);
+                device.DisplayPage("CharacterSelect");
+            }
+        }
 
         // Selectors update
         for (int i=0; i < characterSelectors.Count; i++) {
@@ -224,7 +271,6 @@ public class CampaignLobby : MonoBehaviour {
             string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
             PlayerJoin(controllerID, PlayerInput.InputType.Controller);
         }
-        // TODO: Add table realms join
 
 
         // Portrait updates

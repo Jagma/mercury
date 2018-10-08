@@ -426,8 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.68240345, b: 0, a: 1}
-  m_EffectDistance: {x: 0, y: -10}
+  m_EffectColor: {r: 1, g: 0, b: 0.92985296, a: 1}
+  m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
 --- !u!114 &47702972
 MonoBehaviour:
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.82808495, g: 0, b: 1, a: 1}
+  m_EffectColor: {r: 0, g: 0.96311355, b: 1, a: 1}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &100348277
@@ -5611,6 +5611,7 @@ GameObject:
   - component: {fileID: 678187182}
   - component: {fileID: 678187184}
   - component: {fileID: 678187183}
+  - component: {fileID: 678187185}
   m_Layer: 0
   m_Name: TableRealms (Persistent)
   m_TagString: Untagged
@@ -5667,6 +5668,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e49e9b1a3d1b12342b341004e992159e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &678187185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 678187180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c4f137e57c4be49a7fdafa332d5e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &762835823

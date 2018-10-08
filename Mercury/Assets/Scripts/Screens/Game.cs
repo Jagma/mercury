@@ -25,6 +25,11 @@ public class Game : MonoBehaviour
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {
+            if (playerInputKVP.Value.inputType == PlayerInput.InputType.TableRealms) {
+                TableRealmsDevice device = TableRealmsManager.instance.GetDevice(playerInputKVP.Value.playerID);
+                device.DisplayPage("Controller");
+            }
+
             GameObject playerGO = new GameObject();
             if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Trump"))
             {
