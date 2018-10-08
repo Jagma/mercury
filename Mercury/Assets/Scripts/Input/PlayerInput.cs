@@ -88,7 +88,7 @@ public class PlayerInput {
     {
         if (inputType == InputType.TableRealms)
         {
-            Debug.LogError("Not implemented");
+            return TableRealmsManager.instance.GetDevice(playerID).GetLeftStick();
         }
         if (inputType == InputType.Controller)
         {
@@ -126,7 +126,17 @@ public class PlayerInput {
     {
         if (inputType == InputType.TableRealms)
         {
-            Debug.LogError("Not implemented");
+            Vector2 rightStick = TableRealmsManager.instance.GetDevice(playerID).GetRightStick();
+            Debug.Log(rightStick);
+            Debug.Log(rightStick.magnitude);
+
+            if (rightStick.magnitude > 0.1f) {
+                controllerAimDir = rightStick;
+            } else {
+                return controllerAimDir * 0.01f;
+            }
+
+            return controllerAimDir;
         }
         if (inputType == InputType.Controller)
         {
@@ -168,6 +178,7 @@ public class PlayerInput {
     {
         if (inputType == InputType.TableRealms)
         {
+            Debug.Log(GetAimDirection().magnitude);
             if (GetAimDirection().magnitude > 0.5f)
             {
                 return true;
@@ -195,7 +206,7 @@ public class PlayerInput {
     {
         if (inputType == InputType.TableRealms)
         {
-            Debug.LogError("Not implemented");
+            return TableRealmsManager.instance.GetDevice(playerID).GetInteract();
         }
         if (inputType == InputType.Controller)
         {
@@ -217,7 +228,7 @@ public class PlayerInput {
     {
         if (inputType == InputType.TableRealms)
         {
-            Debug.LogError("Not implemented");
+            return TableRealmsManager.instance.GetDevice(playerID).GetSwapWeapon();
         }
         if (inputType == InputType.Controller)
         {
@@ -267,7 +278,7 @@ public class PlayerInput {
     {
         if (inputType == InputType.TableRealms)
         {
-            Debug.LogError("Not implemented");
+            return TableRealmsManager.instance.GetDevice(playerID).GetAbility();
         }
         if (inputType == InputType.Controller)
         {

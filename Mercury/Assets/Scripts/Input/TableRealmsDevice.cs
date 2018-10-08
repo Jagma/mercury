@@ -133,7 +133,21 @@ public class TableRealmsDevice : TableRealmsPlayerActionBehavior {
         return leftStick;
     }
 
-    public bool GetFire() {
-        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.Fire.Pressed");
+    public Vector2 GetRightStick() {
+        Vector2 leftStick = Vector2.zero;
+        leftStick.x = TableRealmsModel.instance.GetData<float>(GetDeviceID() + ".ThumbStick.StickRight.x");
+        leftStick.y = TableRealmsModel.instance.GetData<float>(GetDeviceID() + ".ThumbStick.StickRight.y");
+
+        return leftStick;
+    }
+
+    public bool GetInteract() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNInteract.Pressed");
+    }
+    public bool GetSwapWeapon() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNSwapWeapon.Pressed");
+    }
+    public bool GetAbility() {
+        return TableRealmsModel.instance.GetData<bool>(GetDeviceID() + ".Button.BTNAbility.Pressed");
     }
 }
