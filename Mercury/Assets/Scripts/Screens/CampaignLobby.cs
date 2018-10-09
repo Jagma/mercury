@@ -130,11 +130,13 @@ public class CampaignLobby : MonoBehaviour {
             status = Status.Ready;
             characterSelectGO.SetActive(false);
             characterSelectedGO.SetActive(true);
+            AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
         }
 
         void DeSelect () {
             characterSelectGO.SetActive(true);
             characterSelectedGO.SetActive(false);
+            AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
 
             status = Status.Selecting;
         }
@@ -155,7 +157,7 @@ public class CampaignLobby : MonoBehaviour {
             if (characterIndex == 4) {
                 characterIndex = 0;
             }
-            
+            AudioManager.instance.PlayAudio("menu1", 1, false);
             UpdatePortrait();
         }
 
@@ -166,7 +168,7 @@ public class CampaignLobby : MonoBehaviour {
             if (characterIndex == -1) {
                 characterIndex = 3;
             }
-
+            AudioManager.instance.PlayAudio("menu1", 1, false);
             UpdatePortrait();
         }
 
