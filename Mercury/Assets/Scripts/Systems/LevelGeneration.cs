@@ -111,6 +111,7 @@ public class LevelGeneration : MonoBehaviour
                     enemyGO.transform.parent = levelRoot;
                     enemyGO.transform.position = new Vector3(x, 2, z);
                     GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
                 }
 
                 if (enemies[x, z] == "Ranged Walker")
@@ -119,6 +120,7 @@ public class LevelGeneration : MonoBehaviour
                     enemyGO.transform.parent = levelRoot;
                     enemyGO.transform.position = new Vector3(x, 2, z);
                     GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
                 }
 
                 if (pickups[x, z] == "Normal Chest")
@@ -144,6 +146,13 @@ public class LevelGeneration : MonoBehaviour
             }
         }
     }
+
+    public void SpawnMartianBoss(Vector3 playerPosition) {
+        GameObject enemyGO = Factory.instance.CreateMartianBoss();
+        enemyGO.transform.parent = levelRoot;
+        enemyGO.transform.position = new Vector3(playerPosition.x, 2, playerPosition.z);
+    }
+
 }
 
 public class Miner

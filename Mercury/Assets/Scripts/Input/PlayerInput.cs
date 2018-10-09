@@ -127,8 +127,6 @@ public class PlayerInput {
         if (inputType == InputType.TableRealms)
         {
             Vector2 rightStick = TableRealmsManager.instance.GetDevice(playerID).GetRightStick();
-            Debug.Log(rightStick);
-            Debug.Log(rightStick.magnitude);
 
             if (rightStick.magnitude > 0.1f) {
                 controllerAimDir = rightStick;
@@ -180,7 +178,6 @@ public class PlayerInput {
     {
         if (inputType == InputType.TableRealms)
         {
-            Debug.Log(GetAimDirection().magnitude);
             if (GetAimDirection().magnitude > 0.5f)
             {
                 return true;

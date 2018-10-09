@@ -76,4 +76,11 @@ public class Game : MonoBehaviour
         return null;
     }
 
+
+    private void Update() {
+        if (EnemyManager.instance.GetEnemyCount() <= 0) {
+            Debug.Log("Game over !!!");
+        }
+    }
+
 }
