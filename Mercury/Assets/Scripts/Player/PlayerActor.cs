@@ -79,7 +79,6 @@ public class PlayerActor : MonoBehaviour
 
     public void Move (Vector2 direction)
     {
-        Debug.Log("Move direction : " + direction);
         Vector2 moveDir = InputManager.instance.GetMoveDirection(model.playerID);
         rigid.velocity += transform.forward * moveDir.y * model.moveAcceleration;
         rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
