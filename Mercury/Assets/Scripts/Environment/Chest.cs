@@ -28,6 +28,39 @@ public class Chest : MonoBehaviour
     protected void Update()
     {
        transform.position = Vector3.Lerp(transform.position, transform.position, 0.3f);
+       visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+    }
+
+    private void LookAtPlayer()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 7.5f);
+
+        PlayerActor closestPlayerActor = null;
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            PlayerActor playerActor = colliders[i].GetComponent<PlayerActor>();
+
+            // Is this collider a player
+            if (playerActor != null)
+            {
+                if (closestPlayerActor == null)
+                {
+                    closestPlayerActor = playerActor;
+                }
+                // Is this player closer than the current closest player
+                if (Vector3.Distance(playerActor.transform.position, transform.position) <
+                    Vector3.Distance(closestPlayerActor.transform.position, transform.position))
+                {
+                    closestPlayerActor = playerActor;
+                }
+            }
+
+        }
+
+        if (closestPlayerActor != null)
+        {
+            visual.eulerAngles = new Vector3(45, 45, closestPlayerActor.transform.eulerAngles.z);
+        }
     }
 
     protected virtual void Use()
