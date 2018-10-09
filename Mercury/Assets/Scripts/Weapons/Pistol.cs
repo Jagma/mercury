@@ -24,8 +24,9 @@ public class Pistol : WeaponRanged
 
         GameObject bullet = Factory.instance.CreateBullet();
         bullet.GetComponent<Projectile>().speed *= 2;
-        bullet.transform.position = transform.position + transform.right * ammoOffset + (Random.insideUnitSphere * missChance);
+        bullet.transform.position = transform.position + transform.right * ammoOffset;
         bullet.transform.right = transform.right;
+        bullet.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
         bullet.GetComponent<Projectile>().Update();
 
         AudioManager.instance.PlayAudio("dspistol", 1f, false);
