@@ -124,6 +124,19 @@ public class LevelGeneration : MonoBehaviour
                     chestGO.transform.position = new Vector3(x, 2, z);
                 }
 
+                if (pickups[x, z] == "Medkit")
+                {
+                    GameObject medkitGO = Factory.instance.CreateMedkit();
+                    medkitGO.transform.parent = levelRoot;
+                    medkitGO.transform.position = new Vector3(x, 2, z);
+                }
+
+                if (pickups[x, z] == "Medpack")
+                {
+                    GameObject medpackGO = Factory.instance.CreateMedpack();
+                    medpackGO.transform.parent = levelRoot;
+                    medpackGO.transform.position = new Vector3(x, 2, z);
+                }
             }
         }
     }
@@ -201,6 +214,14 @@ public class Miner
         if (Random.Range(0, 10000) > 9990)
         {
             levelGen.pickups[posX, posZ] = "Normal Chest";
+        }
+        if (Random.Range(0, 10000) > 9990)
+        {
+            levelGen.pickups[posX, posZ] = "Medkit";
+        }
+        if (Random.Range(0, 10000) > 9990)
+        {
+            levelGen.pickups[posX, posZ] = "Medpack";
         }
     }
 
