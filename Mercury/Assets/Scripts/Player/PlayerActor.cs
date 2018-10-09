@@ -9,15 +9,12 @@ public class PlayerActor : MonoBehaviour
     public static PlayerActor instance;
     public Sprite forward;
     public Sprite facing;
- 
     public Sprite death;
 
     private float startHealth = 100;
     public float health = 100;
     Transform visual;
     Rigidbody rigid;
-    Weapon weapon;
-    Weapon inventoryWeapon;
 
     private void Awake()
     {
@@ -58,6 +55,11 @@ public class PlayerActor : MonoBehaviour
 
         rigid.velocity = Vector3.Lerp(rigid.velocity, new Vector3(0, rigid.velocity.y, 0), model.moveDeceleration);
         CollisionDetection();
+    }
+
+    public Weapon GetPlayerEquippedWeapon()
+    {
+        return model.equippedWeapon;
     }
 
     private void CollisionDetection()
@@ -198,17 +200,10 @@ public class PlayerActor : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         Projectile projectile = col.GetComponent<Projectile>();
-        Portal portal = col.GetComponent<Portal>();
-        MartianBoss martianBoss = col.GetComponent<MartianBoss>();
         if (projectile != null)
         {
             Damage(projectile.damage);
             Debug.Log("Player took damage.");
-        }
-        if (portal != null)
-        {
-            Debug.Log("portal enter.");
-            Portal.instance.EnterPortal();
         }
     }
 

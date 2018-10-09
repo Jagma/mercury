@@ -12,7 +12,9 @@ public class MachineGun : WeaponRanged
         cooldown = 0.1f;
         ammoOffset = 0.6f;
         ammoRandomness = 10f;
-        ammoMaximum = 500;
+        ammoMaxInventory = 500;
+        ammoInventory = 500;
+        ammoMax = 40;
         ammoCount = 40;
     }
 

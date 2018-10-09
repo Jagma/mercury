@@ -135,8 +135,6 @@ public class Factory : MonoBehaviour
 
         return playerGO;
     }
-
-
     public GameObject CreateDropShadow()
     {
         GameObject dropShadowGO = new GameObject("Drop Shadow");
@@ -148,7 +146,6 @@ public class Factory : MonoBehaviour
         dropShadowGO.AddComponent<DropShadow>();
         return dropShadowGO;
     }
-
     public GameObject CreateTNTBag()
     {
         GameObject bagGO = new GameObject("TNTBag");
@@ -428,6 +425,32 @@ public class Factory : MonoBehaviour
         return chestGO;
     }
 
+    public GameObject CreateAmmoChest()
+    {
+        GameObject chestGO = new GameObject("Ammo Chest");
+
+        SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
+        chestCollider.radius = 0.1f;
+
+        SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
+        chestColliderT.isTrigger = true;
+
+        Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject chestVisualGO = new GameObject("Visual");
+        chestVisualGO.transform.parent = chestGO.transform;
+
+        GameObject chestVisualBodyGO = new GameObject("Body");
+        chestVisualBodyGO.transform.parent = chestVisualGO.transform;
+        SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/AmmoChest");
+
+        chestGO.AddComponent<AmmoChest>();
+
+        return chestGO;
+    }
+
     public GameObject CreateMedkit()
     {
         GameObject medkitGO = new GameObject("Medkit");
@@ -478,6 +501,86 @@ public class Factory : MonoBehaviour
         medpackGO.AddComponent<Medpack>();
 
         return medpackGO;
+    }
+
+    public GameObject CreateRocketAmmoPack()
+    {
+        GameObject rocketAmmoGO = new GameObject("RocketAmmo");
+
+        SphereCollider rocketAmmoCollider = rocketAmmoGO.AddComponent<SphereCollider>();
+        rocketAmmoCollider.radius = 0.1f;
+
+        SphereCollider rocketAmmoColliderT = rocketAmmoGO.AddComponent<SphereCollider>();
+        rocketAmmoColliderT.isTrigger = true;
+
+        Rigidbody rocketAmmoRigid = rocketAmmoGO.AddComponent<Rigidbody>();
+        rocketAmmoRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject rocketAmmoVisualGO = new GameObject("Visual");
+        rocketAmmoVisualGO.transform.parent = rocketAmmoGO.transform;
+
+        GameObject rocketAmmoVisualBodyGO = new GameObject("Body");
+        rocketAmmoVisualBodyGO.transform.parent = rocketAmmoVisualGO.transform;
+        SpriteRenderer sr = rocketAmmoVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/rocketammo");
+
+        rocketAmmoGO.AddComponent<RockettAmmoPack>();
+
+        return rocketAmmoGO;
+    }
+
+
+    public GameObject CreateBulletAmmoPack()
+    {
+        GameObject bulletAmmoGO = new GameObject("BulletAmmo");
+
+        SphereCollider bulletAmmoCollider = bulletAmmoGO.AddComponent<SphereCollider>();
+        bulletAmmoCollider.radius = 0.1f;
+
+        SphereCollider bulletAmmoColliderT = bulletAmmoGO.AddComponent<SphereCollider>();
+        bulletAmmoColliderT.isTrigger = true;
+
+        Rigidbody bulletAmmoRigid = bulletAmmoGO.AddComponent<Rigidbody>();
+        bulletAmmoRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject bulletAmmoVisualGO = new GameObject("Visual");
+        bulletAmmoVisualGO.transform.parent = bulletAmmoGO.transform;
+
+        GameObject bulletAmmoVisualBodyGO = new GameObject("Body");
+        bulletAmmoVisualBodyGO.transform.parent = bulletAmmoVisualGO.transform;
+        SpriteRenderer sr = bulletAmmoVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/bulletammo");
+
+        bulletAmmoGO.AddComponent<BulletAmmoPack>();
+
+        return bulletAmmoGO;
+    }
+
+
+    public GameObject CreateBeamAmmoPack()
+    {
+        GameObject BeamAmmoGO = new GameObject("BeamAmmo");
+
+        SphereCollider BeamAmmoCollider = BeamAmmoGO.AddComponent<SphereCollider>();
+        BeamAmmoCollider.radius = 0.1f;
+
+        SphereCollider BeamAmmoColliderT = BeamAmmoGO.AddComponent<SphereCollider>();
+        BeamAmmoColliderT.isTrigger = true;
+
+        Rigidbody BeamAmmoRigid = BeamAmmoGO.AddComponent<Rigidbody>();
+        BeamAmmoRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject BeamAmmoVisualGO = new GameObject("Visual");
+        BeamAmmoVisualGO.transform.parent = BeamAmmoGO.transform;
+
+        GameObject BeamAmmoVisualBodyGO = new GameObject("Body");
+        BeamAmmoVisualBodyGO.transform.parent = BeamAmmoVisualGO.transform;
+        SpriteRenderer sr = BeamAmmoVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/beamammo");
+
+        BeamAmmoGO.AddComponent<BeamAmmoPack>();
+
+        return BeamAmmoGO;
     }
 
     public GameObject CreateFloor()
@@ -588,36 +691,6 @@ public class Factory : MonoBehaviour
         enemyRangedGO.AddComponent<RangedWalker>();
         return enemyRangedGO;
     }
-
-    public GameObject CreatePortal()
-    {
-        GameObject portalGO = new GameObject("Portal");
-
-        CapsuleCollider portalCollider = portalGO.AddComponent<CapsuleCollider>();
-        portalCollider.radius = 0.25f;
-        portalCollider.height = 0.8f;
-
-        Rigidbody portalRigid = portalGO.AddComponent<Rigidbody>();
-        portalRigid.interpolation = RigidbodyInterpolation.Interpolate;
-        portalRigid.constraints = RigidbodyConstraints.FreezeRotation;
-
-        //alternative method to clamp the portal to the ground:
-        //portalRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-
-        GameObject portalVisualGO = new GameObject("Visual");
-        portalVisualGO.transform.parent = portalGO.transform;
-
-        GameObject portalBodyVisualGO = new GameObject("Body");
-        portalBodyVisualGO.transform.parent = portalVisualGO.transform;
-
-        SpriteRenderer sr = portalBodyVisualGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Portal");
-
-        portalGO.AddComponent<Portal>();
-        return portalGO;
-    }
-
-
 
     /* New stuff
      * ********************************************************

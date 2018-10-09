@@ -72,6 +72,7 @@ public class LevelGeneration : MonoBehaviour
         }
 
         pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
+        pickups[minerList[0].posX, minerList[0].posZ] = "Ammo Chest";
         playerSpawnPosition = new Vector3(minerList[0].posX, 4, minerList[0].posZ);
 
         // Build floor
@@ -126,6 +127,13 @@ public class LevelGeneration : MonoBehaviour
                 if (pickups[x, z] == "Normal Chest")
                 {
                     GameObject chestGO = Factory.instance.CreateNormalChest();
+                    chestGO.transform.parent = levelRoot;
+                    chestGO.transform.position = new Vector3(x, 2, z);
+                }
+
+                if (pickups[x, z] == "Ammo Chest")
+                {
+                    GameObject chestGO = Factory.instance.CreateAmmoChest();
                     chestGO.transform.parent = levelRoot;
                     chestGO.transform.position = new Vector3(x, 2, z);
                 }
@@ -227,6 +235,10 @@ public class Miner
         if (Random.Range(0, 10000) > 9990)
         {
             levelGen.pickups[posX, posZ] = "Normal Chest";
+        }
+        if (Random.Range(0, 10000) > 9990)
+        {
+            levelGen.pickups[posX, posZ] = "Ammo Chest";
         }
         if (Random.Range(0, 10000) > 9990)
         {

@@ -13,6 +13,10 @@ public class RocketLauncher : WeaponRanged
         // Stats
         cooldown = 1f;
         ammoOffset = 1f;
+        ammoMaxInventory = 7;
+        ammoInventory = 7;
+        ammoMax = 1;
+        ammoCount = 1;
     }
 
     protected override void Use()
