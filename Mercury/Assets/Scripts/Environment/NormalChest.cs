@@ -21,7 +21,7 @@ public class NormalChest : Chest
 
     public GameObject ChooseRandomWeapon()
     {
-        int[] itemWeights = { 3, 2, 1, 1 };
+        int[] itemWeights = { 2, 200, 1, 1 };
 
         int total = 0;
         for (int i=0; i < itemWeights.Length; i ++) {
@@ -34,7 +34,7 @@ public class NormalChest : Chest
         int result = 0;
         for (int i=0; i < itemWeights.Length; i ++) {
             total += itemWeights[i];
-            if (random < total) {
+            if (random <= total) {
                 result = i;
                 break;
             }
@@ -44,11 +44,11 @@ public class NormalChest : Chest
         {
             return Factory.instance.CreatePistol();
         }
-        if (result == 1) //50-69
+        if (result == 1)
         {
             return Factory.instance.CreateMachineGun();
         }
-        if (result == 2) //70-74 
+        if (result == 2) 
         {
             return Factory.instance.CreateLaserRifle();
         }

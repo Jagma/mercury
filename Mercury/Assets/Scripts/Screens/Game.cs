@@ -12,6 +12,8 @@ public class Game : MonoBehaviour
 
     List<PlayerActor> playerActorList = new List<PlayerActor>();
 
+    List<Enemy> enemyList = new List<Enemy>();
+
 	void Start ()
     {
         if (InputManager.instance == null)
