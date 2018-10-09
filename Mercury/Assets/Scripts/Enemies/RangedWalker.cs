@@ -94,7 +94,6 @@ public class RangedWalker : Enemy
 
     void MoveRandomDir()
     {
-        //base.FaceDirection(Quaternion.AngleAxis(Random.Range(-70.0f, 70.0f), Vector3.forward) * transform.position);
         equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
     }
 
@@ -110,21 +109,11 @@ public class RangedWalker : Enemy
 
     public void AimAtPlayer(Vector3 direction)
     {
-            if (equippedWeapon)
-            {
-                equippedWeapon.transform.right = (direction - transform.position).normalized;
-            }
-        
-       /* else //if player is moving around.
+        if (equippedWeapon)
         {
-            float missChance = 0.35f;
+            equippedWeapon.transform.right = (direction - transform.position).normalized;
+        }
 
-            if (equippedWeapon)
-            {
-                equippedWeapon.transform.right = (direction - transform.position).normalized + Random.insideUnitSphere * missChance;
-            }
-            prevdirection = direction;
-        }*/
     }
 
     public void AttackPlayer()
