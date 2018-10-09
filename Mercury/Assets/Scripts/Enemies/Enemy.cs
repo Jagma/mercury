@@ -87,10 +87,18 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Death()
     {
-        if (equippedWeapon) //has a chance to drop weapon.
+        if (equippedWeapon) //has a chance to drop weapon or ammo pack.
         {
             DropItems();
         }
+
+        Transform enemyVisual = transform.Find("Visual");
+        enemyVisual.transform.parent = null;
+        float speed = 75.0f;
+        float angle = Mathf.PingPong(Time.time * speed, 90.0f);
+        enemyVisual.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        //enemyVisual.eulerAngles = new Vector3(transform.eulerAngles.x, 90f, transform.eulerAngles.z); --alternative method to rotate 90 degrees.
         Destroy(gameObject);
     }
 
@@ -109,7 +117,7 @@ public class Enemy : MonoBehaviour
             equippedWeapon.Dequip();
             equippedWeapon.equipped = false;
             equippedWeapon = null;
-            Destroy(temp);
+            Destroy(equippedWeapon);
         }
 
         if (randomNum >= 20 && randomNum < 61)//40% Drop ammo pack - still needs to be implemented.
