@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
     protected void Update()
     {
         transform.position = Vector3.Lerp(transform.position, transform.position, 0.3f);
+        visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
     }
 
     protected virtual void Use(PlayerActor player)
