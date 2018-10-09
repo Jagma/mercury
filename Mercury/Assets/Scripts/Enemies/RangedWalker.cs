@@ -15,6 +15,7 @@ public class RangedWalker : Enemy
         moveSpeed = 1f;
     }
 
+    RaycastHit[] hits;
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -24,7 +25,7 @@ public class RangedWalker : Enemy
         {
             equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
         }
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
+        hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
 
         GameObject closestPlayerGO = hits[0].collider.gameObject;
         for (int i = 0; i < hits.Length; i++)

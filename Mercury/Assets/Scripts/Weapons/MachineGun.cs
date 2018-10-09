@@ -12,6 +12,8 @@ public class MachineGun : WeaponRanged
         cooldown = 0.1f;
         ammoOffset = 0.6f;
         ammoRandomness = 10f;
+        ammoMaximum = 500;
+        ammoCount = 40;
     }
 
     protected override void Use()
@@ -32,6 +34,6 @@ public class MachineGun : WeaponRanged
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
 
-        AudioManager.instance.PlayAudio("ric1", 1, false);
+        AudioManager.instance.PlayAudio("sfx_wpn_machinegun_loop2", 1, false);
     }
 }
