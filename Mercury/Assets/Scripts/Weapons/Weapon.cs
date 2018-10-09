@@ -9,6 +9,8 @@ public class Weapon : MonoBehaviour
     protected Transform visual;
     protected float cooldownRemaining = 0f;
 
+    protected int ammoMaximum = 120;
+    protected int ammoCount = 120;
     private void Awake()
     {
         visual = transform.Find("Visual");
@@ -16,7 +18,6 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Start()
     {
-
     }
 
     public void Equip()
@@ -39,8 +40,12 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            cooldownRemaining = cooldown;
-            Use();
+            if (ammoCount > 0) {
+                cooldownRemaining = cooldown;
+                Use();
+
+                ammoCount--;
+            }
         }
     }
 
