@@ -67,16 +67,6 @@ public class GameProgressionManager : MonoBehaviour
         Debug.Log("Level complete.");
         SceneManager.LoadScene("LevelComplete");
     }
-
-    public void EnemyDead()
-    {
-        numEnemiesLeft -= 1;
-        if (numEnemiesLeft == 0)
-        {
-            GameObject portal = Factory.instance.CreatePortal();
-            Debug.Log("Portal spawned.");
-        }
-    }
     
     public void IncreaseEnemyCount()
     {

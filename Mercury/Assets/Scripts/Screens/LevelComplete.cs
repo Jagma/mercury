@@ -23,7 +23,6 @@ public class LevelComplete : MonoBehaviour
     {
         Destroy(Game.instance);
         Destroy(Factory.instance);
-        Destroy(Portal.instance);
     }
 
     public void RestartGame()

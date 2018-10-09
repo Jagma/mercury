@@ -2,6 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * SUMMARY:
+ * The factory class was created in order to help reduce any merging problems that may occur when multiple members of our team works on the same classes and scenes in this project.
+ * The factory class is a singleton class, it contains most if not all of the code to create our objects manually through code, as we encountered previous problems within
+ * GitHub that will merge different member's work together and causes it to break.
+ * 
+ * In order to prevent comment "redundancy", the following in-built unity components that are used various time in our code will be explained below:
+ * > SpriteRenderer: Use to...
+ * > RigidBody: Use to...
+ * > LineRenderer: Use to...
+ * > Capsule Collider: Use to...
+ * > PhysicMaterial: Use to...
+ * > Material: Use to...
+ * > ParticleSystem: Use to...
+ * > SphereCollider: Use to...
+ */
+
 public class Factory : MonoBehaviour
 {
     // The factory is a singleton
@@ -48,13 +65,6 @@ public class Factory : MonoBehaviour
         playerVisualBodyGO.transform.parent = playerVisualGO.transform;
         SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
         playerGO.AddComponent<SpriteRenderer>();
-
-        /* GameObject playerHealthBarGO = new GameObject("Health Bar");
-         playerHealthBarGO.transform.parent = playerVisualGO.transform;
-         playerHealthBarGO.transform.localPosition = new Vector3(0,0.5f, -0.3f); // (-2.15f, 3, -0.3f);
-         playerHealthBarGO.transform.localScale = new Vector3(1f, 0.1f, 1);
-         SpriteRenderer srHB = playerHealthBarGO.AddComponent<SpriteRenderer>();
-         playerHealthBarGO.AddComponent<HealthBar>();*/
 
         GameObject health = GameObject.FindGameObjectWithTag("HealthBars");
         health.transform.SetParent(playerGO.transform, true);
@@ -135,8 +145,6 @@ public class Factory : MonoBehaviour
 
         return playerGO;
     }
-
-
     public GameObject CreateDropShadow()
     {
         GameObject dropShadowGO = new GameObject("Drop Shadow");
@@ -148,7 +156,6 @@ public class Factory : MonoBehaviour
         dropShadowGO.AddComponent<DropShadow>();
         return dropShadowGO;
     }
-
     public GameObject CreateTNTBag()
     {
         GameObject bagGO = new GameObject("TNTBag");
@@ -228,7 +235,7 @@ public class Factory : MonoBehaviour
         return rocketGO;
     }
 
-    public GameObject CreateBeamNeon()
+    public GameObject CreateBeamNeon() //code is used in order to create/spawn the laser beam used for the laser rifle weapon.
     {
         GameObject neonBeamGO = new GameObject("BeamNeon");
 
@@ -239,22 +246,22 @@ public class Factory : MonoBehaviour
         neonBeamVisualMainGO.transform.parent = neonBeamVisualGO.transform;
 
         LineRenderer mainLR = neonBeamVisualMainGO.AddComponent<LineRenderer>();
-        Material beamLine = new Material(Shader.Find("Particles/Additive"));
+        Material beamLine = new Material(Shader.Find("Particles/Additive")); //material is used in order to set the beam's material to a custom made one.
         beamLine.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamMiddle"));
         mainLR.material = beamLine;
 
-        Beam beam = neonBeamGO.AddComponent<BeamNeon>();
+        Beam beam = neonBeamGO.AddComponent<BeamNeon>(); //the beam makes use of the BeamNeon script which has its own functionalities.
         beam.Init();
         return neonBeamGO;
     }
 
-    public GameObject CreateBulletHit()
+    public GameObject CreateBulletHit() 
     {
         GameObject bulletHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
         return bulletHit;
     }
 
-    public Material CreateHitFlash()
+    public Material CreateHitFlash() //adds a hit flash effect ("white flash") on the enemies if the player shoots them.
     {
         Material hitflash = new Material(Shader.Find("Particles/Additive"));
         hitflash.SetTexture("_MainTex", Resources.Load<Texture>("Materials/Flash"));
@@ -268,21 +275,20 @@ public class Factory : MonoBehaviour
         return beamHit;
     }
 
-    public GameObject CreateRocketHit()
+    public GameObject CreateRocketHit() //adds an explosion effect onto the rocket when it hits/collides with an object.
     {
         GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Explosion"));
         ParticleSystem.ShapeModule shape = rocketHit.GetComponent<ParticleSystem>().shape;
         ParticleSystemRenderer test = rocketHit.GetComponent<ParticleSystemRenderer>();
 
         Material beamLine = new Material(Shader.Find("Particles/Additive"));
-       // beamLine.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamMiddle"));
         test.material = beamLine;
 
 
         shape.radius = 0.4f;
         return rocketHit;
     }
-    public GameObject CreateRocketSmokeFlash()
+    public GameObject CreateRocketSmokeFlash()  //adds an smoke flash effect that travels with the rocket itself.
     {
         GameObject smokeFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketSmokeFlash"));
         return smokeFlash;
@@ -294,7 +300,7 @@ public class Factory : MonoBehaviour
         return brokenWall;
     }
 
-    public GameObject CreateMuzzleFlash()
+    public GameObject CreateMuzzleFlash() //adds an muzzle flash effect for the weapon.
     {
         GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
         return muzzleFlash;
@@ -326,7 +332,7 @@ public class Factory : MonoBehaviour
         return pistolGO;
     }
 
-    public GameObject CreateMachineGun()
+    public GameObject CreateMachineGun() //code use to create the machine gun weapon for the players to use.
     {
         GameObject machineGunGO = new GameObject("Machine Gun");
         SphereCollider machineGunCollider = machineGunGO.AddComponent<SphereCollider>();
@@ -351,7 +357,7 @@ public class Factory : MonoBehaviour
         return machineGunGO;
     }
 
-    public GameObject CreateLaserRifle()
+    public GameObject CreateLaserRifle()  //code use to create the laser rifle weapon for the players to use.
     {
         GameObject laserRifleGO = new GameObject("Laser Rifle");
 
@@ -376,7 +382,7 @@ public class Factory : MonoBehaviour
 
         return laserRifleGO;
     }
-    public GameObject CreateRocketLauncher()
+    public GameObject CreateRocketLauncher() //code use to create the rocket launcher weapon for the players to use.
     {
         GameObject rocketLauncherGO = new GameObject("Rocket Launcher");
 
@@ -401,7 +407,7 @@ public class Factory : MonoBehaviour
 
         return rocketLauncherGO;
     }
-    public GameObject CreateNormalChest()
+    public GameObject CreateNormalChest()  //code use to create the normal chest.
     {
         GameObject chestGO = new GameObject("Normal Chest");
 
@@ -422,13 +428,39 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/NormalChest");
 
-        chestGO.AddComponent<NormalChest>();
+        chestGO.AddComponent<NormalChest>(); //makes usse of the NormalChest script which has its own functionalities.
 
         return chestGO;
     }
 
-    public GameObject CreateMedkit()
+    public GameObject CreateAmmoChest() //code use to create the ammo chest.
     {
+        GameObject chestGO = new GameObject("Ammo Chest");
+
+        SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
+        chestCollider.radius = 0.1f;
+
+        SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
+        chestColliderT.isTrigger = true;
+
+        Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject chestVisualGO = new GameObject("Visual");
+        chestVisualGO.transform.parent = chestGO.transform;
+
+        GameObject chestVisualBodyGO = new GameObject("Body");
+        chestVisualBodyGO.transform.parent = chestVisualGO.transform;
+        SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/AmmoChest");
+
+        chestGO.AddComponent<AmmoChest>();  //makes usse of the AmmoChest script which has its own functionalities.
+
+        return chestGO;
+    }
+
+    public GameObject CreateMedkit() //code use to create the medkit for players to pickup.
+    { 
         GameObject medkitGO = new GameObject("Medkit");
 
         SphereCollider medkitCollider = medkitGO.AddComponent<SphereCollider>();
@@ -448,12 +480,12 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = medkitVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart");
 
-        medkitGO.AddComponent<Medkit>();
+        medkitGO.AddComponent<Medkit>(); //makes use of the Medkit script which has its own functionalities.
 
         return medkitGO;
     }
 
-    public GameObject CreateMedpack()
+    public GameObject CreateMedpack() //code use to create the medpack for players to pickup.
     {
         GameObject medpackGO = new GameObject("Medpack");
 
@@ -474,9 +506,89 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = medpackVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart1");
 
-        medpackGO.AddComponent<Medpack>();
+        medpackGO.AddComponent<Medpack>(); //makes use of the Medpack script which has its own functionalities.
 
         return medpackGO;
+    }
+
+    public GameObject CreateRocketAmmoPack() //code use to create the rocket ammo pack for players to pickup.
+    {
+        GameObject rocketAmmoGO = new GameObject("RocketAmmo");
+
+        SphereCollider rocketAmmoCollider = rocketAmmoGO.AddComponent<SphereCollider>();
+        rocketAmmoCollider.radius = 0.1f;
+
+        SphereCollider rocketAmmoColliderT = rocketAmmoGO.AddComponent<SphereCollider>();
+        rocketAmmoColliderT.isTrigger = true;
+
+        Rigidbody rocketAmmoRigid = rocketAmmoGO.AddComponent<Rigidbody>();
+        rocketAmmoRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject rocketAmmoVisualGO = new GameObject("Visual");
+        rocketAmmoVisualGO.transform.parent = rocketAmmoGO.transform;
+
+        GameObject rocketAmmoVisualBodyGO = new GameObject("Body");
+        rocketAmmoVisualBodyGO.transform.parent = rocketAmmoVisualGO.transform;
+        SpriteRenderer sr = rocketAmmoVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/rocketammo");
+
+        rocketAmmoGO.AddComponent<RockettAmmoPack>(); //makes use of the RockettAmmoPack script which has its own functionalities.
+
+        return rocketAmmoGO;
+    }
+
+
+    public GameObject CreateBulletAmmoPack() //code use to create the bullet ammo pack for players to pickup.
+    {
+        GameObject bulletAmmoGO = new GameObject("BulletAmmo");
+
+        SphereCollider bulletAmmoCollider = bulletAmmoGO.AddComponent<SphereCollider>();
+        bulletAmmoCollider.radius = 0.1f;
+
+        SphereCollider bulletAmmoColliderT = bulletAmmoGO.AddComponent<SphereCollider>();
+        bulletAmmoColliderT.isTrigger = true;
+
+        Rigidbody bulletAmmoRigid = bulletAmmoGO.AddComponent<Rigidbody>();
+        bulletAmmoRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject bulletAmmoVisualGO = new GameObject("Visual");
+        bulletAmmoVisualGO.transform.parent = bulletAmmoGO.transform;
+
+        GameObject bulletAmmoVisualBodyGO = new GameObject("Body");
+        bulletAmmoVisualBodyGO.transform.parent = bulletAmmoVisualGO.transform;
+        SpriteRenderer sr = bulletAmmoVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/bulletammo");
+
+        bulletAmmoGO.AddComponent<BulletAmmoPack>();  //makes use of the BulletAmmoPack script which has its own functionalities.
+
+        return bulletAmmoGO;
+    }
+
+
+    public GameObject CreateBeamAmmoPack() //code use to create the beam ammo pack for players to pickup.
+    { 
+        GameObject BeamAmmoGO = new GameObject("BeamAmmo");
+
+        SphereCollider BeamAmmoCollider = BeamAmmoGO.AddComponent<SphereCollider>();
+        BeamAmmoCollider.radius = 0.1f;
+
+        SphereCollider BeamAmmoColliderT = BeamAmmoGO.AddComponent<SphereCollider>();
+        BeamAmmoColliderT.isTrigger = true;
+
+        Rigidbody BeamAmmoRigid = BeamAmmoGO.AddComponent<Rigidbody>();
+        BeamAmmoRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject BeamAmmoVisualGO = new GameObject("Visual");
+        BeamAmmoVisualGO.transform.parent = BeamAmmoGO.transform;
+
+        GameObject BeamAmmoVisualBodyGO = new GameObject("Body");
+        BeamAmmoVisualBodyGO.transform.parent = BeamAmmoVisualGO.transform;
+        SpriteRenderer sr = BeamAmmoVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/beamammo"); 
+
+        BeamAmmoGO.AddComponent<BeamAmmoPack>();  //makes use of the BeamAmmoPack script which has its own functionalities.
+
+        return BeamAmmoGO;
     }
 
     public GameObject CreateFloor()
@@ -510,7 +622,7 @@ public class Factory : MonoBehaviour
         return wall;
     }
 
-    public GameObject CreateEnemyWalker()
+    public GameObject CreateEnemyWalker()  //code use to create the walker enemy within the game.
     {
         GameObject enemyWalkerGO = new GameObject("Enemy Walker");
 
@@ -531,7 +643,7 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Walker");
 
-        enemyWalkerGO.AddComponent<Walker>();
+        enemyWalkerGO.AddComponent<Walker>();  //makes use of the Walker script which has its own functionalities.
         return enemyWalkerGO;
     }
 
@@ -563,7 +675,7 @@ public class Factory : MonoBehaviour
          return martianBossGO;
     }
 
-    public GameObject CreateRangedWalker()
+    public GameObject CreateRangedWalker() //code use to create the ranged walker enemy within the game.
     {
         GameObject enemyRangedGO = new GameObject("Ranged Enemy");
 
@@ -584,39 +696,9 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Ranged Walker");
 
-        enemyRangedGO.AddComponent<RangedWalker>();
+        enemyRangedGO.AddComponent<RangedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
         return enemyRangedGO;
     }
-
-    public GameObject CreatePortal()
-    {
-        GameObject portalGO = new GameObject("Portal");
-
-        CapsuleCollider portalCollider = portalGO.AddComponent<CapsuleCollider>();
-        portalCollider.radius = 0.25f;
-        portalCollider.height = 0.8f;
-
-        Rigidbody portalRigid = portalGO.AddComponent<Rigidbody>();
-        portalRigid.interpolation = RigidbodyInterpolation.Interpolate;
-        portalRigid.constraints = RigidbodyConstraints.FreezeRotation;
-
-        //alternative method to clamp the portal to the ground:
-        //portalRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-
-        GameObject portalVisualGO = new GameObject("Visual");
-        portalVisualGO.transform.parent = portalGO.transform;
-
-        GameObject portalBodyVisualGO = new GameObject("Body");
-        portalBodyVisualGO.transform.parent = portalVisualGO.transform;
-
-        SpriteRenderer sr = portalBodyVisualGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Portal");
-
-        portalGO.AddComponent<Portal>();
-        return portalGO;
-    }
-
-
 
     /* New stuff
      * ********************************************************

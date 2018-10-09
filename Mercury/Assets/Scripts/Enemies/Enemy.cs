@@ -91,7 +91,6 @@ public class Enemy : MonoBehaviour
         {
             DropItems();
         }
-        GameProgressionManager.instance.EnemyDead();
         Destroy(gameObject);
     }
 

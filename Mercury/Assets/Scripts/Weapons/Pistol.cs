@@ -12,6 +12,10 @@ public class Pistol : WeaponRanged
         // Stats
         cooldown = 0.5f;
         ammoOffset = 0.2f;
+        ammoMaxInventory = 60;
+        ammoInventory = 60;
+        ammoMax = 15;
+        ammoCount = 15;
     }
 
     protected override void Use()

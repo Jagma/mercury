@@ -14,6 +14,10 @@ public class LaserRifle : WeaponRanged
         // Stats
         cooldown = 0f;
         ammoOffset = 0.25f;
+        ammoMaxInventory = 200;
+        ammoInventory = 200;
+        ammoMax = 100;
+        ammoCount = 100;
     }
 
     protected override void Use()

@@ -48,7 +48,6 @@ public class GameOver : MonoBehaviour
     {
         Destroy(Game.instance);
         Destroy(Factory.instance);
-        Destroy(Portal.instance);
     }
 
     IEnumerator ETitleJuice()
