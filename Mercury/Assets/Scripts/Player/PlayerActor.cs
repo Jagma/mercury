@@ -79,6 +79,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Move (Vector2 direction)
     {
+        Debug.Log("Move direction : " + direction);
         Vector2 moveDir = InputManager.instance.GetMoveDirection(model.playerID);
         rigid.velocity += transform.forward * moveDir.y * model.moveAcceleration;
         rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
@@ -150,7 +151,7 @@ public class PlayerActor : MonoBehaviour
     {
         if (model.equippedWeapon)
         {
-            model.equippedWeapon.transform.right = new Vector3(direction.x, 0, direction.y);
+            model.equippedWeapon.transform.right = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(direction.x, 0, direction.y);
         }
 
         // TODO: Move this to a seperate animation script

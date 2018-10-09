@@ -21,24 +21,42 @@ public class NormalChest : Chest
 
     public GameObject ChooseRandomWeapon()
     {
-        int percentageValue = Random.Range(0, 100);
+        int[] itemWeights = { 3, 2, 1, 1 };
 
-        if (percentageValue < 50) //0-49
+        int total = 0;
+        for (int i=0; i < itemWeights.Length; i ++) {
+            total += itemWeights[i];
+        }
+
+        int random = Random.Range(0, total);
+
+        total = 0;
+        int result = 0;
+        for (int i=0; i < itemWeights.Length; i ++) {
+            total += itemWeights[i];
+            if (random < total) {
+                result = i;
+                break;
+            }
+        }
+
+        if (result == 0)
         {
             return Factory.instance.CreatePistol();
         }
-        else if (percentageValue < 50 + 20) //50-69
+        if (result == 1) //50-69
         {
             return Factory.instance.CreateMachineGun();
         }
-        else if (percentageValue < 50 + 20 +5) //70-74 
+        if (result == 2) //70-74 
         {
             return Factory.instance.CreateLaserRifle();
         }
-        else //anything else.
-        {
+        if (result == 3) {
             return Factory.instance.CreateRocketLauncher();
         }
+
+        return null;
     }
 
 }

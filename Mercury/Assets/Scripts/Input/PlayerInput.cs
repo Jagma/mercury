@@ -150,7 +150,7 @@ public class PlayerInput {
         }
         if (inputType == InputType.Keyboard)
         {
-            if (Game.instance)
+            if (Game.instance != null)
             {
                 Vector3 playerPosition = Game.instance.GetPlayerActor(playerID).transform.position;
                 
@@ -166,8 +166,10 @@ public class PlayerInput {
 
                 Vector3 delta = (worldPosition - playerPosition).normalized;
 
+                Vector3 rotationNormilized = Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(delta.x, 0, delta.z);
+
                 // Return result in 2d space
-                return new Vector2(delta.x, delta.z);                
+                return new Vector2(rotationNormilized.x, rotationNormilized.z);                
             }
         }
 
