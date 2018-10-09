@@ -47,18 +47,21 @@ public class Menu : MonoBehaviour
 
     public void NavigateCampaign ()
     {
+        AudioManager.instance.PlayAudio("sfx_sounds_button5", 1, false);
         AudioManager.instance.StopAudio("main_menu_loop");
         SceneManager.LoadScene("CampaignLobby");
     }
 
     public void NavigateTeamDeathmatch ()
     {
+        AudioManager.instance.PlayAudio("sfx_sounds_button5", 1, false);
         // SceneManager.LoadScene("");
         Debug.LogError("Not implemented");
     }
 
     public void NavigateExit ()
     {
+        AudioManager.instance.PlayAudio("sfx_sounds_button5", 1, false);
         Application.Quit();
     }
 }
