@@ -231,7 +231,7 @@ public class CampaignLobby : MonoBehaviour {
 
         // Selectors update
         for (int i=0; i < characterSelectors.Count; i++) {
-            characterSelectors[i].Update();
+            characterSelectors[i].Update();            
         }
 
         // Game start
@@ -247,13 +247,14 @@ public class CampaignLobby : MonoBehaviour {
 
         if (ready) {
             joinPanel.SetActive(false);
-            countdownPanel.SetActive(true);
+            countdownPanel.SetActive(true); 
 
             countdown -= Time.deltaTime;
             
             countdownPanel.transform.Find("Timer_Text").GetComponent<Text>().text = countdown.ToString("F1");
             if (countdown <= 0.0f)
             {
+                AudioManager.instance.PlayAudio("sfx_menu_select4", 1, false);
                 StartGame();
             }
         } else {
