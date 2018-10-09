@@ -5,6 +5,7 @@ using UnityEngine;
 public class NormalChest : Chest
 {
     GameObject randomWeapon;
+    GameObject randomHealthPack;
     int count = 1;
     protected override void Use()
     {
@@ -15,6 +16,8 @@ public class NormalChest : Chest
             Vector3 spawnPos = transform.position;
             randomWeapon = ChooseRandomWeapon();
             randomWeapon.transform.position = spawnPos;
+            randomHealthPack = ChooseRandomHealthPack();
+            randomHealthPack.transform.position = spawnPos;
             base.Delete();
         }
     }
@@ -24,7 +27,8 @@ public class NormalChest : Chest
         int[] itemWeights = { 3, 2, 1, 1 };
 
         int total = 0;
-        for (int i=0; i < itemWeights.Length; i ++) {
+        for (int i=0; i < itemWeights.Length; i ++)
+        {
             total += itemWeights[i];
         }
 
@@ -32,7 +36,8 @@ public class NormalChest : Chest
 
         total = 0;
         int result = 0;
-        for (int i=0; i < itemWeights.Length; i ++) {
+        for (int i=0; i < itemWeights.Length; i ++)
+        {
             total += itemWeights[i];
             if (random < total) {
                 result = i;
@@ -57,6 +62,41 @@ public class NormalChest : Chest
         }
 
         return null;
+    }
+
+    public GameObject ChooseRandomHealthPack()
+    {
+
+        int[] itemWeights = { 3, 2};
+
+        int total = 0;
+        for (int i = 0; i < itemWeights.Length; i++)
+        {
+            total += itemWeights[i];
+        }
+
+        int random = Random.Range(0, total);
+
+        total = 0;
+        int result = 0;
+        for (int i = 0; i < itemWeights.Length; i++)
+        {
+            total += itemWeights[i];
+            if (random < total)
+            {
+                result = i;
+                break;
+            }
+        }
+
+        if (result == 0)
+        {
+            return Factory.instance.CreateMedkit();
+        }
+        else
+        {
+            return Factory.instance.CreateMedpack();
+        }
     }
 
 }
