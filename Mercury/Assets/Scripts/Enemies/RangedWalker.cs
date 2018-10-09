@@ -6,6 +6,7 @@ public class RangedWalker : Enemy
 {
     private float timer = 0;
     private Vector3 prevdirection;
+    System.Random ran = new System.Random();
     protected override void Start()
     {
         base.Start();
@@ -99,11 +100,21 @@ public class RangedWalker : Enemy
 
     void CreateWeapon()
     {
-        GameObject weapon = Factory.instance.CreatePistol();
+        GameObject weapon;
+        int randomNum = ran.Next(0, 100);
+        if (randomNum >= 0 && randomNum < 11)//10% spawn with machine gun.
+        {
+            weapon = Factory.instance.CreateMachineGun();
+            equippedWeapon.setMissChance(0.35f);
+        }
+        else
+        {
+            weapon = Factory.instance.CreatePistol();
+            equippedWeapon.setMissChance(0.25f);
+        }
         equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
-        equippedWeapon.setMissChance(0.25f);
         equippedWeapon.equipped = true;
     }
 
