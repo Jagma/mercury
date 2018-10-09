@@ -5,11 +5,12 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public float cooldown = 0.1f;
-    public float missChance = 0f;
     public bool equipped = false;
     protected Transform visual;
     protected float cooldownRemaining = 0f;
 
+    protected int ammoMaximum = 120;
+    protected int ammoCount = 120;
     private void Awake()
     {
         visual = transform.Find("Visual");
@@ -17,7 +18,6 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Start()
     {
-
     }
 
     public void Equip()
@@ -26,10 +26,6 @@ public class Weapon : MonoBehaviour
         equipped = true;
     }
 
-    public void setMissChance(float value)
-    {
-        missChance = value;
-    }
     public void Dequip()
     {
         GetComponent<Rigidbody>().useGravity = true;
@@ -44,8 +40,12 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            cooldownRemaining = cooldown;
-            Use();
+            if (ammoCount > 0) {
+                cooldownRemaining = cooldown;
+                Use();
+
+                ammoCount--;
+            }
         }
     }
 

@@ -12,6 +12,8 @@ public class MachineGun : WeaponRanged
         cooldown = 0.1f;
         ammoOffset = 0.6f;
         ammoRandomness = 10f;
+        ammoMaximum = 500;
+        ammoCount = 40;
     }
 
     protected override void Use()
@@ -23,7 +25,7 @@ public class MachineGun : WeaponRanged
         Destroy(flash, 1); 
 
         GameObject bullet = Factory.instance.CreateBullet();
-        bullet.transform.position = transform.position + transform.right * ammoOffset + (Random.insideUnitSphere * missChance); ;
+        bullet.transform.position = transform.position + transform.right * ammoOffset;
         bullet.transform.right = transform.right;
         bullet.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
         bullet.GetComponent<Projectile>().Update();

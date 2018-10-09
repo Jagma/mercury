@@ -498,7 +498,7 @@ public class Factory : MonoBehaviour
         GameObject wall = new GameObject("Wall");
         wall.AddComponent<BoxCollider>();
         wall.AddComponent<Wall>();
-
+        wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
         if (m == null)
         {
             m = new Material(Shader.Find("Mobile/Diffuse"));
