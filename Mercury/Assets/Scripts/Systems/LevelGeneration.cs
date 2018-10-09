@@ -89,6 +89,10 @@ public class LevelGeneration : MonoBehaviour
                     GameObject wallGO = Factory.instance.CreateWall();
                     wallGO.transform.parent = levelRoot;
                     wallGO.transform.position = new Vector3(x, 1, z);
+                    if(x == 0 || x == mapWidth-1)
+                        wallGO.GetComponent<Wall>().health = int.MaxValue;
+                    if (z == 0 || z == mapDepth-1)
+                        wallGO.GetComponent<Wall>().health = int.MaxValue;
                 }
 
                 if (enemies[x, z] == "Martian Boss")

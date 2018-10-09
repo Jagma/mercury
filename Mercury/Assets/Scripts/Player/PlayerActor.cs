@@ -190,6 +190,11 @@ public class PlayerActor : MonoBehaviour
         return health;
     }
 
+    public float GetStartHealth()
+    {
+        return startHealth;
+    }
+
     // Damage, health, and death
     private void OnTriggerEnter(Collider col)
     {
