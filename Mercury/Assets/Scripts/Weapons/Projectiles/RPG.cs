@@ -40,6 +40,10 @@ public class RPG : Projectile
         AudioManager.instance.PlayAudio("r_exp3", .5f, false);
         a.transform.position = transform.position;
         Destroy(a, 1f);
+
+        Transform smokeTrail = visual.Find("SmokeTrail");
+        smokeTrail.transform.parent = null;
+        Destroy(smokeTrail.gameObject, 2f);
     }
 
     private void OnTriggerEnter(Collider col)

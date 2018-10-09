@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -76,11 +77,22 @@ public class Game : MonoBehaviour
         return null;
     }
 
-
+    int gameStage = 0;
     private void Update() {
-        if (EnemyManager.instance.GetEnemyCount() <= 0) {
-            Debug.Log("Game over !!!");
+        if (gameStage == 0 && EnemyManager.instance.GetEnemyCount() <= 0) {
+            gameStage++;
+
+            Vector3 playerMid = Vector3.zero;
+            for (int i=0; i < playerActorList.Count; i ++) {
+                playerMid += playerActorList[i].transform.position;
+            }
+
+            playerMid /= playerActorList.Count;
+
+            LevelGeneration.instance.SpawnMartianBoss(playerMid);
+        }
+        if (gameStage == 1 && EnemyManager.instance.GetEnemyCount() <= 0) {
+            SceneManager.LoadScene("Intermission");
         }
     }
-
 }

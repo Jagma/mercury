@@ -28,15 +28,4 @@ public class RocketLauncher : WeaponRanged
         rocket.transform.right = transform.right;
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
-
-    protected override void Update()
-    {
-        base.Update();
-        if (rocket != null)
-        {
-            GameObject smoke = Factory.instance.CreateRocketTrail();
-            smoke.transform.position = rocket.transform.position;
-            Destroy(smoke, 0.4f);
-        }
-    }
 }

@@ -29,7 +29,6 @@ public class Menu : MonoBehaviour
                 buttonList[i].transform.Find("Text").GetComponent<Text>().color = new Color(1, 0.7f, 0);
                 buttonList[i].transform.localScale = new Vector3(1f, 1, 1);
             }
-            
         }
 
         // This ensures that there is always a selected UI component

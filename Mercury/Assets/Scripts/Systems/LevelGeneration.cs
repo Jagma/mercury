@@ -151,6 +151,7 @@ public class LevelGeneration : MonoBehaviour
         GameObject enemyGO = Factory.instance.CreateMartianBoss();
         enemyGO.transform.parent = levelRoot;
         enemyGO.transform.position = new Vector3(playerPosition.x, 2, playerPosition.z);
+        EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
     }
 
 }

@@ -218,6 +218,11 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_Rocket");
 
+        GameObject smokeTrail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketTrail"));
+        smokeTrail.name = "SmokeTrail";
+        smokeTrail.transform.parent = bulletVisualGO.transform;
+        smokeTrail.transform.localPosition = Vector3.zero;
+
         Projectile rock = rocketGO.AddComponent<RPG>();
         rock.Init();
         return rocketGO;
@@ -281,12 +286,6 @@ public class Factory : MonoBehaviour
     {
         GameObject smokeFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketSmokeFlash"));
         return smokeFlash;
-    }
-
-    public GameObject CreateRocketTrail()
-    {
-        GameObject smokeTrail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketTrail"));
-        return smokeTrail;
     }
 
     public GameObject CreateBrokenWallEffect()
