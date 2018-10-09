@@ -104,17 +104,10 @@ public class RangedWalker : Enemy
         GameObject weapon;
         int randomNum = ran.Next(0, 100);
         if (randomNum >= 0 && randomNum < 11)//10% spawn with machine gun.
-        {
             weapon = Factory.instance.CreateMachineGun();
-            equippedWeapon = weapon.GetComponent<Weapon>();
-            equippedWeapon.setMissChance(0.35f);
-        }
         else
-        {
             weapon = Factory.instance.CreatePistol();
-            equippedWeapon = weapon.GetComponent<Weapon>();
-            equippedWeapon.setMissChance(0.25f);
-        }
+        equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
