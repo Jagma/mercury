@@ -17,6 +17,25 @@ public class RPG : Projectile
     public override void Destroy()
     {
         base.Destroy();
+
+        Collider[] hits = Physics.OverlapSphere(this.transform.position, blastRadius);
+
+        foreach (Collider hit in hits) {
+            Enemy enemyHit = hit.GetComponent<Enemy>();
+            PlayerActor playerHit = hit.GetComponent<PlayerActor>();
+            Wall wallHit = hit.GetComponent<Wall>();
+
+            if (enemyHit) {
+                enemyHit.Damage(damage);
+            }
+            if (playerHit) {
+                playerHit.Damage(damage);
+            }
+            if (wallHit) {
+                wallHit.Damage((int)damage);
+            }
+        }
+
         GameObject a = Factory.instance.CreateRocketHit();
         AudioManager.instance.PlayAudio("r_exp3", .5f, false);
         a.transform.position = transform.position;
@@ -25,32 +44,11 @@ public class RPG : Projectile
 
     private void OnTriggerEnter(Collider col)
     {
-        Collider[] hits = Physics.OverlapSphere(this.transform.position, blastRadius);
-        foreach (Collider hit in hits)
-        {
-            Debug.Log(hit.gameObject.name);
-            if (hit.gameObject.name.Equals("Enemy Walker") || hit.gameObject.name.Equals("Ranged Enemy"))
-            {
-                Enemy enemyHit = hit.GetComponent<Enemy>();
-                enemyHit.Damage(damage);
-            }
-           if (hit.gameObject.name.Equals("Player"))
-            {
-                PlayerActor player = hit.GetComponent<PlayerActor>();
-                player.Damage(damage);
-            }
-            if (hit.gameObject.name.Equals("Wall"))
-            {
-                Wall wall = hit.GetComponent<Wall>();
-                wall.Damage((int)damage);
-            }
-        }
+        Enemy enemyHit = col.GetComponent<Enemy>();
+        PlayerActor playerHit = col.GetComponent<PlayerActor>();
+        Wall wallHit = col.GetComponent<Wall>();
 
-
-        Wall wallCheck = col.GetComponent<Wall>();
-        Enemy enemy = col.GetComponent<Enemy>();
-        PlayerActor playerA = col.GetComponent<PlayerActor>();
-        if (wallCheck != null || playerA != null || enemy != null)
+        if (enemyHit != null || playerHit != null || wallHit != null)
         {
             Destroy();
         }
