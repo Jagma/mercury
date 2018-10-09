@@ -22,7 +22,7 @@ public class MachineGun : WeaponRanged
         Destroy(flash, 1);
 
         GameObject bullet = Factory.instance.CreateBullet();
-        bullet.transform.position = transform.position + transform.right * ammoOffset;
+        bullet.transform.position = transform.position + transform.right * ammoOffset + (Random.insideUnitSphere * missChance); ;
         bullet.transform.right = transform.right;
         bullet.GetComponent<Projectile>().Update();
 
