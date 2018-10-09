@@ -11,6 +11,7 @@ public class MachineGun : WeaponRanged
         // Stats
         cooldown = 0.1f;
         ammoOffset = 0.6f;
+        ammoRandomness = 10f;
     }
 
     protected override void Use()
@@ -19,11 +20,12 @@ public class MachineGun : WeaponRanged
 
         GameObject flash = Factory.instance.CreateMuzzleFlash();
         flash.transform.position = transform.position + transform.right * ammoOffset;
-        Destroy(flash, 1);
+        Destroy(flash, 1); 
 
         GameObject bullet = Factory.instance.CreateBullet();
         bullet.transform.position = transform.position + transform.right * ammoOffset;
         bullet.transform.right = transform.right;
+        bullet.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
         bullet.GetComponent<Projectile>().Update();
 
         AudioManager.instance.PlayAudio("dspistol",1,false);

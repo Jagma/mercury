@@ -31,6 +31,7 @@ public class LevelGeneration : MonoBehaviour
         levelRoot = new GameObject("Level Root").transform;
 
         // Random.InitState(91142069);
+        // Fill level with solids
         for (int z=0; z < terrain.GetLength(1); z ++)
         {
             for (int x = 0; x < terrain.GetLength(0); x++)
@@ -39,6 +40,7 @@ public class LevelGeneration : MonoBehaviour
             }
         }
 
+        // Mine away solids
         List<Miner> minerList = new List<Miner>();
         for (int i = 0; i < 5; i++)
         {
@@ -50,7 +52,7 @@ public class LevelGeneration : MonoBehaviour
             minerList.Add(miner);
         }
 
-        for (int i=0; i < 10000; i ++)
+        for (int i=0; i < 1000; i ++)
         {
             bool exit = true;
             for (int j=0;j < minerList.Count; j ++)
@@ -122,6 +124,19 @@ public class LevelGeneration : MonoBehaviour
                     chestGO.transform.position = new Vector3(x, 2, z);
                 }
 
+                if (pickups[x, z] == "Medkit")
+                {
+                    GameObject medkitGO = Factory.instance.CreateMedkit();
+                    medkitGO.transform.parent = levelRoot;
+                    medkitGO.transform.position = new Vector3(x, 2, z);
+                }
+
+                if (pickups[x, z] == "Medpack")
+                {
+                    GameObject medpackGO = Factory.instance.CreateMedpack();
+                    medpackGO.transform.parent = levelRoot;
+                    medpackGO.transform.position = new Vector3(x, 2, z);
+                }
             }
         }
     }
@@ -189,7 +204,7 @@ public class Miner
         }
         if (Random.Range(0, 1000) > 995)
         {
-            levelGen.enemies[posX, posZ] = "Martian Boss";
+        //    levelGen.enemies[posX, posZ] = "Martian Boss";
         }
         if (Random.Range(0, 1000) > 995)
         {
@@ -199,6 +214,14 @@ public class Miner
         if (Random.Range(0, 10000) > 9990)
         {
             levelGen.pickups[posX, posZ] = "Normal Chest";
+        }
+        if (Random.Range(0, 10000) > 9990)
+        {
+            levelGen.pickups[posX, posZ] = "Medkit";
+        }
+        if (Random.Range(0, 10000) > 9990)
+        {
+            levelGen.pickups[posX, posZ] = "Medpack";
         }
     }
 

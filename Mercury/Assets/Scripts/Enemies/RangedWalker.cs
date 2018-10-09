@@ -6,6 +6,7 @@ public class RangedWalker : Enemy
 {
     private float timer = 0;
     private Vector3 prevdirection;
+    System.Random ran = new System.Random();
     protected override void Start()
     {
         base.Start();
@@ -94,37 +95,30 @@ public class RangedWalker : Enemy
 
     void MoveRandomDir()
     {
-        //base.FaceDirection(Quaternion.AngleAxis(Random.Range(-70.0f, 70.0f), Vector3.forward) * transform.position);
         equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
     }
 
     void CreateWeapon()
     {
-        GameObject weapon = Factory.instance.CreatePistol();
+        GameObject weapon;
+        int randomNum = ran.Next(0, 100);
+        if (randomNum >= 0 && randomNum < 11)//10% spawn with machine gun.
+            weapon = Factory.instance.CreateMachineGun();
+        else
+            weapon = Factory.instance.CreatePistol();
         equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
-        equippedWeapon.setMissChance(0.25f);
         equippedWeapon.equipped = true;
     }
 
     public void AimAtPlayer(Vector3 direction)
     {
-            if (equippedWeapon)
-            {
-                equippedWeapon.transform.right = (direction - transform.position).normalized;
-            }
-        
-       /* else //if player is moving around.
+        if (equippedWeapon)
         {
-            float missChance = 0.35f;
+            equippedWeapon.transform.right = (direction - transform.position).normalized;
+        }
 
-            if (equippedWeapon)
-            {
-                equippedWeapon.transform.right = (direction - transform.position).normalized + Random.insideUnitSphere * missChance;
-            }
-            prevdirection = direction;
-        }*/
     }
 
     public void AttackPlayer()

@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
     Material temp;
     public Vector3 forwardDirection = Vector3.forward;
+    System.Random ran = new System.Random(91142069);
 
     IEnumerator Wait()
     {
@@ -86,15 +87,35 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Death()
     {
-        if (equippedWeapon)
+        if (equippedWeapon) //has a chance to drop weapon.
         {
-            equippedWeapon.Dequip();
-            equippedWeapon.equipped = false;
-            equippedWeapon = null;
+            DropItems();
         }
         GameProgressionManager.instance.EnemyDead();
         Destroy(gameObject);
     }
 
+    private void DropItems()
+    {
+        int randomNum = ran.Next(0, 100);
+        if (randomNum >= 0 && randomNum < 11)//10% Drop weapon
+        {
+            equippedWeapon.Dequip();
+            equippedWeapon.equipped = false;
+            equippedWeapon = null;
+        }
+        else //destroy weapon from world.
+        {
+            Weapon temp = equippedWeapon;
+            equippedWeapon.Dequip();
+            equippedWeapon.equipped = false;
+            equippedWeapon = null;
+            Destroy(temp);
+        }
 
+        if (randomNum >= 20 && randomNum < 61)//40% Drop ammo pack - still needs to be implemented.
+        {
+            //drop ammo pack...
+        }
+    }
 }

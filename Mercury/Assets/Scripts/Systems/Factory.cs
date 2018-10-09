@@ -428,6 +428,58 @@ public class Factory : MonoBehaviour
         return chestGO;
     }
 
+    public GameObject CreateMedkit()
+    {
+        GameObject medkitGO = new GameObject("Medkit");
+
+        SphereCollider medkitCollider = medkitGO.AddComponent<SphereCollider>();
+        medkitCollider.radius = 0.1f;
+
+        SphereCollider medkitColliderT = medkitGO.AddComponent<SphereCollider>();
+        medkitColliderT.isTrigger = true;
+
+        Rigidbody medkitRigid = medkitGO.AddComponent<Rigidbody>();
+        medkitRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject medkitVisualGO = new GameObject("Visual");
+        medkitVisualGO.transform.parent = medkitGO.transform;
+
+        GameObject medkitVisualBodyGO = new GameObject("Body");
+        medkitVisualBodyGO.transform.parent = medkitVisualGO.transform;
+        SpriteRenderer sr = medkitVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart");
+
+        medkitGO.AddComponent<Medkit>();
+
+        return medkitGO;
+    }
+
+    public GameObject CreateMedpack()
+    {
+        GameObject medpackGO = new GameObject("Medpack");
+
+        SphereCollider medpackCollider = medpackGO.AddComponent<SphereCollider>();
+        medpackCollider.radius = 0.1f;
+
+        SphereCollider medpackColliderT = medpackGO.AddComponent<SphereCollider>();
+        medpackColliderT.isTrigger = true;
+
+        Rigidbody medpackRigid = medpackGO.AddComponent<Rigidbody>();
+        medpackRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject medpackVisualGO = new GameObject("Visual");
+        medpackVisualGO.transform.parent = medpackGO.transform;
+
+        GameObject medpackVisualBodyGO = new GameObject("Body");
+        medpackVisualBodyGO.transform.parent = medpackVisualGO.transform;
+        SpriteRenderer sr = medpackVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart1");
+
+        medpackGO.AddComponent<Medpack>();
+
+        return medpackGO;
+    }
+
     public GameObject CreateFloor()
     {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);

@@ -540,6 +540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1244943644}
   - component: {fileID: 1244943645}
+  - component: {fileID: 1244943647}
   - component: {fileID: 1244943646}
   m_Layer: 0
   m_Name: Game
@@ -586,6 +587,17 @@ MonoBehaviour:
   playerSpawnPosition: {x: 3, y: 3, z: 3}
   mapWidth: 64
   mapDepth: 64
+--- !u!114 &1244943647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1244943643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94fd7187340be5b4b91bfc5603933bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1789866616
 GameObject:
   m_ObjectHideFlags: 0
