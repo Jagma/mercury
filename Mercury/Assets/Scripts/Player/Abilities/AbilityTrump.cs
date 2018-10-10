@@ -28,9 +28,8 @@ public class AbilityTrump : Ability {
         }
 
 
-        //Create wall and move to position with infinite HP
-        GameObject wall = Factory.instance.CreateWall();
-        wall.GetComponent<Wall>().health = int.MaxValue;
+        //Create trump wall
+        GameObject wall = Factory.instance.CreateTrumpWall();        
         wall.transform.position = placePos;
         BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
         //Destroy wall after x Seconds

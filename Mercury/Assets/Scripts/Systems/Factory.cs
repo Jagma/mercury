@@ -591,7 +591,24 @@ public class Factory : MonoBehaviour
         return BeamAmmoGO;
     }
 
-    public GameObject CreateFloor()
+    public GameObject CreateTrumpWall() {
+        GameObject wall = new GameObject("Wall");
+        wall.AddComponent<BoxCollider>();
+        wall.AddComponent<Wall>();
+        wall.GetComponent<Wall>().health = int.MaxValue;
+        wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
+
+        Material trumpWallmat = new Material(Shader.Find("Mobile/Diffuse"));
+        trumpWallmat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Voxel"));
+
+        Voxel wallVoxel = wall.AddComponent<Voxel>();
+        wallVoxel.material = trumpWallmat;
+        wallVoxel.Init();        
+        return wall;
+    }
+
+    // Mars environment
+    public GameObject CreateMarsFloor()
     {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
         floor.name = "Floor";
@@ -603,21 +620,50 @@ public class Factory : MonoBehaviour
         return floor;
     }
 
-    Material m = null;
-    public GameObject CreateWall()
+    Material marsWallMat = null;
+    public GameObject CreateMarsWall()
     {
         GameObject wall = new GameObject("Wall");
         wall.AddComponent<BoxCollider>();
         wall.AddComponent<Wall>();
         wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
-        if (m == null)
+        if (marsWallMat == null)
         {
-            m = new Material(Shader.Find("Mobile/Diffuse"));
-            m.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Voxel"));
+            marsWallMat = new Material(Shader.Find("Mobile/Diffuse"));
+            marsWallMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Voxel"));
         }
 
         Voxel wallVoxel = wall.AddComponent<Voxel>();
-        wallVoxel.material = m;
+        wallVoxel.material = marsWallMat;
+        wallVoxel.Init();
+        return wall;
+    }
+
+    // Spaceship environment
+    public GameObject CreateSpaceshipFloor() {
+        GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        floor.name = "Floor";
+
+        Material mf = new Material(Shader.Find("Mobile/Diffuse"));
+        mf.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Spaceship/Floor"));
+
+        floor.GetComponent<Renderer>().material = mf;
+        return floor;
+    }
+
+    Material spaceshipWallmat = null;
+    public GameObject CreateSpaceshipeWall() {
+        GameObject wall = new GameObject("Wall");
+        wall.AddComponent<BoxCollider>();
+        wall.AddComponent<Wall>();
+        wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
+        if (spaceshipWallmat == null) {
+            spaceshipWallmat = new Material(Shader.Find("Mobile/Diffuse"));
+            spaceshipWallmat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Spaceship/Voxel"));
+        }
+
+        Voxel wallVoxel = wall.AddComponent<Voxel>();
+        wallVoxel.material = spaceshipWallmat;
         wallVoxel.Init();
         return wall;
     }

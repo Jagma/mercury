@@ -76,7 +76,7 @@ public class LevelGeneration : MonoBehaviour
         playerSpawnPosition = new Vector3(minerList[0].posX, 4, minerList[0].posZ);
 
         // Build floor
-        GameObject floor = Factory.instance.CreateFloor();
+        GameObject floor = Factory.instance.CreateMarsFloor();
         floor.transform.parent = levelRoot;
         floor.transform.localScale = new Vector3(mapWidth, 1, mapDepth);
         floor.transform.position = new Vector3(mapWidth / 2.0f, 0, mapDepth / 2.0f);
@@ -89,7 +89,7 @@ public class LevelGeneration : MonoBehaviour
             {
                 if (terrain[x, z] == "Solid")
                 {
-                    GameObject wallGO = Factory.instance.CreateWall();
+                    GameObject wallGO = Factory.instance.CreateMarsWall();
                     wallGO.transform.parent = levelRoot;
                     wallGO.transform.position = new Vector3(x, 1, z);
                     if(x == 0 || x == mapWidth-1)
