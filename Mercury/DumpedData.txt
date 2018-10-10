@@ -26,3 +26,19 @@ Player: Trump, 40, 51.2965
 Player: Trump, 52, 3.634523
 Player: Trump, 52, 3.634523
 >>>>>>> 0a34808305e540e89375cf7cd44eaa6ef813ff8c
+Player: Trump, 9, 11.5062
+Player: Trump, 9, 11.5062
+Player: Trump, 15, 4.981081
+Player: Trump, 15, 4.981081
+Player: Trump, 28, 4.392448
+Player: Trump, 28, 4.392448
+Player: Trump, 43, 26.43696
+Player: Trump, 43, 26.43696
+Player: Trump, 61, 11.84598
+Player: Trump, 61, 11.84598
+Player: Trump, 72, 11.04175
+Player: Trump, 72, 11.04175
+Player: Trump, 19, 117.7838
+Player: Trump, 19, 117.7838
+Player: Trump, 19, 2.788107
+Player: Trump, 19, 2.788107
