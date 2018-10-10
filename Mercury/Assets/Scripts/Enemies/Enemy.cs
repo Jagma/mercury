@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
     Material temp;
     public Vector3 forwardDirection = Vector3.forward;
-    System.Random ran = new System.Random(91142069);
+    System.Random ran = new System.Random(85466248);
 
     IEnumerator Wait()
     {
@@ -106,24 +106,35 @@ public class Enemy : MonoBehaviour
     private void DropItems()
     {
         int randomNum = ran.Next(0, 100);
-        if (randomNum >= 0 && randomNum < 11)//10% Drop weapon
+        if (randomNum >= 20 && randomNum < 61)//40% Drop ammo pack - still needs to be implemented.
         {
-            equippedWeapon.Dequip();
-            equippedWeapon.equipped = false;
-            equippedWeapon = null;
-        }
-        else //destroy weapon from world.
-        {
+            GameObject randomAmmoPack;
+            randomNum = ran.Next(0, 100);
+            if (randomNum >= 0 && randomNum < 11)//10% Laser Rifle ammo
+            {
+                randomAmmoPack = Factory.instance.CreateBeamAmmoPack();
+            }
+            else if (randomNum > 20 && randomNum < 61) //40% rocket launcher ammo
+            {
+                randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
+            }
+            else
+            {
+                randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
+            }
+            randomAmmoPack.transform.position = transform.position;
             Weapon temp = equippedWeapon;
             equippedWeapon.Dequip();
             equippedWeapon.equipped = false;
             equippedWeapon = null;
             Destroy(equippedWeapon);
         }
-
-        if (randomNum >= 20 && randomNum < 61)//40% Drop ammo pack - still needs to be implemented.
+        else
         {
-            //drop ammo pack...
+            equippedWeapon.Dequip();
+            equippedWeapon.equipped = false;
+            equippedWeapon = null;
         }
+
     }
 }
