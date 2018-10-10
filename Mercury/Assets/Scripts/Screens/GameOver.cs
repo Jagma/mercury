@@ -48,6 +48,7 @@ public class GameOver : MonoBehaviour
     {
         Destroy(Game.instance);
         Destroy(Factory.instance);
+        GameProgressionManager.instance.Reset();
     }
 
     IEnumerator ETitleJuice()

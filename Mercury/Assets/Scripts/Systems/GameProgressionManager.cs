@@ -27,6 +27,8 @@ public class GameProgressionManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            numEnemiesLeft = 0;
+            numEnemiesStart = 0;
         }
         else
             Destroy(gameObject);
@@ -75,6 +77,16 @@ public class GameProgressionManager : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
 
+    public void Reset()
+    {
+        numEnemiesLeft = 0;
+        numEnemiesStart = 0;
+        numOfBulletsUsed = 0;
+        enemiesKilled = 0;
+        wallsDestroyed = 0;
+        damageTaken = 0;
+    }
+
     public void LevelComplete()
     {
         Debug.Log("Level complete.");
@@ -91,9 +103,9 @@ public class GameProgressionManager : MonoBehaviour
     public void DumpData()
     {
         if (File.Exists("./DumpedData.txt"))
-            File.AppendAllText("./DumpedData.txt", "Player: " + player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
+            File.AppendAllText("./DumpedData.txt",player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
         else
-            File.WriteAllText("./DumpedData.txt", "Player: " + player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
+            File.WriteAllText("./DumpedData.txt",player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
  
         Debug.Log("Data dumped to text file.");
     }

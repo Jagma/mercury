@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Player: Trump, 28, 8.182875
 Player: Trump, 43, 5.409604
 Player: Trump, 17, 12.77947
@@ -42,3 +43,42 @@ Player: Trump, 19, 117.7838
 Player: Trump, 19, 117.7838
 Player: Trump, 19, 2.788107
 Player: Trump, 19, 2.788107
+=======
+Trump, 18, 20.60514
+Trump, 29, 49.00842
+Trump, 17, 6.010782
+Trump, 30, 26.86185
+Trump, 6, 4.360811
+Trump, 18, 3.747533
+The Pope, 27, 9.028166
+Oprah, 12, 76.37233
+Oprah, 22, 3.805011
+Trump, 7, 9.406161
+Trump, 21, 8.534197
+Trump, 29, 4.206432
+Oprah, 42, 9.812849
+Oprah, 45, 3.165474
+Bin Laden, 49, 12.29546
+Bin Laden, 69, 5.136206
+Bin Laden, 76, 13.16251
+Bin Laden, 89, 11.22611
+Bin Laden, 104, 6.112789
+Bin Laden, 116, 4.716474
+The Pope, 12, 26.90524
+The Pope, 18, 8.46235
+The Pope, 34, 7.801084
+The Pope, 48, 15.58315
+The Pope, 61, 5.749791
+The Pope, 75, 7.867717
+The Pope, 85, 18.9145
+The Pope, 102, 4.595237
+The Pope, 115, 14.91532
+The Pope, 127, 36.17438
+Trump, 10, 3.116386
+Trump, 10, 3.116386
+Trump, 10, 9.707026
+Trump, 19, 2.411797
+Trump, 29, 4.412825
+Trump, 14, 6.628325
+Trump, 11, 3.172943
+>>>>>>> ddb9517a78498631d184ebbfd9775ce627a1241e

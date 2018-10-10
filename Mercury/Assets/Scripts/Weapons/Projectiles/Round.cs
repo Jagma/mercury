@@ -8,7 +8,7 @@ public class Round : Projectile {
 
         // Stats
         speed = 20f;
-        damage = 2000;
+        damage = 10;
     }
     public override void Destroy() {
         base.Destroy();
