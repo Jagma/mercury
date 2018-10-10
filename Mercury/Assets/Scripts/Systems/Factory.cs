@@ -263,7 +263,7 @@ public class Factory : MonoBehaviour
 
     public Material CreateHitFlash() //adds a hit flash effect ("white flash") on the enemies if the player shoots them.
     {
-        Material hitflash = new Material(Shader.Find("Particles/Additive"));
+        Material hitflash = new Material(Shader.Find("HitFlash"));
         hitflash.SetTexture("_MainTex", Resources.Load<Texture>("Materials/Additive"));
 
         return hitflash;

@@ -6,20 +6,17 @@ public class Enemy : MonoBehaviour
 {
     public double health = 100;
     public float moveSpeed = 1f;
-    public bool allowWalk = false;
     public Weapon equippedWeapon;
     Transform visual;
     Transform dropShadow;
     Rigidbody rigid;
-    Material temp;
+
     public Vector3 forwardDirection = Vector3.forward;
     System.Random ran = new System.Random(85466248);
 
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(0.15f);
-        transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material = temp;
-    }
+    SpriteRenderer spriteRenderer;
+    Material hitMaterial;
+    Material normalMaterial;
 
     private void Awake()
     {
@@ -29,11 +26,14 @@ public class Enemy : MonoBehaviour
         dropShadow.parent = visual;
         dropShadow.localPosition = new Vector3(0, 0, 0);
         dropShadow.localScale = new Vector3(0.6f, 0.2f, 1);
+
+        spriteRenderer = visual.Find("Body").GetComponent<SpriteRenderer>();
+        hitMaterial = Factory.instance.CreateHitFlash();
+        normalMaterial = spriteRenderer.material;
     }
 
     protected virtual void Start()
     {
-        temp = transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material;
     }
 
     //Forces enemy to look at camera
@@ -76,14 +76,20 @@ public class Enemy : MonoBehaviour
     public void Damage(double damage)
     {
         health -= damage;
-        Material hit = Factory.instance.CreateHitFlash();
-        transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material = hit;
-        allowWalk = true;
         if (health <= 0)
         {
             Death();
+        } else {
+            StartCoroutine(HitFlash());
         }
-        StartCoroutine(Wait());
+    }
+
+    IEnumerator HitFlash() {
+        spriteRenderer.material = hitMaterial;
+
+        yield return new WaitForSeconds(0.1f);
+
+        spriteRenderer.material = normalMaterial;
     }
 
     protected virtual void Death()
@@ -98,13 +104,18 @@ public class Enemy : MonoBehaviour
 
     private void DisplayEnemyCorpse()
     {
-        Transform enemyVisual = transform.Find("Visual");
-        enemyVisual.transform.parent = null;
-        float speed = 75.0f;
-        float angle = Mathf.PingPong(Time.time * speed, 90.0f);
-        enemyVisual.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        visual.transform.parent = null;
+        if (Random.Range(0, 100) >= 50) {
+            visual.transform.localEulerAngles = new Vector3(45, 45, -90);
+        } else {
+            visual.transform.localEulerAngles = new Vector3(45, 45, 90);
+        }
 
-        //enemyVisual.eulerAngles = new Vector3(transform.eulerAngles.x, 90f, transform.eulerAngles.z); --alternative method to rotate 90 degrees.
+        visual.transform.position = new Vector3(visual.transform.position.x, 0.7f, visual.transform.position.z);
+
+        Destroy(visual.Find("Drop Shadow").gameObject);
+
+        spriteRenderer.material = normalMaterial;
     }
 
     private void DropItems()
