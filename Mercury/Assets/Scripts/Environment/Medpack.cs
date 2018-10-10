@@ -17,6 +17,8 @@ public class Medpack : Health
         {
             count--;
             player.health += healAmount;
+            if (player.health > player.GetStartHealth())
+                player.health = player.GetStartHealth();    //GetStartHealth Returns the player's maximum health
             Debug.Log("Player healed with 25hp.");
             base.Delete();
         }
