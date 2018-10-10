@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Round : Projectile
-{
-    public override void Init()
-    {
+public class Round : Projectile {
+    public override void Init() {
         base.Init();
 
         // Stats
         speed = 20f;
-        damage = 20;
+        damage = 2000;
     }
-    public override void Destroy()
-    {
+    public override void Destroy() {
         base.Destroy();
         GameObject a = Factory.instance.CreateBulletHit();
         a.transform.position = transform.position;

@@ -24,29 +24,30 @@ public class Projectile : MonoBehaviour
         visual.eulerAngles = new Vector3(45, 45, Mathf.Atan2(transform.right.z, transform.right.x) * Mathf.Rad2Deg + 45);
     }
 
+    public virtual void Destroy() {
+        Destroy(gameObject);
+    }
+
     private void OnTriggerEnter(Collider col)
     {
         Wall wall = col.GetComponent<Wall>();
         if (wall != null)
         {
+            wall.Damage(damage);
             Destroy();
         }
 
         Enemy enemy = col.GetComponent<Enemy>();
         if (enemy != null)
         {
+            enemy.Damage(damage);
             Destroy();
         }
 
         PlayerActor player = col.GetComponent<PlayerActor>();
-        if (player != null)
-        {
+        if (player != null) {
+            player.Damage(damage);
             Destroy();
         }
-    }
-
-    public virtual void Destroy()
-    {
-        Destroy(gameObject);
     }
 }

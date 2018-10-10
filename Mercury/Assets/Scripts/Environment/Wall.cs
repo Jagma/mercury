@@ -6,20 +6,6 @@ public class Wall : MonoBehaviour
 {
     public int health = 100;
 
-    private void OnTriggerEnter(Collider col)
-    {
-        Projectile p = col.GetComponent<Projectile>();
-        Beam b = col.GetComponent<Beam>();
-        if (p != null)
-        {
-            Damage(p.damage);
-        }
-        else if (b != null)
-        {
-            Damage(b.damage);
-        }
-    }
-
     public void Damage (int damage)
     {
         health -= damage;
