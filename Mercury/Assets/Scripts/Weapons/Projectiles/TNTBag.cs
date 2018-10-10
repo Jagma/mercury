@@ -29,7 +29,7 @@ public class TNTBag : Projectile
             {
                 Explode();
             }
-            this.transform.position += new Vector3(aimDirection.x,0, aimDirection.y) * speed * Time.deltaTime;
+            this.transform.position += new Vector3(aimDirection.x, aimDirection.y, aimDirection.z) * speed * Time.deltaTime;
             if (timer <= 0)
             {
                 Explode();
@@ -46,6 +46,7 @@ public class TNTBag : Projectile
         aimDirection = aAimDirection;
     }
 
+    //Inverse the speed to simulate bounce against wals
     private void CollisionCheck()
     {
         Collider[] hits = Physics.OverlapSphere(this.transform.position, 0.1f);
@@ -58,6 +59,7 @@ public class TNTBag : Projectile
         }
     }
 
+    //Destroying object and applying damage to colliding players ect.
     public void Explode()
     {
         Collider[] hits = Physics.OverlapSphere(this.transform.position, blastRadius);
@@ -80,7 +82,7 @@ public class TNTBag : Projectile
                 wall.Damage((int)damage);
             }
         }
-        GameObject explosion = Factory.instance.CreateRocketHit();
+        GameObject explosion = Factory.instance.CreateRocketHit();//Explosion effect
         explosion.transform.position = this.transform.position;
         this.Destroy();
     }
