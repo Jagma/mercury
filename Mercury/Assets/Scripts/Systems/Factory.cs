@@ -595,7 +595,7 @@ public class Factory : MonoBehaviour
         wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
 
         Material trumpWallmat = new Material(Shader.Find("Mobile/Diffuse"));
-        trumpWallmat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Voxel"));
+        trumpWallmat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Random/TrumpWall"));
 
         Voxel wallVoxel = wall.AddComponent<Voxel>();
         wallVoxel.material = trumpWallmat;

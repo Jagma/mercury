@@ -36,5 +36,7 @@ public class AbilityTrump : Ability {
         BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
         //Destroy wall after x Seconds
         GameObject.Destroy(wall, 5f);
+
+        AudioManager.instance.PlayAudio("Trump - Great great wall", 1, false);
     }
 }
