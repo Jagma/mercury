@@ -27,7 +27,7 @@ public class AbilityOprah : Ability
 
         //Get aim direction and rotate by 45 degrees
         Vector2 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
-        if (aimDirection.magnitude < 0.5)
+        if (aimDirection.magnitude <= 0.1)
         {
             aimDirection = aimDirection * 100f;
         }
