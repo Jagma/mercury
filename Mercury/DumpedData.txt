@@ -3,3 +3,7 @@ Player: Trump, 43, 5.409604
 Player: Trump, 17, 12.77947
 Player: Trump, 36, 3.916825
 Player: Trump, 48, 29.21637
+Player: Trump, 12, 25.0002
+Player: Trump, 12, 25.0002
+Player: Trump, 22, 8.351983
+Player: Trump, 22, 8.351983
