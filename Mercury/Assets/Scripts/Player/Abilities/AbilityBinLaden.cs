@@ -20,7 +20,7 @@ public class AbilityBinLaden : Ability {
 
         //Get aim and rotate by 45*
         Vector2 aim = InputManager.instance.GetAimDirection(playerActor.model.playerID);
-        if (aim.magnitude < 0.5)
+        if (aim.magnitude <= 0.1)
         {
             aim = aim * 100f;
         }
