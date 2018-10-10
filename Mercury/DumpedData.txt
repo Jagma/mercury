@@ -1,0 +1,5 @@
+Player: Trump, 28, 8.182875
+Player: Trump, 43, 5.409604
+Player: Trump, 17, 12.77947
+Player: Trump, 36, 3.916825
+Player: Trump, 48, 29.21637

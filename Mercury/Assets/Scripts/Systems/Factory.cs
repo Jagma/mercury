@@ -281,10 +281,6 @@ public class Factory : MonoBehaviour
         ParticleSystem.ShapeModule shape = rocketHit.GetComponent<ParticleSystem>().shape;
         ParticleSystemRenderer test = rocketHit.GetComponent<ParticleSystemRenderer>();
 
-        Material beamLine = new Material(Shader.Find("Particles/Additive"));
-        test.material = beamLine;
-
-
         shape.radius = 0.4f;
         return rocketHit;
     }
@@ -614,7 +610,7 @@ public class Factory : MonoBehaviour
         floor.name = "Floor";
 
         Material mf = new Material(Shader.Find("Mobile/Diffuse"));
-        mf.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Floor"));
+        mf.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mars/Floor"));
 
         floor.GetComponent<Renderer>().material = mf;
         return floor;
@@ -630,7 +626,7 @@ public class Factory : MonoBehaviour
         if (marsWallMat == null)
         {
             marsWallMat = new Material(Shader.Find("Mobile/Diffuse"));
-            marsWallMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mercury/Voxel"));
+            marsWallMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mars/Voxel"));
         }
 
         Voxel wallVoxel = wall.AddComponent<Voxel>();
@@ -693,7 +689,7 @@ public class Factory : MonoBehaviour
         return enemyWalkerGO;
     }
 
-    public GameObject CreateMartianBoss()
+    public GameObject CreateMartianBoss() //Creates the martian boss
     {
          GameObject martianBossGO = new GameObject("Martian Boss");
 

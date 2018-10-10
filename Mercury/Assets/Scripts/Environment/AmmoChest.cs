@@ -5,7 +5,7 @@ using UnityEngine;
 public class AmmoChest : Chest
 {
     GameObject randomAmmoPack;
-    System.Random ran = new System.Random(91142069);
+    System.Random ran = new System.Random(6875124);
     int randomNum;
     int count = 1;
     protected override void Use()

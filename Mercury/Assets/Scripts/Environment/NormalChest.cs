@@ -7,6 +7,7 @@ public class NormalChest : Chest
     GameObject randomWeapon;
     GameObject randomHealthPack;
     int count = 1;
+
     protected override void Use()
     {
         if (count >= 1)

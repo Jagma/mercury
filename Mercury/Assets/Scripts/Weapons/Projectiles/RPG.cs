@@ -32,7 +32,7 @@ public class RPG : Projectile
                 playerHit.Damage(damage);
             }
             if (wallHit) {
-                wallHit.Damage((int)damage);
+                wallHit.Damage(damage);
             }
         }
 

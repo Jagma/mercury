@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
     Material temp;
     public Vector3 forwardDirection = Vector3.forward;
-    System.Random ran = new System.Random(91142069);
+    System.Random ran = new System.Random(85466248);
 
     IEnumerator Wait()
     {
@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
         temp = transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material;
     }
 
+    //Forces enemy to look at camera
     protected virtual void FixedUpdate()
     {
         visual.eulerAngles = new Vector3(45, 45, 0);
@@ -91,7 +92,12 @@ public class Enemy : MonoBehaviour
         {
             DropItems();
         }
+        DisplayEnemyCorpse();
+        Destroy(gameObject);
+    }
 
+    private void DisplayEnemyCorpse()
+    {
         Transform enemyVisual = transform.Find("Visual");
         enemyVisual.transform.parent = null;
         float speed = 75.0f;
@@ -99,30 +105,42 @@ public class Enemy : MonoBehaviour
         enemyVisual.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         //enemyVisual.eulerAngles = new Vector3(transform.eulerAngles.x, 90f, transform.eulerAngles.z); --alternative method to rotate 90 degrees.
-        Destroy(gameObject);
     }
 
     private void DropItems()
     {
         int randomNum = ran.Next(0, 100);
-        if (randomNum >= 0 && randomNum < 11)//10% Drop weapon
+        if (randomNum >= 20 && randomNum < 61) //40% Drop ammo pack - still needs to be implemented.
         {
-            equippedWeapon.Dequip();
-            equippedWeapon.equipped = false;
-            equippedWeapon = null;
-        }
-        else //destroy weapon from world.
-        {
-            Weapon temp = equippedWeapon;
+            GameObject randomAmmoPack;
+            randomNum = ran.Next(0, 100);
+            if (randomNum >= 0 && randomNum < 11)//10% Laser Rifle ammo
+            {
+                randomAmmoPack = Factory.instance.CreateBeamAmmoPack();
+            }
+            else if (randomNum > 20 && randomNum < 61) //40% rocket launcher ammo
+            {
+                randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
+            }
+            else //if the random value is else.
+            {
+                randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
+            }
+            randomAmmoPack.transform.position = transform.position;
+
+            //removes weapon from being used.
+            equippedWeapon.gameObject.SetActive(false);
             equippedWeapon.Dequip();
             equippedWeapon.equipped = false;
             equippedWeapon = null;
             Destroy(equippedWeapon);
         }
-
-        if (randomNum >= 20 && randomNum < 61)//40% Drop ammo pack - still needs to be implemented.
+        else
         {
-            //drop ammo pack...
+            equippedWeapon.Dequip();
+            equippedWeapon.equipped = false;
+            equippedWeapon = null;
         }
+
     }
 }
