@@ -71,9 +71,26 @@ public class LevelGeneration : MonoBehaviour
             }
         }
 
+        int playerSpawnX = minerList[0].posX;
+        int playerSpawnZ = minerList[0].posZ;
+        playerSpawnPosition = new Vector3(playerSpawnX, 4, playerSpawnZ);
+
+        for (int z = playerSpawnZ - 8; z < playerSpawnZ + 8; z++) {
+            for (int x = playerSpawnX - 8; x < playerSpawnX + 8; x++) {
+                x = Mathf.Clamp(x, 0, terrain.GetLength(0));
+                z = Mathf.Clamp(z, 0, terrain.GetLength(1));
+
+                enemies[x, z] = "";
+            }
+        }
+
+
         pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
-        pickups[minerList[0].posX, minerList[0].posZ] = "Ammo Chest";
-        playerSpawnPosition = new Vector3(minerList[0].posX, 4, minerList[0].posZ);
+        //  pickups[minerList[0].posX, minerList[0].posZ] = "Ammo Chest";
+
+
+
+        
 
         // Build floor
         GameObject floor = Factory.instance.CreateMarsFloor();
