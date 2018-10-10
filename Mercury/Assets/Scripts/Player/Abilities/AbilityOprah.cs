@@ -1,17 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityOprah : Ability {
+public class AbilityOprah : Ability
+{
 
     bool isProjectile = false;
-    bool isLazer = false;
     float count = 0;
     GameObject freeItem;
     System.Random ran = new System.Random(91142069);
     int randomNum;
 
-    public override void Init() {
+    public override void Init()
+    {
         base.Init();
 
         // Stats
@@ -22,51 +24,38 @@ public class AbilityOprah : Ability {
     {
         base.Use();
         freeItem = ChooseRandomItem();
-        Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
-
+        Vector2 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        Vector3 normalizedAim = Quaternion.AngleAxis(45, Vector3.up)* new Vector3(aimDirection.x,0,aimDirection.y);
+        Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, normalizedAim.y, normalizedAim.z) * 1f;
         Debug.Log("OPRAH Spawned: " + freeItem.gameObject.name);
-        if (!isProjectile && !isLazer)
+        if (!isProjectile)
         {
-            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 2f;
 
-        }
-        else if (isLazer)
-        {
-            // Visual look at camera
-            freeItem.transform.eulerAngles = new Vector3(45, 45, -freeItem.transform.eulerAngles.y + 45);
-            freeItem.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y, aimDirection.z) * 1f; 
+            freeItem.transform.position = position;
+            freeItem.transform.right = aimDirection;
 
-            Beam(); //- crashes unity.
-            GameObject.Destroy(freeItem, 1f);
-            isLazer = false;
-            
         }
         else
         {
-            freeItem.GetComponent<Projectile>().speed *= 2;
-            freeItem.transform.position = playerActor.transform.position + aimDirection *1f;
-            freeItem.transform.right = new Vector3(aimDirection.x, 0 , aimDirection.y);
+            //freeItem.GetComponent<Projectile>().speed *= 2;
+            freeItem.transform.position = position;
+            freeItem.transform.right = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(aimDirection.x, 0, aimDirection.y);
+            //freeItem.transform.eulerAngles = new Vector3(0, 0, 0);
             freeItem.GetComponent<Projectile>().Update();
             isProjectile = false;
         }
     }
 
-    void Beam()
+    private GameObject ChooseRandomItem()
     {
-        count += Time.deltaTime;
-        while (count < 4)
-        {
-            Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
-            freeItem.transform.position = playerActor.transform.position;
-            freeItem.transform.right = new Vector3(aimDirection.x, 0, aimDirection.y);
-            freeItem.GetComponent<Beam>().UpdateVisual(freeItem.transform.position, aimDirection);
-        }
-    }
-    public GameObject ChooseRandomItem()
-    {
-        randomNum = ran.Next(0, 100);
-        Debug.Log("RANDOM ITEM ROLL" + randomNum);
-        if(randomNum >= 0 && randomNum < 11)//10% FLASHES
+
+        int[] categoryWeight = { 5, 5, 30, 60 };// HIT EFFECTS| ENEIES| ROUNDS| WEAPONS
+        int[] weaponWeights = {25,30,30,25};// MACHINE GUN| LAZER RIFLE| ROCKET LAUNCHER| PISTOL
+        int[] enemyWeights = {60, 40};// MELEE| RANGED
+
+        int result = GetResult(categoryWeight);
+        Debug.Log("CATEGORY " + result);
+        if(result == 0)//Hit effects
         {
             int roll = ran.Next(0, 4);
 
@@ -81,16 +70,16 @@ public class AbilityOprah : Ability {
             if (roll == 4)
                 return Factory.instance.CreateMuzzleFlash();
         }
-        if (randomNum > 10 && randomNum < 21)//10% ENEMIES
+        if (result == 1)//Enemies
         {
-            int roll = ran.Next(0, 1);
-
-            if (roll == 0)
+            result = GetResult(enemyWeights);
+            Debug.Log("ENEMY " + result);
+            if (result == 0)
                 return Factory.instance.CreateEnemyWalker();
-            if (roll == 1)
+            if (result == 1)
                 return Factory.instance.CreateRangedWalker();
         }
-        if(randomNum > 20 && randomNum < 61 )//40% BULLETS
+        if (result == 2)//Rounds
         {
             int roll = ran.Next(0, 2);
             isProjectile = true;
@@ -99,28 +88,41 @@ public class AbilityOprah : Ability {
                 return Factory.instance.CreateBullet();
             if (roll == 1)
                 return Factory.instance.CreateRocket();
-            if (roll == 2)
-            {
-                isProjectile = false;
-                isLazer = true;
-                return Factory.instance.CreateBeamNeon();
-            }
-                
         }
-        if(randomNum > 60 && randomNum < 101)//40% WEAPONS
+        if (result == 3)//weapons
         {
-            int roll = ran.Next(0, 3);
-
-            if (roll == 0)
+            result = GetResult(weaponWeights);
+            Debug.Log("WEAPON " + result);
+            if (result == 0)
                 return Factory.instance.CreateMachineGun();
-            if (roll == 1)
+            if (result == 1)
                 return Factory.instance.CreateLaserRifle();
-            if (roll == 2)
+            if (result == 2)
                 return Factory.instance.CreateRocketLauncher();
-            if (roll == 3)
+            if (result == 3)
                 return Factory.instance.CreatePistol();
         }
         return null;
+    }
+
+    private int GetResult(int[] array)
+    {
+        int total = 0;
+        Array.ForEach(array, delegate (int i) { total += i; });
+        randomNum = ran.Next(0, total);
+
+        total = 0;
+        int result = 0;
+        for (int i = 0; i < array.Length; i++)
+        {
+            total += array[i];
+            if (randomNum <= total)
+            {
+                result = i;
+                break;
+            }
+        }
+        return result;
     }
 
 }

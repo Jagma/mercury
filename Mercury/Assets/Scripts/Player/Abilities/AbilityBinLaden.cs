@@ -22,23 +22,27 @@ public class AbilityBinLaden : Ability {
 
     private void PlaceBag()
     {
-        Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        Vector2 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        Vector3 normalizedAim = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(aimDirection.x, 0, aimDirection.y);
+        Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, normalizedAim.y, normalizedAim.z) * 1f;
 
         bag = Factory.instance.CreateTNTBag();
-        bag.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 2f;
-        bag.transform.right = new Vector3(aimDirection.x, 0, aimDirection.y);
+        bag.transform.position = position;
+        bag.transform.right = normalizedAim;
         bag.GetComponent<Projectile>().Update();
     }
 
     private void ThrowBag()
     {
-        Vector3 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        Vector2 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        Vector3 normalizedAim = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(aimDirection.x, 0, aimDirection.y);
+        Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, normalizedAim.y, normalizedAim.z) * 1f;
 
         bag = Factory.instance.CreateTNTBag();
         //bag.GetComponent<Projectile>().speed += 1f;
-        bag.transform.position = playerActor.transform.position + new Vector3(aimDirection.x, 0, aimDirection.y) * 1f;
-        bag.GetComponent<TNTBag>().Move(aimDirection);
-        bag.transform.right += new Vector3(aimDirection.x, 0, aimDirection.y);
+        bag.transform.position = position;
+        bag.GetComponent<TNTBag>().Move(normalizedAim);
+        bag.transform.right = normalizedAim;
         bag.GetComponent<Projectile>().Update();
     }
 }
