@@ -106,6 +106,17 @@ public class PlayerActor : MonoBehaviour
         {
             Weapon weapon = colliders[i].GetComponent<Weapon>();
             Chest chest = colliders[i].GetComponent<Chest>();
+            if (weapon != null && weapon.equipped == false && weapon.name.Equals(model.equippedWeapon.name))
+            {
+                model.equippedWeapon.SetAmmoCount(20);
+                Destroy(weapon, 0.1f);
+            }
+            else if(weapon != null && model.secondaryWeapon !=null && weapon.equipped == false && weapon.name.Equals(model.secondaryWeapon.name))
+            {
+                model.secondaryWeapon.SetAmmoCount(20);
+                Destroy(weapon, 0.1f);
+            }
+            else
             if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon && weapon.equipped == false)
             {
                 // Dequip current weapon
@@ -138,7 +149,6 @@ public class PlayerActor : MonoBehaviour
                     AudioManager.instance.PlayAudio("dsdbload", 1, false);
                     model.equippedWeapon = weapon;
                 }
-                return;
             }
 
             if (chest != null)
