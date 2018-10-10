@@ -689,7 +689,7 @@ public class Factory : MonoBehaviour
         return enemyWalkerGO;
     }
 
-    public GameObject CreateMartianBoss()
+    public GameObject CreateMartianBoss() //Creates the martian boss
     {
          GameObject martianBossGO = new GameObject("Martian Boss");
 

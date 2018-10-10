@@ -54,7 +54,6 @@ public class Chest : MonoBehaviour
                     closestPlayerActor = playerActor;
                 }
             }
-
         }
 
         if (closestPlayerActor != null)
