@@ -77,6 +77,16 @@ public class GameProgressionManager : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
 
+    public void Reset()
+    {
+        numEnemiesLeft = 0;
+        numEnemiesStart = 0;
+        numOfBulletsUsed = 0;
+        enemiesKilled = 0;
+        wallsDestroyed = 0;
+        damageTaken = 0;
+    }
+
     public void LevelComplete()
     {
         Debug.Log("Level complete.");
