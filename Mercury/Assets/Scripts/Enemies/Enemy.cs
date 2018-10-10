@@ -92,7 +92,12 @@ public class Enemy : MonoBehaviour
         {
             DropItems();
         }
+        DisplayEnemyCorpse();
+        Destroy(gameObject);
+    }
 
+    private void DisplayEnemyCorpse()
+    {
         Transform enemyVisual = transform.Find("Visual");
         enemyVisual.transform.parent = null;
         float speed = 75.0f;
@@ -100,13 +105,12 @@ public class Enemy : MonoBehaviour
         enemyVisual.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         //enemyVisual.eulerAngles = new Vector3(transform.eulerAngles.x, 90f, transform.eulerAngles.z); --alternative method to rotate 90 degrees.
-        Destroy(gameObject);
     }
 
     private void DropItems()
     {
         int randomNum = ran.Next(0, 100);
-        if (randomNum >= 20 && randomNum < 61)//40% Drop ammo pack - still needs to be implemented.
+        if (randomNum >= 20 && randomNum < 61) //40% Drop ammo pack - still needs to be implemented.
         {
             GameObject randomAmmoPack;
             randomNum = ran.Next(0, 100);
@@ -118,12 +122,14 @@ public class Enemy : MonoBehaviour
             {
                 randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
             }
-            else
+            else //if the random value is else.
             {
                 randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
             }
             randomAmmoPack.transform.position = transform.position;
-            Weapon temp = equippedWeapon;
+
+            //removes weapon from being used.
+            equippedWeapon.gameObject.SetActive(false);
             equippedWeapon.Dequip();
             equippedWeapon.equipped = false;
             equippedWeapon = null;
