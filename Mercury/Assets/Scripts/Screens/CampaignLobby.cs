@@ -183,6 +183,18 @@ public class CampaignLobby : MonoBehaviour {
             characterSelectedGO.transform.Find("CharacterName_Text").GetComponent<Text>().text = characterName;
 
             characterSelectImageGO.transform.localScale *= 1.2f;
+
+            AudioManager.instance.StopAudio("Trump - BingBingBong");
+           // AudioManager.instance.StopAudio("Oprah sound"); _____________________________________________________________________________________________ Hiers die code. Jy kan seker van hier af werk.
+           // en so an vir al die characters
+
+            if (characterIndex == 0) {
+                AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
+            }
+            /*
+            if (characterIndex == 1) {
+                AudioManager.instance.PlayAudio("Oprah sound", 1, false);
+            } */
         }
     }
 
