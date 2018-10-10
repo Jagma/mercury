@@ -37,7 +37,7 @@ public class Health : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         PlayerActor player = col.GetComponent<PlayerActor>();
-        if (player != null)
+        if (player != null && player.GetHealthInformation() < 100)
         {
             Use(player);
         }

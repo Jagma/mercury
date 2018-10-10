@@ -87,3 +87,12 @@ Trump, 14, 47.19189
 Trump, 12, 44.35387
 Trump, 7, 50.94236
 Trump, 11, 14.75091
+Trump, 17, 8.21696
+Trump, 10, 34.29641
+Trump, 10, 34.29641
+Bin Laden, 19, 13.01174
+Bin Laden, 19, 13.01174
+Bin Laden, 17, 8.919938
+Bin Laden, 20, 15.32013
+Trump, 10, 22.74454
+Trump, 19, 14.36975
