@@ -591,7 +591,7 @@ public class Factory : MonoBehaviour
         return BeamAmmoGO;
     }
 
-    public GameObject CreateFloor()
+    public GameObject CreateFloor() //Code to create a floor object on the maps
     {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
         floor.name = "Floor";
@@ -604,7 +604,7 @@ public class Factory : MonoBehaviour
     }
 
     Material m = null;
-    public GameObject CreateWall()
+    public GameObject CreateWall() //Creates a wall object on the map
     {
         GameObject wall = new GameObject("Wall");
         wall.AddComponent<BoxCollider>();
@@ -647,7 +647,7 @@ public class Factory : MonoBehaviour
         return enemyWalkerGO;
     }
 
-    public GameObject CreateMartianBoss()
+    public GameObject CreateMartianBoss() //Creates the martian boss
     {
          GameObject martianBossGO = new GameObject("Martian Boss");
 

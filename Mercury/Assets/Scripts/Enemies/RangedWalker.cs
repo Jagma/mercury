@@ -27,6 +27,7 @@ public class RangedWalker : Enemy
         }
         hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
 
+        //Looks for closest Player then walks
         GameObject closestPlayerGO = hits[0].collider.gameObject;
         for (int i = 0; i < hits.Length; i++)
         {

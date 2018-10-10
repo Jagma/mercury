@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
         temp = transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>().material;
     }
 
+    //Forces enemy to look at camera
     protected virtual void FixedUpdate()
     {
         visual.eulerAngles = new Vector3(45, 45, 0);
