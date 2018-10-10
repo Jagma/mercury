@@ -15,13 +15,13 @@ EditorBuildSettings:
     path: Assets/Scenes/GameCOOP.unity
     guid: 9c1c2a73154d1f64da417a522a55f81d
   - enabled: 1
-    path: Assets/Scenes/GameMultiplayer.unity
+    path: Assets/Scenes/Multiplayer/GameMultiplayer.unity
     guid: 7dbd169bf18256942ba94f7a80371e60
   - enabled: 1
-    path: Assets/Scenes/Lobby.unity
+    path: Assets/Scenes/Multiplayer/Lobby.unity
     guid: c0aa25f166da6dc4c97cb4549d3cef3b
   - enabled: 1
-    path: Assets/Scenes/Multiplayer.unity
+    path: Assets/Scenes/Multiplayer/Multiplayer.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelComplete.unity
     guid: 934b6c1e703c875428268677b2910df5
+  - enabled: 1
+    path: Assets/Scenes/Intermission.unity
+    guid: f2945e2cf12ac4c4fa10cd100ab2dd4f
   m_configObjects: {}

@@ -30,7 +30,7 @@ public class AbilityTrump : Ability {
 
 
         //Create wall and move to position with infinite HP
-        GameObject wall = Factory.instance.CreateWall();
+        GameObject wall = Factory.instance.CreateTrumpWall();
         wall.GetComponent<Wall>().health = int.MaxValue;
         wall.transform.position = position;
         BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();

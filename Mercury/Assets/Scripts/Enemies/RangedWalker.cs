@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class RangedWalker : Enemy
 {
-    private float timer = 0;
-    private Vector3 prevdirection;
-    System.Random ran = new System.Random();
     protected override void Start()
     {
         base.Start();
         CreateWeapon();
         health = 100;
         moveSpeed = 1f;
-    }
 
-    RaycastHit[] hits;
+        movementTime = Random.Range(2f, 4f);
+        waitTime = Random.Range(0.25f, 2f);
+    }
+    
+    Collider[] colliders;
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -25,27 +25,9 @@ public class RangedWalker : Enemy
         {
             equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
         }
-        hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
 
-        //Looks for closest Player then walks
-        GameObject closestPlayerGO = hits[0].collider.gameObject;
-        for (int i = 0; i < hits.Length; i++)
-        {
-            PlayerActor player = hits[i].collider.GetComponent<PlayerActor>();
-            if (player != null)
-            {
-                allowWalk = true;
-            }
-        }
-
-        PlayerActor playerC = closestPlayerGO.GetComponent<PlayerActor>();
-
-        if (playerC != null)
-        {
-            allowWalk = true;
-        }
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 7.5f);
+        colliders = Physics.OverlapSphere(transform.position, 7.5f);
+        Debug.Log(colliders.Length);
 
         PlayerActor closestPlayerActor = null;
         for (int i = 0; i < colliders.Length; i++)
@@ -69,7 +51,7 @@ public class RangedWalker : Enemy
         }
 
         // If we found a player move towards it
-        if (closestPlayerActor != null && allowWalk)
+        if (closestPlayerActor != null)
         {
             float playerRange = Vector3.Distance(closestPlayerActor.transform.position, transform.position);
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);
@@ -84,26 +66,38 @@ public class RangedWalker : Enemy
         }
         else
         {
-            timer += 1;
-            if (timer > 4)
-            {
-                MoveRandomDir();
-                timer = 0;
-            }
-            base.MoveForward();
+            IdleMovement();
         }
 
     }
 
-    void MoveRandomDir()
-    {
-        equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
-    }
+    float timer = 0;
+    float movementTime = 3;
+    float waitTime = 1;
+    void IdleMovement () {
+        timer += Time.deltaTime;
+        if (timer > movementTime + waitTime) {
 
+
+            Vector3 direction = Random.onUnitSphere;
+            direction.y = 0;
+            direction.Normalize();
+            FaceDirection(direction);
+
+            movementTime = Random.Range(2.3f, 3.7f);
+            waitTime = Random.Range(0.4f, 1.8f);
+
+            timer = 0;
+        }
+        if (timer < movementTime) {
+            base.MoveForward();
+        }
+    }
+    
     void CreateWeapon()
     {
         GameObject weapon;
-        int randomNum = ran.Next(0, 100);
+        int randomNum = Random.Range(0, 100);
         if (randomNum >= 0 && randomNum < 11)//10% spawn with machine gun.
             weapon = Factory.instance.CreateMachineGun();
         else
