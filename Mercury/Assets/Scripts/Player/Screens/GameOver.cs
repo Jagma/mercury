@@ -11,7 +11,7 @@ public class GameOver : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        AudioManager.instance.PlayAudio("Game_music_Unknown_planet", .4f, true);
     }
 
     void Update()
@@ -26,7 +26,7 @@ public class GameOver : MonoBehaviour
     {
         DestroyInstances();
         AudioManager.instance.StopAllAudio();
-        AudioManager.instance.PlayAudio("sfx_sounds_button5", 1, false);
+        AudioManager.instance.PlayAudio("sfx_sounds_button5", .7f, false);
         SceneManager.LoadScene("GameCOOP");
     }
 
@@ -34,13 +34,13 @@ public class GameOver : MonoBehaviour
     {
         DestroyInstances();
         AudioManager.instance.StopAllAudio();
-        AudioManager.instance.PlayAudio("sfx_sounds_button5", 1, false);
+        AudioManager.instance.PlayAudio("sfx_sounds_button5", .7f, false);
         SceneManager.LoadScene("Menu");
     }
 
     public void ExitGame()
     {
-        AudioManager.instance.PlayAudio("sfx_sounds_button5", 1, false);
+        AudioManager.instance.PlayAudio("sfx_sounds_button5", .7f, false);
         Application.Quit();
     }
 
