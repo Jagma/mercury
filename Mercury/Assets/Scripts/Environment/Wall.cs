@@ -13,7 +13,7 @@ public class Wall : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            GameObject wallBreak = Factory.instance.CreateWallBreak("Venus");
+            GameObject wallBreak = Factory.instance.CreateWallBreak(ProgressionState.environmentName);
             wallBreak.transform.position = gameObject.transform.position; 
             Destroy(wallBreak, 2f);
         }

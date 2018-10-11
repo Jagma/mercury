@@ -38,6 +38,7 @@ public class Factory : MonoBehaviour
     public GameObject CreatePlayerBase()
     {
         GameObject playerGO = new GameObject("Player");
+        playerGO.layer = LayerMask.NameToLayer("Player");
 
         CapsuleCollider playerCollider = playerGO.AddComponent<CapsuleCollider>();
         playerCollider.radius = 0.25f;

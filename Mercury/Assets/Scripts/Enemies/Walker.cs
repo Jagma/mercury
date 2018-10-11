@@ -13,11 +13,14 @@ public class Walker : Enemy
         moveSpeed = 2f;
     }
 
+    Collider[] colliders;
     protected override void FixedUpdate ()
     {
         base.FixedUpdate();
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 7.5f);
+        int layerId = LayerMask.NameToLayer("Player");
+        int layerMask = 1 << layerId;
+        colliders = Physics.OverlapSphere(transform.position, 7.5f, layerMask);
 
         PlayerActor closestPlayerActor = null;
         for (int i = 0; i < colliders.Length; i++)
