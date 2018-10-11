@@ -26,7 +26,7 @@ public class PlayerActor : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
-        model.equippedWeapon = Factory.instance.CreatePistol().GetComponent<Weapon>();
+        model.equippedWeapon = Factory.instance.CreateMachineGun().GetComponent<Weapon>();
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
     }

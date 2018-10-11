@@ -7,7 +7,6 @@ public class
     MartianBoss : Enemy
 {
     private Timer timer;
-    private PlayerActor closestPlayerActor = null;
     int i = 0;
     protected override void Start()
     {

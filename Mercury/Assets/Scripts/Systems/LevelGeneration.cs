@@ -137,6 +137,15 @@ public class LevelGeneration : MonoBehaviour
                     EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
                 }
 
+                if (enemies[x, z] == "Overlord Walker")
+                {
+                    GameObject enemyGO = Factory.instance.CreateOverlordWalker();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
+
                 if (pickups[x, z] == "Normal Chest")
                 {
                     GameObject chestGO = Factory.instance.CreateNormalChest();
@@ -244,6 +253,10 @@ public class Miner
         if (Random.Range(0, 1000) > 995)
         {
             levelGen.enemies[posX, posZ] = "Ranged Walker";
+        }
+        if (Random.Range(0, 1000) > 995)
+        {
+            levelGen.enemies[posX, posZ] = "Overlord Walker";
         }
         // Pickups
         if (Random.Range(0, 10000) > 9990)

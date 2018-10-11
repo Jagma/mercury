@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeamNeon : Beam
+public class BeamPurple : Beam
 {
     public override void Init()
     {
@@ -10,7 +10,7 @@ public class BeamNeon : Beam
 
         // Stats
         width = 0.25f;
-        damage = 2;
+        damage = 35;
     }
 
 }
