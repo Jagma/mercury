@@ -65,22 +65,18 @@ public class CampaignLobby : MonoBehaviour
 
                     if (device.GetSelectTrumpWasPressed())
                     {
-                        AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
                         Browse(0);
                     }
                     if (device.GetSelectBinLadenWasPressed())
                     {
-                        AudioManager.instance.PlayAudio("abra", 1, false);
                         Browse(1);
                     }
                     if (device.GetSelectOprahWasPressed())
                     {
-                        AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
                         Browse(2);
                     }
                     if (device.GetSelectPopeWasPressed())
                     {
-                        AudioManager.instance.PlayAudio("Pope_peace", 1, false);
                         Browse(3);
                     }
                     if (device.GetCharacterSelect()) {
@@ -235,14 +231,6 @@ public class CampaignLobby : MonoBehaviour
             characterSelectedGO.transform.Find("CharacterName_Text").GetComponent<Text>().text = characterName;
 
             characterSelectImageGO.transform.localScale *= 1.2f;
-
-            AudioManager.instance.StopAudio("Trump - BingBingBong");
-            AudioManager.instance.StopAudio("Oprah You Get A Car");
-            AudioManager.instance.StopAudio("Pope_peace");
-            AudioManager.instance.StopAudio("abra");
-
-
-
         }
     }
 

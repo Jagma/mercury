@@ -6,7 +6,7 @@ public class Intermission : MonoBehaviour {
     public Texture2D spaceshipDesign;
 	void Start () {
         Transform levelRoot = new GameObject("LevelRoot").transform;
-
+        AudioManager.instance.PlayAudio("Game_music_Magellanic_clouds", .4f, true);
         for (int z = 0; z < spaceshipDesign.height; z++) {
             for (int x = 0; x < spaceshipDesign.width; x++) {
                 Color col = spaceshipDesign.GetPixel(x, z);

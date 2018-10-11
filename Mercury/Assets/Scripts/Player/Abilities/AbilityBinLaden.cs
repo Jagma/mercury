@@ -18,6 +18,8 @@ public class AbilityBinLaden : Ability {
     {
         base.Use();
 
+        AudioManager.instance.PlayAudio("abra", 1, false);
+
         //Get aim and rotate by 45*
         Vector2 aim = InputManager.instance.GetAimDirection(playerActor.model.playerID);
         if (aim.magnitude <= 0.1)
