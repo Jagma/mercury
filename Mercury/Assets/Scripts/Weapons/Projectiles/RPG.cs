@@ -42,8 +42,11 @@ public class RPG : Projectile
         Destroy(a, 1f);
 
         Transform smokeTrail = visual.Find("SmokeTrail");
-        smokeTrail.transform.parent = null;
-        Destroy(smokeTrail.gameObject, 2f);
+        if (smokeTrail != null)
+        {
+            smokeTrail.transform.parent = null;
+            Destroy(smokeTrail.gameObject, 2f);
+        }
     }
 
     private void OnTriggerEnter(Collider col)

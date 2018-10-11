@@ -279,8 +279,6 @@ public class Factory : MonoBehaviour
     {
         GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Explosion"));
         ParticleSystem.ShapeModule shape = rocketHit.GetComponent<ParticleSystem>().shape;
-        ParticleSystemRenderer test = rocketHit.GetComponent<ParticleSystemRenderer>();
-
         shape.radius = 0.4f;
         return rocketHit;
     }

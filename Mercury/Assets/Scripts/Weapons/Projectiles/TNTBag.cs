@@ -5,7 +5,7 @@ using UnityEngine;
 public class TNTBag : Projectile
 {
 
-    float blastRadius, timer, height, distance;
+    float blastRadius, timer, distance;
     Vector3 aimDirection, initPosition;
     public override void Init()
     {
@@ -15,7 +15,6 @@ public class TNTBag : Projectile
         damage = 100;
         blastRadius = 2f;
         timer = 2f;
-        height = 0;
         initPosition = this.transform.position;
     }
 

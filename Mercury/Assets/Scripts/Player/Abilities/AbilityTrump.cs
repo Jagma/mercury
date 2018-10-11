@@ -40,7 +40,7 @@ public class AbilityTrump : Ability {
         GameObject wall = Factory.instance.CreateTrumpWall();
         wall.GetComponent<Wall>().health = int.MaxValue;
         wall.transform.position = position;
-        BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
+        //BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
         
         //Destroy wall after x Seconds
         GameObject.Destroy(wall, 5f);
