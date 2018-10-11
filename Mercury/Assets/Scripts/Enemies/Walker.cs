@@ -9,7 +9,7 @@ public class Walker : Enemy
     {
         base.Start();
 
-        health = 50;
+        health = 25;
         moveSpeed = 2f;
     }
 

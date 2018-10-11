@@ -235,6 +235,13 @@ public class Factory : MonoBehaviour
         return rocketGO;
     }
 
+    public GameObject CreateFlame()
+    {
+        //flame code.
+        return null;
+    }
+
+
     public GameObject CreateBeamNeon() //code is used in order to create/spawn the laser beam used for the laser rifle weapon.
     {
         GameObject neonBeamGO = new GameObject("BeamNeon");
@@ -247,12 +254,32 @@ public class Factory : MonoBehaviour
 
         LineRenderer mainLR = neonBeamVisualMainGO.AddComponent<LineRenderer>();
         Material beamLine = new Material(Shader.Find("Particles/Additive")); //material is used in order to set the beam's material to a custom made one.
-        beamLine.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamMiddle"));
+        beamLine.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamNeon"));
         mainLR.material = beamLine;
 
         Beam beam = neonBeamGO.AddComponent<BeamNeon>(); //the beam makes use of the BeamNeon script which has its own functionalities.
         beam.Init();
         return neonBeamGO;
+    }
+
+    public GameObject CreateBeamPurple() //code is used in order to create/spawn the laser beam used for the laser pisol weapon.
+    {
+        GameObject purpleBeamGO = new GameObject("BeamNeon");
+
+        GameObject purpleBeamVisualGO = new GameObject("Visual");
+        purpleBeamVisualGO.transform.parent = purpleBeamGO.transform;
+
+        GameObject neonBeamVisualMainGO = new GameObject("MainBeam");
+        neonBeamVisualMainGO.transform.parent = purpleBeamVisualGO.transform;
+
+        LineRenderer mainLR = neonBeamVisualMainGO.AddComponent<LineRenderer>();
+        Material beamLine = new Material(Shader.Find("Particles/Additive")); //material is used in order to set the beam's material to a custom made one.
+        beamLine.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamPurple"));
+        mainLR.material = beamLine;
+
+        Beam beam = purpleBeamGO.AddComponent<BeamPurple>(); //the beam makes use of the BeamNeon script which has its own functionalities.
+        beam.Init();
+        return purpleBeamGO;
     }
 
     public GameObject CreateBulletHit() 
@@ -324,6 +351,59 @@ public class Factory : MonoBehaviour
         pistolGO.AddComponent<Pistol>();
 
         return pistolGO;
+    }
+
+    public GameObject CreateFlamethrower()  //code use to create the flamethower weapon for the players to use.
+    {
+        GameObject flamethrowerGO = new GameObject("Flamethrower");
+
+        SphereCollider flameThrowerCollider = flamethrowerGO.AddComponent<SphereCollider>();
+        flameThrowerCollider.radius = 0.1f;
+
+        SphereCollider flameThrowerColliderT = flamethrowerGO.AddComponent<SphereCollider>();
+        flameThrowerColliderT.isTrigger = true;
+
+        Rigidbody flameThrowerRigid = flamethrowerGO.AddComponent<Rigidbody>();
+        flameThrowerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject flamethrowerVisualGO = new GameObject("Visual");
+        flamethrowerVisualGO.transform.parent = flamethrowerGO.transform;
+
+        GameObject flamethrowerVisualBodyGO = new GameObject("Body");
+        flamethrowerVisualBodyGO.transform.parent = flamethrowerVisualGO.transform;
+        SpriteRenderer sr = flamethrowerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Flamethrower");
+
+        flamethrowerGO.AddComponent<Flamethrower>();
+
+        return flamethrowerGO;
+    }
+
+
+    public GameObject CreateLaserPistol()  //code use to create the laser pistol weapon for the players to use.
+    {
+        GameObject laserPistolGO = new GameObject("Laser Pistol");
+
+        SphereCollider laserPistolCollider = laserPistolGO.AddComponent<SphereCollider>();
+        laserPistolCollider.radius = 0.1f;
+
+        SphereCollider laserPistolColliderT = laserPistolGO.AddComponent<SphereCollider>();
+        laserPistolColliderT.isTrigger = true;
+
+        Rigidbody laserPistolRigid = laserPistolGO.AddComponent<Rigidbody>();
+        laserPistolRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject laserPistolVisualGO = new GameObject("Visual");
+        laserPistolVisualGO.transform.parent = laserPistolGO.transform;
+
+        GameObject laserPistolVisualBodyGO = new GameObject("Body");
+        laserPistolVisualBodyGO.transform.parent = laserPistolVisualGO.transform;
+        SpriteRenderer sr = laserPistolVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserPistol");
+
+        laserPistolGO.AddComponent<LaserPistol>();
+
+        return laserPistolGO;
     }
 
     public GameObject CreateMachineGun() //code use to create the machine gun weapon for the players to use.
@@ -737,6 +817,31 @@ public class Factory : MonoBehaviour
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Ranged Walker");
 
         enemyRangedGO.AddComponent<RangedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        return enemyRangedGO;
+    }
+
+    public GameObject CreateOverlordWalker() //code use to create the overlord walker enemy within the game.
+    {
+        GameObject enemyRangedGO = new GameObject("Overlord Walker");
+
+        CapsuleCollider enemyWalkerCollider = enemyRangedGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyRangedGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyRangedGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Overlord Walker");
+
+        enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
         return enemyRangedGO;
     }
 
