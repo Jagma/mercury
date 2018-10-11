@@ -16,6 +16,8 @@ public class Game : MonoBehaviour
 
 	void Start ()
     {
+        AudioManager.instance.PlayAudio("Game_music_Moon_garden", .5f, true);
+
         if (InputManager.instance == null)
         {
             return;
@@ -95,6 +97,7 @@ public class Game : MonoBehaviour
             LevelGeneration.instance.SpawnMartianBoss(playerMid);
         }
         if (gameStage == 1 && EnemyManager.instance.GetEnemyCount() <= 0) {
+            AudioManager.instance.StopAudio("Game_music_Moon_garden");
             SceneManager.LoadScene("Intermission");
         }
     }
