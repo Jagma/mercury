@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityPope : Ability {
+public class AbilityPope : Ability
+{
 
     float reviveRadius;
-    double reviveHP;
+    //double reviveHP;
     public override void Init()
     {
         base.Init();
@@ -13,7 +14,7 @@ public class AbilityPope : Ability {
         // Stats
         cooldown = 0f;
         reviveRadius = 10f;
-        reviveHP = 50f;
+        //reviveHP = 50f;
     }
 
     protected override void Use()

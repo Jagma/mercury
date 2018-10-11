@@ -77,8 +77,8 @@ public class LevelGeneration : MonoBehaviour
 
         for (int z = playerSpawnZ - 8; z < playerSpawnZ + 8; z++) {
             for (int x = playerSpawnX - 8; x < playerSpawnX + 8; x++) {
-                x = Mathf.Clamp(x, 0, terrain.GetLength(0));
-                z = Mathf.Clamp(z, 0, terrain.GetLength(1));
+                x = Mathf.Clamp(x, 0, terrain.GetLength(0)-1);
+                z = Mathf.Clamp(z, 0, terrain.GetLength(1)-1);
 
                 enemies[x, z] = "";
             }
@@ -88,12 +88,8 @@ public class LevelGeneration : MonoBehaviour
         pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
         //  pickups[minerList[0].posX, minerList[0].posZ] = "Ammo Chest";
 
-
-
-        
-
         // Build floor
-        GameObject floor = Factory.instance.CreateMarsFloor();
+        GameObject floor = Factory.instance.CreateFloor("Mars");
         floor.transform.parent = levelRoot;
         floor.transform.localScale = new Vector3(mapWidth, 1, mapDepth);
         floor.transform.position = new Vector3(mapWidth / 2.0f, 0, mapDepth / 2.0f);
@@ -106,7 +102,7 @@ public class LevelGeneration : MonoBehaviour
             {
                 if (terrain[x, z] == "Solid")
                 {
-                    GameObject wallGO = Factory.instance.CreateMarsWall();
+                    GameObject wallGO = Factory.instance.CreateWall("Mars");
                     wallGO.transform.parent = levelRoot;
                     wallGO.transform.position = new Vector3(x, 1, z);
                     if(x == 0 || x == mapWidth-1)
@@ -135,6 +131,15 @@ public class LevelGeneration : MonoBehaviour
                 if (enemies[x, z] == "Ranged Walker")
                 {
                     GameObject enemyGO = Factory.instance.CreateRangedWalker();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
+
+                if (enemies[x, z] == "Overlord Walker")
+                {
+                    GameObject enemyGO = Factory.instance.CreateOverlordWalker();
                     enemyGO.transform.parent = levelRoot;
                     enemyGO.transform.position = new Vector3(x, 2, z);
                     GameProgressionManager.instance.IncreaseEnemyCount();
@@ -175,7 +180,7 @@ public class LevelGeneration : MonoBehaviour
     public void SpawnMartianBoss(Vector3 playerPosition) {
         GameObject enemyGO = Factory.instance.CreateMartianBoss();
         enemyGO.transform.parent = levelRoot;
-        enemyGO.transform.position = new Vector3(playerPosition.x, 2, playerPosition.z);
+        enemyGO.transform.position = new Vector3(playerPosition.x, 5, playerPosition.z);
         EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
     }
 
@@ -248,6 +253,10 @@ public class Miner
         if (Random.Range(0, 1000) > 995)
         {
             levelGen.enemies[posX, posZ] = "Ranged Walker";
+        }
+        if (Random.Range(0, 1000) > 995)
+        {
+            levelGen.enemies[posX, posZ] = "Overlord Walker";
         }
         // Pickups
         if (Random.Range(0, 10000) > 9990)

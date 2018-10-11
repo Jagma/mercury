@@ -26,7 +26,7 @@ public class PlayerActor : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
         instance = this;
-        model.equippedWeapon = Factory.instance.CreatePistol().GetComponent<Weapon>();
+        model.equippedWeapon = Factory.instance.CreateMachineGun().GetComponent<Weapon>();
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
     }
@@ -54,29 +54,11 @@ public class PlayerActor : MonoBehaviour
         rigid.velocity = new Vector3(velocityMinusY.x, rigid.velocity.y, velocityMinusY.z);
 
         rigid.velocity = Vector3.Lerp(rigid.velocity, new Vector3(0, rigid.velocity.y, 0), model.moveDeceleration);
-        CollisionDetection();
     }
 
     public Weapon GetPlayerEquippedWeapon()
     {
         return model.equippedWeapon;
-    }
-
-    private void CollisionDetection()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            MartianBoss playerActor = colliders[i].GetComponent<MartianBoss>();
-
-            // Is this collider a player
-            if (playerActor != null)
-            {
-                rigid.AddExplosionForce(70, transform.position,0.5f);
-                Damage(2.5f);
-            }
-        }
     }
 
     public void Move (Vector2 direction)
@@ -88,6 +70,9 @@ public class PlayerActor : MonoBehaviour
     
     public void SwitchWeapons()
     {
+        if (model.secondaryWeapon == null) {
+            return;
+        }
         Weapon sw = model.equippedWeapon;
         model.equippedWeapon.Dequip();
         model.equippedWeapon.equipped = false;
@@ -204,17 +189,6 @@ public class PlayerActor : MonoBehaviour
     public float GetStartHealth()
     {
         return startHealth;
-    }
-
-    // Damage, health, and death
-    private void OnTriggerEnter(Collider col)
-    {
-        Projectile projectile = col.GetComponent<Projectile>();
-        if (projectile != null)
-        {
-            Damage(projectile.damage);
-            Debug.Log("Player took damage.");
-        }
     }
 
     public void Damage(float damage)

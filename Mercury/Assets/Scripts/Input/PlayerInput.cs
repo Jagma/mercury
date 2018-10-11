@@ -237,7 +237,6 @@ public class PlayerInput {
         {
             if (Input.GetKey(KeyCode.Tab))
             {
-                Debug.Log("Switch Weapons");
                 return true;
             }
         }

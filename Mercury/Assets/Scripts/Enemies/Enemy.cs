@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
     IEnumerator HitFlash() {
         spriteRenderer.material = hitMaterial;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
         spriteRenderer.material = normalMaterial;
     }
@@ -116,6 +116,10 @@ public class Enemy : MonoBehaviour
         Destroy(visual.Find("Drop Shadow").gameObject);
 
         spriteRenderer.material = normalMaterial;
+        Color deadColor = spriteRenderer.color;
+        deadColor *= 0.6f;
+        deadColor.a = 1;
+        spriteRenderer.color = deadColor;
     }
 
     private void DropItems()

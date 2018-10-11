@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 public class GameProgressionManager : MonoBehaviour
 {
-    private int numEnemiesLeft;
+    //private int numEnemiesLeft;
     private int numEnemiesStart;
     //private int numOfBulletsUsed;
     //private int enemiesKilled;
@@ -27,7 +27,6 @@ public class GameProgressionManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            numEnemiesLeft = 0;
             numEnemiesStart = 0;
         }
         else
@@ -37,7 +36,6 @@ public class GameProgressionManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        numEnemiesLeft = 0;
         numEnemiesStart = 0;
         numEnemiesStart = EnemyManager.instance.GetEnemyCount();
     }
@@ -55,7 +53,7 @@ public class GameProgressionManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        numEnemiesLeft = 0;
+        numEnemiesStart = 0;
     }
 
     public void GameOver()
@@ -67,7 +65,6 @@ public class GameProgressionManager : MonoBehaviour
 
     public void Reset()
     {
-        numEnemiesLeft = 0;
         numEnemiesStart = 0;
     }
 

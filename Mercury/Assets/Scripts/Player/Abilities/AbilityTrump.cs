@@ -23,7 +23,7 @@ public class AbilityTrump : Ability {
         Vector3 normalizedAim = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(aimDirection.x, 0, aimDirection.y);
 
         //Position to place wall
-        Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, normalizedAim.y, normalizedAim.z) * placementOffset;
+        Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, 0, normalizedAim.z) * placementOffset;
 
         //Check for other walls at that position
         Collider[] hits = Physics.OverlapSphere(position, 0.2f);
@@ -37,8 +37,9 @@ public class AbilityTrump : Ability {
 
 
         //Create wall and move to position with infinite HP
-        GameObject wall = Factory.instance.CreateTrumpWall();
+        GameObject wall = Factory.instance.CreateWall("Trump");
         wall.GetComponent<Wall>().health = int.MaxValue;
+        position.y = 1;
         wall.transform.position = position;
         //BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
         

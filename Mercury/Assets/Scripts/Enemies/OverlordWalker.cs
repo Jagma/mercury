@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedWalker : Enemy
+public class OverlordWalker : Enemy
 {
     protected override void Start()
     {
         base.Start();
         CreateWeapon();
-        health = 50;
-        moveSpeed = 1f;
+        health = 100;
+        moveSpeed = 1.25f;
 
         movementTime = Random.Range(2f, 4f);
         waitTime = Random.Range(0.25f, 2f);
     }
-    
+
     Collider[] colliders;
     protected override void FixedUpdate()
     {
@@ -54,7 +54,7 @@ public class RangedWalker : Enemy
         {
             float playerRange = Vector3.Distance(closestPlayerActor.transform.position, transform.position);
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);
-            
+
             AimAtPlayer(closestPlayerActor.transform.position);
 
             if (playerRange < 5.5f) //checks if player is close enough to shoot.
@@ -73,9 +73,11 @@ public class RangedWalker : Enemy
     float timer = 0;
     float movementTime = 3;
     float waitTime = 1;
-    void IdleMovement () {
+    void IdleMovement()
+    {
         timer += Time.deltaTime;
-        if (timer > movementTime + waitTime) {
+        if (timer > movementTime + waitTime)
+        {
 
 
             Vector3 direction = Random.onUnitSphere;
@@ -88,15 +90,16 @@ public class RangedWalker : Enemy
 
             timer = 0;
         }
-        if (timer < movementTime) {
+        if (timer < movementTime)
+        {
             base.MoveForward();
         }
     }
-    
+
     void CreateWeapon()
     {
         GameObject weapon;
-        weapon = Factory.instance.CreatePistol();
+        weapon = Factory.instance.CreateMachineGun();
         equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
