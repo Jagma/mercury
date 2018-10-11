@@ -17,7 +17,7 @@ public class GameProgressionManager : MonoBehaviour
     private GameObject levels;
     private GameObject[] players;
     private GameObject[] gunsUsed;
-    private List<string> playerActors;
+    private List<string> playerActors = new List<string>();
     private List<string> player;
     // The Game progression manager is a singleton
     public static GameProgressionManager instance;
