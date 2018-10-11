@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour {
 
-    Dictionary<string, object> objectDictionary = new Dictionary<string, object>();
+    //Dictionary<string, object> objectDictionary = new Dictionary<string, object>();
 
     public static ObjectManager instance;
     private void Awake() {
@@ -23,7 +23,7 @@ public class ObjectManager : MonoBehaviour {
 
         if (message.GetType() == typeof(NetworkMessages.ObjectCreated)) {
             NetworkMessages.ObjectCreated objectCreated = (NetworkMessages.ObjectCreated)message;
-            GameObject result =  objectCreated.objectConstructor.Construct();
+            //GameObject result =  objectCreated.objectConstructor.Construct();
         }
 
         if (message.GetType() == typeof(NetworkMessages.ObjectDestroyed)) {

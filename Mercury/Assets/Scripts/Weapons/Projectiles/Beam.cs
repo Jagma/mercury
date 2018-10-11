@@ -40,10 +40,6 @@ public class Beam : MonoBehaviour
         GameObject closestGO = hits[0].collider.gameObject;
         for (int i=0; i < hits.Length; i ++)
         {
-
-            Wall walls = hits[i].collider.GetComponent<Wall>();
-            Enemy enemies = hits[i].collider.GetComponent<Enemy>();
-
             // This is for selecting the closest qualifying collider. Since the RaycastHit[] array isn't ordered.
             if (hits[i].collider.GetComponent<Wall>() ||hits[i].collider.GetComponent<Enemy>())
             {

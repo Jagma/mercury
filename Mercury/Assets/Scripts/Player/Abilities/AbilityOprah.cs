@@ -7,7 +7,6 @@ public class AbilityOprah : Ability
 {
 
     bool isProjectile = false;
-    float count = 0;
     GameObject freeItem;
     System.Random ran = new System.Random(91142069);
     int randomNum;
