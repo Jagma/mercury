@@ -63,16 +63,24 @@ public class CampaignLobby : MonoBehaviour
                 if (InputManager.instance.GetPlayerInput(playerID).inputType == PlayerInput.InputType.TableRealms) {
                     TableRealmsDevice device = TableRealmsManager.instance.GetDevice(playerID);
 
-                    if (device.GetSelectTrumpWasPressed()) {
+                    if (device.GetSelectTrumpWasPressed())
+                    {
+                        AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
                         Browse(0);
                     }
-                    if (device.GetSelectBinLadenWasPressed()) {
+                    if (device.GetSelectBinLadenWasPressed())
+                    {
+                        AudioManager.instance.PlayAudio("abra", 1, false);
                         Browse(1);
                     }
-                    if (device.GetSelectOprahWasPressed()) {
+                    if (device.GetSelectOprahWasPressed())
+                    {
+                        AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
                         Browse(2);
                     }
-                    if (device.GetSelectPopeWasPressed()) {
+                    if (device.GetSelectPopeWasPressed())
+                    {
+                        AudioManager.instance.PlayAudio("Pope_peace", 1, false);
                         Browse(3);
                     }
                     if (device.GetCharacterSelect()) {
@@ -91,6 +99,7 @@ public class CampaignLobby : MonoBehaviour
                         Down();
                     }
                     if (InputManager.instance.GetSelectPressed(playerID)) {
+                        playCharacterSound();
                         Select();
                     }
                     if (InputManager.instance.GetBackPressed(playerID)) {
@@ -111,17 +120,57 @@ public class CampaignLobby : MonoBehaviour
                     TableRealmsDevice device = TableRealmsManager.instance.GetDevice(playerID);
 
                     if (device.GetLeaveReady()) {
+                        stopCharacterSound();
                         DeSelect();
                         device.DisplayPage("CharacterSelect");
                     }
                 }
                 else {
                     if (InputManager.instance.GetBackPressed(playerID)) {
+                        stopCharacterSound();
                         DeSelect();
                     }
                 }
             }
 
+        }
+
+        void playCharacterSound()
+        {
+            switch (characterIndex)
+            {
+                case 0:
+                    AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
+                    break;
+                case 1:
+                    AudioManager.instance.PlayAudio("abra", 1, false);
+                    break;
+                case 2:
+                    AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
+                    break;
+                case 3:
+                    AudioManager.instance.PlayAudio("Pope_peace", 1, false);
+                    break;
+            }
+        }
+
+        void stopCharacterSound()
+        {
+            switch (characterIndex)
+            {
+                case 0:
+                    AudioManager.instance.StopAudio("Trump - BingBingBong");
+                    break;
+                case 1:
+                    AudioManager.instance.StopAudio("abra");
+                    break;
+                case 2:
+                    AudioManager.instance.StopAudio("Oprah You Get A Car");
+                    break;
+                case 3:
+                    AudioManager.instance.StopAudio("Pope_peace");
+                    break;
+            }
         }
 
         void Select() {
@@ -174,7 +223,8 @@ public class CampaignLobby : MonoBehaviour
             UpdatePortrait();
         }
 
-        void UpdatePortrait() {
+        void UpdatePortrait()
+        {
             characterImage = lobby.characterPortraits[characterIndex];
             characterName = lobby.characterNames[characterIndex];
 
@@ -192,23 +242,7 @@ public class CampaignLobby : MonoBehaviour
             AudioManager.instance.StopAudio("abra");
 
 
-            if (characterIndex == 0) {
-                AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
-            }
-           
-            if (characterIndex == 2) {
-                AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
-            }
 
-            if (characterIndex == 3)
-            {
-                AudioManager.instance.PlayAudio("Pope_peace", 1, false);
-            }
-
-            if (characterIndex == 1)
-            {
-                AudioManager.instance.PlayAudio("abra", 1, false);
-            }
         }
     }
 
@@ -355,6 +389,7 @@ public class CampaignLobby : MonoBehaviour
             foreach (CharacterSelect player in characterSelectors)
             {
                 PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
+                GameProgressionManager.instance.setPlayerList(player.playerID);
             }
             AudioManager.instance.StopAudio("Game_music_Space_loop");
             SceneManager.LoadScene("GameCOOP");

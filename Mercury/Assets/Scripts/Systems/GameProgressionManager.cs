@@ -12,13 +12,13 @@ public class GameProgressionManager : MonoBehaviour
     //private int enemiesKilled;
     //private int wallsDestroyed;
     //private int damageTaken;
-    private string player;
     //private Time currentStageTime;
     //private Time totalTimePlayed;
     private GameObject levels;
     private GameObject[] players;
     private GameObject[] gunsUsed;
-    private List<PlayerActor> playerActors;
+    private List<string> playerActors;
+    private List<string> player;
     // The Game progression manager is a singleton
     public static GameProgressionManager instance;
     private void Awake()
@@ -46,9 +46,9 @@ public class GameProgressionManager : MonoBehaviour
 
     }
 
-    public void setPlayer(string value)
+    public void setPlayerList(string players)
     {
-        player = value;
+        playerActors.Add(players);
     }
 
     public void RestartLevel()
@@ -56,15 +56,9 @@ public class GameProgressionManager : MonoBehaviour
         numEnemiesStart = 0;
     }
 
-    public void setPlayerList(List<PlayerActor> playerActorList)
-    {
-        playerActors = playerActorList;
-    }
-
     public void GameOver()
     {
         Debug.Log("Game over.");
-        //DumpData();
         SceneManager.LoadScene("GameOver");
     }
 
