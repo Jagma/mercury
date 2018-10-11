@@ -40,7 +40,6 @@ public class CampaignLobby : MonoBehaviour
             this.playerID = playerID;
             this.portrait = portrait;
             this.lobby = lobby;
-
             characterSelectGO = portrait.transform.Find("CharacterSelect_Panel").gameObject;
             characterSelectedGO = portrait.transform.Find("CharacterSelected_Panel").gameObject;
 
