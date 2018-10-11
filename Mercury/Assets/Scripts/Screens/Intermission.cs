@@ -11,13 +11,13 @@ public class Intermission : MonoBehaviour {
             for (int x = 0; x < spaceshipDesign.width; x++) {
                 Color col = spaceshipDesign.GetPixel(x, z);
                 if (col == Color.red) {
-                    GameObject wallGO = Factory.instance.CreateSpaceshipFloor();
+                    GameObject wallGO = Factory.instance.CreateFloor("Spaceship");
                     wallGO.transform.parent = levelRoot;
                     wallGO.transform.position = new Vector3(x, 0, z);
                 }
 
                 if (col == Color.white) {
-                    GameObject wallGO = Factory.instance.CreateSpaceshipeWall();
+                    GameObject wallGO = Factory.instance.CreateWall("Spaceship");
                     wallGO.transform.parent = levelRoot;
                     wallGO.transform.position = new Vector3(x, 1, z);
                 }

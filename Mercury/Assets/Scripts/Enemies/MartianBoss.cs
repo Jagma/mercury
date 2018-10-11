@@ -19,7 +19,7 @@ public class
 
     protected override void FixedUpdate()
     {
-     //   base.FixedUpdate();
+        base.FixedUpdate();
 
     }
 }

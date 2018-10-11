@@ -24,7 +24,6 @@ public class AudioManager : MonoBehaviour
         {
             if (clips[i] != null) {
                 audioClipDictionary.Add(clips[i].name, clips[i]);
-                Debug.Log("Audio clip loaded : " + clips[i].name);
             }           
         }
     }

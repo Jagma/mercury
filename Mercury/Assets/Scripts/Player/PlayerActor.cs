@@ -70,6 +70,9 @@ public class PlayerActor : MonoBehaviour
     
     public void SwitchWeapons()
     {
+        if (model.secondaryWeapon == null) {
+            return;
+        }
         Weapon sw = model.equippedWeapon;
         model.equippedWeapon.Dequip();
         model.equippedWeapon.equipped = false;

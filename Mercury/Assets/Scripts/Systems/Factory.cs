@@ -585,81 +585,31 @@ public class Factory : MonoBehaviour
         return BeamAmmoGO;
     }
 
-    public GameObject CreateTrumpWall() {
+    public GameObject CreateWall(string environmentName) {
         GameObject wall = new GameObject("Wall");
         wall.AddComponent<BoxCollider>();
         wall.AddComponent<Wall>();
-        wall.GetComponent<Wall>().health = int.MaxValue;
         wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
 
-        Material trumpWallmat = new Material(Shader.Find("Mobile/Diffuse"));
-        trumpWallmat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Random/TrumpWall"));
+        Material mat = new Material(Shader.Find("Mobile/Diffuse"));
+        mat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/" + environmentName + "/Voxel"));
 
         Voxel wallVoxel = wall.AddComponent<Voxel>();
-        wallVoxel.material = trumpWallmat;
-        wallVoxel.Init();        
+        wallVoxel.material = mat;
+        wallVoxel.Init();
+
         return wall;
     }
 
-    // Mars environment
-    public GameObject CreateMarsFloor()
-    {
+    public GameObject CreateFloor(string environmentName) {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
         floor.name = "Floor";
 
-        Material mf = new Material(Shader.Find("Mobile/Diffuse"));
-        mf.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mars/Floor"));
+        Material mat = new Material(Shader.Find("Mobile/Diffuse"));
+        mat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/" + environmentName + "/Floor"));
 
-        floor.GetComponent<Renderer>().material = mf;
+        floor.GetComponent<Renderer>().material = mat;
         return floor;
-    }
-
-    Material marsWallMat = null;
-    public GameObject CreateMarsWall()
-    {
-        GameObject wall = new GameObject("Wall");
-        wall.AddComponent<BoxCollider>();
-        wall.AddComponent<Wall>();
-        wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
-        if (marsWallMat == null)
-        {
-            marsWallMat = new Material(Shader.Find("Mobile/Diffuse"));
-            marsWallMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Mars/Voxel"));
-        }
-
-        Voxel wallVoxel = wall.AddComponent<Voxel>();
-        wallVoxel.material = marsWallMat;
-        wallVoxel.Init();
-        return wall;
-    }
-
-    // Spaceship environment
-    public GameObject CreateSpaceshipFloor() {
-        GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        floor.name = "Floor";
-
-        Material mf = new Material(Shader.Find("Mobile/Diffuse"));
-        mf.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Spaceship/Floor"));
-
-        floor.GetComponent<Renderer>().material = mf;
-        return floor;
-    }
-
-    Material spaceshipWallmat = null;
-    public GameObject CreateSpaceshipeWall() {
-        GameObject wall = new GameObject("Wall");
-        wall.AddComponent<BoxCollider>();
-        wall.AddComponent<Wall>();
-        wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
-        if (spaceshipWallmat == null) {
-            spaceshipWallmat = new Material(Shader.Find("Mobile/Diffuse"));
-            spaceshipWallmat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/Spaceship/Voxel"));
-        }
-
-        Voxel wallVoxel = wall.AddComponent<Voxel>();
-        wallVoxel.material = spaceshipWallmat;
-        wallVoxel.Init();
-        return wall;
     }
 
     public GameObject CreateEnemyWalker()  //code use to create the walker enemy within the game.
