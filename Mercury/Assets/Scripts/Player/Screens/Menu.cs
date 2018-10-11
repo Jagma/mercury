@@ -47,7 +47,7 @@ public class Menu : MonoBehaviour
         AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
         AudioManager.instance.StopAudio("main_menu_loop");
         AudioManager.instance.PlayAudio("Game_music_Space_loop", .6f, true);
-        SceneManager.LoadScene("Intermission");
+        SceneManager.LoadScene("CampaignLobby");
     }
 
     public void NavigateTeamDeathmatch ()
