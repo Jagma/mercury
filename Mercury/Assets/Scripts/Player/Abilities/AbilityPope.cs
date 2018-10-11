@@ -19,6 +19,7 @@ public class AbilityPope : Ability
 
     protected override void Use()
     {
+        AudioManager.instance.PlayAudio("Pope_peace", 1, false);
         base.Use();
         Revive();
     }

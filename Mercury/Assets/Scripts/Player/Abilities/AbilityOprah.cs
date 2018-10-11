@@ -22,6 +22,9 @@ public class AbilityOprah : Ability
     protected override void Use()
     {
         base.Use();
+
+        AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
+
         freeItem = ChooseRandomItem();
 
         //Get aim direction and rotate by 45 degrees
