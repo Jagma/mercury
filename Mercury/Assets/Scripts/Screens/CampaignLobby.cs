@@ -38,6 +38,7 @@ public class CampaignLobby : MonoBehaviour {
             this.portrait = portrait;
             this.lobby = lobby;
 
+            AudioManager.instance.PlayAudio("Game_music_Space_loop", .6f, true);
             characterSelectGO = portrait.transform.Find("CharacterSelect_Panel").gameObject;            
             characterSelectedGO = portrait.transform.Find("CharacterSelected_Panel").gameObject;
 
@@ -342,6 +343,7 @@ public class CampaignLobby : MonoBehaviour {
             {
                PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);       
             }
+            AudioManager.instance.StopAudio("Game_music_Space_loop");
             SceneManager.LoadScene("GameCOOP");
         }
     }
