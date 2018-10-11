@@ -18,7 +18,7 @@ public class GameProgressionManager : MonoBehaviour
     private GameObject levels;
     private GameObject[] players;
     private GameObject[] gunsUsed;
-
+    private List<PlayerActor> playerActors;
     // The Game progression manager is a singleton
     public static GameProgressionManager instance;
     private void Awake()
@@ -56,6 +56,11 @@ public class GameProgressionManager : MonoBehaviour
         numEnemiesStart = 0;
     }
 
+    public void setPlayerList(List<PlayerActor> playerActorList)
+    {
+        playerActors = playerActorList;
+    }
+
     public void GameOver()
     {
         Debug.Log("Game over.");
@@ -68,6 +73,10 @@ public class GameProgressionManager : MonoBehaviour
         numEnemiesStart = 0;
     }
 
+    public int getPlayerCount()
+    {
+        return playerActors.Count;
+    }
     public void LevelComplete()
     {
         Debug.Log("Level complete.");
