@@ -29,11 +29,10 @@ public class AbilityPope : Ability
         Collider[] hits = Physics.OverlapSphere(playerActor.transform.position, reviveRadius );
         foreach (Collider hit in hits)
         {
-            if (hit.gameObject.name.Equals("Player") && playerActor.model.playerID != hit.GetComponent<PlayerModel>().playerID)
+            if (hit.GetComponent<PlayerActor>() !=null)
             {
-                hit.GetComponent<PlayerActor>().Revive(50);
+                hit.GetComponent<PlayerActor>().HealPlayer(50);
             }
-
         }
     }
 }

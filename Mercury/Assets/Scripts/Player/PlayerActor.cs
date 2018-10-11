@@ -221,9 +221,12 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
-    public void Revive(float hp)
+    public void HealPlayer(float hp)
     {
-        health = hp;
+        if (health + hp > 100)
+            health = 100;
+        else
+            health += hp;
         playerActive = true;
     }
 
@@ -269,7 +272,7 @@ public class PlayerActor : MonoBehaviour
         PlayerActor player = col.GetComponent<PlayerActor>();
         if (player != null)
         {
-            Revive(100);
+            HealPlayer(100);
         }
     }
 }
