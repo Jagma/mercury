@@ -288,11 +288,7 @@ public class Factory : MonoBehaviour
         return smokeFlash;
     }
 
-    public GameObject CreateBrokenWallEffect()
-    {
-        GameObject brokenWall = GameObject.Instantiate(Resources.Load<GameObject>("Effects/WallBreak"));
-        return brokenWall;
-    }
+    
 
     public GameObject CreateMuzzleFlash() //adds an muzzle flash effect for the weapon.
     {
@@ -454,7 +450,7 @@ public class Factory : MonoBehaviour
     }
 
     public GameObject CreateMedkit() //code use to create the medkit for players to pickup.
-    { 
+    {
         GameObject medkitGO = new GameObject("Medkit");
 
         SphereCollider medkitCollider = medkitGO.AddComponent<SphereCollider>();
@@ -583,6 +579,11 @@ public class Factory : MonoBehaviour
         BeamAmmoGO.AddComponent<BeamAmmoPack>();  //makes use of the BeamAmmoPack script which has its own functionalities.
 
         return BeamAmmoGO;
+    }
+
+    public GameObject CreateWallBreak(string environmentName) {
+        GameObject brokenWall = GameObject.Instantiate(Resources.Load<GameObject>("Effects/" + environmentName + "/WallBreak"));
+        return brokenWall;
     }
 
     public GameObject CreateWall(string environmentName) {
