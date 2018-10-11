@@ -26,7 +26,9 @@ public class OverlordWalker : Enemy
             equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
         }
 
-        colliders = Physics.OverlapSphere(transform.position, 7.5f);
+        int layerId = LayerMask.NameToLayer("Player");
+        int layerMask = 1 << layerId;
+        colliders = Physics.OverlapSphere(transform.position, 7.5f, layerMask);
 
         PlayerActor closestPlayerActor = null;
         for (int i = 0; i < colliders.Length; i++)
