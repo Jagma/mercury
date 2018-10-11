@@ -77,8 +77,8 @@ public class LevelGeneration : MonoBehaviour
 
         for (int z = playerSpawnZ - 8; z < playerSpawnZ + 8; z++) {
             for (int x = playerSpawnX - 8; x < playerSpawnX + 8; x++) {
-                x = Mathf.Clamp(x, 0, terrain.GetLength(0));
-                z = Mathf.Clamp(z, 0, terrain.GetLength(1));
+                x = Mathf.Clamp(x, 0, terrain.GetLength(0)-1);
+                z = Mathf.Clamp(z, 0, terrain.GetLength(1)-1);
 
                 enemies[x, z] = "";
             }
@@ -87,10 +87,6 @@ public class LevelGeneration : MonoBehaviour
 
         pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
         //  pickups[minerList[0].posX, minerList[0].posZ] = "Ammo Chest";
-
-
-
-        
 
         // Build floor
         GameObject floor = Factory.instance.CreateMarsFloor();
@@ -175,7 +171,7 @@ public class LevelGeneration : MonoBehaviour
     public void SpawnMartianBoss(Vector3 playerPosition) {
         GameObject enemyGO = Factory.instance.CreateMartianBoss();
         enemyGO.transform.parent = levelRoot;
-        enemyGO.transform.position = new Vector3(playerPosition.x, 2, playerPosition.z);
+        enemyGO.transform.position = new Vector3(playerPosition.x, 5, playerPosition.z);
         EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
     }
 
