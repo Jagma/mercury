@@ -37,7 +37,7 @@ public class AbilityTrump : Ability {
 
 
         //Create wall and move to position with infinite HP
-        GameObject wall = Factory.instance.CreateWall("Trump");
+        GameObject wall = Factory.instance.CreateWall("Trump", 0);
         wall.GetComponent<Wall>().health = int.MaxValue;
         position.y = 1;
         wall.transform.position = position;

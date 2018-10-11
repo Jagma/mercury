@@ -325,7 +325,7 @@ public class Factory : MonoBehaviour
     }
 
    public GameObject CreatePistol()
-    {
+   {
         GameObject pistolGO = new GameObject("Pistol");
 
         SphereCollider pistolCollider = pistolGO.AddComponent<SphereCollider>();
@@ -348,7 +348,7 @@ public class Factory : MonoBehaviour
         pistolGO.AddComponent<Pistol>();
 
         return pistolGO;
-    }
+   }
 
     public GameObject CreateFlamethrower()  //code use to create the flamethower weapon for the players to use.
     {
@@ -637,7 +637,7 @@ public class Factory : MonoBehaviour
 
 
     public GameObject CreateBeamAmmoPack() //code use to create the beam ammo pack for players to pickup.
-    { 
+    {
         GameObject BeamAmmoGO = new GameObject("BeamAmmo");
 
         SphereCollider BeamAmmoCollider = BeamAmmoGO.AddComponent<SphereCollider>();
@@ -667,14 +667,14 @@ public class Factory : MonoBehaviour
         return brokenWall;
     }
 
-    public GameObject CreateWall(string environmentName) {
+    public GameObject CreateWall(string environmentName, int textureID) {
         GameObject wall = new GameObject("Wall");
         wall.AddComponent<BoxCollider>();
         wall.AddComponent<Wall>();
         wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
 
         Material mat = new Material(Shader.Find("Mobile/Diffuse"));
-        mat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/" + environmentName + "/Voxel"));
+        mat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/" + environmentName + "/Voxel" + textureID.ToString()));
 
         Voxel wallVoxel = wall.AddComponent<Voxel>();
         wallVoxel.material = mat;
@@ -683,12 +683,12 @@ public class Factory : MonoBehaviour
         return wall;
     }
 
-    public GameObject CreateFloor(string environmentName) {
+    public GameObject CreateFloor(string environmentName, int textureID) {
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
         floor.name = "Floor";
 
         Material mat = new Material(Shader.Find("Mobile/Diffuse"));
-        mat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/" + environmentName + "/Floor"));
+        mat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Environment/" + environmentName + "/Floor" + textureID.ToString()));
 
         floor.GetComponent<Renderer>().material = mat;
         return floor;
