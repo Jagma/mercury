@@ -189,16 +189,28 @@ public class CampaignLobby : MonoBehaviour
             characterSelectImageGO.transform.localScale *= 1.2f;
 
             AudioManager.instance.StopAudio("Trump - BingBingBong");
-            // AudioManager.instance.StopAudio("Oprah sound"); _____________________________________________________________________________________________ Hiers die code. Jy kan seker van hier af werk.
-            // en so an vir al die characters
+            AudioManager.instance.StopAudio("Oprah You Get A Car");
+            AudioManager.instance.StopAudio("Pope_peace");
+            AudioManager.instance.StopAudio("abra");
+
 
             if (characterIndex == 0) {
                 AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
             }
-            /*
-            if (characterIndex == 1) {
-                AudioManager.instance.PlayAudio("Oprah sound", 1, false);
-            } */
+           
+            if (characterIndex == 2) {
+                AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
+            }
+
+            if (characterIndex == 3)
+            {
+                AudioManager.instance.PlayAudio("Pope_peace", 1, false);
+            }
+
+            if (characterIndex == 1)
+            {
+                AudioManager.instance.PlayAudio("abra", 1, false);
+            }
         }
     }
 
