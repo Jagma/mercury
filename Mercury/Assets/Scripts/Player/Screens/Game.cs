@@ -38,24 +38,24 @@ public class Game : MonoBehaviour
             if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Trump"))
             {
                 playerGO = Factory.instance.CreatePlayerTrump();
-                GameProgressionManager.instance.setPlayer("Trump");
+                //GameProgressionManager.instance.setPlayer(playerGO.GetComponent<PlayerActor>(),"Trump");
             }
 
             if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("The Pope"))
             {
                 playerGO = Factory.instance.CreatePlayerPope();
-                GameProgressionManager.instance.setPlayer("The Pope");
+               // GameProgressionManager.instance.setPlayer(playerGO.GetComponent<PlayerActor>(),"The Pope");
             }
 
             if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Oprah"))
             {
                 playerGO = Factory.instance.CreatePlayerOprah();
-                GameProgressionManager.instance.setPlayer("Oprah");
+               // GameProgressionManager.instance.setPlayer(playerGO.GetComponent<PlayerActor>(), "Oprah");
             }
             if (PlayerData.GetCharacterName(playerInputKVP.Value.playerID).Equals("Bin Laden"))
             {
                 playerGO = Factory.instance.CreatePlayerBinLaden();
-                GameProgressionManager.instance.setPlayer("Bin Laden");
+               //GameProgressionManager.instance.setPlayer(playerGO.GetComponent<PlayerActor>(),"Bin Laden");
             }
 
             playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
