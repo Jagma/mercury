@@ -36,8 +36,6 @@ public class GameProgressionManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        numEnemiesStart = 0;
-        numEnemiesStart = EnemyManager.instance.GetEnemyCount();
     }
 	
 	// Update is called once per frame
