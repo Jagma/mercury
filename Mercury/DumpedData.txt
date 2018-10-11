@@ -1,3 +1,49 @@
+<<<<<<< HEAD
+Player: Trump, 28, 8.182875
+Player: Trump, 43, 5.409604
+Player: Trump, 17, 12.77947
+Player: Trump, 36, 3.916825
+Player: Trump, 48, 29.21637
+<<<<<<< HEAD
+Player: Trump, 12, 25.0002
+Player: Trump, 12, 25.0002
+Player: Trump, 22, 8.351983
+Player: Trump, 22, 8.351983
+=======
+Player: Trump, 13, 8.906846
+Player: Trump, 13, 8.906846
+Player: Trump, 26, 78.04402
+Player: Trump, 26, 78.04402
+Player: Trump, 11, 7.257158
+Player: Trump, 11, 7.257158
+Player: Trump, 21, 4.690817
+Player: Trump, 21, 4.690817
+Player: Trump, 15, 20.1443
+Player: Trump, 15, 20.1443
+Player: Trump, 28, 23.07573
+Player: Trump, 28, 23.07573
+Player: Trump, 40, 51.2965
+Player: Trump, 40, 51.2965
+Player: Trump, 52, 3.634523
+Player: Trump, 52, 3.634523
+>>>>>>> 0a34808305e540e89375cf7cd44eaa6ef813ff8c
+Player: Trump, 9, 11.5062
+Player: Trump, 9, 11.5062
+Player: Trump, 15, 4.981081
+Player: Trump, 15, 4.981081
+Player: Trump, 28, 4.392448
+Player: Trump, 28, 4.392448
+Player: Trump, 43, 26.43696
+Player: Trump, 43, 26.43696
+Player: Trump, 61, 11.84598
+Player: Trump, 61, 11.84598
+Player: Trump, 72, 11.04175
+Player: Trump, 72, 11.04175
+Player: Trump, 19, 117.7838
+Player: Trump, 19, 117.7838
+Player: Trump, 19, 2.788107
+Player: Trump, 19, 2.788107
+=======
 Trump, 18, 20.60514
 Trump, 29, 49.00842
 Trump, 17, 6.010782
@@ -35,11 +81,18 @@ Trump, 19, 2.411797
 Trump, 29, 4.412825
 Trump, 14, 6.628325
 Trump, 11, 3.172943
-Trump, 10, 8.591973
-Trump, 21, 6.624548
-Trump, 5, 30.48314
-Trump, 5, 30.48314
-Trump, 10, 9.752213
-Trump, 5, 12.12681
-Trump, 12, 8.697242
-Trump, 15, 59.18028
+>>>>>>> ddb9517a78498631d184ebbfd9775ce627a1241e
+Trump, 10, 33.12456
+Trump, 14, 47.19189
+Trump, 12, 44.35387
+Trump, 7, 50.94236
+Trump, 11, 14.75091
+Trump, 17, 8.21696
+Trump, 10, 34.29641
+Trump, 10, 34.29641
+Bin Laden, 19, 13.01174
+Bin Laden, 19, 13.01174
+Bin Laden, 17, 8.919938
+Bin Laden, 20, 15.32013
+Trump, 10, 22.74454
+Trump, 19, 14.36975
