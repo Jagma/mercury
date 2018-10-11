@@ -9,8 +9,6 @@ public class Menu : MonoBehaviour
 {
     public EventSystem eventSystem;
     public GameObject[] buttonList;
-    int selectionIndex = 0;
-
     GameObject previousSelection;
 
     void Start ()

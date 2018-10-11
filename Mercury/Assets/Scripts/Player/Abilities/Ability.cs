@@ -9,7 +9,7 @@ public class Ability
     public PlayerActor playerActor;
     float lastUseTime = 0f;
     public float cooldown = 1f;
-
+    public float placementOffset = 2f;
     public virtual void Init ()
     {
 

@@ -12,11 +12,18 @@ public class AbilityTrump : Ability {
     }
 
     protected override void Use() {
-        base.Use();        
-
+        base.Use();
+        //Get aim direction and rotate by 45 degrees
         Vector2 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
+        
+        if(aimDirection.magnitude <= 0.1)
+        {
+            aimDirection = aimDirection * 100f;
+        }
         Vector3 normalizedAim = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(aimDirection.x, 0, aimDirection.y);
-        Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, normalizedAim.y, normalizedAim.z) * 1f;
+
+        //Position to place wall
+        Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, normalizedAim.y, normalizedAim.z) * placementOffset;
 
         //Check for other walls at that position
         Collider[] hits = Physics.OverlapSphere(position, 0.2f);
@@ -33,7 +40,8 @@ public class AbilityTrump : Ability {
         GameObject wall = Factory.instance.CreateTrumpWall();
         wall.GetComponent<Wall>().health = int.MaxValue;
         wall.transform.position = position;
-        BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
+        //BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
+        
         //Destroy wall after x Seconds
         GameObject.Destroy(wall, 5f);
 

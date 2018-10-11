@@ -48,7 +48,6 @@ public class Weapon : MonoBehaviour
                 cooldownRemaining = cooldown;
                 Use();
                 ammoCount--;
-                Debug.Log("Ammo count: " + ammoCount);
             }
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
             {

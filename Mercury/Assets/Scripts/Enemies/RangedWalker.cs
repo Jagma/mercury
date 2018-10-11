@@ -27,7 +27,6 @@ public class RangedWalker : Enemy
         }
 
         colliders = Physics.OverlapSphere(transform.position, 7.5f);
-        Debug.Log(colliders.Length);
 
         PlayerActor closestPlayerActor = null;
         for (int i = 0; i < colliders.Length; i++)

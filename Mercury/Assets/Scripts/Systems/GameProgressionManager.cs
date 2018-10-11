@@ -8,13 +8,13 @@ public class GameProgressionManager : MonoBehaviour
 {
     private int numEnemiesLeft;
     private int numEnemiesStart;
-    private int numOfBulletsUsed;
-    private int enemiesKilled;
-    private int wallsDestroyed;
-    private int damageTaken;
+    //private int numOfBulletsUsed;
+    //private int enemiesKilled;
+    //private int wallsDestroyed;
+    //private int damageTaken;
     private string player;
-    private Time currentStageTime;
-    private Time totalTimePlayed;
+    //private Time currentStageTime;
+    //private Time totalTimePlayed;
     private GameObject levels;
     private GameObject[] players;
     private GameObject[] gunsUsed;
@@ -39,14 +39,7 @@ public class GameProgressionManager : MonoBehaviour
     {
         numEnemiesLeft = 0;
         numEnemiesStart = 0;
-        numOfBulletsUsed = 0;
-        enemiesKilled = 0;
-        wallsDestroyed = 0;
-        damageTaken = 0;
-        currentStageTime = null;
-        totalTimePlayed = null;
         numEnemiesStart = EnemyManager.instance.GetEnemyCount();
-        Debug.Log("Enemy Count: " + numEnemiesStart);
     }
 	
 	// Update is called once per frame
@@ -63,17 +56,12 @@ public class GameProgressionManager : MonoBehaviour
     public void RestartLevel()
     {
         numEnemiesLeft = 0;
-        numOfBulletsUsed = 0;
-        enemiesKilled = 0;
-        wallsDestroyed = 0;
-        damageTaken = 0;
-        currentStageTime = null;
     }
 
     public void GameOver()
     {
         Debug.Log("Game over.");
-        DumpData();
+        //DumpData();
         SceneManager.LoadScene("GameOver");
     }
 
@@ -81,16 +69,12 @@ public class GameProgressionManager : MonoBehaviour
     {
         numEnemiesLeft = 0;
         numEnemiesStart = 0;
-        numOfBulletsUsed = 0;
-        enemiesKilled = 0;
-        wallsDestroyed = 0;
-        damageTaken = 0;
     }
 
     public void LevelComplete()
     {
         Debug.Log("Level complete.");
-        DumpData();
+        //DumpData();
         SceneManager.LoadScene("LevelComplete");
     }
     
@@ -106,7 +90,5 @@ public class GameProgressionManager : MonoBehaviour
             File.AppendAllText("./DumpedData.txt",player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
         else
             File.WriteAllText("./DumpedData.txt",player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
- 
-        Debug.Log("Data dumped to text file.");
     }
 }
