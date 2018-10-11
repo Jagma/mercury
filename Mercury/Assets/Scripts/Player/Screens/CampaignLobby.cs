@@ -6,12 +6,15 @@ using UnityEngine.UI;
 using InControl;
 using System.Threading;
 
-public class CampaignLobby : MonoBehaviour {
-   
+public class CampaignLobby : MonoBehaviour
+{
+
     public static CampaignLobby instance;
 
-    public class CharacterSelect {
-        public enum Status {
+    public class CharacterSelect
+    {
+        public enum Status
+        {
             Selecting,
             Ready
         }
@@ -25,7 +28,7 @@ public class CampaignLobby : MonoBehaviour {
         GameObject characterSelectUpArrowGO;
         GameObject characterSelectDownArrowGO;
 
-        GameObject characterSelectedGO;        
+        GameObject characterSelectedGO;
 
         Sprite characterImage;
         string characterName = "no name";
@@ -38,7 +41,8 @@ public class CampaignLobby : MonoBehaviour {
             this.portrait = portrait;
             this.lobby = lobby;
 
-            characterSelectGO = portrait.transform.Find("CharacterSelect_Panel").gameObject;            
+            AudioManager.instance.PlayAudio("Game_music_Space_loop", .6f, true);
+            characterSelectGO = portrait.transform.Find("CharacterSelect_Panel").gameObject;
             characterSelectedGO = portrait.transform.Find("CharacterSelected_Panel").gameObject;
 
             characterSelectImageGO = characterSelectGO.transform.Find("Character_Image").gameObject;
@@ -47,7 +51,7 @@ public class CampaignLobby : MonoBehaviour {
 
             characterSelectGO.transform.Find("UpArrow_Image").GetComponent<Button>().onClick.AddListener(Up);
             characterSelectGO.transform.Find("DownArrow_Image").GetComponent<Button>().onClick.AddListener(Down);
-            
+
             characterSelectGO.SetActive(true);
             characterSelectedGO.SetActive(false);
 
@@ -133,7 +137,7 @@ public class CampaignLobby : MonoBehaviour {
             AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
         }
 
-        void DeSelect () {
+        void DeSelect() {
             characterSelectGO.SetActive(true);
             characterSelectedGO.SetActive(false);
             AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
@@ -141,16 +145,16 @@ public class CampaignLobby : MonoBehaviour {
             status = Status.Selecting;
         }
 
-        void Leave () {
+        void Leave() {
             lobby.PlayerLeave(playerID);
         }
 
-        void Browse (int i) {
+        void Browse(int i) {
             characterIndex = i;
             UpdatePortrait();
         }
 
-        void Up () {
+        void Up() {
             characterSelectUpArrowGO.transform.localScale *= 2f;
 
             characterIndex++;
@@ -161,7 +165,7 @@ public class CampaignLobby : MonoBehaviour {
             UpdatePortrait();
         }
 
-        void Down () {
+        void Down() {
             characterSelectDownArrowGO.transform.localScale *= 2f;
 
             characterIndex--;
@@ -172,7 +176,7 @@ public class CampaignLobby : MonoBehaviour {
             UpdatePortrait();
         }
 
-        void UpdatePortrait () {
+        void UpdatePortrait() {
             characterImage = lobby.characterPortraits[characterIndex];
             characterName = lobby.characterNames[characterIndex];
 
@@ -185,8 +189,8 @@ public class CampaignLobby : MonoBehaviour {
             characterSelectImageGO.transform.localScale *= 1.2f;
 
             AudioManager.instance.StopAudio("Trump - BingBingBong");
-           // AudioManager.instance.StopAudio("Oprah sound"); _____________________________________________________________________________________________ Hiers die code. Jy kan seker van hier af werk.
-           // en so an vir al die characters
+            // AudioManager.instance.StopAudio("Oprah sound"); _____________________________________________________________________________________________ Hiers die code. Jy kan seker van hier af werk.
+            // en so an vir al die characters
 
             if (characterIndex == 0) {
                 AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
@@ -200,8 +204,8 @@ public class CampaignLobby : MonoBehaviour {
 
     public Color[] playerColors;
     public string[] characterNames;
-    public Sprite[] characterPortraits;    
-    
+    public Sprite[] characterPortraits;
+
     List<CharacterSelect> characterSelectors = new List<CharacterSelect>();
 
     GameObject portraitPrefab;
@@ -217,14 +221,14 @@ public class CampaignLobby : MonoBehaviour {
         countdown = 5;
     }
 
-    
-	void Update () {
+
+    void Update() {
         // Leave
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (InputManager.instance.GetPlayerInput("Keyboard|0001") == null) {
                 SceneManager.LoadScene("Menu");
             }
-        }        
+        }
         if (InControl.InputManager.ActiveDevice.Action2.WasPressed) {
             string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
             if (InputManager.instance.GetPlayerInput(controllerID) == null) {
@@ -244,8 +248,8 @@ public class CampaignLobby : MonoBehaviour {
         }
 
         // Selectors update
-        for (int i=0; i < characterSelectors.Count; i++) {
-            characterSelectors[i].Update();            
+        for (int i = 0; i < characterSelectors.Count; i++) {
+            characterSelectors[i].Update();
         }
 
         // Game start
@@ -253,7 +257,7 @@ public class CampaignLobby : MonoBehaviour {
         if (characterSelectors.Count <= 0) {
             ready = false;
         }
-        for (int i=0; i < characterSelectors.Count; i ++) {
+        for (int i = 0; i < characterSelectors.Count; i++) {
             if (characterSelectors[i].status != CharacterSelect.Status.Ready) {
                 ready = false;
             }
@@ -261,10 +265,10 @@ public class CampaignLobby : MonoBehaviour {
 
         if (ready) {
             joinPanel.SetActive(false);
-            countdownPanel.SetActive(true); 
+            countdownPanel.SetActive(true);
 
             countdown -= Time.deltaTime;
-            
+
             countdownPanel.transform.Find("Timer_Text").GetComponent<Text>().text = countdown.ToString("F1");
             if (countdown <= 0.0f)
             {
@@ -311,7 +315,7 @@ public class CampaignLobby : MonoBehaviour {
         }
     }
 
-    void PlayerJoin (string playerID, PlayerInput.InputType type) {
+    void PlayerJoin(string playerID, PlayerInput.InputType type) {
 
         if (InputManager.instance.GetPlayerInput(playerID) == null) {
             PlayerInput pi = new PlayerInput(playerID, type);
@@ -325,7 +329,7 @@ public class CampaignLobby : MonoBehaviour {
         PlayerInput pi = InputManager.instance.GetPlayerInput(playerID);
         InputManager.instance.RemovePlayerInput(pi);
 
-        for (int i = 0; i < characterSelectors.Count; i ++) {
+        for (int i = 0; i < characterSelectors.Count; i++) {
             if (characterSelectors[i].playerID == playerID) {
                 Destroy(characterSelectors[i].portrait);
                 characterSelectors.RemoveAt(i);
@@ -335,23 +339,24 @@ public class CampaignLobby : MonoBehaviour {
         }
     }
 
-    void StartGame () {
+    void StartGame() {
         PlayerData.ClearDictionary(); //Prevent restart bug
         if (InputManager.instance.GetPlayerInputDictionary().Count >= 1) {
             foreach (CharacterSelect player in characterSelectors)
             {
-               PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);       
+                PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
             }
+            AudioManager.instance.StopAudio("Game_music_Space_loop");
             SceneManager.LoadScene("GameCOOP");
         }
     }
 
-    void CreatePortrait (string playerID) {
-        
+    void CreatePortrait(string playerID) {
+
         GameObject p = Instantiate(portraitPrefab);
         p.transform.SetParent(portraitPrefab.transform.parent, false);
-        
-        
+
+
 
         p.SetActive(true);
 
