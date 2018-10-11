@@ -50,8 +50,7 @@ public class Beam : MonoBehaviour
                 }
             }
         }
-
-        UpdateVisual(transform.position, closest.point);
+       UpdateVisual(transform.position, closest.point);
 
         Wall wall = closestGO.GetComponent<Wall>();
         Enemy enemy = closestGO.GetComponent<Enemy>();
@@ -68,11 +67,14 @@ public class Beam : MonoBehaviour
 
     public void UpdateVisual (Vector3 startPos, Vector3 endPos)
     {
-        LineRenderer mainLR = visual.transform.Find("MainBeam").GetComponent<LineRenderer>();
-        Vector3[] positions = {startPos, endPos};
-        mainLR.positionCount = 2;
-        mainLR.SetPositions(positions);
-        mainLR.widthMultiplier = width;
+        if (visual != null)
+        {
+            LineRenderer mainLR = visual.transform.Find("MainBeam").GetComponent<LineRenderer>();
+            Vector3[] positions = { startPos, endPos };
+            mainLR.positionCount = 2;
+            mainLR.SetPositions(positions);
+            mainLR.widthMultiplier = width;
+        }
     }
 
     public virtual void Destroy()
