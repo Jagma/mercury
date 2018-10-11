@@ -7,5 +7,5 @@ public class ProgressionState : MonoBehaviour {
     public static int world = 0; // 0, 1, 2
     public static int level = 0; // 2 - 4;
 
-    public static string environmentName = "Mars";
+    public static string environmentName = "Mercury";
 }
