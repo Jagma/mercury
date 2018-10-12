@@ -69,9 +69,12 @@ public class PlayerActor : MonoBehaviour
 
     public void Move (Vector2 direction)
     {
-        Vector2 moveDir = InputManager.instance.GetMoveDirection(model.playerID);
-        rigid.velocity += transform.forward * moveDir.y * model.moveAcceleration;
-        rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
+        if (playerActive)
+        {
+            Vector2 moveDir = InputManager.instance.GetMoveDirection(model.playerID);
+            rigid.velocity += transform.forward * moveDir.y * model.moveAcceleration;
+            rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
+        }
     }
     
     public void SwitchWeapons()
@@ -198,7 +201,8 @@ public class PlayerActor : MonoBehaviour
 
     public void UseAbility ()
     {
-        model.ability.UseAbility();
+        if (playerActive)
+            model.ability.UseAbility();
     }
 
     public float GetHealthInformation()
@@ -228,6 +232,7 @@ public class PlayerActor : MonoBehaviour
         else
             health += hp;
         playerActive = true;
+        rigid.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     private void DisplayPlayerDown()
@@ -243,6 +248,7 @@ public class PlayerActor : MonoBehaviour
             visual.transform.localEulerAngles = new Vector3(45, 45, 90);
         }
         visual.transform.position = new Vector3(visual.transform.position.x, 0.7f, visual.transform.position.z);
+        rigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
     }
 
 
@@ -272,6 +278,7 @@ public class PlayerActor : MonoBehaviour
         PlayerActor player = col.GetComponent<PlayerActor>();
         if (player != null)
         {
+            Debug.Log("Player collided with another player.");
             HealPlayer(100);
         }
     }
