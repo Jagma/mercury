@@ -7,7 +7,6 @@ public class LaserRifle : WeaponRanged
     protected override void Start()
     {
         base.Start();
-
         beam = Factory.instance.CreateBeamNeon();
         beam.transform.parent = transform;
 
@@ -18,6 +17,12 @@ public class LaserRifle : WeaponRanged
         ammoInventory = 200;
         ammoMax = 100;
         ammoCount = 100;
+    }
+
+
+    public void setDamage(int damageA)
+    {
+        beam.GetComponent<BeamNeon>().setDamage(damageA);
     }
 
     protected override void Use()

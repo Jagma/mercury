@@ -17,6 +17,7 @@ public class RocketLauncher : WeaponRanged
         ammoInventory = 7;
         ammoMax = 1;
         ammoCount = 1;
+        damage = 100;
     }
 
     protected override void Use()
@@ -28,8 +29,14 @@ public class RocketLauncher : WeaponRanged
         base.Use();
 
         rocket =  Factory.instance.CreateRocket();
+        rocket.GetComponent<RPG>().setDamage(damage);
         rocket.transform.position = transform.position + transform.right * ammoOffset;
         rocket.transform.right = transform.right;
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
+    }
+
+    public void setDamage(int damageA)
+    {
+        damage = damageA;
     }
 }

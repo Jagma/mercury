@@ -16,6 +16,7 @@ public class Pistol : WeaponRanged
         ammoInventory = 60;
         ammoMax = 15;
         ammoCount = 15;
+        damage = 5;
     }
 
     protected override void Use()
@@ -27,6 +28,7 @@ public class Pistol : WeaponRanged
         Destroy(flash, 1);
 
         GameObject bullet = Factory.instance.CreateBullet();
+        bullet.GetComponent<Round>().setDamage(damage);
         bullet.GetComponent<Projectile>().speed *= 2;
         bullet.transform.position = transform.position + transform.right * ammoOffset;
         bullet.transform.right = transform.right;
@@ -36,5 +38,10 @@ public class Pistol : WeaponRanged
         AudioManager.instance.PlayAudio("dspistol", 1f, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
+    }
+
+    public void setDamage(int damageA)
+    {
+        damage = damageA;
     }
 }

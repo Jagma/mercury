@@ -13,4 +13,8 @@ public class BeamNeon : Beam
         damage = 2;
     }
 
+    public void setDamage(int damageA)
+    {
+        damage = damageA;
+    }
 }

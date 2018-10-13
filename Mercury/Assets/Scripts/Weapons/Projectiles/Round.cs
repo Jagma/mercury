@@ -16,4 +16,9 @@ public class Round : Projectile {
         a.transform.position = transform.position;
         Destroy(a, 1f);
     }
+
+    public void setDamage(int damageA)
+    {
+        damage = damageA;
+    }
 }

@@ -13,7 +13,10 @@ public class RPG : Projectile
         damage = 100;
         blastRadius = 1f;
     }
-
+    public void setDamage(int damageA)
+    {
+        damage = damageA;
+    }
     public override void Destroy()
     {
         base.Destroy();
