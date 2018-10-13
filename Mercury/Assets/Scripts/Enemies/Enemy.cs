@@ -82,6 +82,8 @@ public class Enemy : MonoBehaviour
         } else {
             StartCoroutine(HitFlash());
         }
+        GameObject blood = Factory.instance.CreateBlood();
+        blood.transform.position = this.transform.position;
     }
 
     IEnumerator HitFlash() {

@@ -106,17 +106,6 @@ public class PlayerActor : MonoBehaviour
             {
                 Weapon weapon = colliders[i].GetComponent<Weapon>();
                 Chest chest = colliders[i].GetComponent<Chest>();
-                if (weapon != null && weapon.equipped == false && weapon.name.Equals(model.equippedWeapon.name))
-                {
-                    model.equippedWeapon.SetAmmoCount(20);
-                    Destroy(weapon, 0.1f);
-                }
-                else if (weapon != null && model.secondaryWeapon != null && weapon.equipped == false && weapon.name.Equals(model.secondaryWeapon.name))
-                {
-                    model.secondaryWeapon.SetAmmoCount(20);
-                    Destroy(weapon, 0.1f);
-                }
-                else
                 if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon && weapon.equipped == false)
                 {
                     // Dequip current weapon
@@ -138,7 +127,7 @@ public class PlayerActor : MonoBehaviour
                         weapon.Equip();
                         weapon.equipped = true;
                         model.equippedWeapon = weapon;
-                        model.secondaryWeapon.gameObject.SetActive(false);
+                        model.secondaryWeapon.gameObject.SetActive(false);//Hides the secondary weapon
                     }
 
                     // Equip new weapon
@@ -223,6 +212,8 @@ public class PlayerActor : MonoBehaviour
         {
             Down();
         }
+        GameObject blood = Factory.instance.CreateBlood();
+        blood.transform.position = this.transform.position;
     }
 
     public void HealPlayer(float hp)

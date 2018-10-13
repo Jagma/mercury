@@ -478,6 +478,24 @@ public class Factory : MonoBehaviour
 
         return rocketLauncherGO;
     }
+
+    public GameObject CreateBlood()
+    {
+        GameObject bloodGO = new GameObject("Blood");
+
+        Rigidbody rb = bloodGO.AddComponent<Rigidbody>();
+        rb.transform.parent = bloodGO.transform;
+        rb.useGravity = true;
+
+        SpriteRenderer sr = bloodGO.AddComponent<SpriteRenderer>();
+        sr.transform.parent = rb.transform;
+
+        Blood behavior = bloodGO.AddComponent<Blood>();
+
+        return bloodGO;
+    }
+
+
     public GameObject CreateNormalChest()  //code use to create the normal chest.
     {
         GameObject chestGO = new GameObject("Normal Chest");
