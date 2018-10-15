@@ -147,11 +147,9 @@ public class Enemy : MonoBehaviour
             randomAmmoPack.transform.position = transform.position;
 
             //removes weapon from being used.
-            equippedWeapon.gameObject.SetActive(false);
             equippedWeapon.Dequip();
             equippedWeapon.equipped = false;
             equippedWeapon = null;
-            Destroy(equippedWeapon);
         }
         else
         {

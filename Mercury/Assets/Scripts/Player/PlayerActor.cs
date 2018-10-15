@@ -219,12 +219,16 @@ public class PlayerActor : MonoBehaviour
     public void HealPlayer(float hp)
     {
         if (health + hp > 100)
-            health = 100;
+            health = startHealth;
         else
             health += hp;
-        playerActive = true;
-        rigid.constraints = RigidbodyConstraints.FreezeRotation;
-        visual.transform.parent = transform;
+        if (!playerActive)
+        {
+            playerActive = true;
+            rigid.constraints = RigidbodyConstraints.FreezeRotation;
+            visual.transform.parent = transform;
+            visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+        }
         Debug.Log("Player healed.");
     }
 

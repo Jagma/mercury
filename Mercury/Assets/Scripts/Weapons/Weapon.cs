@@ -52,12 +52,10 @@ public class Weapon : MonoBehaviour
             }
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
             {
-                Debug.Log("Reloading Weapon.");
                 ReloadWeapon();
             }
             else //if the weapon is completely out of ammo.
             {
-                 Debug.Log("Weapon out of ammo.");
                 //play sound for out of ammo..
             }
         }
@@ -113,7 +111,7 @@ public class Weapon : MonoBehaviour
 
     public void SetAmmoCount(int ammoValue)
     {
-        if ((ammoInventory + ammoValue) > ammoMaxInventory) //checks to see if the 
+        if ((ammoInventory + ammoValue) > ammoMaxInventory) //checks to see if the current ammo inventory and the newly ammoun count obtained is greater than the max ammo allowed.
         {
             ammoInventory = ammoMaxInventory;
             ReloadWeapon();
