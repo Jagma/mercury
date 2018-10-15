@@ -6,7 +6,7 @@ public class AbilityPope : Ability
 {
 
     float reviveRadius;
-    //double reviveHP;
+    float reviveHP;
     public override void Init()
     {
         base.Init();
@@ -14,7 +14,7 @@ public class AbilityPope : Ability
         // Stats
         cooldown = 0f;
         reviveRadius = 10f;
-        //reviveHP = 50f;
+        reviveHP = 50f;
     }
 
     protected override void Use()
@@ -31,7 +31,7 @@ public class AbilityPope : Ability
         {
             if (hit.GetComponent<PlayerActor>() !=null)
             {
-                hit.GetComponent<PlayerActor>().HealPlayer(50);
+                hit.GetComponent<PlayerActor>().HealPlayer(reviveHP);
             }
         }
     }

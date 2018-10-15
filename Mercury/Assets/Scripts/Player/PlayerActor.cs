@@ -11,7 +11,7 @@ public class PlayerActor : MonoBehaviour
     public Sprite facing;
     public Sprite death;
     private float startHealth = 100;
-    private bool playerActive = true;
+    public bool playerActive = true;
     public float health = 100;
     Transform visual;
     Rigidbody rigid;
@@ -224,7 +224,10 @@ public class PlayerActor : MonoBehaviour
             health += hp;
         playerActive = true;
         rigid.constraints = RigidbodyConstraints.FreezeRotation;
+        visual.transform.parent = transform;
+        Debug.Log("Player healed.");
     }
+
 
     private void DisplayPlayerDown()
     {
@@ -265,7 +268,6 @@ public class PlayerActor : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-
         PlayerActor player = col.GetComponent<PlayerActor>();
         if (player != null)
         {

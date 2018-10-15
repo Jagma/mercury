@@ -128,7 +128,7 @@ public class Enemy : MonoBehaviour
     private void DropItems()
     {
         int randomNum = ran.Next(0, 100);
-        if (randomNum >= 20 && randomNum < 61) //40% Drop ammo pack - still needs to be implemented.
+        if (randomNum >= 20 && randomNum < 61)
         {
             GameObject randomAmmoPack;
             randomNum = ran.Next(0, 100);
