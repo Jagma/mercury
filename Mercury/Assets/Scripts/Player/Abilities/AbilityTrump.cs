@@ -56,6 +56,6 @@ public class AbilityTrump : Ability {
         //Destroy wall after x Seconds
         GameObject.Destroy(wall, wallLifetime);
 
-        AudioManager.instance.PlayAudio("Trump - Great great wall", 1, false);
+        AudioManager.instance.PlayAudio("Trump - Wall", 1, false);
     }
 }
