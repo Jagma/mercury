@@ -18,7 +18,7 @@ public class AbilityBinLaden : Ability {
     {
         base.Use();
 
-        AudioManager.instance.PlayAudio("abra", 1, false);
+
 
         //Get aim and rotate by 45*
         Vector2 aim = InputManager.instance.GetAimDirection(playerActor.model.playerID);
@@ -44,6 +44,7 @@ public class AbilityBinLaden : Ability {
         bag.transform.position = position;
         bag.transform.right = aimDirection;
         bag.GetComponent<Projectile>().Update();
+        AudioManager.instance.PlayAudio("abra", 1, false);
     }
 
     private void ThrowBag()
@@ -53,5 +54,6 @@ public class AbilityBinLaden : Ability {
         bag.GetComponent<TNTBag>().Move(aimDirection);
         bag.transform.right = aimDirection;
         bag.GetComponent<Projectile>().Update();
+        AudioManager.instance.PlayAudio("abra", 1, false);
     }
 }

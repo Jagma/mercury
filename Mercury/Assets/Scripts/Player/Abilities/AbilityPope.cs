@@ -6,7 +6,7 @@ public class AbilityPope : Ability
 {
 
     float reviveRadius;
-    //double reviveHP;
+    float reviveHP;
     public override void Init()
     {
         base.Init();
@@ -14,25 +14,35 @@ public class AbilityPope : Ability
         // Stats
         cooldown = 0f;
         reviveRadius = 10f;
-        //reviveHP = 50f;
+        reviveHP = 50f;
     }
 
     protected override void Use()
     {
-        AudioManager.instance.PlayAudio("Pope_peace", 1, false);
         base.Use();
         Revive();
     }
 
+    Collider[] colliders;
     private void Revive()
     {
-        Collider[] hits = Physics.OverlapSphere(playerActor.transform.position, reviveRadius );
-        foreach (Collider hit in hits)
+        int layerId = LayerMask.NameToLayer("Player");
+        int layerMask = 1 << layerId;
+        colliders = Physics.OverlapSphere(playerActor.transform.position, reviveRadius, layerMask);
+
+        for (int i = 0; i < colliders.Length; i++)
         {
-            if (hit.GetComponent<PlayerActor>() !=null)
+            PlayerActor players = colliders[i].GetComponent<PlayerActor>();
+
+            // Is this collider a player
+            if (players != null)
             {
-                hit.GetComponent<PlayerActor>().HealPlayer(50);
+                //playerActor.HealPlayer(reviveHP);
+                players.HealPlayer(players.GetStartHealth());
+                Debug.Log("Pope ability.");
             }
+
         }
+        AudioManager.instance.PlayAudio("Pope_peace", 1, false);
     }
 }

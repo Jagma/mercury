@@ -23,7 +23,7 @@ public class AbilityOprah : Ability
     {
         base.Use();
 
-        AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
+
 
         freeItem = ChooseRandomItem();
 
@@ -52,6 +52,7 @@ public class AbilityOprah : Ability
             freeItem.GetComponent<Projectile>().Update();
             isProjectile = false;
         }
+        AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
     }
 
     private GameObject ChooseRandomItem()

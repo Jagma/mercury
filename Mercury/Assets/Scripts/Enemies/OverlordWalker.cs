@@ -52,7 +52,7 @@ public class OverlordWalker : Enemy
         }
 
         // If we found a player move towards it
-        if (closestPlayerActor != null)
+        if (closestPlayerActor != null && closestPlayerActor.playerActive)
         {
             float playerRange = Vector3.Distance(closestPlayerActor.transform.position, transform.position);
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);
@@ -122,6 +122,7 @@ public class OverlordWalker : Enemy
     {
         if (equippedWeapon)
         {
+            equippedWeapon.SetAmmoCount(9999); //prevents enemy from running out of ammo.
             equippedWeapon.UseWeapon();
         }
     }

@@ -28,7 +28,8 @@ public class Walker : Enemy
             PlayerActor playerActor = colliders[i].GetComponent<PlayerActor>();
 
             // Is this collider a player
-            if (playerActor != null) {
+            if (playerActor != null)
+            {
                 if (closestPlayerActor == null)
                 {
                     closestPlayerActor = playerActor;
@@ -44,7 +45,7 @@ public class Walker : Enemy
         }
 
         // If we found a player move towards it
-        if (closestPlayerActor != null)
+        if (closestPlayerActor != null && closestPlayerActor.playerActive)
         {
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);
             base.MoveForward();
