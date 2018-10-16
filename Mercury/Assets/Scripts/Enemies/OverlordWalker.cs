@@ -61,7 +61,14 @@ public class OverlordWalker : Enemy
 
             if (playerRange < 5.5f) //checks if player is close enough to shoot.
             {
-                AttackPlayer();
+                // Raycast to determine if the enemy has line of sight to player                
+                int environmentLayerID = LayerMask.NameToLayer("Environment");
+                int environmentLayerMask = 1 << environmentLayerID;
+                Ray ray = new Ray(transform.position, (closestPlayerActor.transform.position - transform.position).normalized);
+
+                if (Physics.Raycast(ray, 5.5f, environmentLayerMask) == false) {
+                    AttackPlayer();
+                }
             }
             base.MoveForward();
         }

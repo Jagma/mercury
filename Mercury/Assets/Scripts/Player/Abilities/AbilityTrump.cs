@@ -4,15 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityTrump : Ability {
+    float wallLifetime = 4f;
+    int wallCount = 0;
     public override void Init() {
         base.Init();
 
         // Stats
-        cooldown = 5f;
+        cooldown = 0.2f;
+        
     }
 
     protected override void Use() {
         base.Use();
+        wallCount++;
+
         //Get aim direction and rotate by 45 degrees
         Vector2 aimDirection = InputManager.instance.GetAimDirection(playerActor.model.playerID);
         
@@ -24,14 +29,19 @@ public class AbilityTrump : Ability {
 
         //Position to place wall
         Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, 0, normalizedAim.z) * placementOffset;
+        position.y = 1;
 
         //Check for other walls at that position
-        Collider[] hits = Physics.OverlapSphere(position, 0.2f);
-        foreach(Collider hit in hits)
+        int environmentLayerID = LayerMask.NameToLayer("Environment");
+        int environmentLayerMask = 1 << environmentLayerID;
+        Collider[] colliders = Physics.OverlapSphere(position, 0.5f, environmentLayerMask);
+
+        foreach(Collider col in colliders)
         {
-            if(hit.gameObject != null && hit.gameObject.name.Equals("Wall"))
+            Wall wallScript = col.GetComponent<Wall>();
+            if (wallScript != null)
             {
-                GameObject.Destroy(hit.gameObject, 0.1f);
+                wallScript.Damage(1000);
             }
         }
 
@@ -39,12 +49,12 @@ public class AbilityTrump : Ability {
         //Create wall and move to position with infinite HP
         GameObject wall = Factory.instance.CreateWall("Trump", 0);
         wall.GetComponent<Wall>().health = int.MaxValue;
-        position.y = 1;
-        wall.transform.position = position;
-        //BoxCollider wallBoxCollider = wall.GetComponent<BoxCollider>();
         
+        wall.transform.position = position;
+        wall.transform.eulerAngles = new Vector3(0, -Mathf.Atan2(normalizedAim.z, normalizedAim.x) * Mathf.Rad2Deg, 0);
+  
         //Destroy wall after x Seconds
-        GameObject.Destroy(wall, 5f);
+        GameObject.Destroy(wall, wallLifetime);
 
         AudioManager.instance.PlayAudio("Trump - Great great wall", 1, false);
     }

@@ -26,11 +26,12 @@ public class RangedWalker : Enemy
             equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
         }
 
-        int layerId = LayerMask.NameToLayer("Player");
-        int layerMask = 1 << layerId;
-        colliders = Physics.OverlapSphere(transform.position, 7.5f, layerMask);
+        int playerLayerID = LayerMask.NameToLayer("Player");
+        int playerLayerMask = 1 << playerLayerID;
+        colliders = Physics.OverlapSphere(transform.position, 7.5f, playerLayerMask);
         
 
+        // Finds the closest player
         PlayerActor closestPlayerActor = null;
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -49,7 +50,6 @@ public class RangedWalker : Enemy
                     closestPlayerActor = playerActor;
                 }
             }
-
         }
 
         // If we found a player move towards it
@@ -62,7 +62,15 @@ public class RangedWalker : Enemy
 
             if (playerRange < 5.5f) //checks if player is close enough to shoot.
             {
-                AttackPlayer();
+                // Raycast to determine if the enemy has line of sight to player                
+                int environmentLayerID = LayerMask.NameToLayer("Environment");
+                int environmentLayerMask = 1 << environmentLayerID;
+                Ray ray = new Ray(transform.position,  (closestPlayerActor.transform.position - transform.position).normalized);
+
+                if (Physics.Raycast(ray, 5.5f, environmentLayerMask) == false) {
+                    AttackPlayer();
+                }
+               
             }
             base.MoveForward();
         }

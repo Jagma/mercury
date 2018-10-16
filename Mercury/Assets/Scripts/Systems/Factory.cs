@@ -687,6 +687,8 @@ public class Factory : MonoBehaviour
 
     public GameObject CreateWall(string environmentName, int textureID) {
         GameObject wall = new GameObject("Wall");
+        wall.layer = LayerMask.NameToLayer("Environment");
+
         wall.AddComponent<BoxCollider>();
         wall.AddComponent<Wall>();
         wall.GetComponent<BoxCollider>().size = new Vector3(1, 50, 1);
