@@ -56,6 +56,29 @@ public class AbilityTrump : Ability {
         //Destroy wall after x Seconds
         GameObject.Destroy(wall, wallLifetime);
 
-        AudioManager.instance.PlayAudio("Trump - Wall", 1, false);
+
+        int randomClipInt;
+        randomClipInt = UnityEngine.Random.Range(0,4);
+        switch (randomClipInt)
+            {
+                case 0:
+                    AudioManager.instance.PlayAudio("Trump - Great wall", .4f, false);
+                    break;
+
+                case 1:
+                    AudioManager.instance.PlayAudio("Trump - Need a wall", .4f, false);
+                    break;
+
+                case 2:
+                    AudioManager.instance.PlayAudio("Trump - Great great wall", .4f, false);
+                    break;
+
+                case 3:
+                    AudioManager.instance.PlayAudio("Trump - Wall", .6f, false);
+                    break;
+        }
+            
+
+        
     }
 }
