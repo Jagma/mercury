@@ -188,6 +188,24 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
+    private float saveHealth;
+    bool godMode = false;
+    public void ToggleGodMode()
+    {
+        godMode = !godMode;
+        if (godMode)
+        {
+            saveHealth = health;
+            health = float.MaxValue;
+            Debug.Log("God Mode Activated");
+        }
+        else if (!godMode)
+        {
+            health = saveHealth;
+            Debug.Log("God Mode Deactivated");
+        }
+    }
+
     public void UseAbility ()
     {
         if (playerActive)

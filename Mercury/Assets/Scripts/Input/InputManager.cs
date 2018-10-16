@@ -96,4 +96,9 @@ public class InputManager : MonoBehaviour
     {
         return playerInputDictionary[playerID].GetUseAbilityPressed();
     }
+
+    public bool ToggleGodMode(string playerID)
+    {
+        return playerInputDictionary[playerID].toggleGodMode();
+    }
 }

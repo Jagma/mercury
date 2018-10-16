@@ -307,4 +307,18 @@ public class PlayerInput {
 
         return result;
     }
+
+
+    public bool toggleGodMode()
+    {
+        if (inputType == InputType.Keyboard)
+        {
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
