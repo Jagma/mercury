@@ -483,16 +483,54 @@ public class Factory : MonoBehaviour
     {
         GameObject bloodGO = new GameObject("Blood");
 
-        Rigidbody rb = bloodGO.AddComponent<Rigidbody>();
-        rb.transform.parent = bloodGO.transform;
-        rb.useGravity = true;
-
-        SpriteRenderer sr = bloodGO.AddComponent<SpriteRenderer>();
-        sr.transform.parent = rb.transform;
-
         Blood behavior = bloodGO.AddComponent<Blood>();
 
         return bloodGO;
+    }
+
+    /// <summary>
+    /// Creates chunks and places them around a point
+    /// </summary>
+    /// <param name="center"> Center around which chunks is placed </param>
+    /// <param name="radius"> The radius of the cirle </param>
+    /// <returns> List of GameObjects</returns>
+        public List<GameObject> CreateChunks(Vector3 center, float radius)
+    {
+        System.Random random = new System.Random(91169420);
+        int chunkCount = random.Next(6, 10);
+        List<GameObject> chunkList = new List<GameObject>();
+        Debug.Log("Chunk COunt" + chunkCount);
+        //Creates a game object 
+        for (int i = 0; i < chunkCount; i++)
+        { 
+            GameObject chunk = new GameObject();
+            chunk.transform.position = center;
+
+            Rigidbody rigid = chunk.AddComponent<Rigidbody>();
+            rigid.useGravity = true;
+
+            //Position around circle
+            float angle = random.Next(0, 360);
+            Vector3 pos = new Vector3(
+                x: center.x + radius * Mathf.Sin(angle * Mathf.Deg2Rad),
+                y: center.y,
+                z: center.z + radius * Mathf.Cos(angle * Mathf.Deg2Rad)
+            );
+            rigid.transform.position = pos;
+
+            SpriteRenderer visual = chunk.AddComponent<SpriteRenderer>();
+            visual.transform.parent = rigid.transform;
+            visual.transform.rotation *= Quaternion.AngleAxis(45f, Vector3.right);
+
+            GameObject trail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Blood/BloodTrail"));
+            trail.transform.parent = rigid.transform;
+            trail.transform.localPosition = Vector3.zero;
+
+            Chunk behavior = chunk.AddComponent<Chunk>();
+
+            chunkList.Add(chunk);
+        };
+        return chunkList;
     }
 
 
