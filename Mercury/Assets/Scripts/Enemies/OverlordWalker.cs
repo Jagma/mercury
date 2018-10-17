@@ -129,7 +129,7 @@ public class OverlordWalker : Enemy
     {
         if (equippedWeapon)
         {
-            equippedWeapon.GetComponent<WeaponRanged>().SetAmmoCount(9999); //prevents enemy from running out of ammo.
+            equippedWeapon.SetAmmoCount(9999); //prevents enemy from running out of ammo.
             equippedWeapon.UseWeapon();
         }
     }

@@ -16,7 +16,7 @@ public class RockettAmmoPack : AmmoPack
         base.Use(player);
         if (player.GetPlayerEquippedWeapon().GetComponent<RocketLauncher>() != null)
         {
-            player.GetPlayerEquippedWeapon().GetComponent<WeaponRanged>().SetAmmoCount(ammoAmount);
+            player.GetPlayerEquippedWeapon().SetAmmoCount(ammoAmount);
             base.Delete();
         }
     }

@@ -9,7 +9,7 @@ public class BeamPurple : Beam
         base.Init();
 
         // Stats
-        width = 0.25f;
+        width = 0.5f;
         damage = 35;
     }
     public void setDamage(int damageA)

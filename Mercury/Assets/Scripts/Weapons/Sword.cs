@@ -11,8 +11,11 @@ public class Sword : WeaponMelee
 
         // Stats
         cooldown = 0.5f;
-        durability = 100f;
-        damage = 5;
+        ammoMaxInventory = 0;
+        ammoInventory = 0;
+        ammoMax = 100;
+        ammoCount = 100;
+        damage = 10;
     }
 
     protected override void Use()
