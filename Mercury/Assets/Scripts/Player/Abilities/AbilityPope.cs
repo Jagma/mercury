@@ -7,6 +7,7 @@ public class AbilityPope : Ability
 
     float reviveRadius;
     float reviveHP;
+    float healHP;
     public override void Init()
     {
         base.Init();
@@ -15,6 +16,7 @@ public class AbilityPope : Ability
         cooldown = 0f;
         reviveRadius = 10f;
         reviveHP = 50f;
+        healHP = 10;
     }
 
     protected override void Use()
@@ -32,12 +34,16 @@ public class AbilityPope : Ability
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            PlayerActor players = colliders[i].GetComponent<PlayerActor>();
+            PlayerActor player = colliders[i].GetComponent<PlayerActor>();
 
             // Is this collider a player
-            if (players != null)
+            if (player != null && player.model.playerActive == false)
             {
-                players.HealPlayer(players.model.maxHealth);
+                player.HealPlayer(reviveHP);
+            }
+            if (player != null && player.model.playerActive == true)
+            {
+                player.HealPlayer(healHP);
             }
 
         }

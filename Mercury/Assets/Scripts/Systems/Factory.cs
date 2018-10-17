@@ -560,7 +560,7 @@ public class Factory : MonoBehaviour
     /// <returns> List of GameObjects</returns>
         public List<GameObject> CreateChunks(Vector3 center, float radius)
         {
-        int chunkCount = Random.Range(5, 8);
+        int chunkCount = Random.Range(5, 9);
         List<GameObject> chunkList = new List<GameObject>();
         Debug.Log("Chunk Count" + chunkCount);
         //Creates a game object 
@@ -573,14 +573,14 @@ public class Factory : MonoBehaviour
             rigid.useGravity = true;
 
             //Position around circle
-            float angle = Random.Range(0,360);
+            float angle = Random.Range(0,361);
             Vector3 pos = new Vector3(
                 x: center.x + radius * Mathf.Sin(angle * Mathf.Deg2Rad),
                 y: center.y,
                 z: center.z + radius * Mathf.Cos(angle * Mathf.Deg2Rad)
             );
             rigid.transform.position = pos;
-            rigid.mass = Random.Range(2f, 4f);
+            rigid.mass = Random.Range(2f, 5f);
 
             SpriteRenderer visual = chunk.AddComponent<SpriteRenderer>();
             visual.transform.parent = rigid.transform;
