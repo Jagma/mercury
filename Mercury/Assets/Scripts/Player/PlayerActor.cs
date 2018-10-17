@@ -96,7 +96,7 @@ public class PlayerActor : MonoBehaviour
     {
         if (model.playerActive)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
             for (int i = 0; i < colliders.Length; i++)
             {
                 Weapon weapon = colliders[i].GetComponent<Weapon>();
