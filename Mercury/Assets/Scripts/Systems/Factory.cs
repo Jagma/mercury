@@ -354,6 +354,32 @@ public class Factory : MonoBehaviour
         return pistolGO;
    }
 
+    public GameObject CreateShotgun()
+    {
+        GameObject shotgunGO = new GameObject("Shotgun");
+
+        SphereCollider shotgunCollider = shotgunGO.AddComponent<SphereCollider>();
+        shotgunCollider.radius = 0.1f;
+
+        SphereCollider shotgunColliderT = shotgunGO.AddComponent<SphereCollider>();
+        shotgunColliderT.isTrigger = true;
+
+        Rigidbody shotgunRigid = shotgunGO.AddComponent<Rigidbody>();
+        shotgunRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject shotgunVisualGO = new GameObject("Visual");
+        shotgunVisualGO.transform.parent = shotgunGO.transform;
+
+        GameObject shotgunVisualBodyGO = new GameObject("Body");
+        shotgunVisualBodyGO.transform.parent = shotgunVisualGO.transform;
+        SpriteRenderer sr = shotgunVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Shotgun");
+
+        shotgunGO.AddComponent<Shotgun>();
+
+        return shotgunGO;
+    }
+
     public GameObject CreateFlamethrower()  //code use to create the flamethower weapon for the players to use.
     {
         GameObject flamethrowerGO = new GameObject("Flamethrower");
