@@ -4,25 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
+    public PlayerModel playerModel;
 
-    [Header("Unity")]
-    public Image healthbar;
-
-    Vector3 localScale;
-	// Use this for initialization
+    Image healthbar;
+    
 	void Start ()
     {
-
+        healthbar = transform.Find("Inner").GetComponent<Image>();
 	}
 	
-	// Update is called once per frame
+
 	void Update ()
     {
         if (healthbar != null)
         {
-            if (PlayerActor.instance != null)
+            if (playerModel != null)
             {
-                float health = PlayerActor.instance.GetHealthInformation();
+                float health = playerModel.health;
                 healthbar.fillAmount = health / 100;
                 if (health > 75 && health <= 100)
                 {

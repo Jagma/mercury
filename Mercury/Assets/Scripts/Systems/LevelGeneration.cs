@@ -30,7 +30,7 @@ public class LevelGeneration : MonoBehaviour
 
         levelRoot = new GameObject("Level Root").transform;
 
-        // Random.InitState(91142069);
+         Random.InitState(91142069);
         // Fill level with solids
         for (int z=0; z < terrain.GetLength(1); z ++)
         {
@@ -46,6 +46,7 @@ public class LevelGeneration : MonoBehaviour
         {
             Miner miner = new Miner();
             miner.levelGen = this;
+            miner.lifetime = Random.RandomRange(400, 1000);
             miner.posX = mapWidth / 2;
             miner.posZ = mapDepth / 2;
 
@@ -191,7 +192,7 @@ public class Miner
     public LevelGeneration levelGen;
     public int posX = 3;
     public int posZ = 3;
-    public int lifetime = 400;
+    public int lifetime = 100;
     public int roomChance = 98;
 
     public void Update ()

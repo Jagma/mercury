@@ -8,7 +8,14 @@ public class PlayerModel
     public float moveAcceleration = 1.2f; 
     public float moveDeceleration = 0.2f;
     public float moveMaxSpeed = 8f;
+
+    public float maxHealth = 100;
+    public float health = 100;
+    public bool playerActive = true;
+
     public Weapon equippedWeapon;
     public Weapon secondaryWeapon;
     public Ability ability;
+
+    public bool godMode = false;
 }

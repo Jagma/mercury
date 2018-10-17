@@ -17,7 +17,7 @@ public class SpaceshipTelleporter : MonoBehaviour {
     private void OnTriggerEnter(Collider col) {
         PlayerActor actor = col.GetComponent<PlayerActor>();
         if (actor != null) {
-            Intermission.instance
+        //    Intermission.instance
         }
     }
 }

@@ -6,13 +6,9 @@ using UnityEngine.UI;
 public class PlayerActor : MonoBehaviour
 {
     public PlayerModel model;
-    public static PlayerActor instance;
     public Sprite forward;
     public Sprite facing;
     public Sprite death;
-    private float startHealth = 100;
-    public bool playerActive = true;
-    public float health = 100;
     Transform visual;
     Rigidbody rigid;
 
@@ -25,7 +21,6 @@ public class PlayerActor : MonoBehaviour
     void Start ()
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
-        instance = this;
         model.equippedWeapon = Factory.instance.CreateLaserRifle().GetComponent<Weapon>();
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
@@ -33,7 +28,7 @@ public class PlayerActor : MonoBehaviour
 
 	void Update ()
     {
-        if (playerActive)
+        if (model.playerActive)
         {
             if (model.equippedWeapon)
             {
@@ -52,7 +47,7 @@ public class PlayerActor : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerActive)
+        if (model.playerActive)
         {
             Vector3 velocityMinusY = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
             velocityMinusY = Vector3.ClampMagnitude(velocityMinusY, model.moveMaxSpeed);
@@ -69,7 +64,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Move (Vector2 direction)
     {
-        if (playerActive)
+        if (model.playerActive)
         {
             Vector2 moveDir = InputManager.instance.GetMoveDirection(model.playerID);
             rigid.velocity += transform.forward * moveDir.y * model.moveAcceleration;
@@ -79,7 +74,7 @@ public class PlayerActor : MonoBehaviour
     
     public void SwitchWeapons()
     {
-        if (playerActive)
+        if (model.playerActive)
         {
             if (model.secondaryWeapon == null)
             {
@@ -99,7 +94,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Interact()
     {
-        if (playerActive)
+        if (model.playerActive)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
             for (int i = 0; i < colliders.Length; i++)
@@ -150,7 +145,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Aim (Vector2 direction)
     {
-        if (playerActive)
+        if (model.playerActive)
         {
             if (model.equippedWeapon)
             {
@@ -179,7 +174,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Attack ()
     {
-        if (playerActive)
+        if (model.playerActive)
         {
             if (model.equippedWeapon)
             {
@@ -188,66 +183,54 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
-    private float saveHealth;
-    bool godMode = false;
-    public void ToggleGodMode()
-    {
-        godMode = !godMode;
-        if (godMode)
-        {
-            saveHealth = health;
-            health = float.MaxValue;
-            Debug.Log("God Mode Activated");
-        }
-        else if (!godMode)
-        {
-            health = saveHealth;
-            Debug.Log("God Mode Deactivated");
-        }
-    }
-
     public void UseAbility ()
     {
-        if (playerActive)
+        if (model.playerActive)
             model.ability.UseAbility();
-    }
-
-    public float GetHealthInformation()
-    {
-        return health;
-    }
-
-    public float GetStartHealth()
-    {
-        return startHealth;
     }
 
     public void Damage(float damage)
     {
-        health -= damage;
+        if (model.godMode == true) {
+            return;
+        }
 
-        if (health <= 0)
+        model.health -= damage;
+
+        if (model.health <= 0)
         {
             Down();
         }
+
         GameObject blood = Factory.instance.CreateBlood();
         blood.transform.position = this.transform.position;
     }
 
+    public void Down() {
+        if (GameProgressionManager.instance.getPlayerCount() > 1) {
+            DisplayPlayerDown();
+            model.playerActive = false;
+        }
+        else {
+            Death();
+        }
+    }
+
     public void HealPlayer(float hp)
     {
-        if (health + hp > 100)
-            health = startHealth;
-        else
-            health += hp;
-        if (!playerActive)
+        model.health += hp;
+
+        if (model.health + hp > 100) {
+            model.health = 100;
+        }            
+  
+        if (model.playerActive == false)
         {
-            playerActive = true;
+            model.playerActive = true;
             rigid.constraints = RigidbodyConstraints.FreezeRotation;
             visual.transform.parent = transform;
             visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
         }
-        Debug.Log("Player healed.");
     }
 
 
@@ -268,18 +251,7 @@ public class PlayerActor : MonoBehaviour
     }
 
 
-    public void Down()
-    {
-        if (GameProgressionManager.instance.getPlayerCount() > 1)
-        {
-            DisplayPlayerDown();
-            playerActive = false;
-        }
-        else
-        {
-            Death();
-        }
-    }
+
 
     public void Death()
     {

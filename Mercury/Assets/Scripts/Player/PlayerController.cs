@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {  
     public PlayerActor actor;
     private float saveHealth;
-    bool godMode = false;
+
 	void Update ()
     {
         actor.Move(InputManager.instance.GetMoveDirection(actor.model.playerID));
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         }
         if(InputManager.instance.ToggleGodMode(actor.model.playerID))
         {
-            actor.ToggleGodMode();
+            actor.model.godMode = true;
         }
     }
 }

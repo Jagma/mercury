@@ -53,7 +53,7 @@ public class RangedWalker : Enemy
         }
 
         // If we found a player move towards it
-        if (closestPlayerActor != null && closestPlayerActor.playerActive)
+        if (closestPlayerActor != null && closestPlayerActor.model.playerActive)
         {
             float playerRange = Vector3.Distance(closestPlayerActor.transform.position, transform.position);
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);

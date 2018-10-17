@@ -45,7 +45,7 @@ public class Walker : Enemy
         }
 
         // If we found a player move towards it
-        if (closestPlayerActor != null && closestPlayerActor.playerActive)
+        if (closestPlayerActor != null && closestPlayerActor.model.playerActive)
         {
             base.FaceDirection((closestPlayerActor.transform.position - transform.position).normalized);
             base.MoveForward();

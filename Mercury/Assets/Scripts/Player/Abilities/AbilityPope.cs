@@ -37,9 +37,7 @@ public class AbilityPope : Ability
             // Is this collider a player
             if (players != null)
             {
-                //playerActor.HealPlayer(reviveHP);
-                players.HealPlayer(players.GetStartHealth());
-                Debug.Log("Pope ability.");
+                players.HealPlayer(players.model.maxHealth);
             }
 
         }

@@ -65,10 +65,8 @@ public class Factory : MonoBehaviour
         GameObject playerVisualBodyGO = new GameObject("Body");
         playerVisualBodyGO.transform.parent = playerVisualGO.transform;
         SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
-        playerGO.AddComponent<SpriteRenderer>();
+        playerGO.AddComponent<SpriteRenderer>();        
 
-        GameObject health = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/HealthBar")); 
-        health.transform.SetParent(playerGO.transform, true);
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
         playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
         playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
@@ -80,6 +78,11 @@ public class Factory : MonoBehaviour
         PlayerModel playerModel = new PlayerModel();
         playerActor.model = playerModel;
 
+        GameObject health = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/HealthBar"));
+        health.transform.SetParent(playerGO.transform, true);
+        health.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
+        health.transform.localEulerAngles = new Vector3(45, 0, 0);
+        health.transform.position = new Vector3(0, 1.5f, 0);
         return playerGO;
     }
 
