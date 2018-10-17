@@ -97,8 +97,24 @@ public class Game : MonoBehaviour
             LevelGeneration.instance.SpawnMartianBoss(playerMid);
         }
         if (gameStage == 1 && EnemyManager.instance.GetEnemyCount() <= 0) {
-            AudioManager.instance.StopAudio("Game_music_Moon_garden");
-            SceneManager.LoadScene("Intermission");
+            NavigateIntermission();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            NavigateIntermission();
+        }
+    }
+
+    void NavigateIntermission () {
+        List<PlayerModel> modelList = new List<PlayerModel>();
+
+        for (int i=0; i < playerActorList.Count; i ++) {
+            modelList.Add(playerActorList[i].model);
+        }
+
+        Intermission.SetPlayers(modelList);
+
+        AudioManager.instance.StopAudio("Game_music_Moon_garden");
+        SceneManager.LoadScene("Intermission");
     }
 }

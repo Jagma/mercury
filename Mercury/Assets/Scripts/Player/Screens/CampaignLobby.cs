@@ -251,6 +251,8 @@ public class CampaignLobby : MonoBehaviour
 
         portraitPrefab.SetActive(false);
         countdown = 5;
+
+        AudioManager.instance.PlayAudio("Game_music_Space_loop", .6f, true);
     }
 
 

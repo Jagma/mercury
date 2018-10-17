@@ -148,27 +148,31 @@ public class PlayerInput {
         }
         if (inputType == InputType.Keyboard)
         {
+            Vector3 playerPosition = Vector3.zero;
             if (Game.instance != null)
             {
-                Vector3 playerPosition = Game.instance.GetPlayerActor(playerID).transform.position;
-                
-                // Get world position of mouse
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Plane plane = new Plane(Vector3.up, playerPosition);
-                float distance = 0;
-                Vector3 worldPosition = Vector3.zero;
-                if (plane.Raycast(ray, out distance))
-                {
-                    worldPosition = ray.GetPoint(distance);
-                }
-
-                Vector3 delta = (worldPosition - playerPosition).normalized;
-
-                Vector3 rotationNormilized = Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(delta.x, 0, delta.z);
-
-                // Return result in 2d space
-                return new Vector2(rotationNormilized.x, rotationNormilized.z);                
+                playerPosition = Game.instance.GetPlayerActor(playerID).transform.position;    
             }
+
+            if (Intermission.instance != null) {
+                playerPosition = Intermission.instance.GetPlayerActor(playerID).transform.position;
+            }
+
+            // Get world position of mouse
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane plane = new Plane(Vector3.up, playerPosition);
+            float distance = 0;
+            Vector3 worldPosition = Vector3.zero;
+            if (plane.Raycast(ray, out distance)) {
+                worldPosition = ray.GetPoint(distance);
+            }
+
+            Vector3 delta = (worldPosition - playerPosition).normalized;
+
+            Vector3 rotationNormilized = Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(delta.x, 0, delta.z);
+
+            // Return result in 2d space
+            return new Vector2(rotationNormilized.x, rotationNormilized.z);
         }
 
         return Vector2.zero;
