@@ -143,7 +143,7 @@ public class AbilityOprah : Ability
             if (roll == 0)
                 return Factory.instance.CreateNormalChest();
             if (roll == 1)
-                return Factory.instance.CreateAmmoChest();
+                return Factory.instance.CreateRareChest();
 
         }
         #endregion
