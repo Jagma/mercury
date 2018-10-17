@@ -37,6 +37,11 @@ public class AbilityBinLaden : Ability {
         ThrowBag();
     }
 
+    private void PlaceBag()
+    {
+
+    }
+
     private void ThrowBag()
     {
         bag.GetComponent<TNTBag>().Throw(power,playerActor.transform.position);

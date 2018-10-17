@@ -227,6 +227,7 @@ public class PlayerActor : MonoBehaviour
         if (model.playerActive == false)
         {
             model.playerActive = true;
+            model.health = hp;
             rigid.constraints = RigidbodyConstraints.FreezeRotation;
             visual.transform.parent = transform;
             visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
@@ -249,9 +250,6 @@ public class PlayerActor : MonoBehaviour
         visual.transform.position = new Vector3(visual.transform.position.x, 0.7f, visual.transform.position.z);
         rigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
     }
-
-
-
 
     public void Death()
     {

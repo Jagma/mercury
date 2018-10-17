@@ -33,7 +33,7 @@ public class Blood : MonoBehaviour {
 
 
             explosionPoint = new Vector3(x, y, z);
-            power = Random.Range(6, 8);
+            power = Random.Range(6, 10);
 
             Rigidbody rigidbody = chunk.GetComponent<Rigidbody>();
             rigidbody.AddExplosionForce(power, explosionPoint, radius, upModifier, ForceMode.Impulse);
