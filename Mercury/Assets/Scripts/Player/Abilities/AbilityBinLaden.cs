@@ -12,9 +12,9 @@ public class AbilityBinLaden : Ability {
         base.Init();
         
         // Stats
-        cooldown = 0f;
+        cooldown = 4f;
         power = 10;
-        placementOffset = 1;
+        placementOffset = 2;
     }
 
     protected override void Use()
@@ -24,7 +24,7 @@ public class AbilityBinLaden : Ability {
 
         //Get aim and rotate by 45*
         Vector2 aim = InputManager.instance.GetAimDirection(playerActor.model.playerID);
-        if (aim.magnitude <= 0.1)
+        if (aim.magnitude <= 0.8)
         {
             aim = aim * 100f;
         }
@@ -44,7 +44,7 @@ public class AbilityBinLaden : Ability {
 
     private void ThrowBag()
     {
-        bag.GetComponent<TNTBag>().Throw(power,playerActor.transform.position);
+        bag.GetComponent<TNTBag>().Throw(power, playerActor.transform.position);
         
     }
 }

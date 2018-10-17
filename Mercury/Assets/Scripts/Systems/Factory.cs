@@ -279,10 +279,16 @@ public class Factory : MonoBehaviour
 
     public GameObject CreateRocketHit() //adds an explosion effect onto the rocket when it hits/collides with an object.
     {
-        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Explosion"));
+        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketExplosion"));
         ParticleSystem.ShapeModule shape = rocketHit.GetComponent<ParticleSystem>().shape;
-        shape.radius = 0.4f;
+        shape.radius = 0.8f;
         return rocketHit;
+    }
+
+    public GameObject CreateBagExplosion() //adds an explosion effect onto the rocket when it hits/collides with an object.
+    {
+        GameObject exlosion = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BagExplosion"));
+        return exlosion;
     }
     public GameObject CreateRocketSmokeFlash()  //adds an smoke flash effect that travels with the rocket itself.
     {
@@ -562,7 +568,7 @@ public class Factory : MonoBehaviour
         {
         int chunkCount = Random.Range(5, 9);
         List<GameObject> chunkList = new List<GameObject>();
-        Debug.Log("Chunk Count" + chunkCount);
+
         //Creates a game object 
         for (int i = 0; i < chunkCount; i++)
         { 

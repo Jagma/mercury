@@ -7,12 +7,20 @@ public class TNTBag : MonoBehaviour
     Rigidbody rigid;
     float blastRadius;
     float damage;
+
+    private void Init()
+    {
+        blastRadius = 2f;
+        damage = 100;
+    }
+
     private void Awake()
     {
         rigid = gameObject.GetComponent<Rigidbody>();
     }
     void Start()
     {
+        Init();
         AudioManager.instance.PlayAudio("abra", 1, false);
     }
 
@@ -22,15 +30,11 @@ public class TNTBag : MonoBehaviour
         {
             Explode();
         }
-        if( rigid.velocity.y == 0)
-        {
-            Explode();
-        }
     }
 
     public void Throw(float power, Vector3 position)
     {
-        rigid.AddExplosionForce(power, position, 5f, 0.5f, ForceMode.Impulse);
+        rigid.AddExplosionForce(power, position, 10f,0.2f, ForceMode.Impulse);
     }
 
     //Destroying object and applying damage to colliding players ect.
@@ -39,13 +43,12 @@ public class TNTBag : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(this.transform.position, blastRadius);
         foreach(Collider hit in hits)
         {
-            Debug.Log(hit.gameObject.name);
             if(hit.GetComponent<Enemy>() != null)
             {
                 Enemy enemyHit = hit.GetComponent<Enemy>();
                 enemyHit.Damage(damage);
             }
-            if (hit.gameObject.name.Equals("Player"))
+            if (hit.GetComponent<PlayerActor>() != null)
             {
                 PlayerActor player = hit.GetComponent<PlayerActor>();
                 player.Damage(damage);
@@ -56,7 +59,7 @@ public class TNTBag : MonoBehaviour
                 wall.Damage((int)damage);
             }
         }
-        GameObject explosion = Factory.instance.CreateRocketHit();//Explosion effect
+        GameObject explosion = Factory.instance.CreateBagExplosion();//Explosion effect
         explosion.transform.position = rigid.transform.position;
         GameObject.Destroy(gameObject);
     }

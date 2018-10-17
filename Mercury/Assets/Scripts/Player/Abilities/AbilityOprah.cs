@@ -15,7 +15,7 @@ public class AbilityOprah : Ability
         base.Init();
 
         // Stats
-        cooldown = 0f;
+        cooldown = 4f;
     }
 
     protected override void Use()
