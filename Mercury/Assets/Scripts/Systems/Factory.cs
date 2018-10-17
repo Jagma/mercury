@@ -35,6 +35,7 @@ public class Factory : MonoBehaviour
     }
 
     // Factory methods
+    #region Characters
     public GameObject CreatePlayerBase()
     {
         GameObject playerGO = new GameObject("Player");
@@ -150,42 +151,9 @@ public class Factory : MonoBehaviour
 
         return playerGO;
     }
-    public GameObject CreateDropShadow()
-    {
-        GameObject dropShadowGO = new GameObject("Drop Shadow");
+#endregion
 
-        SpriteRenderer sr = dropShadowGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Random/DropShadow");
-        sr.color = new Color(0, 0, 0, 0.5f);
-
-        dropShadowGO.AddComponent<DropShadow>();
-        return dropShadowGO;
-    }
-    public GameObject CreateTNTBag()
-    {
-        GameObject bagGO = new GameObject("TNTBag");
-
-        SphereCollider bagCollider = bagGO.AddComponent<SphereCollider>();
-        bagCollider.isTrigger = false;
-        bagCollider.radius = 0.0f;
-
-        Rigidbody bagRigid = bagGO.AddComponent<Rigidbody>();
-        bagRigid.isKinematic = true;
-        bagRigid.useGravity = false;
-
-        GameObject bagVisualGO = new GameObject("Visual");
-        bagVisualGO.transform.parent = bagGO.transform;
-
-        GameObject bagVisualBodyGO = new GameObject("Body");
-        bagVisualBodyGO.transform.parent = bagVisualGO.transform;
-        SpriteRenderer sr = bagVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Random/TNTBag");
-
-        Projectile p = bagGO.AddComponent<TNTBag>();
-        p.Init();
-        return bagGO;
-    }
-
+    #region Bullets
     public GameObject CreateBullet()
     {
         GameObject bulletGO = new GameObject("Bullet");
@@ -286,7 +254,9 @@ public class Factory : MonoBehaviour
         beam.Init();
         return purpleBeamGO;
     }
+#endregion
 
+    #region Effects & Abilities
     public GameObject CreateBulletHit() 
     {
         GameObject bulletHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
@@ -320,15 +290,51 @@ public class Factory : MonoBehaviour
         return smokeFlash;
     }
 
-    
-
     public GameObject CreateMuzzleFlash() //adds an muzzle flash effect for the weapon.
     {
         GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
         return muzzleFlash;
     }
 
-   public GameObject CreatePistol()
+    public GameObject CreateDropShadow()
+    {
+        GameObject dropShadowGO = new GameObject("Drop Shadow");
+
+        SpriteRenderer sr = dropShadowGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Random/DropShadow");
+        sr.color = new Color(0, 0, 0, 0.5f);
+
+        dropShadowGO.AddComponent<DropShadow>();
+        return dropShadowGO;
+    }
+
+    public GameObject CreateTNTBag()
+    {
+        GameObject bagGO = new GameObject("TNTBag");
+
+        Rigidbody bagRigid = bagGO.AddComponent<Rigidbody>();
+        bagRigid.useGravity = true;
+        bagRigid.freezeRotation = true;
+        bagRigid.transform.position = bagGO.transform.position;
+
+        SphereCollider bagCollider = bagGO.AddComponent<SphereCollider>();
+        bagCollider.isTrigger = false;
+        bagCollider.radius = 0.0f;
+        bagCollider.transform.parent = bagRigid.transform;
+
+        SpriteRenderer sr = bagGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Random/TNTBag");
+        sr.transform.parent = bagRigid.transform;
+        sr.transform.localEulerAngles = new Vector3(45, 0, 0);
+
+        TNTBag bag = bagGO.AddComponent<TNTBag>();
+        return bagGO;
+    }
+
+    #endregion
+
+    #region Weapons
+    public GameObject CreatePistol()
    {
         GameObject pistolGO = new GameObject("Pistol");
 
@@ -508,7 +514,9 @@ public class Factory : MonoBehaviour
 
         return rocketLauncherGO;
     }
+#endregion 
 
+    #region Blood
     public GameObject CreateBlood()
     {
         GameObject bloodGO = new GameObject("Blood");
@@ -525,12 +533,10 @@ public class Factory : MonoBehaviour
     /// <param name="radius"> The radius of the cirle </param>
     /// <returns> List of GameObjects</returns>
         public List<GameObject> CreateChunks(Vector3 center, float radius)
-    {
-        System.Random random = new System.Random(91169420);
-        int chunkCount = random.Next(6, 10);
+        {
+        int chunkCount = Random.Range(5, 8);
         List<GameObject> chunkList = new List<GameObject>();
-        Debug.Log("Chunk COunt" + chunkCount);
-        //Creates a game object 
+
         for (int i = 0; i < chunkCount; i++)
         { 
             GameObject chunk = new GameObject();
@@ -540,13 +546,14 @@ public class Factory : MonoBehaviour
             rigid.useGravity = true;
 
             //Position around circle
-            float angle = random.Next(0, 360);
+            float angle = Random.Range(0,360);
             Vector3 pos = new Vector3(
                 x: center.x + radius * Mathf.Sin(angle * Mathf.Deg2Rad),
                 y: center.y,
                 z: center.z + radius * Mathf.Cos(angle * Mathf.Deg2Rad)
             );
             rigid.transform.position = pos;
+            rigid.mass = Random.Range(2f, 4f);
 
             SpriteRenderer visual = chunk.AddComponent<SpriteRenderer>();
             visual.transform.parent = rigid.transform;
@@ -555,6 +562,7 @@ public class Factory : MonoBehaviour
             GameObject trail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Blood/BloodTrail"));
             trail.transform.parent = rigid.transform;
             trail.transform.localPosition = Vector3.zero;
+            GameObject.Destroy(trail, 5f);
 
             Chunk behavior = chunk.AddComponent<Chunk>();
 
@@ -562,8 +570,9 @@ public class Factory : MonoBehaviour
         };
         return chunkList;
     }
+    #endregion
 
-
+    #region Chests
     public GameObject CreateNormalChest()  //code use to create the normal chest.
     {
         GameObject chestGO = new GameObject("Normal Chest");
@@ -615,7 +624,9 @@ public class Factory : MonoBehaviour
 
         return chestGO;
     }
+    #endregion
 
+    #region Health Pickups
     public GameObject CreateMedkit() //code use to create the medkit for players to pickup.
     {
         GameObject medkitGO = new GameObject("Medkit");
@@ -667,7 +678,9 @@ public class Factory : MonoBehaviour
 
         return medpackGO;
     }
+#endregion
 
+    #region Ammo Pickups
     public GameObject CreateRocketAmmoPack() //code use to create the rocket ammo pack for players to pickup.
     {
         GameObject rocketAmmoGO = new GameObject("RocketAmmo");
@@ -693,7 +706,6 @@ public class Factory : MonoBehaviour
 
         return rocketAmmoGO;
     }
-
 
     public GameObject CreateBulletAmmoPack() //code use to create the bullet ammo pack for players to pickup.
     {
@@ -747,7 +759,9 @@ public class Factory : MonoBehaviour
 
         return BeamAmmoGO;
     }
+    #endregion
 
+    #region Walls & Floor
     public GameObject CreateWallBreak(string environmentName) {
         GameObject brokenWall = GameObject.Instantiate(Resources.Load<GameObject>("Effects/" + environmentName + "/WallBreak"));
         return brokenWall;
@@ -781,7 +795,9 @@ public class Factory : MonoBehaviour
         floor.GetComponent<Renderer>().material = mat;
         return floor;
     }
+    #endregion
 
+    #region Enemies & Bosses
     public GameObject CreateEnemyWalker()  //code use to create the walker enemy within the game.
     {
         GameObject enemyWalkerGO = new GameObject("Enemy Walker");
@@ -884,6 +900,7 @@ public class Factory : MonoBehaviour
         enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
         return enemyRangedGO;
     }
+#endregion
 
     /* New stuff
      * ********************************************************

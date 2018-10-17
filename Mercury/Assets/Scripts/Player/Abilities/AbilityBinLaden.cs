@@ -6,19 +6,21 @@ public class AbilityBinLaden : Ability {
 
     GameObject bag;
     Vector3 aimDirection, position;
+    float power;
     public override void Init()
     {
         base.Init();
         
         // Stats
         cooldown = 0f;
+        power = 10;
+        placementOffset = 1;
     }
 
     protected override void Use()
     {
+        Init();
         base.Use();
-
-
 
         //Get aim and rotate by 45*
         Vector2 aim = InputManager.instance.GetAimDirection(playerActor.model.playerID);
@@ -30,30 +32,14 @@ public class AbilityBinLaden : Ability {
 
         //position to place object
         position = playerActor.transform.position + new Vector3(aimDirection.x, aimDirection.y, aimDirection.z) * placementOffset;
-
-
-        ThrowBag();
-        //PlaceBag();
-        
-    }
-
-    private void PlaceBag()
-    {
-
         bag = Factory.instance.CreateTNTBag();
         bag.transform.position = position;
-        bag.transform.right = aimDirection;
-        bag.GetComponent<Projectile>().Update();
-        AudioManager.instance.PlayAudio("abra", 1, false);
+        ThrowBag();
     }
 
     private void ThrowBag()
     {
-        bag = Factory.instance.CreateTNTBag();
-        bag.transform.position = position;
-        bag.GetComponent<TNTBag>().Move(aimDirection);
-        bag.transform.right = aimDirection;
-        bag.GetComponent<Projectile>().Update();
-        AudioManager.instance.PlayAudio("abra", 1, false);
+        bag.GetComponent<TNTBag>().Throw(power,playerActor.transform.position);
+        
     }
 }

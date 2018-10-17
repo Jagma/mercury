@@ -20,7 +20,6 @@ public class Chunk : MonoBehaviour {
             {
                 sr.sprite = ChooseBloodSplatter();
                 sr.transform.position = new Vector3(rigid.transform.position.x, 0.6f, rigid.transform.position.z);
-                Destroy(gameObject.GetComponent<ParticleSystem>());
                 Destroy(rigid);
             }
         }
@@ -29,8 +28,7 @@ public class Chunk : MonoBehaviour {
 	}
     private Sprite ChooseBloodSplatter()
     {
-        System.Random random = new System.Random(91142069);
-        int spriteNum = random.Next(1, 2);
+        int spriteNum = Random.Range(1, 4);
         return Resources.Load<Sprite>("Effects/Blood/Splat_" + spriteNum);
     }
 }
