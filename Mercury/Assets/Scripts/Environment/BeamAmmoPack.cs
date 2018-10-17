@@ -16,7 +16,7 @@ public class BeamAmmoPack : AmmoPack
         base.Use(player);
         if (player.GetPlayerEquippedWeapon().GetComponent<LaserRifle>() != null)
         {
-            player.GetPlayerEquippedWeapon().SetAmmoCount(ammoAmount);
+            player.GetPlayerEquippedWeapon().GetComponent<WeaponRanged>().SetAmmoCount(ammoAmount); //prevents enemy from running out of ammo.
             base.Delete();
         }
     }

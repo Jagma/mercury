@@ -354,6 +354,32 @@ public class Factory : MonoBehaviour
         return pistolGO;
    }
 
+    public GameObject CreateSword()
+    {
+        GameObject swordGO = new GameObject("Sword");
+
+        SphereCollider swordCollider = swordGO.AddComponent<SphereCollider>();
+        swordCollider.radius = 0.1f;
+
+        SphereCollider swordColliderT = swordGO.AddComponent<SphereCollider>();
+        swordColliderT.isTrigger = true;
+
+        Rigidbody swordRigid = swordGO.AddComponent<Rigidbody>();
+        swordRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject swordVisualGO = new GameObject("Visual");
+        swordVisualGO.transform.parent = swordGO.transform;
+
+        GameObject swordVisualBodyGO = new GameObject("Body");
+        swordVisualBodyGO.transform.parent = swordVisualGO.transform;
+        SpriteRenderer sr = swordVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Sword");
+
+        swordGO.AddComponent<Sword>();
+
+        return swordGO;
+    }
+
     public GameObject CreateShotgun()
     {
         GameObject shotgunGO = new GameObject("Shotgun");
@@ -529,7 +555,7 @@ public class Factory : MonoBehaviour
         System.Random random = new System.Random(91169420);
         int chunkCount = random.Next(6, 10);
         List<GameObject> chunkList = new List<GameObject>();
-        Debug.Log("Chunk COunt" + chunkCount);
+        Debug.Log("Chunk Count" + chunkCount);
         //Creates a game object 
         for (int i = 0; i < chunkCount; i++)
         { 
@@ -590,9 +616,9 @@ public class Factory : MonoBehaviour
         return chestGO;
     }
 
-    public GameObject CreateAmmoChest() //code use to create the ammo chest.
+    public GameObject CreateRareChest() //code use to create the rare chest.
     {
-        GameObject chestGO = new GameObject("Ammo Chest");
+        GameObject chestGO = new GameObject("Rare Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
         chestCollider.radius = 0.1f;
@@ -609,9 +635,9 @@ public class Factory : MonoBehaviour
         GameObject chestVisualBodyGO = new GameObject("Body");
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/AmmoChest");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/RareChest");
 
-        chestGO.AddComponent<AmmoChest>();  //makes usse of the AmmoChest script which has its own functionalities.
+        chestGO.AddComponent<RareChest>();  //makes usse of the RareCgest script which has its own functionalities.
 
         return chestGO;
     }

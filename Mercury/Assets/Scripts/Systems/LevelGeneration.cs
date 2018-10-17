@@ -46,7 +46,7 @@ public class LevelGeneration : MonoBehaviour
         {
             Miner miner = new Miner();
             miner.levelGen = this;
-            miner.lifetime = Random.RandomRange(400, 1000);
+            miner.lifetime = Random.Range(400, 1000);
             miner.posX = mapWidth / 2;
             miner.posZ = mapDepth / 2;
 
@@ -87,7 +87,7 @@ public class LevelGeneration : MonoBehaviour
 
 
         pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
-        //  pickups[minerList[0].posX, minerList[0].posZ] = "Ammo Chest";
+        pickups[minerList[0].posX, minerList[0].posZ] = "Rare Chest";
 
         // Build floor
         GameObject floor = Factory.instance.CreateFloor(ProgressionState.environmentName, 0);
@@ -154,9 +154,9 @@ public class LevelGeneration : MonoBehaviour
                     chestGO.transform.position = new Vector3(x, 2, z);
                 }
 
-                if (pickups[x, z] == "Ammo Chest")
+                if (pickups[x, z] == "Rare Chest")
                 {
-                    GameObject chestGO = Factory.instance.CreateAmmoChest();
+                    GameObject chestGO = Factory.instance.CreateRareChest();
                     chestGO.transform.parent = levelRoot;
                     chestGO.transform.position = new Vector3(x, 2, z);
                 }
@@ -266,7 +266,7 @@ public class Miner
         }
         if (Random.Range(0, 10000) > 9990)
         {
-            levelGen.pickups[posX, posZ] = "Ammo Chest";
+            levelGen.pickups[posX, posZ] = "Rare Chest";
         }
         if (Random.Range(0, 10000) > 9990)
         {

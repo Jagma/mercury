@@ -17,7 +17,7 @@ protected override void Use(PlayerActor player)
         base.Use(player);
         if (player.GetPlayerEquippedWeapon().GetComponent<Pistol>() != null || player.GetPlayerEquippedWeapon().GetComponent<MachineGun>() != null)
         {
-            player.GetPlayerEquippedWeapon().SetAmmoCount(ammoAmount);
+            player.GetPlayerEquippedWeapon().GetComponent<WeaponRanged>().SetAmmoCount(ammoAmount);
             base.Delete();
         }
     }

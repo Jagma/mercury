@@ -128,7 +128,7 @@ public class RangedWalker : Enemy
     {
         if (equippedWeapon)
         {
-            equippedWeapon.SetAmmoCount(9999); //prevents enemy from running out of ammo.
+            equippedWeapon.GetComponent<WeaponRanged>().SetAmmoCount(9999); //prevents enemy from running out of ammo.
             equippedWeapon.UseWeapon();
         }
     }

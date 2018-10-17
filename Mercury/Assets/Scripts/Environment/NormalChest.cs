@@ -5,7 +5,7 @@ using UnityEngine;
 public class NormalChest : Chest
 {
     GameObject randomWeapon;
-    GameObject randomHealthPack;
+    GameObject randomConsumable;
     int count = 1;
 
     protected override void Use()
@@ -13,19 +13,19 @@ public class NormalChest : Chest
         if (count >= 1)
         {
             count--;
-            Debug.Log("Chest opened.");
+            Debug.Log("Nomral chest opened.");
             Vector3 spawnPos = transform.position;
             randomWeapon = ChooseRandomWeapon();
             randomWeapon.transform.position = spawnPos;
-            randomHealthPack = ChooseRandomHealthPack();
-            randomHealthPack.transform.position = spawnPos;
+            randomConsumable = ChooseRandomConsumable();
+            randomConsumable.transform.position = spawnPos;
             base.Delete();
         }
     }
 
     public GameObject ChooseRandomWeapon()
     {
-        int[] itemWeights = { 2, 2, 1, 2,3,1,1 };
+        int[] itemWeights = { 2, 2, 1, 2,3,1,1,20,20,20 };
 
         int total = 0;
         for (int i=0; i < itemWeights.Length; i ++)
@@ -71,17 +71,17 @@ public class NormalChest : Chest
         {
             return Factory.instance.CreateLaserPistol();
         }
-       /* if (result == 6)
-        {
-            return Factory.instance.CreateFlamethrower();
-        }*/
+         if (result == 6)
+         {
+             return Factory.instance.CreateSword();
+         }
         return null;
     }
 
-    public GameObject ChooseRandomHealthPack()
+    public GameObject ChooseRandomConsumable()
     {
 
-        int[] itemWeights = { 3, 2};
+        int[] itemWeights = { 3, 2,3,3,3};
 
         int total = 0;
         for (int i = 0; i < itemWeights.Length; i++)
@@ -107,10 +107,23 @@ public class NormalChest : Chest
         {
             return Factory.instance.CreateMedkit();
         }
-        else
+        if (result == 1)
         {
             return Factory.instance.CreateMedpack();
         }
+        if (result == 2)
+        {
+            return Factory.instance.CreateBeamAmmoPack();
+        }
+        if (result == 3)
+        {
+            return Factory.instance.CreateBulletAmmoPack();
+        }
+        if (result == 4)
+        {
+            return Factory.instance.CreateRocketAmmoPack();
+        }
+        return null;
     }
 
 }

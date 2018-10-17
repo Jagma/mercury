@@ -40,30 +40,6 @@ public class Shotgun : WeaponRanged
             bullet.GetComponent<Projectile>().Update();
         }
 
-      /*  GameObject bullet1 = Factory.instance.CreateBullet();
-        GameObject bullet2 = Factory.instance.CreateBullet();
-        GameObject bullet3 = Factory.instance.CreateBullet();
-
-        bullet1.GetComponent<Round>().setDamage(damage);
-        bullet2.GetComponent<Round>().setDamage(damage);
-        bullet3.GetComponent<Round>().setDamage(damage);
-
-        bullet1.transform.position = transform.position + transform.right * ammoOffset;
-        bullet1.transform.right = transform.right;
-        bullet1.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
-
-        bullet2.transform.position = transform.position + transform.right * ammoOffset;
-        bullet2.transform.right = transform.right;
-        bullet2.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
-
-        bullet3.transform.position = transform.position + transform.right * ammoOffset;
-        bullet3.transform.right = transform.right;
-        bullet3.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
-
-        bullet1.GetComponent<Projectile>().Update();
-        bullet2.GetComponent<Projectile>().Update();
-        bullet3.GetComponent<Projectile>().Update();*/
-      
         AudioManager.instance.PlayAudio("dspistol", 1, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
