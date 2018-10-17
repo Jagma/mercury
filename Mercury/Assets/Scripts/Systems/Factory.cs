@@ -562,12 +562,8 @@ public class Factory : MonoBehaviour
         {
         int chunkCount = Random.Range(5, 8);
         List<GameObject> chunkList = new List<GameObject>();
-<<<<<<< HEAD
         Debug.Log("Chunk Count" + chunkCount);
         //Creates a game object 
-=======
-
->>>>>>> 95a7772b70e1b30ba63e1544265efde3e2e5da01
         for (int i = 0; i < chunkCount; i++)
         { 
             GameObject chunk = new GameObject();
