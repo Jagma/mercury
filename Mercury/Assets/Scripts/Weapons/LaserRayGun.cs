@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LaserRifle : WeaponRanged
+public class LaserRayGun : WeaponRanged
 {
     GameObject beam;
     protected override void Start()

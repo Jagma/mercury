@@ -179,6 +179,31 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
+    public GameObject CreateLaserBullet()
+    {
+        GameObject LbulletGO = new GameObject("Laser Bullet");
+
+        SphereCollider lbulletCollider = LbulletGO.AddComponent<SphereCollider>();
+        lbulletCollider.isTrigger = true;
+        lbulletCollider.radius = 0.2f;
+
+        Rigidbody lbulletRigid = LbulletGO.AddComponent<Rigidbody>();
+        lbulletRigid.isKinematic = true;
+        lbulletRigid.useGravity = false;
+
+        GameObject lbulletVisualGO = new GameObject("Visual");
+        lbulletVisualGO.transform.parent = LbulletGO.transform;
+
+        GameObject lbulletVisualBodyGO = new GameObject("Body");
+        lbulletVisualBodyGO.transform.parent = lbulletVisualGO.transform;
+        SpriteRenderer sr = lbulletVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_2");
+
+        Projectile p = LbulletGO.AddComponent<Round>();
+        p.Init();
+        return LbulletGO;
+    }
+
     public GameObject CreateRocket()
     {
         GameObject rocketGO = new GameObject("Rocket");
@@ -300,6 +325,12 @@ public class Factory : MonoBehaviour
     {
         GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
         return muzzleFlash;
+    }
+
+    public GameObject CreateLaserMuzzleFlash() //adds an muzzle flash effect for the weapon.
+    {
+        GameObject LmuzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/LaserMuzzleFlash"));
+        return LmuzzleFlash;
     }
 
     public GameObject CreateDropShadow()
@@ -444,7 +475,30 @@ public class Factory : MonoBehaviour
         return flamethrowerGO;
     }
 
+    public GameObject CreateLaserMachineGun() //code use to create the laser machine gun weapon for the players to use.
+    {
+        GameObject LmachineGunGO = new GameObject("Laser Machine Gun");
+        SphereCollider LmachineGunCollider = LmachineGunGO.AddComponent<SphereCollider>();
+        LmachineGunCollider.radius = 0.1f;
 
+        SphereCollider LmachineGunColliderT = LmachineGunGO.AddComponent<SphereCollider>();
+        LmachineGunColliderT.isTrigger = true;
+
+        Rigidbody LmachineGunRigid = LmachineGunGO.AddComponent<Rigidbody>();
+        LmachineGunRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject LmachineGunVisualGO = new GameObject("Visual");
+        LmachineGunVisualGO.transform.parent = LmachineGunGO.transform;
+
+        GameObject LmachineGunVisualBodyGO = new GameObject("Body");
+        LmachineGunVisualBodyGO.transform.parent = LmachineGunVisualGO.transform;
+        SpriteRenderer sr = LmachineGunVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserMachineGun");
+
+        LmachineGunGO.AddComponent<LaserMachineGun>();
+
+        return LmachineGunGO;
+    }
     public GameObject CreateLaserPistol()  //code use to create the laser pistol weapon for the players to use.
     {
         GameObject laserPistolGO = new GameObject("Laser Pistol");
@@ -498,7 +552,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreateLaserRifle()  //code use to create the laser rifle weapon for the players to use.
     {
-        GameObject laserRifleGO = new GameObject("Laser Rifle");
+        GameObject laserRifleGO = new GameObject("Laser RayGun");
 
         SphereCollider laserRifleCollider = laserRifleGO.AddComponent<SphereCollider>();
         laserRifleCollider.radius = 0.1f;
@@ -515,9 +569,9 @@ public class Factory : MonoBehaviour
         GameObject laserRifleVissualBodyGO = new GameObject("Body");
         laserRifleVissualBodyGO.transform.parent = laserRifleVisualGO.transform;
         SpriteRenderer sr = laserRifleVissualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserRifle");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserRayGun");
 
-        laserRifleGO.AddComponent<LaserRifle>();
+        laserRifleGO.AddComponent<LaserRayGun>();
 
         return laserRifleGO;
     }
