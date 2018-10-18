@@ -27,4 +27,19 @@ public class Sword : WeaponMelee
     {
         damage = damageA;
     }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        Wall wall = col.GetComponent<Wall>();
+        if (wall != null)
+        {
+            wall.Damage(damage);
+        }
+
+        Enemy enemy = col.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.Damage(damage);
+        }
+    }
 }
