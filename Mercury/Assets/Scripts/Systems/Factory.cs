@@ -575,7 +575,7 @@ public class Factory : MonoBehaviour
         return machineGunGO;
     }
 
-    public GameObject CreateLaserRifle()  //code use to create the laser rifle weapon for the players to use.
+    public GameObject CreateLaserRayGun()  //code use to create the laser rifle weapon for the players to use.
     {
         GameObject laserRifleGO = new GameObject("Laser RayGun");
 

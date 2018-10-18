@@ -56,7 +56,7 @@ public class NormalChest : Chest
         }
         if (result == 2) 
         {
-            return Factory.instance.CreateLaserRifle();
+            return Factory.instance.CreateSniperRifle();
         }
         if (result == 3)
         {

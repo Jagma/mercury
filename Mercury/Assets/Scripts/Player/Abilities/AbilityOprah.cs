@@ -128,7 +128,7 @@ public class AbilityOprah : Ability
             if (result == 0)
                 return Factory.instance.CreateMachineGun();
             if (result == 1)
-                return Factory.instance.CreateLaserRifle();
+                return Factory.instance.CreateLaserRayGun();
             if (result == 2)
                 return Factory.instance.CreateRocketLauncher();
             if (result == 3)

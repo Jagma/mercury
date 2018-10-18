@@ -23,7 +23,7 @@ public class RareChest : Chest
 
     public GameObject ChooseRandomAmmoPack()
     {
-        int[] itemWeights = { 2, 2, 1, 2 };
+        int[] itemWeights = { 2, 2, 1, 2,3 };
 
         int total = 0;
         for (int i = 0; i < itemWeights.Length; i++)
@@ -51,13 +51,17 @@ public class RareChest : Chest
         }
         if (result == 1)
         {
-            return Factory.instance.CreateLaserRifle();
+            return Factory.instance.CreateLaserRayGun();
         }
         if (result == 2)
         {
             return Factory.instance.CreateFlamethrower();
         }
         if (result == 3)
+        {
+            return Factory.instance.CreateLaserMachineGun();
+        }
+        if (result == 4)
         {
             return Factory.instance.CreateShotgun();
         }
