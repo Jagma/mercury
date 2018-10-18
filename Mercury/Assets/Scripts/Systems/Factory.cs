@@ -396,6 +396,31 @@ public class Factory : MonoBehaviour
 
         return pistolGO;
    }
+    public GameObject CreateSniperRifle()
+    {
+        GameObject sniperGO = new GameObject("Sniper Rifle");
+
+        SphereCollider sniperCollider = sniperGO.AddComponent<SphereCollider>();
+        sniperCollider.radius = 0.1f;
+
+        SphereCollider sniperColliderT = sniperGO.AddComponent<SphereCollider>();
+        sniperColliderT.isTrigger = true;
+
+        Rigidbody sniperRigid = sniperGO.AddComponent<Rigidbody>();
+        sniperRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject sniperVisualGO = new GameObject("Visual");
+        sniperVisualGO.transform.parent = sniperGO.transform;
+
+        GameObject sniperVisualBodyGO = new GameObject("Body");
+        sniperVisualBodyGO.transform.parent = sniperVisualGO.transform;
+        SpriteRenderer sr = sniperVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/SniperRifle");
+
+        sniperGO.AddComponent<SniperRifle>();
+
+        return sniperGO;
+    }
 
     public GameObject CreateSword()
     {
