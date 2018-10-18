@@ -206,12 +206,19 @@ public class PlayerActor : MonoBehaviour
         blood.transform.position = this.transform.position;
     }
 
-    public void Down() {
-        if (GameProgressionManager.instance.getPlayerCount() > 1) {
+
+    public void Down()
+    {
+        GameProgressionManager.instance.SetPlayerDown(model.playerID, true);
+        bool allDown = GameProgressionManager.instance.getPlayerDownCount();
+
+        if (GameProgressionManager.instance.getPlayerCount() > 1 && allDown ==false)
+        {
             DisplayPlayerDown();
             model.playerActive = false;
         }
-        else {
+        else
+        {
             Death();
         }
     }
@@ -220,7 +227,8 @@ public class PlayerActor : MonoBehaviour
     {
         model.health += hp;
 
-        if (model.health + hp > 100) {
+        if (model.health + hp > 100)
+        {
             model.health = 100;
         }            
   
@@ -231,7 +239,9 @@ public class PlayerActor : MonoBehaviour
             rigid.constraints = RigidbodyConstraints.FreezeRotation;
             visual.transform.parent = transform;
             visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+            GameProgressionManager.instance.SetPlayerDown(model.playerID, false);
         }
+
     }
 
 

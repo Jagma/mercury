@@ -17,7 +17,8 @@ public class GameProgressionManager : MonoBehaviour
     private GameObject levels;
     private GameObject[] players;
     private GameObject[] gunsUsed;
-    private List<string> playerActors = new List<string>();
+    public List<string> playerActors = new List<string>();
+    public List<bool> playerDown = new List<bool>();
     private List<string> player;
     // The Game progression manager is a singleton
     public static GameProgressionManager instance;
@@ -34,19 +35,53 @@ public class GameProgressionManager : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
+  
+    }
+
+    public bool getPlayerDownCount()
+    {
+        int count = 0;
+        for (int i = 0; i < playerDown.Count; i++) //loop to check if all players are down.
+        {
+            if (playerDown[i] == true)
+            {
+                Debug.Log("get value is true");
+                count++;
+            }
+        }
+        Debug.Log("count " + count + "player cont is " + playerDown.Count);
+        if (count >= playerDown.Count) //checks to see if the countDown is equal or larger than the players down count.
+            return true;
+        else
+            return false;
+    }
+
+    public void SetPlayerDown(string playerID, bool value)
+    {
+        for (int i = 0; i < playerActors.Count; i++)//set player down in gameprogression manager to false.
+        {
+            if (playerActors[i] == playerID)
+            {
+                Debug.Log("set  value: " + value);
+                playerDown[i] = value;
+                return;
+            }
+        }
 
     }
 
     public void setPlayerList(string players)
     {
         playerActors.Add(players);
+        playerDown.Add(false);
+        Debug.Log(playerActors.Count);
     }
 
     public void RestartLevel()
