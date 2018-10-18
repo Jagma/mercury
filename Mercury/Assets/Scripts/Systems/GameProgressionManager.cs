@@ -97,6 +97,10 @@ public class GameProgressionManager : MonoBehaviour
 
     public void Reset()
     {
+        for (int i = 0; i < playerActors.Count; i++)//set player down in gameprogression manager to false.
+        {
+            playerDown[i] = false;
+        }
         numEnemiesStart = 0;
     }
 
