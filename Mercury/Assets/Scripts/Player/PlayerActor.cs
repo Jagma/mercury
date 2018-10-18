@@ -24,6 +24,8 @@ public class PlayerActor : MonoBehaviour
         model.equippedWeapon = Factory.instance.CreateBurstAssaultRifle().GetComponent<Weapon>();
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
+
+        SingleUsePassives();//Activate passives with single affect
     }
 
 	void Update ()
@@ -37,11 +39,12 @@ public class PlayerActor : MonoBehaviour
             if (model.secondaryWeapon)
             {
                 model.secondaryWeapon.transform.position = transform.position + new Vector3(0.4f, 0, 0.5f);
-
             }
-
+            
             // Visual look at camera
             visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+
+            RecurringPassives();//Apply recurring affects of passives
         }
     }
 
@@ -204,6 +207,7 @@ public class PlayerActor : MonoBehaviour
 
         GameObject blood = Factory.instance.CreateBlood();
         blood.transform.position = this.transform.position;
+        GameObject.Destroy(blood, 5);
     }
 
 
@@ -212,7 +216,7 @@ public class PlayerActor : MonoBehaviour
         GameProgressionManager.instance.SetPlayerDown(model.playerID, true);
         bool allDown = GameProgressionManager.instance.getPlayerDownCount();
 
-        if (GameProgressionManager.instance.getPlayerCount() > 1 && allDown ==false)
+        if (GameProgressionManager.instance.getPlayerCount() > 1 && allDown == false)
         {
             DisplayPlayerDown();
             model.playerActive = false;
@@ -226,10 +230,10 @@ public class PlayerActor : MonoBehaviour
     public void HealPlayer(float hp)
     {
         model.health += hp;
-
-        if (model.health + hp > 100)
+        Debug.Log("Player was healed by" + hp);
+        if (model.health + hp > model.maxHealth)
         {
-            model.health = 100;
+            model.health = model.maxHealth;
         }            
   
         if (model.playerActive == false)
@@ -266,6 +270,28 @@ public class PlayerActor : MonoBehaviour
         AudioManager.instance.PlayAudio("death1", 1, false);
         Debug.Log("Player died.");
         GameProgressionManager.instance.GameOver();
+    }
+    
+    private void RecurringPassives()// Apply passive's recurring affect
+    {
+        if(model.passives.Count > 0)
+        {
+            foreach (Passive passive in model.passives)
+            {
+                passive.RecurringAffect();
+            }
+        } 
+    }
+    
+    private void SingleUsePassives()// Apply passive's single affect
+    {
+        if (model.passives.Count > 0)
+        {
+            foreach (Passive passive in model.passives)
+            {
+                passive.SingleAffect();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider col)

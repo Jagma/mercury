@@ -16,6 +16,7 @@ public class PlayerModel
     public Weapon equippedWeapon;
     public Weapon secondaryWeapon;
     public Ability ability;
-
     public bool godMode = false;
+
+    public List<Passive> passives = new List<Passive>();
 }
