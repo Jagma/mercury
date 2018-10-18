@@ -396,6 +396,58 @@ public class Factory : MonoBehaviour
 
         return pistolGO;
    }
+
+    public GameObject CreateRevolver()
+    {
+        GameObject revolverGO = new GameObject("Revolver");
+
+        SphereCollider revolverCollider = revolverGO.AddComponent<SphereCollider>();
+        revolverCollider.radius = 0.1f;
+
+        SphereCollider revolverColliderT = revolverGO.AddComponent<SphereCollider>();
+        revolverColliderT.isTrigger = true;
+
+        Rigidbody revolverRigid = revolverGO.AddComponent<Rigidbody>();
+        revolverRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject revolverVisualGO = new GameObject("Visual");
+        revolverVisualGO.transform.parent = revolverGO.transform;
+
+        GameObject revolverVisualBodyGO = new GameObject("Body");
+        revolverVisualBodyGO.transform.parent = revolverVisualGO.transform;
+        SpriteRenderer sr = revolverVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Revolver");
+
+        revolverGO.AddComponent<Revolver>();
+
+        return revolverGO;
+    }
+
+    public GameObject CreateBurstAssaultRifle()
+    {
+        GameObject burstARGO = new GameObject("Burst Assault Rifle");
+
+        SphereCollider burstARCollider = burstARGO.AddComponent<SphereCollider>();
+        burstARCollider.radius = 0.1f;
+
+        SphereCollider burstARColliderT = burstARGO.AddComponent<SphereCollider>();
+        burstARColliderT.isTrigger = true;
+
+        Rigidbody burstARRigid = burstARGO.AddComponent<Rigidbody>();
+        burstARRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject burstARVisualGO = new GameObject("Visual");
+        burstARVisualGO.transform.parent = burstARGO.transform;
+
+        GameObject burstARVisualBodyGO = new GameObject("Body");
+        burstARVisualBodyGO.transform.parent = burstARVisualGO.transform;
+        SpriteRenderer sr = burstARVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/BurstAssaultRifle");
+
+        burstARGO.AddComponent<BurstAssaultRifle>();
+
+        return burstARGO;
+    }
     public GameObject CreateSniperRifle()
     {
         GameObject sniperGO = new GameObject("Sniper Rifle");

@@ -52,11 +52,10 @@ public class GameProgressionManager : MonoBehaviour
         {
             if (playerDown[i] == true)
             {
-                Debug.Log("get value is true");
                 count++;
             }
         }
-        Debug.Log("count " + count + "player cont is " + playerDown.Count);
+
         if (count >= playerDown.Count) //checks to see if the countDown is equal or larger than the players down count.
             return true;
         else
@@ -69,7 +68,6 @@ public class GameProgressionManager : MonoBehaviour
         {
             if (playerActors[i] == playerID)
             {
-                Debug.Log("set  value: " + value);
                 playerDown[i] = value;
                 return;
             }

@@ -21,7 +21,7 @@ public class PlayerActor : MonoBehaviour
     void Start ()
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
-        model.equippedWeapon = Factory.instance.CreateSniperRifle().GetComponent<Weapon>();
+        model.equippedWeapon = Factory.instance.CreateBurstAssaultRifle().GetComponent<Weapon>();
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
     }

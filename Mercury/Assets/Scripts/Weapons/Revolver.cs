@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : WeaponRanged
+public class Revolver : WeaponRanged
 {
+
     protected override void Start()
     {
         base.Start();
 
         // Stats
-        cooldown = 0.5f;
+        cooldown = 0.75f;
         ammoOffset = 0.2f;
-        ammoMaxInventory = 60;
-        ammoInventory = 60;
-        ammoMax = 15;
-        ammoCount = 15;
-        damage = 5;
+        ammoMaxInventory = 18;
+        ammoInventory = 18;
+        ammoMax = 6;
+        ammoCount = 6;
+        damage = 9;
     }
 
     protected override void Use()
     {
         base.Use();
-            
+
         GameObject flash = Factory.instance.CreateMuzzleFlash();
         flash.transform.position = transform.position + transform.right * ammoOffset;
         Destroy(flash, 1);
@@ -34,7 +35,7 @@ public class Pistol : WeaponRanged
         bullet.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
         bullet.GetComponent<Projectile>().Update();
 
-        AudioManager.instance.PlayAudio("dspistol", 1f, false);
+        AudioManager.instance.PlayAudio("rev_sound_effect", 1f, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
