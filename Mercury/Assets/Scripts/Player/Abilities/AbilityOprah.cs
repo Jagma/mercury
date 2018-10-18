@@ -56,13 +56,13 @@ public class AbilityOprah : Ability
 
         int[] categoryWeight = 
             {
-                2, // Hit Effect
+                3, // Hit Effect
                 2, // Enemies
-                5, // Rounds
+                6, // Rounds
                 5, // Weapons
                 1, // Chest
-                2, // Medkit
-                2  //Ammo Pack
+                1, // Medkit
+                1  //Ammo Pack
             };
 
         int[] weaponWeights = 
@@ -75,8 +75,8 @@ public class AbilityOprah : Ability
                 2, // Shotgun
                 1, // Flamethrower
             };
-        int[] enemyWeights = {60, 40};
-
+        int[] enemyWeights = { 5, 1}; //Melee |Ranged
+        int[] chestWeights = { 5, 1 };//Normal |Rare
         int result = GetResult(categoryWeight);//Choose category
 
         #region Hit Effects
@@ -138,11 +138,11 @@ public class AbilityOprah : Ability
         #region Chest
         if (result == 4)
         {
-            int roll = Random.Range(0, 2);
+            result = GetResult(categoryWeight);
 
-            if (roll == 0)
+            if (result == 0)
                 return Factory.instance.CreateNormalChest();
-            if (roll == 1)
+            if (result == 1)
                 return Factory.instance.CreateRareChest();
 
         }

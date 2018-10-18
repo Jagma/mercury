@@ -699,7 +699,6 @@ public class Factory : MonoBehaviour
         {
         int chunkCount = Random.Range(5, 9);
         List<GameObject> chunkList = new List<GameObject>();
-
         //Creates a game object 
         for (int i = 0; i < chunkCount; i++)
         { 
@@ -720,8 +719,10 @@ public class Factory : MonoBehaviour
             rigid.mass = Random.Range(2f, 5f);
 
             SpriteRenderer visual = chunk.AddComponent<SpriteRenderer>();
+            visual.sprite = Resources.Load<Sprite>("Effects/Blood/Splat_" + Random.Range(1, 5));
             visual.transform.parent = rigid.transform;
             visual.transform.rotation *= Quaternion.AngleAxis(45f, Vector3.right);
+            visual.enabled = false;
 
             GameObject trail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Blood/BloodTrail"));
             trail.transform.parent = rigid.transform;

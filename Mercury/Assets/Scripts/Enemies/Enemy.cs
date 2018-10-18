@@ -77,6 +77,7 @@ public class Enemy : MonoBehaviour
     {
         GameObject blood = Factory.instance.CreateBlood();
         blood.transform.position = this.transform.position;
+        GameObject.Destroy(blood, 5);
 
         health -= damage;
         if (health <= 0)
