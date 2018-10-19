@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198714375184474898}
   - component: {fileID: 199044576494926334}
   m_Layer: 0
-  m_Name: MuzzleFlash
+  m_Name: LaserMuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.25207138, g: 0, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.8680659, b: 0.08399999, a: 1}
+      maxColor: {r: 0, g: 0.9622642, b: 0.90209514, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

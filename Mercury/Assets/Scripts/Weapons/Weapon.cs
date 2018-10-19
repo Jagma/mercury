@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     protected Transform visual;
     protected float cooldownRemaining = 0f;
 
-    protected int damage = 0;
+    protected float damage = 0;
     protected int ammoMaxInventory = 120; //ammoMMaxInventory is the maximum ammount of ammo a weapon can have in the player's inventory.
     protected int ammoInventory = 120; //ammoInventory is the amount of ammo for the weapon in the player's inventory.
     protected int ammoCount = 120; //ammoCount is the amount of ammo currently in the weapon's mag.
@@ -49,6 +49,7 @@ public class Weapon : MonoBehaviour
             {
                 cooldownRemaining = cooldown;
                 ammoCount--;
+                Debug.Log("Damage is " + damage);
                 Use();
             }
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
@@ -62,6 +63,13 @@ public class Weapon : MonoBehaviour
             }
         }
 
+    }
+
+    public void SetWeaponDamage (float value)
+    {
+        Debug.Log("Damage before change is : " + damage);
+        damage = value;
+        Debug.Log("Damage after change is : " + damage);
     }
 
     public void SetAmmoCount(int ammoValue)

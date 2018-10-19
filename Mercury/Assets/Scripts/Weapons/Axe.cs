@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : WeaponMelee
+public class Axe : WeaponMelee
 {
 
     protected override void Start()
@@ -13,9 +13,9 @@ public class Sword : WeaponMelee
         cooldown = 0.5f;
         ammoMaxInventory = 0;
         ammoInventory = 0;
-        ammoMax = 100;
-        ammoCount = 100;
-        damage = 10f;
+        ammoMax = 150;
+        ammoCount = 150;
+        damage = 25;
     }
 
     protected override void Use()

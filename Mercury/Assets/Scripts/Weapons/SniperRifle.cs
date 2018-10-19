@@ -16,7 +16,7 @@ public class SniperRifle : WeaponRanged
         ammoInventory = 15;
         ammoMax = 5;
         ammoCount = 5;
-        damage = 50;
+        damage = 50f;
     }
 
     protected override void Use()
@@ -40,8 +40,4 @@ public class SniperRifle : WeaponRanged
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }

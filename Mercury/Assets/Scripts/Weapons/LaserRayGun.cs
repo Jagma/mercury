@@ -19,12 +19,6 @@ public class LaserRayGun : WeaponRanged
         ammoCount = 100;
     }
 
-
-    public void setDamage(int damageA)
-    {
-        beam.GetComponent<BeamNeon>().setDamage(damageA);
-    }
-
     protected override void Use()
     {
         base.Use();

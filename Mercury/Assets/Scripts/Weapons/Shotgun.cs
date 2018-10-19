@@ -12,12 +12,12 @@ public class Shotgun : WeaponRanged
         // Stats
         cooldown = 0.5f;
         ammoOffset = 0.6f;
-        ammoRandomness = 20f;
+        ammoRandomness = 40f;
         ammoMaxInventory = 20;
         ammoInventory = 20;
         ammoMax = 6;
         ammoCount = 6;
-        damage = 25;
+        damage = 25f;
     }
 
     protected override void Use()
@@ -43,10 +43,5 @@ public class Shotgun : WeaponRanged
         AudioManager.instance.PlayAudio("dspistol", 1, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
-    }
-
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
     }
 }

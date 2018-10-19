@@ -17,7 +17,7 @@ public class BurstAssaultRifle : WeaponRanged
         ammoInventory = 120;
         ammoMax = 31;
         ammoCount = 31;
-        damage = 25;
+        damage = 25f;
     }
 
     protected override void Use()
@@ -58,8 +58,4 @@ public class BurstAssaultRifle : WeaponRanged
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }

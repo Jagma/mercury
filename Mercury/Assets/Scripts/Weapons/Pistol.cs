@@ -15,7 +15,7 @@ public class Pistol : WeaponRanged
         ammoInventory = 60;
         ammoMax = 15;
         ammoCount = 15;
-        damage = 5;
+        damage = 5f;
     }
 
     protected override void Use()
@@ -39,8 +39,4 @@ public class Pistol : WeaponRanged
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }

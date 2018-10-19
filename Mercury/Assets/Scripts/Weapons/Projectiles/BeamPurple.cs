@@ -10,9 +10,9 @@ public class BeamPurple : Beam
 
         // Stats
         width = 0.5f;
-        damage = 35;
+        damage = 35f;
     }
-    public void setDamage(int damageA)
+    public void setDamage(float damageA)
     {
         damage = damageA;
     }

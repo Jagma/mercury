@@ -17,7 +17,7 @@ public class MachineGun : WeaponRanged
         ammoInventory = 500;
         ammoMax = 40;
         ammoCount = 40;
-        damage = 10;
+        damage = 10f;
     }
 
    protected override void Use()
@@ -42,8 +42,4 @@ public class MachineGun : WeaponRanged
         AudioManager.instance.PlayAudio("sfx_wpn_machinegun_loop2", 1, false);
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }

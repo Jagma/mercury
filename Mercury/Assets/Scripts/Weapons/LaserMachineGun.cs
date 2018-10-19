@@ -17,7 +17,7 @@ public class LaserMachineGun : WeaponRanged
         ammoInventory = 500;
         ammoMax = 40;
         ammoCount = 40;
-        damage = 15;
+        damage = 15f;
     }
 
     protected override void Use()
@@ -39,8 +39,4 @@ public class LaserMachineGun : WeaponRanged
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }

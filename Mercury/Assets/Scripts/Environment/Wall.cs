@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    public int health = 100;
+    public float health = 100;
 
-    public void Damage (int damage)
+    public void Damage (float damage)
     {
         health -= damage;
 

@@ -380,7 +380,7 @@ public class Factory : MonoBehaviour
 
         SphereCollider pistolColliderT = pistolGO.AddComponent<SphereCollider>();
         pistolColliderT.isTrigger = true;
-
+         
         Rigidbody pistolRigid = pistolGO.AddComponent<Rigidbody>();
         pistolRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
@@ -498,6 +498,32 @@ public class Factory : MonoBehaviour
         swordGO.AddComponent<Sword>();
 
         return swordGO;
+    }
+
+    public GameObject CreateAxe()
+    {
+        GameObject axeGO = new GameObject("Axe");
+
+        SphereCollider axeCollider = axeGO.AddComponent<SphereCollider>();
+        axeCollider.radius = 0.1f;
+
+        SphereCollider axeColliderT = axeGO.AddComponent<SphereCollider>();
+        axeColliderT.isTrigger = true;
+
+        Rigidbody axeRigid = axeGO.AddComponent<Rigidbody>();
+        axeRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject axeVisualGO = new GameObject("Visual");
+        axeVisualGO.transform.parent = axeGO.transform;
+
+        GameObject axeVisualBodyGO = new GameObject("Body");
+        axeVisualBodyGO.transform.parent = axeGO.transform;
+        SpriteRenderer sr = axeVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Axe");
+
+        axeGO.AddComponent<Axe>();
+
+        return axeGO;
     }
 
     public GameObject CreateShotgun()
@@ -1041,6 +1067,56 @@ public class Factory : MonoBehaviour
         return enemyRangedGO;
     }
 
+    public GameObject CreateCorruptedWalker() //code use to create the ranged walker enemy within the game.
+    {
+        GameObject enemyRangedGO = new GameObject("Corrupted Enemy");
+
+        CapsuleCollider enemyWalkerCollider = enemyRangedGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyRangedGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyRangedGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Corrupted Walker");
+
+        enemyRangedGO.AddComponent<CorruptedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        return enemyRangedGO;
+    }
+
+
+    public GameObject CreateArcWalker() //code use to create the ranged walker enemy within the game.
+    {
+        GameObject enemyRangedGO = new GameObject("Arc Enemy");
+
+        CapsuleCollider enemyWalkerCollider = enemyRangedGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyRangedGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyRangedGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Arc Walker");
+
+        enemyRangedGO.AddComponent<ArcWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        return enemyRangedGO;
+    }
     public GameObject CreateOverlordWalker() //code use to create the overlord walker enemy within the game.
     {
         GameObject enemyRangedGO = new GameObject("Overlord Walker");

@@ -8,7 +8,7 @@ public class Round : Projectile {
 
         // Stats
         speed = 20f;
-        damage = 10;
+        damage = 10f;
     }
     public override void Destroy() {
         base.Destroy();
@@ -17,7 +17,7 @@ public class Round : Projectile {
         Destroy(a, 1f);
     }
 
-    public void setDamage(int damageA)
+    public void setDamage(float damageA)
     {
         damage = damageA;
     }

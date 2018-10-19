@@ -10,10 +10,10 @@ public class BeamNeon : Beam
 
         // Stats
         width = 0.25f;
-        damage = 2;
+        damage = 2f;
     }
 
-    public void setDamage(int damageA)
+    public void setDamage(float damageA)
     {
         damage = damageA;
     }

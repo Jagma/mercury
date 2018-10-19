@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OverlordWalker : Enemy
+public class CorruptedWalker : Enemy
 {
     protected override void Start()
     {
         base.Start();
         CreateWeapon();
-        health = 100;
-        moveSpeed = 1.25f;
+        health = 65;
+        moveSpeed = 1f;
 
         movementTime = Random.Range(2f, 4f);
         waitTime = Random.Range(0.25f, 2f);
@@ -26,10 +26,12 @@ public class OverlordWalker : Enemy
             equippedWeapon.transform.position = transform.position + equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
         }
 
-        int layerId = LayerMask.NameToLayer("Player");
-        int layerMask = 1 << layerId;
-        colliders = Physics.OverlapSphere(transform.position, 7.5f, layerMask);
+        int playerLayerID = LayerMask.NameToLayer("Player");
+        int playerLayerMask = 1 << playerLayerID;
+        colliders = Physics.OverlapSphere(transform.position, 7.5f, playerLayerMask);
 
+
+        // Finds the closest player
         PlayerActor closestPlayerActor = null;
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -48,7 +50,6 @@ public class OverlordWalker : Enemy
                     closestPlayerActor = playerActor;
                 }
             }
-
         }
 
         // If we found a player move towards it
@@ -66,9 +67,11 @@ public class OverlordWalker : Enemy
                 int environmentLayerMask = 1 << environmentLayerID;
                 Ray ray = new Ray(transform.position, (closestPlayerActor.transform.position - transform.position).normalized);
 
-                if (Physics.Raycast(ray, 5.5f, environmentLayerMask) == false) {
+                if (Physics.Raycast(ray, 5.5f, environmentLayerMask) == false)
+                {
                     AttackPlayer();
                 }
+
             }
             base.MoveForward();
         }
@@ -108,12 +111,12 @@ public class OverlordWalker : Enemy
     void CreateWeapon()
     {
         GameObject weapon;
-        weapon = Factory.instance.CreateMachineGun();
+        weapon = Factory.instance.CreateShotgun();
         equippedWeapon = weapon.GetComponent<Weapon>();
-        equippedWeapon.SetWeaponDamage(0f);
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
+        equippedWeapon.SetWeaponDamage(2);
     }
 
     public void AimAtPlayer(Vector3 direction)
@@ -129,6 +132,7 @@ public class OverlordWalker : Enemy
     {
         if (equippedWeapon)
         {
+            equippedWeapon.SetAmmoCount(9999); //prevents enemy from running out of ammo.
             equippedWeapon.UseWeapon();
         }
     }

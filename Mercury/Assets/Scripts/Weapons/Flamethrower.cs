@@ -17,7 +17,7 @@ public class Flamethrower : WeaponRanged
         ammoInventory = 200;
         ammoMax = 100;
         ammoCount = 100;
-        damage = 50;
+        damage = 50f;
     }
 
     protected override void Use()
@@ -27,8 +27,4 @@ public class Flamethrower : WeaponRanged
         flame = Factory.instance.CreateFlame();
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }

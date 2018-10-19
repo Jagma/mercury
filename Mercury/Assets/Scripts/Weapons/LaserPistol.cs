@@ -8,7 +8,7 @@ public class LaserPistol : WeaponRanged
     protected override void Start()
     {
         base.Start();
-        damage = 75;
+        damage = 75f;
         beam = Factory.instance.CreateBeamPurple();
         beam.transform.parent = transform;
 
@@ -22,10 +22,6 @@ public class LaserPistol : WeaponRanged
 
     }
 
-    public void setDamage(int damageA)
-    {
-        beam.GetComponent<BeamPurple>().setDamage(damageA);
-    }
     protected override void Use()
     {
         base.Use();

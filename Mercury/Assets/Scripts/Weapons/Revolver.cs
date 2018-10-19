@@ -16,7 +16,7 @@ public class Revolver : WeaponRanged
         ammoInventory = 18;
         ammoMax = 6;
         ammoCount = 6;
-        damage = 9;
+        damage = 9f;
     }
 
     protected override void Use()
@@ -40,8 +40,4 @@ public class Revolver : WeaponRanged
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }
