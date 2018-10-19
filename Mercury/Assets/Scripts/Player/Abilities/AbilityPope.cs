@@ -5,21 +5,26 @@ using UnityEngine;
 public class AbilityPope : Ability
 {
 
-    float reviveRadius;
+    float abilityRadius;
     float reviveHP;
+    float healHP;
+    float reviveCount;
     public override void Init()
     {
         base.Init();
 
         // Stats
-        cooldown = 0f;
-        reviveRadius = 10f;
-        reviveHP = 50f;
+        cooldown = 10f;
+        abilityRadius = 20f;
+        healHP = 20;
+        reviveHP = 20;
+        reviveCount = 1;
     }
 
     protected override void Use()
     {
         base.Use();
+        Init();
         Revive();
     }
 
@@ -28,18 +33,28 @@ public class AbilityPope : Ability
     {
         int layerId = LayerMask.NameToLayer("Player");
         int layerMask = 1 << layerId;
-        colliders = Physics.OverlapSphere(playerActor.transform.position, reviveRadius, layerMask);
+        colliders = Physics.OverlapSphere(playerActor.transform.position, abilityRadius, layerMask);
 
-        for (int i = 0; i < colliders.Length; i++)
+        foreach (Collider hit in colliders)
         {
-            PlayerActor players = colliders[i].GetComponent<PlayerActor>();
-
-            // Is this collider a player
-            if (players != null)
+            PlayerActor playerHit = hit.GetComponent<PlayerActor>();
+            //Heal players that is not downed
+            if (playerHit != null && playerHit.model.playerActive == true)
             {
-                players.HealPlayer(players.model.maxHealth);
+                playerHit.HealPlayer(healHP);
             }
-
+            //Revive players that is downed
+            if (playerHit != null && playerHit.model.playerActive == false)
+            {
+                if (reviveCount == 0)
+                {
+                    reviveCount++;
+                    playerHit.HealPlayer(reviveHP);
+                }  
+                if (reviveCount > 0)
+                    playerHit.HealPlayer(reviveHP);
+                
+            }
         }
         AudioManager.instance.PlayAudio("Pope_peace", 1, false);
     }

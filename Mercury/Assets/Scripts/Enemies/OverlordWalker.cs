@@ -110,7 +110,7 @@ public class OverlordWalker : Enemy
         GameObject weapon;
         weapon = Factory.instance.CreateMachineGun();
         equippedWeapon = weapon.GetComponent<Weapon>();
-        equippedWeapon.GetComponent<MachineGun>().setDamage(5);
+        equippedWeapon.SetWeaponDamage(0f);
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
@@ -129,7 +129,6 @@ public class OverlordWalker : Enemy
     {
         if (equippedWeapon)
         {
-            equippedWeapon.SetAmmoCount(9999); //prevents enemy from running out of ammo.
             equippedWeapon.UseWeapon();
         }
     }

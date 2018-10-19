@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Blood : MonoBehaviour {
 
-
-    System.Random random = new System.Random(91169420);
-
     //Radius of circle used to place rigidbodies
     float placementRadius = 0.3f;
     //Center point of the circle
@@ -19,9 +16,7 @@ public class Blood : MonoBehaviour {
     float power;
     float radius = 5f;
     float upModifier = 0.3f;
-    float yOffset = 0.1f;
-    float zOffset = 0.1f;
-    float xOffset = 0.1f;
+    float offset = 2f;
 
     void Start () {
         //Instanciate center position
@@ -29,24 +24,21 @@ public class Blood : MonoBehaviour {
 
         List<GameObject> chunks = Factory.instance.CreateChunks(center,placementRadius);
 
-
-
         foreach (GameObject chunk in chunks)
         {
             //Offset to create randomness feel
-            float y = center.y + yOffset * random.Next(-1, 1);
-            float x = center.x + xOffset * random.Next(-1, 1);
-            float z = center.z + zOffset * random.Next(-1, 1);
+            float y = center.y + Random.Range(-offset, offset);
+            float x = center.x + Random.Range(-offset, offset);
+            float z = center.z + Random.Range(-offset, offset);
 
 
             explosionPoint = new Vector3(x, y, z);
-            power = random.Next(1, 5);
+            power = Random.Range(6, 10);
 
             Rigidbody rigidbody = chunk.GetComponent<Rigidbody>();
             rigidbody.AddExplosionForce(power, explosionPoint, radius, upModifier, ForceMode.Impulse);
         }
-
-        GameObject.Destroy(gameObject, 10f);
+        GameObject.Destroy(gameObject, 5f);
     }
 	
 	void Update () {

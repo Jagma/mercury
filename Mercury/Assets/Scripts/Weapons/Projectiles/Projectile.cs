@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {  
     public float speed = 20;
-    public int damage = 1;
+    public float damage = 1;
     protected Transform visual;
     
     public virtual void Init()

@@ -17,7 +17,7 @@ public class RocketLauncher : WeaponRanged
         ammoInventory = 7;
         ammoMax = 1;
         ammoCount = 1;
-        damage = 100;
+        damage = 100f;
     }
 
     protected override void Use()
@@ -35,8 +35,4 @@ public class RocketLauncher : WeaponRanged
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
 
-    public void setDamage(int damageA)
-    {
-        damage = damageA;
-    }
 }

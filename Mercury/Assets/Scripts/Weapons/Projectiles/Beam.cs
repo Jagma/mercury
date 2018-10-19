@@ -8,7 +8,7 @@ public class Beam : MonoBehaviour
     // Currently a lot of functionality that should be handled by the children classes lives here.
 
     public float width;
-    public int damage = 1;
+    public float damage = 1f;
     protected Transform visual;
 
     public virtual void Init()

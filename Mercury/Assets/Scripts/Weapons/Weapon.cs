@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     protected Transform visual;
     protected float cooldownRemaining = 0f;
 
-    protected int damage = 0;
+    protected float damage = 0;
     protected int ammoMaxInventory = 120; //ammoMMaxInventory is the maximum ammount of ammo a weapon can have in the player's inventory.
     protected int ammoInventory = 120; //ammoInventory is the amount of ammo for the weapon in the player's inventory.
     protected int ammoCount = 120; //ammoCount is the amount of ammo currently in the weapon's mag.
@@ -36,6 +36,7 @@ public class Weapon : MonoBehaviour
         equipped = false;
     }
 
+
     public void UseWeapon()
     {
         if (cooldownRemaining > 0)
@@ -45,10 +46,11 @@ public class Weapon : MonoBehaviour
         else
         {
             if (ammoCount > 0) //if there is still ammo left in the mag.
-            { 
+            {
                 cooldownRemaining = cooldown;
-                Use();
                 ammoCount--;
+                Debug.Log("Damage is " + damage);
+                Use();
             }
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
             {
@@ -56,14 +58,32 @@ public class Weapon : MonoBehaviour
             }
             else //if the weapon is completely out of ammo.
             {
+                return;
                 //play sound for out of ammo..
             }
         }
+
     }
 
-    protected virtual void Use()
+    public void SetWeaponDamage (float value)
     {
+        Debug.Log("Damage before change is : " + damage);
+        damage = value;
+        Debug.Log("Damage after change is : " + damage);
+    }
 
+    public void SetAmmoCount(int ammoValue)
+    {
+        if ((ammoInventory + ammoValue) > ammoMaxInventory) //checks to see if the current ammo inventory and the newly ammoun count obtained is greater than the max ammo allowed.
+        {
+            ammoInventory = ammoMaxInventory;
+            ReloadWeapon();
+        }
+        else
+        {
+            ammoInventory += ammoValue;
+            ReloadWeapon();
+        }
     }
 
     private void ReloadWeapon()
@@ -108,20 +128,11 @@ public class Weapon : MonoBehaviour
             }
         }
     }
-
-    public void SetAmmoCount(int ammoValue)
+    protected virtual void Use()
     {
-        if ((ammoInventory + ammoValue) > ammoMaxInventory) //checks to see if the current ammo inventory and the newly ammoun count obtained is greater than the max ammo allowed.
-        {
-            ammoInventory = ammoMaxInventory;
-            ReloadWeapon();
-        }
-        else
-        {
-            ammoInventory += ammoValue;
-            ReloadWeapon();
-        }
+
     }
+
     protected virtual void Update()
     {
         // Cooldown

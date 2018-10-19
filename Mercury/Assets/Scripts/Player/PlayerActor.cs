@@ -21,9 +21,11 @@ public class PlayerActor : MonoBehaviour
     void Start ()
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
-        model.equippedWeapon = Factory.instance.CreateLaserRifle().GetComponent<Weapon>();
+        model.equippedWeapon = Factory.instance.CreateShotgun().GetComponent<Weapon>();
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
+
+        SingleUsePassives();//Activate passives with single affect
     }
 
 	void Update ()
@@ -37,11 +39,12 @@ public class PlayerActor : MonoBehaviour
             if (model.secondaryWeapon)
             {
                 model.secondaryWeapon.transform.position = transform.position + new Vector3(0.4f, 0, 0.5f);
-
             }
-
+            
             // Visual look at camera
             visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+
+            RecurringPassives();//Apply recurring affects of passives
         }
     }
 
@@ -82,9 +85,7 @@ public class PlayerActor : MonoBehaviour
             }
             Weapon sw = model.equippedWeapon;
             model.equippedWeapon.Dequip();
-            model.equippedWeapon.equipped = false;
             model.secondaryWeapon.Equip();
-            model.secondaryWeapon.equipped = true;
             model.equippedWeapon = model.secondaryWeapon;
             model.secondaryWeapon = sw;
             model.secondaryWeapon.gameObject.SetActive(false);
@@ -92,6 +93,24 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
+    private void PickUpWeapon(Weapon weapon)
+    {
+        model.equippedWeapon = weapon;
+        model.equippedWeapon.Equip();
+    }
+
+    private void SwapEquipedWeapon(Weapon weapon)
+    {
+        model.equippedWeapon.Dequip();
+        PickUpWeapon(weapon);
+    }
+
+    private void PickUpSecondaryWeapon(Weapon weapon)
+    {
+        model.secondaryWeapon = weapon;
+        model.secondaryWeapon.Dequip();
+        SwitchWeapons();
+    }
     public void Interact()
     {
         if (model.playerActive)
@@ -100,41 +119,29 @@ public class PlayerActor : MonoBehaviour
             for (int i = 0; i < colliders.Length; i++)
             {
                 Weapon weapon = colliders[i].GetComponent<Weapon>();
-                Chest chest = colliders[i].GetComponent<Chest>();
                 if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon && weapon.equipped == false)
                 {
                     // Dequip current weapon
                     //Both slots full
                     if (model.equippedWeapon != null && model.secondaryWeapon != null)
                     {
-                        model.equippedWeapon.Dequip();
-                        model.equippedWeapon.equipped = false;
-                        weapon.Equip();
-                        weapon.equipped = true;
-                        model.equippedWeapon = weapon;
+                        SwapEquipedWeapon(weapon);
                     }
                     //Inventory empty
                     if (model.equippedWeapon != null && model.secondaryWeapon == null)
                     {
-                        model.equippedWeapon.Dequip();
-                        model.equippedWeapon.equipped = false;
-                        model.secondaryWeapon = model.equippedWeapon;
-                        weapon.Equip();
-                        weapon.equipped = true;
-                        model.equippedWeapon = weapon;
-                        model.secondaryWeapon.gameObject.SetActive(false);//Hides the secondary weapon
+                        PickUpSecondaryWeapon(weapon);
                     }
 
                     // Equip new weapon
                     if (model.equippedWeapon == null && model.secondaryWeapon == null)
                     {
-                        weapon.Equip();
-                        weapon.equipped = true;
+                        PickUpWeapon(weapon);
                         AudioManager.instance.PlayAudio("dsdbload", 1, false);
-                        model.equippedWeapon = weapon;
                     }
                 }
 
+                Chest chest = colliders[i].GetComponent<Chest>();
                 if (chest != null)
                 {
                     chest.OpenChest();
@@ -204,14 +211,22 @@ public class PlayerActor : MonoBehaviour
 
         GameObject blood = Factory.instance.CreateBlood();
         blood.transform.position = this.transform.position;
+        GameObject.Destroy(blood, 5);
     }
 
-    public void Down() {
-        if (GameProgressionManager.instance.getPlayerCount() > 1) {
+
+    public void Down()
+    {
+        GameProgressionManager.instance.SetPlayerDown(model.playerID, true);
+        bool allDown = GameProgressionManager.instance.getPlayerDownCount();
+
+        if (GameProgressionManager.instance.getPlayerCount() > 1 && allDown == false)
+        {
             DisplayPlayerDown();
             model.playerActive = false;
         }
-        else {
+        else
+        {
             Death();
         }
     }
@@ -219,18 +234,22 @@ public class PlayerActor : MonoBehaviour
     public void HealPlayer(float hp)
     {
         model.health += hp;
-
-        if (model.health + hp > 100) {
-            model.health = 100;
+        Debug.Log("Player was healed by" + hp);
+        if (model.health + hp > model.maxHealth)
+        {
+            model.health = model.maxHealth;
         }            
   
         if (model.playerActive == false)
         {
             model.playerActive = true;
+            model.health = hp;
             rigid.constraints = RigidbodyConstraints.FreezeRotation;
             visual.transform.parent = transform;
             visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+            GameProgressionManager.instance.SetPlayerDown(model.playerID, false);
         }
+
     }
 
 
@@ -250,14 +269,33 @@ public class PlayerActor : MonoBehaviour
         rigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
     }
 
-
-
-
     public void Death()
     {
         AudioManager.instance.PlayAudio("death1", 1, false);
         Debug.Log("Player died.");
         GameProgressionManager.instance.GameOver();
+    }
+    
+    private void RecurringPassives()// Apply passive's recurring affect
+    {
+        if(model.passives.Count > 0)
+        {
+            foreach (Passive passive in model.passives)
+            {
+                passive.RecurringAffect();
+            }
+        } 
+    }
+    
+    private void SingleUsePassives()// Apply passive's single affect
+    {
+        if (model.passives.Count > 0)
+        {
+            foreach (Passive passive in model.passives)
+            {
+                passive.SingleAffect();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider col)

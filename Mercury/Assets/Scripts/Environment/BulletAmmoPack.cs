@@ -15,7 +15,7 @@ public class BulletAmmoPack : AmmoPack
 protected override void Use(PlayerActor player)
     {
         base.Use(player);
-        if (player.GetPlayerEquippedWeapon().GetComponent<Pistol>() != null || player.GetPlayerEquippedWeapon().GetComponent<MachineGun>() != null)
+        if (player.GetPlayerEquippedWeapon().GetComponent<Pistol>() != null || player.GetPlayerEquippedWeapon().GetComponent<MachineGun>() != null || player.GetPlayerEquippedWeapon().GetComponent<SniperRifle>() != null || player.GetPlayerEquippedWeapon().GetComponent<Shotgun>() != null)
         {
             player.GetPlayerEquippedWeapon().SetAmmoCount(ammoAmount);
             base.Delete();

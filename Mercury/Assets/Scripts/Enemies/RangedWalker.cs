@@ -112,7 +112,7 @@ public class RangedWalker : Enemy
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
-        equippedWeapon.GetComponent<Pistol>().setDamage(2);
+        equippedWeapon.SetWeaponDamage(0f);
     }
 
     public void AimAtPlayer(Vector3 direction)
@@ -128,7 +128,6 @@ public class RangedWalker : Enemy
     {
         if (equippedWeapon)
         {
-            equippedWeapon.SetAmmoCount(9999); //prevents enemy from running out of ammo.
             equippedWeapon.UseWeapon();
         }
     }

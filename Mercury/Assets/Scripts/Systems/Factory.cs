@@ -35,6 +35,7 @@ public class Factory : MonoBehaviour
     }
 
     // Factory methods
+    #region Characters
     public GameObject CreatePlayerBase()
     {
         GameObject playerGO = new GameObject("Player");
@@ -150,42 +151,9 @@ public class Factory : MonoBehaviour
 
         return playerGO;
     }
-    public GameObject CreateDropShadow()
-    {
-        GameObject dropShadowGO = new GameObject("Drop Shadow");
+#endregion
 
-        SpriteRenderer sr = dropShadowGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Random/DropShadow");
-        sr.color = new Color(0, 0, 0, 0.5f);
-
-        dropShadowGO.AddComponent<DropShadow>();
-        return dropShadowGO;
-    }
-    public GameObject CreateTNTBag()
-    {
-        GameObject bagGO = new GameObject("TNTBag");
-
-        SphereCollider bagCollider = bagGO.AddComponent<SphereCollider>();
-        bagCollider.isTrigger = false;
-        bagCollider.radius = 0.0f;
-
-        Rigidbody bagRigid = bagGO.AddComponent<Rigidbody>();
-        bagRigid.isKinematic = true;
-        bagRigid.useGravity = false;
-
-        GameObject bagVisualGO = new GameObject("Visual");
-        bagVisualGO.transform.parent = bagGO.transform;
-
-        GameObject bagVisualBodyGO = new GameObject("Body");
-        bagVisualBodyGO.transform.parent = bagVisualGO.transform;
-        SpriteRenderer sr = bagVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Random/TNTBag");
-
-        Projectile p = bagGO.AddComponent<TNTBag>();
-        p.Init();
-        return bagGO;
-    }
-
+    #region Bullets
     public GameObject CreateBullet()
     {
         GameObject bulletGO = new GameObject("Bullet");
@@ -209,6 +177,31 @@ public class Factory : MonoBehaviour
         Projectile p = bulletGO.AddComponent<Round>();
         p.Init();
         return bulletGO;
+    }
+
+    public GameObject CreateLaserBullet()
+    {
+        GameObject LbulletGO = new GameObject("Laser Bullet");
+
+        SphereCollider lbulletCollider = LbulletGO.AddComponent<SphereCollider>();
+        lbulletCollider.isTrigger = true;
+        lbulletCollider.radius = 0.2f;
+
+        Rigidbody lbulletRigid = LbulletGO.AddComponent<Rigidbody>();
+        lbulletRigid.isKinematic = true;
+        lbulletRigid.useGravity = false;
+
+        GameObject lbulletVisualGO = new GameObject("Visual");
+        lbulletVisualGO.transform.parent = LbulletGO.transform;
+
+        GameObject lbulletVisualBodyGO = new GameObject("Body");
+        lbulletVisualBodyGO.transform.parent = lbulletVisualGO.transform;
+        SpriteRenderer sr = lbulletVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_2");
+
+        Projectile p = LbulletGO.AddComponent<Round>();
+        p.Init();
+        return LbulletGO;
     }
 
     public GameObject CreateRocket()
@@ -286,7 +279,9 @@ public class Factory : MonoBehaviour
         beam.Init();
         return purpleBeamGO;
     }
+#endregion
 
+    #region Effects & Abilities
     public GameObject CreateBulletHit() 
     {
         GameObject bulletHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BulletHit"));
@@ -309,10 +304,16 @@ public class Factory : MonoBehaviour
 
     public GameObject CreateRocketHit() //adds an explosion effect onto the rocket when it hits/collides with an object.
     {
-        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Explosion"));
+        GameObject rocketHit = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketExplosion"));
         ParticleSystem.ShapeModule shape = rocketHit.GetComponent<ParticleSystem>().shape;
-        shape.radius = 0.4f;
+        shape.radius = 0.8f;
         return rocketHit;
+    }
+
+    public GameObject CreateBagExplosion() //adds an explosion effect onto the rocket when it hits/collides with an object.
+    {
+        GameObject exlosion = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BagExplosion"));
+        return exlosion;
     }
     public GameObject CreateRocketSmokeFlash()  //adds an smoke flash effect that travels with the rocket itself.
     {
@@ -320,15 +321,57 @@ public class Factory : MonoBehaviour
         return smokeFlash;
     }
 
-    
-
     public GameObject CreateMuzzleFlash() //adds an muzzle flash effect for the weapon.
     {
         GameObject muzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/MuzzleFlash"));
         return muzzleFlash;
     }
 
-   public GameObject CreatePistol()
+    public GameObject CreateLaserMuzzleFlash() //adds an muzzle flash effect for the weapon.
+    {
+        GameObject LmuzzleFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/LaserMuzzleFlash"));
+        return LmuzzleFlash;
+    }
+
+    public GameObject CreateDropShadow()
+    {
+        GameObject dropShadowGO = new GameObject("Drop Shadow");
+
+        SpriteRenderer sr = dropShadowGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Random/DropShadow");
+        sr.color = new Color(0, 0, 0, 0.5f);
+
+        dropShadowGO.AddComponent<DropShadow>();
+        return dropShadowGO;
+    }
+
+    public GameObject CreateTNTBag()
+    {
+        GameObject bagGO = new GameObject("TNTBag");
+
+        Rigidbody bagRigid = bagGO.AddComponent<Rigidbody>();
+        bagRigid.useGravity = true;
+        bagRigid.freezeRotation = true;
+        bagRigid.transform.position = bagGO.transform.position;
+
+        SphereCollider bagCollider = bagGO.AddComponent<SphereCollider>();
+        bagCollider.isTrigger = false;
+        bagCollider.radius = 0.0f;
+        bagCollider.transform.parent = bagRigid.transform;
+
+        SpriteRenderer sr = bagGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Random/TNTBag");
+        sr.transform.parent = bagRigid.transform;
+        sr.transform.localEulerAngles = new Vector3(45, 0, 0);
+
+        TNTBag bag = bagGO.AddComponent<TNTBag>();
+        return bagGO;
+    }
+
+    #endregion
+
+    #region Weapons
+    public GameObject CreatePistol()
    {
         GameObject pistolGO = new GameObject("Pistol");
 
@@ -337,7 +380,7 @@ public class Factory : MonoBehaviour
 
         SphereCollider pistolColliderT = pistolGO.AddComponent<SphereCollider>();
         pistolColliderT.isTrigger = true;
-
+         
         Rigidbody pistolRigid = pistolGO.AddComponent<Rigidbody>();
         pistolRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
@@ -353,6 +396,161 @@ public class Factory : MonoBehaviour
 
         return pistolGO;
    }
+
+    public GameObject CreateRevolver()
+    {
+        GameObject revolverGO = new GameObject("Revolver");
+
+        SphereCollider revolverCollider = revolverGO.AddComponent<SphereCollider>();
+        revolverCollider.radius = 0.1f;
+
+        SphereCollider revolverColliderT = revolverGO.AddComponent<SphereCollider>();
+        revolverColliderT.isTrigger = true;
+
+        Rigidbody revolverRigid = revolverGO.AddComponent<Rigidbody>();
+        revolverRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject revolverVisualGO = new GameObject("Visual");
+        revolverVisualGO.transform.parent = revolverGO.transform;
+
+        GameObject revolverVisualBodyGO = new GameObject("Body");
+        revolverVisualBodyGO.transform.parent = revolverVisualGO.transform;
+        SpriteRenderer sr = revolverVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Revolver");
+
+        revolverGO.AddComponent<Revolver>();
+
+        return revolverGO;
+    }
+
+    public GameObject CreateBurstAssaultRifle()
+    {
+        GameObject burstARGO = new GameObject("Burst Assault Rifle");
+
+        SphereCollider burstARCollider = burstARGO.AddComponent<SphereCollider>();
+        burstARCollider.radius = 0.1f;
+
+        SphereCollider burstARColliderT = burstARGO.AddComponent<SphereCollider>();
+        burstARColliderT.isTrigger = true;
+
+        Rigidbody burstARRigid = burstARGO.AddComponent<Rigidbody>();
+        burstARRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject burstARVisualGO = new GameObject("Visual");
+        burstARVisualGO.transform.parent = burstARGO.transform;
+
+        GameObject burstARVisualBodyGO = new GameObject("Body");
+        burstARVisualBodyGO.transform.parent = burstARVisualGO.transform;
+        SpriteRenderer sr = burstARVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/BurstAssaultRifle");
+
+        burstARGO.AddComponent<BurstAssaultRifle>();
+
+        return burstARGO;
+    }
+    public GameObject CreateSniperRifle()
+    {
+        GameObject sniperGO = new GameObject("Sniper Rifle");
+
+        SphereCollider sniperCollider = sniperGO.AddComponent<SphereCollider>();
+        sniperCollider.radius = 0.1f;
+
+        SphereCollider sniperColliderT = sniperGO.AddComponent<SphereCollider>();
+        sniperColliderT.isTrigger = true;
+
+        Rigidbody sniperRigid = sniperGO.AddComponent<Rigidbody>();
+        sniperRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject sniperVisualGO = new GameObject("Visual");
+        sniperVisualGO.transform.parent = sniperGO.transform;
+
+        GameObject sniperVisualBodyGO = new GameObject("Body");
+        sniperVisualBodyGO.transform.parent = sniperVisualGO.transform;
+        SpriteRenderer sr = sniperVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/SniperRifle");
+
+        sniperGO.AddComponent<SniperRifle>();
+
+        return sniperGO;
+    }
+
+    public GameObject CreateSword()
+    {
+        GameObject swordGO = new GameObject("Sword");
+
+        SphereCollider swordCollider = swordGO.AddComponent<SphereCollider>();
+        swordCollider.radius = 0.1f;
+
+        SphereCollider swordColliderT = swordGO.AddComponent<SphereCollider>();
+        swordColliderT.isTrigger = true;
+
+        Rigidbody swordRigid = swordGO.AddComponent<Rigidbody>();
+        swordRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject swordVisualGO = new GameObject("Visual");
+        swordVisualGO.transform.parent = swordGO.transform;
+
+        GameObject swordVisualBodyGO = new GameObject("Body");
+        swordVisualBodyGO.transform.parent = swordVisualGO.transform;
+        SpriteRenderer sr = swordVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Sword");
+
+        swordGO.AddComponent<Sword>();
+
+        return swordGO;
+    }
+
+    public GameObject CreateAxe()
+    {
+        GameObject axeGO = new GameObject("Axe");
+
+        SphereCollider axeCollider = axeGO.AddComponent<SphereCollider>();
+        axeCollider.radius = 0.1f;
+
+        SphereCollider axeColliderT = axeGO.AddComponent<SphereCollider>();
+        axeColliderT.isTrigger = true;
+
+        Rigidbody axeRigid = axeGO.AddComponent<Rigidbody>();
+        axeRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject axeVisualGO = new GameObject("Visual");
+        axeVisualGO.transform.parent = axeGO.transform;
+
+        GameObject axeVisualBodyGO = new GameObject("Body");
+        axeVisualBodyGO.transform.parent = axeGO.transform;
+        SpriteRenderer sr = axeVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Axe");
+
+        axeGO.AddComponent<Axe>();
+
+        return axeGO;
+    }
+
+    public GameObject CreateShotgun()
+    {
+        GameObject shotgunGO = new GameObject("Shotgun");
+
+        SphereCollider shotgunCollider = shotgunGO.AddComponent<SphereCollider>();
+        shotgunCollider.radius = 0.1f;
+
+        SphereCollider shotgunColliderT = shotgunGO.AddComponent<SphereCollider>();
+        shotgunColliderT.isTrigger = true;
+
+        Rigidbody shotgunRigid = shotgunGO.AddComponent<Rigidbody>();
+        shotgunRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject shotgunVisualGO = new GameObject("Visual");
+        shotgunVisualGO.transform.parent = shotgunGO.transform;
+
+        GameObject shotgunVisualBodyGO = new GameObject("Body");
+        shotgunVisualBodyGO.transform.parent = shotgunVisualGO.transform;
+        SpriteRenderer sr = shotgunVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Shotgun");
+
+        shotgunGO.AddComponent<Shotgun>();
+
+        return shotgunGO;
+    }
 
     public GameObject CreateFlamethrower()  //code use to create the flamethower weapon for the players to use.
     {
@@ -380,7 +578,30 @@ public class Factory : MonoBehaviour
         return flamethrowerGO;
     }
 
+    public GameObject CreateLaserMachineGun() //code use to create the laser machine gun weapon for the players to use.
+    {
+        GameObject LmachineGunGO = new GameObject("Laser Machine Gun");
+        SphereCollider LmachineGunCollider = LmachineGunGO.AddComponent<SphereCollider>();
+        LmachineGunCollider.radius = 0.1f;
 
+        SphereCollider LmachineGunColliderT = LmachineGunGO.AddComponent<SphereCollider>();
+        LmachineGunColliderT.isTrigger = true;
+
+        Rigidbody LmachineGunRigid = LmachineGunGO.AddComponent<Rigidbody>();
+        LmachineGunRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject LmachineGunVisualGO = new GameObject("Visual");
+        LmachineGunVisualGO.transform.parent = LmachineGunGO.transform;
+
+        GameObject LmachineGunVisualBodyGO = new GameObject("Body");
+        LmachineGunVisualBodyGO.transform.parent = LmachineGunVisualGO.transform;
+        SpriteRenderer sr = LmachineGunVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserMachineGun");
+
+        LmachineGunGO.AddComponent<LaserMachineGun>();
+
+        return LmachineGunGO;
+    }
     public GameObject CreateLaserPistol()  //code use to create the laser pistol weapon for the players to use.
     {
         GameObject laserPistolGO = new GameObject("Laser Pistol");
@@ -432,9 +653,9 @@ public class Factory : MonoBehaviour
         return machineGunGO;
     }
 
-    public GameObject CreateLaserRifle()  //code use to create the laser rifle weapon for the players to use.
+    public GameObject CreateLaserRayGun()  //code use to create the laser rifle weapon for the players to use.
     {
-        GameObject laserRifleGO = new GameObject("Laser Rifle");
+        GameObject laserRifleGO = new GameObject("Laser RayGun");
 
         SphereCollider laserRifleCollider = laserRifleGO.AddComponent<SphereCollider>();
         laserRifleCollider.radius = 0.1f;
@@ -451,9 +672,9 @@ public class Factory : MonoBehaviour
         GameObject laserRifleVissualBodyGO = new GameObject("Body");
         laserRifleVissualBodyGO.transform.parent = laserRifleVisualGO.transform;
         SpriteRenderer sr = laserRifleVissualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserRifle");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/LaserRayGun");
 
-        laserRifleGO.AddComponent<LaserRifle>();
+        laserRifleGO.AddComponent<LaserRayGun>();
 
         return laserRifleGO;
     }
@@ -482,7 +703,9 @@ public class Factory : MonoBehaviour
 
         return rocketLauncherGO;
     }
+#endregion 
 
+    #region Blood
     public GameObject CreateBlood()
     {
         GameObject bloodGO = new GameObject("Blood");
@@ -499,11 +722,9 @@ public class Factory : MonoBehaviour
     /// <param name="radius"> The radius of the cirle </param>
     /// <returns> List of GameObjects</returns>
         public List<GameObject> CreateChunks(Vector3 center, float radius)
-    {
-        System.Random random = new System.Random(91169420);
-        int chunkCount = random.Next(6, 10);
+        {
+        int chunkCount = Random.Range(5, 9);
         List<GameObject> chunkList = new List<GameObject>();
-        Debug.Log("Chunk COunt" + chunkCount);
         //Creates a game object 
         for (int i = 0; i < chunkCount; i++)
         { 
@@ -514,21 +735,25 @@ public class Factory : MonoBehaviour
             rigid.useGravity = true;
 
             //Position around circle
-            float angle = random.Next(0, 360);
+            float angle = Random.Range(0,361);
             Vector3 pos = new Vector3(
                 x: center.x + radius * Mathf.Sin(angle * Mathf.Deg2Rad),
                 y: center.y,
                 z: center.z + radius * Mathf.Cos(angle * Mathf.Deg2Rad)
             );
             rigid.transform.position = pos;
+            rigid.mass = Random.Range(2f, 5f);
 
             SpriteRenderer visual = chunk.AddComponent<SpriteRenderer>();
+            visual.sprite = Resources.Load<Sprite>("Effects/Blood/Splat_" + Random.Range(1, 5));
             visual.transform.parent = rigid.transform;
-            visual.transform.rotation *= Quaternion.AngleAxis(45f, Vector3.right);
+            visual.transform.rotation = Quaternion.Euler(45, 45, 0);
+            visual.enabled = false;
 
             GameObject trail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Blood/BloodTrail"));
             trail.transform.parent = rigid.transform;
             trail.transform.localPosition = Vector3.zero;
+            GameObject.Destroy(trail, 5f);
 
             Chunk behavior = chunk.AddComponent<Chunk>();
 
@@ -536,8 +761,9 @@ public class Factory : MonoBehaviour
         };
         return chunkList;
     }
+    #endregion
 
-
+    #region Chests
     public GameObject CreateNormalChest()  //code use to create the normal chest.
     {
         GameObject chestGO = new GameObject("Normal Chest");
@@ -564,9 +790,9 @@ public class Factory : MonoBehaviour
         return chestGO;
     }
 
-    public GameObject CreateAmmoChest() //code use to create the ammo chest.
+    public GameObject CreateRareChest() //code use to create the rare chest.
     {
-        GameObject chestGO = new GameObject("Ammo Chest");
+        GameObject chestGO = new GameObject("Rare Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
         chestCollider.radius = 0.1f;
@@ -583,13 +809,15 @@ public class Factory : MonoBehaviour
         GameObject chestVisualBodyGO = new GameObject("Body");
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/AmmoChest");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/RareChest");
 
-        chestGO.AddComponent<AmmoChest>();  //makes usse of the AmmoChest script which has its own functionalities.
+        chestGO.AddComponent<RareChest>();  //makes usse of the RareCgest script which has its own functionalities.
 
         return chestGO;
     }
+    #endregion
 
+    #region Health Pickups
     public GameObject CreateMedkit() //code use to create the medkit for players to pickup.
     {
         GameObject medkitGO = new GameObject("Medkit");
@@ -641,7 +869,9 @@ public class Factory : MonoBehaviour
 
         return medpackGO;
     }
+#endregion
 
+    #region Ammo Pickups
     public GameObject CreateRocketAmmoPack() //code use to create the rocket ammo pack for players to pickup.
     {
         GameObject rocketAmmoGO = new GameObject("RocketAmmo");
@@ -667,7 +897,6 @@ public class Factory : MonoBehaviour
 
         return rocketAmmoGO;
     }
-
 
     public GameObject CreateBulletAmmoPack() //code use to create the bullet ammo pack for players to pickup.
     {
@@ -721,7 +950,9 @@ public class Factory : MonoBehaviour
 
         return BeamAmmoGO;
     }
+    #endregion
 
+    #region Walls & Floor
     public GameObject CreateWallBreak(string environmentName) {
         GameObject brokenWall = GameObject.Instantiate(Resources.Load<GameObject>("Effects/" + environmentName + "/WallBreak"));
         return brokenWall;
@@ -755,7 +986,9 @@ public class Factory : MonoBehaviour
         floor.GetComponent<Renderer>().material = mat;
         return floor;
     }
+    #endregion
 
+    #region Enemies & Bosses
     public GameObject CreateEnemyWalker()  //code use to create the walker enemy within the game.
     {
         GameObject enemyWalkerGO = new GameObject("Enemy Walker");
@@ -834,6 +1067,56 @@ public class Factory : MonoBehaviour
         return enemyRangedGO;
     }
 
+    public GameObject CreateCorruptedWalker() //code use to create the ranged walker enemy within the game.
+    {
+        GameObject enemyRangedGO = new GameObject("Corrupted Enemy");
+
+        CapsuleCollider enemyWalkerCollider = enemyRangedGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyRangedGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyRangedGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Corrupted Walker");
+
+        enemyRangedGO.AddComponent<CorruptedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        return enemyRangedGO;
+    }
+
+
+    public GameObject CreateArcWalker() //code use to create the ranged walker enemy within the game.
+    {
+        GameObject enemyRangedGO = new GameObject("Arc Enemy");
+
+        CapsuleCollider enemyWalkerCollider = enemyRangedGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyRangedGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyRangedGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Arc Walker");
+
+        enemyRangedGO.AddComponent<ArcWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        return enemyRangedGO;
+    }
     public GameObject CreateOverlordWalker() //code use to create the overlord walker enemy within the game.
     {
         GameObject enemyRangedGO = new GameObject("Overlord Walker");
@@ -858,6 +1141,7 @@ public class Factory : MonoBehaviour
         enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
         return enemyRangedGO;
     }
+#endregion
 
     /* New stuff
      * ********************************************************

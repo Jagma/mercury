@@ -75,6 +75,10 @@ public class Enemy : MonoBehaviour
 
     public void Damage(double damage)
     {
+        GameObject blood = Factory.instance.CreateBlood();
+        blood.transform.position = this.transform.position;
+        GameObject.Destroy(blood, 5);
+
         health -= damage;
         if (health <= 0)
         {
@@ -82,8 +86,7 @@ public class Enemy : MonoBehaviour
         } else {
             StartCoroutine(HitFlash());
         }
-        GameObject blood = Factory.instance.CreateBlood();
-        blood.transform.position = this.transform.position;
+        
     }
 
     IEnumerator HitFlash() {

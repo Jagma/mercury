@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +8,6 @@ public class AbilityOprah : Ability
 
     bool isProjectile = false;
     GameObject freeItem;
-    System.Random ran = new System.Random(91142069);
     int randomNum;
 
     public override void Init()
@@ -16,14 +15,12 @@ public class AbilityOprah : Ability
         base.Init();
 
         // Stats
-        cooldown = 0f;
+        cooldown = 4f;
     }
 
     protected override void Use()
     {
         base.Use();
-
-
 
         freeItem = ChooseRandomItem();
 
@@ -37,13 +34,12 @@ public class AbilityOprah : Ability
 
         //Position to spawn item
         Vector3 position = playerActor.transform.position + new Vector3(normalizedAim.x, normalizedAim.y, normalizedAim.z) * placementOffset;
-        Debug.Log("OPRAH Spawned: " + freeItem.gameObject.name);
+
         if (!isProjectile)//for everything that is not a projectile
         {
 
             freeItem.transform.position = position;
             freeItem.transform.right = aimDirection;
-
         }
         else
         {
@@ -58,15 +54,40 @@ public class AbilityOprah : Ability
     private GameObject ChooseRandomItem()
     {
 
-        int[] categoryWeight = { 5, 5, 30, 60 };// HIT EFFECTS| ENEIES| ROUNDS| WEAPONS
-        int[] weaponWeights = {25,30,30,25};// MACHINE GUN| LAZER RIFLE| ROCKET LAUNCHER| PISTOL
-        int[] enemyWeights = {60, 40};// MELEE| RANGED
+        int[] categoryWeight = 
+            {
+                3, // Hit Effect
+                2, // Enemies
+                6, // Rounds
+                5, // Weapons
+                1, // Chest
+                1, // Medkit
+                1  //Ammo Pack
+            };
 
-        int result = GetResult(categoryWeight);//What category to spawn
-        Debug.Log("CATEGORY " + result);
+        int[] weaponWeights = 
+            {
+                2, // Machine Gun
+                1, // Lazer Pistol
+                2, // Lazer Rifle
+                3, // Rocket Launcher
+                1, // Pistol
+                2, // Shotgun
+                2, // Sniper Rifle 
+                2, // Lazer Machine Gun 
+                1, // Flamethrower 
+                3, // Sword 
+                1, // Revolver 
+                3 // Burst Assault Rifle 
+            };
+        int[] enemyWeights = { 10, 5, 1}; //Melee |Ranged
+        int[] chestWeights = { 5, 1 };//Normal |Rare
+        int result = GetResult(categoryWeight);//Choose category
+
+        #region Hit Effects
         if(result == 0)//Hit effects
         {
-            int roll = ran.Next(0, 4);
+            int roll = UnityEngine.Random.Range(0, 4);
 
             //Hit effects roll for random
             if (roll == 0)
@@ -80,7 +101,9 @@ public class AbilityOprah : Ability
             if (roll == 4)
                 return Factory.instance.CreateMuzzleFlash();
         }
-        if (result == 1)//Enemies
+        #endregion
+        #region Enemies
+        if (result == 1)
         {
             result = GetResult(enemyWeights);//Use weigths to balance enemy spawn chance
 
@@ -88,10 +111,14 @@ public class AbilityOprah : Ability
                 return Factory.instance.CreateEnemyWalker();
             if (result == 1)
                 return Factory.instance.CreateRangedWalker();
+            if (result == 2)
+                return Factory.instance.CreateOverlordWalker();
         }
-        if (result == 2)//Rounds
+        #endregion
+        #region Rounds
+        if (result == 2)
         {
-            int roll = ran.Next(0, 2);//roll for random
+            int roll = Random.Range(0, 2);//roll for random
             isProjectile = true;
 
             if (roll == 0)
@@ -99,33 +126,93 @@ public class AbilityOprah : Ability
             if (roll == 1)
                 return Factory.instance.CreateRocket();
         }
-        if (result == 3)//weapons
+        #endregion
+        #region Weapons
+        if (result == 3)
         {
             result = GetResult(weaponWeights);//Use weigths to balance weapon spawn chance
 
             if (result == 0)
                 return Factory.instance.CreateMachineGun();
             if (result == 1)
-                return Factory.instance.CreateLaserRifle();
+                return Factory.instance.CreateLaserPistol();
             if (result == 2)
-                return Factory.instance.CreateRocketLauncher();
+                return Factory.instance.CreateLaserRayGun();
             if (result == 3)
+                return Factory.instance.CreateRocketLauncher();
+            if (result == 4)
                 return Factory.instance.CreatePistol();
+            if (result == 5)
+                return Factory.instance.CreateShotgun();
+            if (result == 6)
+                return Factory.instance.CreateSniperRifle();
+            if (result == 7)
+                return Factory.instance.CreateLaserMachineGun();
+            if (result == 8)
+                return Factory.instance.CreateFlamethrower();
+            if (result == 9)
+                return Factory.instance.CreateSword();
+            if (result == 10)
+                return Factory.instance.CreateRevolver();
+            if (result == 11)
+                return Factory.instance.CreateBurstAssaultRifle();
         }
+        #endregion
+        #region Chest
+        if (result == 4)
+        {
+            result = GetResult(categoryWeight);
+
+            if (result == 0)
+                return Factory.instance.CreateNormalChest();
+            if (result == 1)
+                return Factory.instance.CreateRareChest();
+
+        }
+        #endregion
+        #region Medkit
+        if(result == 5)
+        {
+            int roll = Random.Range(0, 2);
+
+            if (roll == 0)
+                return Factory.instance.CreateMedkit();
+            if (roll == 1)
+                return Factory.instance.CreateMedpack();
+        }
+#endregion
+        #region Ammo Pack
+        if(result == 6)
+        {
+            int roll = Random.Range(0, 3);
+
+            if (roll == 0)
+                return Factory.instance.CreateRocketAmmoPack();
+            if (roll == 1)
+                return Factory.instance.CreateBeamAmmoPack();
+            if (roll == 2)
+                return Factory.instance.CreateBulletAmmoPack();
+        }
+#endregion
         return null;
     }
 
-    private int GetResult(int[] array)
+    private int GetResult(int[] weights)
     {
         int total = 0;
-        Array.ForEach(array, delegate (int i) { total += i; });
-        randomNum = ran.Next(0, total);
+
+        for (int i = 0; i < weights.Length; i++)
+        {
+            total += weights[i];
+        }
+
+        randomNum = Random.Range(0, total+1);
 
         total = 0;
         int result = 0;
-        for (int i = 0; i < array.Length; i++)
+        for (int i = 0; i < weights.Length; i++)
         {
-            total += array[i];
+            total += weights[i];
             if (randomNum <= total)
             {
                 result = i;

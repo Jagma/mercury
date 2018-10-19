@@ -9,7 +9,7 @@ public class Flame : Projectile
         base.Init();
         // Stats
         speed = 10f;
-        damage = 100;
+        damage = 100f;
     }
 
     public override void Destroy()
