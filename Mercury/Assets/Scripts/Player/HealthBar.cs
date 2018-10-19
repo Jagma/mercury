@@ -20,21 +20,22 @@ public class HealthBar : MonoBehaviour
         {
             if (playerModel != null)
             {
+                float maxHealth = playerModel.maxHealth; 
                 float health = playerModel.health;
-                healthbar.fillAmount = health / 100;
-                if (health > 75 && health <= 100)
+                healthbar.fillAmount = health / playerModel.maxHealth;
+                if (health > maxHealth * 0.75 && health <= maxHealth)
                 {
                     healthbar.color = new Color(0, 255, 0);
                 }
-                if (health > 50 && health <= 75)
+                if (health > maxHealth * 0.5 && health <= maxHealth * 0.75)
                 {
                     healthbar.color = new Color(200, 255, 0);
                 }
-                if (health > 25 && health <= 50)
+                if (health > maxHealth * 0.25 && health <= maxHealth * 0.5)
                 {
                     healthbar.color = new Color(255, 167, 0);
                 }
-                if (health > 0 && health <= 25)
+                if (health > maxHealth * 0 && health <= maxHealth * 0.25)
                 {
                     healthbar.color = new Color(255, 0, 0);
                 }

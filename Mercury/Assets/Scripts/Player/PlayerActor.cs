@@ -24,7 +24,14 @@ public class PlayerActor : MonoBehaviour
         model.equippedWeapon = Factory.instance.CreateShotgun().GetComponent<Weapon>();
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
-
+        //DELETE
+        AddPassive(new PassiveDegenAura());
+        AddPassive(new PassiveHPRegen());
+        AddPassive(new PassiveMovementSpeed());
+        AddPassive(new PassiveIncreasedMaxHP());
+        AddPassive(new PassiveIncreasedMaxHP());
+        AddPassive(new PassiveRandomBullet());
+        //
         SingleUsePassives();//Activate passives with single affect
     }
 
@@ -84,12 +91,16 @@ public class PlayerActor : MonoBehaviour
                 return;
             }
             Weapon sw = model.equippedWeapon;
-            model.equippedWeapon.Dequip();
-            model.secondaryWeapon.Equip();
+
             model.equippedWeapon = model.secondaryWeapon;
             model.secondaryWeapon = sw;
-            model.secondaryWeapon.gameObject.SetActive(false);
-            model.equippedWeapon.gameObject.SetActive(true);
+
+
+            SpriteRenderer srEquiped = model.equippedWeapon.GetComponent<SpriteRenderer>();
+            SpriteRenderer srSecondary = model.secondaryWeapon.GetComponent<SpriteRenderer>();
+
+            srEquiped.enabled = true;
+            srSecondary.enabled = false;
         }
     }
 
@@ -108,9 +119,10 @@ public class PlayerActor : MonoBehaviour
     private void PickUpSecondaryWeapon(Weapon weapon)
     {
         model.secondaryWeapon = weapon;
-        model.secondaryWeapon.Dequip();
+        model.secondaryWeapon.Equip();
         SwitchWeapons();
     }
+
     public void Interact()
     {
         if (model.playerActive)
@@ -234,7 +246,7 @@ public class PlayerActor : MonoBehaviour
     public void HealPlayer(float hp)
     {
         model.health += hp;
-        Debug.Log("Player was healed by" + hp);
+
         if (model.health + hp > model.maxHealth)
         {
             model.health = model.maxHealth;
@@ -269,13 +281,19 @@ public class PlayerActor : MonoBehaviour
         rigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
     }
 
+
     public void Death()
     {
         AudioManager.instance.PlayAudio("death1", 1, false);
         Debug.Log("Player died.");
         GameProgressionManager.instance.GameOver();
     }
-    
+
+    public void AddPassive(Passive passive)
+    {
+        passive.player = this;
+        model.passives.Add(passive);
+    }
     private void RecurringPassives()// Apply passive's recurring affect
     {
         if(model.passives.Count > 0)
