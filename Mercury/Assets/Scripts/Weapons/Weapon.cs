@@ -32,12 +32,14 @@ public class Weapon : MonoBehaviour
     public void Equip()
     {
         GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<SphereCollider>().enabled = false;
         equipped = true;
     }
 
     public void Dequip()
     {
         GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<SphereCollider>().enabled = true;
         equipped = false;
     }
 

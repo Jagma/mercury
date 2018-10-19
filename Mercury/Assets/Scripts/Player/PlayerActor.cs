@@ -91,12 +91,16 @@ public class PlayerActor : MonoBehaviour
                 return;
             }
             Weapon sw = model.equippedWeapon;
-            model.equippedWeapon.Dequip();
-            model.secondaryWeapon.Equip();
+
             model.equippedWeapon = model.secondaryWeapon;
             model.secondaryWeapon = sw;
-            model.secondaryWeapon.gameObject.SetActive(false);
-            model.equippedWeapon.gameObject.SetActive(true);
+
+
+            SpriteRenderer srEquiped = model.equippedWeapon.GetComponent<SpriteRenderer>();
+            SpriteRenderer srSecondary = model.secondaryWeapon.GetComponent<SpriteRenderer>();
+
+            srEquiped.enabled = true;
+            srSecondary.enabled = false;
         }
     }
 
@@ -115,7 +119,7 @@ public class PlayerActor : MonoBehaviour
     private void PickUpSecondaryWeapon(Weapon weapon)
     {
         model.secondaryWeapon = weapon;
-        model.secondaryWeapon.Dequip();
+        model.secondaryWeapon.Equip();
         SwitchWeapons();
     }
 
