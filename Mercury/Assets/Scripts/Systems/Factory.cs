@@ -79,11 +79,13 @@ public class Factory : MonoBehaviour
         PlayerModel playerModel = new PlayerModel();
         playerActor.model = playerModel;
 
-        GameObject health = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/HealthBar"));
-        health.transform.SetParent(playerGO.transform, true);
-        health.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
-        health.transform.localEulerAngles = new Vector3(45, 0, 0);
-        health.transform.position = new Vector3(0, 1.5f, 0);
+        GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
+        hud.transform.SetParent(playerGO.transform, true);
+        hud.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
+        hud.transform.Find("AmmoBar1").GetComponent<AmmoBar>().playerModel = playerModel;
+        hud.transform.Find("AmmoBar2").GetComponent<AmmoBar>().playerModel = playerModel;
+        hud.transform.localEulerAngles = new Vector3(45, 0, 0);
+        hud.transform.position = new Vector3(0, 1.5f, 0);
         return playerGO;
     }
 

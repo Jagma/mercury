@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114429968498742404}
   - component: {fileID: 114068567470891724}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: PlayerHUD
   m_TagString: HealthBars
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,8 +39,9 @@ GameObject:
   - component: {fileID: 224744696507202696}
   - component: {fileID: 222178744603898672}
   - component: {fileID: 114429536782768982}
+  - component: {fileID: 114659842259315452}
   m_Layer: 5
-  m_Name: AmmoCount
+  m_Name: AmmoBar1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,8 +94,9 @@ GameObject:
   - component: {fileID: 224773005598674262}
   - component: {fileID: 222043296800121212}
   - component: {fileID: 114362144811970126}
+  - component: {fileID: 114827357769254200}
   m_Layer: 5
-  m_Name: AmmoCount
+  m_Name: AmmoBar2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,6 +374,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 128
+--- !u!114 &114659842259315452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621144698744410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a3f7bce8ef6e7448f792662198e034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponIndex: 1
 --- !u!114 &114666995894835066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -386,6 +400,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 10, y: -10}
   m_UseGraphicAlpha: 1
+--- !u!114 &114827357769254200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1873354414824674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a3f7bce8ef6e7448f792662198e034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponIndex: 2
 --- !u!114 &114911009477830612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -543,7 +569,7 @@ RectTransform:
   m_Children:
   - {fileID: 224258890562749116}
   m_Father: {fileID: 224986201932658736}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -562,7 +588,7 @@ RectTransform:
   m_Children:
   - {fileID: 224972586447459042}
   m_Father: {fileID: 224986201932658736}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -598,8 +624,8 @@ RectTransform:
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.03}
   m_Children:
   - {fileID: 224371723795653028}
-  - {fileID: 224773005598674262}
   - {fileID: 224744696507202696}
+  - {fileID: 224773005598674262}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

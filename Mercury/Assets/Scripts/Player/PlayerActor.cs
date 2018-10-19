@@ -96,11 +96,10 @@ public class PlayerActor : MonoBehaviour
             model.secondaryWeapon = sw;
 
 
-            SpriteRenderer srEquiped = model.equippedWeapon.GetComponent<SpriteRenderer>();
-            SpriteRenderer srSecondary = model.secondaryWeapon.GetComponent<SpriteRenderer>();
+            //      SpriteRenderer srEquiped = model.equippedWeapon.transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>();
+            //      SpriteRenderer srSecondary = model.secondaryWeapon.transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>();
+            model.secondaryWeapon.transform.localEulerAngles = new Vector3(45, 90, 0);
 
-            srEquiped.enabled = true;
-            srSecondary.enabled = false;
         }
     }
 

@@ -237,6 +237,8 @@ public class Miner
         posX += dirX;
         posZ += dirZ;
 
+        posX = Mathf.Clamp(posX, 1, levelGen.mapWidth - 2);
+        posZ = Mathf.Clamp(posZ, 1, levelGen.mapDepth - 2);
 
         // Death
         if (posX <= 1 || posX >= levelGen.mapWidth-2 ||

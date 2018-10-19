@@ -6,14 +6,16 @@ public class Weapon : MonoBehaviour
 {
     public float cooldown = 0.1f;
     public bool equipped = false;
+
+    public int ammoMaxInventory = 120; //ammoMMaxInventory is the maximum ammount of ammo a weapon can have in the player's inventory.
+    public int ammoInventory = 120; //ammoInventory is the amount of ammo for the weapon in the player's inventory.
+    public int ammoCount = 120; //ammoCount is the amount of ammo currently in the weapon's mag.
+    public int ammoMax = 12; //ammoMax is the amount of ammo the weapon is allowed to have in one mag.
+
     protected Transform visual;
     protected float cooldownRemaining = 0f;
-
     protected float damage = 0;
-    protected int ammoMaxInventory = 120; //ammoMMaxInventory is the maximum ammount of ammo a weapon can have in the player's inventory.
-    protected int ammoInventory = 120; //ammoInventory is the amount of ammo for the weapon in the player's inventory.
-    protected int ammoCount = 120; //ammoCount is the amount of ammo currently in the weapon's mag.
-    protected int ammoMax = 12; //ammoMax is the amount of ammo the weapon is allowed to have in one mag.
+
     private void Awake()
     {
         visual = transform.Find("Visual");
