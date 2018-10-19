@@ -1,0 +1,73 @@
+body{
+  margin: 0;
+  padding: 0;
+  overflow:hidden;
+  background-color: #333;
+  width: 100%; 
+  height: 100%;
+  position: absolute;
+}
+
+canvas {
+  width: 100%; 
+  height: 100%;
+  background-color: #333;
+}
+#gameContainer {
+  width: 100%; 
+  height: 100%; 
+  position: absolute;
+}
+#gameContainer {
+  position: absolute;
+}
+
+#fullScreenToggle {
+  width: 100%; 
+  height: 100%;
+  position: absolute;
+}
+
+div#loadingBox {
+  position: absolute;
+
+  width: 100%;
+  top: 30%;
+  height: 40vh;
+  text-align: center;
+}
+
+img#loadingIcon {
+  height: 50%;
+  padding-bottom: 5vh;
+}
+
+div#bgBar {
+  position: relative;
+  width: 300px;
+  margin-left: -150px;
+  left: 50%;
+  height: 2vh;
+  background-color: #777;
+  border-radius: 1vh;
+}
+div#progressBar {
+  left: 0%;
+  position: relative;
+  width: 0px;
+  height: 100%;
+  background-color: white;
+  border-radius: 1vh;
+}
+
+p#loadingInfo {
+  color: #fff;
+  letter-spacing: 1px;
+  position: relative;
+  height: 3vh;
+  width: 100%;
+  font-family: "Monaco", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 3vh;
+}

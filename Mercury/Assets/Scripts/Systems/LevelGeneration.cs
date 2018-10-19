@@ -87,7 +87,7 @@ public class LevelGeneration : MonoBehaviour
 
 
         pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
-        pickups[minerList[0].posX, minerList[0].posZ] = "Rare Chest";
+     //   pickups[minerList[0].posX, minerList[0].posZ] = "Rare Chest";
 
         // Build floor
         GameObject floor = Factory.instance.CreateFloor(ProgressionState.environmentName, 0);

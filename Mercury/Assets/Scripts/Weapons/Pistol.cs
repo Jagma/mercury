@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Pistol : WeaponRanged
 {
-    protected override void Start()
-    {
-        base.Start();
-
-        // Stats
+    protected override void InitWeaponStats() {
+        base.InitWeaponStats();
         cooldown = 0.5f;
         ammoOffset = 0.2f;
         ammoMaxInventory = 60;
@@ -38,5 +35,4 @@ public class Pistol : WeaponRanged
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
-
 }

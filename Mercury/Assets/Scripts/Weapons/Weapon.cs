@@ -17,6 +17,11 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         visual = transform.Find("Visual");
+        InitWeaponStats();
+    }
+
+    protected virtual void InitWeaponStats() {
+
     }
 
     protected virtual void Start()
@@ -67,9 +72,7 @@ public class Weapon : MonoBehaviour
 
     public void SetWeaponDamage (float value)
     {
-        Debug.Log("Damage before change is : " + damage);
         damage = value;
-        Debug.Log("Damage after change is : " + damage);
     }
 
     public void SetAmmoCount(int ammoValue)

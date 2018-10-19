@@ -372,7 +372,7 @@ public class Factory : MonoBehaviour
 
     #region Weapons
     public GameObject CreatePistol()
-   {
+    {
         GameObject pistolGO = new GameObject("Pistol");
 
         SphereCollider pistolCollider = pistolGO.AddComponent<SphereCollider>();
@@ -391,11 +391,11 @@ public class Factory : MonoBehaviour
         pistolVisualBodyGO.transform.parent = pistolVisualGO.transform;
         SpriteRenderer sr = pistolVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Pistol");
-
+                
         pistolGO.AddComponent<Pistol>();
 
         return pistolGO;
-   }
+    }
 
     public GameObject CreateRevolver()
     {

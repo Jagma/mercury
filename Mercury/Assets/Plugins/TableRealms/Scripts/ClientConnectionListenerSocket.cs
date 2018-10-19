@@ -45,28 +45,30 @@ public class ClientConnectionListenerSocket : MonoBehaviour, IClientConnectionLi
             server.BeginAcceptTcpClient(new AsyncCallback(DoAcceptTcpClientCallback), server);
 
             serverUrl = "";
-            
-            /*foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces()) {
+            string ipFound = "";
+            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces()) {
                 if (item.OperationalStatus == OperationalStatus.Up) {
                     foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses) {
                         if (ip.Address.AddressFamily == AddressFamily.InterNetwork) {
                             if (serverUrl.Length > 0) {
                                 serverUrl = serverUrl + ",";
                             }
-                            serverUrl = serverUrl + ip.Address.ToString();
+                            ipFound = ip.Address.ToString();
+                            Debug.Log(ip.Address.ToString());
                         }
                     }
                 }
-            }*/
+            }
 
             //serverUrl="192.168.1.176";
-            serverUrl = "http://tbrm.me?i=" + WWW.EscapeURL(GetIP4Address()) + ":" + port + "&n=" + WWW.EscapeURL(gameName) + "&p=S";
-         //   serverUrl = "http://tbrm.me?i=" + WWW.EscapeURL(Network.player.ipAddress) + ":" + port + "&n=" + WWW.EscapeURL(gameName) + "&p=S";
+        //    serverUrl = "http://tbrm.me?i=" + WWW.EscapeURL(GetIP4Address()) + ":" + port + "&n=" + WWW.EscapeURL(gameName) + "&p=S";
+
+            serverUrl = "http://tbrm.me?i=" + WWW.EscapeURL(ipFound) + ":" + port + "&n=" + WWW.EscapeURL(gameName) + "&p=S";
             Debug.Log("TableRealms: listening for clients on " + serverUrl);
         }
 #endif
     }
-    
+   /* 
     public static string GetIP4Address(){
         string IP4Address = String.Empty;
         foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
@@ -78,7 +80,7 @@ public class ClientConnectionListenerSocket : MonoBehaviour, IClientConnectionLi
             }
         }
         return IP4Address;
-    }
+    } */
 
 #if (!UNITY_WEBGL || UNITY_EDITOR)
     private bool IsPortAvailable(int port) {
