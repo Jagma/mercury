@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Pistol : WeaponRanged
 {
-    protected override void InitWeaponStats() {
+    protected override void InitWeaponStats()
+    {
         base.InitWeaponStats();
         cooldown = 0.5f;
         ammoOffset = 0.2f;

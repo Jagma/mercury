@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class MachineGun : WeaponRanged
 {
-  
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
         // Stats
-        cooldown = 0.1f;
-        ammoOffset = 0.6f;
-        ammoRandomness = 10f;
-        ammoMaxInventory = 500;
-        ammoInventory = 500;
-        ammoMax = 40;
-        ammoCount = 40;
-        damage = 10f;
+        base.InitWeaponStats();
+        cooldown = 0.5f;
+        ammoOffset = 0.2f;
+        ammoMaxInventory = 60;
+        ammoInventory = 60;
+        ammoMax = 15;
+        ammoCount = 15;
+        damage = 5f;
     }
 
-   protected override void Use()
+    protected override void Use()
     {
         base.Use();
 

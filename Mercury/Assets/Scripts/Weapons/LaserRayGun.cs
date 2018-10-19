@@ -4,9 +4,10 @@ using System.Collections;
 public class LaserRayGun : WeaponRanged
 {
     GameObject beam;
-    protected override void Start()
+
+    protected override void InitWeaponStats()
     {
-        base.Start();
+        base.InitWeaponStats();
         beam = Factory.instance.CreateBeamNeon();
         beam.transform.parent = transform;
 
@@ -18,6 +19,9 @@ public class LaserRayGun : WeaponRanged
         ammoMax = 100;
         ammoCount = 100;
     }
+
+
+
 
     protected override void Use()
     {
