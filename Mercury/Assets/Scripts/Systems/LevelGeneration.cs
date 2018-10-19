@@ -13,8 +13,8 @@ public class LevelGeneration : MonoBehaviour
 
     public Vector3 playerSpawnPosition = new Vector3(3, 3, 3);
 
-    public int mapWidth = 64;
-    public int mapDepth = 64;
+    public int mapWidth = 128;
+    public int mapDepth = 128;
 
     public string[,] terrain;
     public string[,] enemies;
@@ -24,13 +24,16 @@ public class LevelGeneration : MonoBehaviour
 
     public void Generate ()
     {
+        mapWidth = 64;
+        mapDepth = 64;
+
         terrain = new string[mapWidth, mapDepth];
         enemies = new string[mapWidth, mapDepth];
         pickups = new string[mapWidth, mapDepth];
 
         levelRoot = new GameObject("Level Root").transform;
 
-         Random.InitState(91142069);
+   //     Random.InitState(91142069);
         // Fill level with solids
         for (int z=0; z < terrain.GetLength(1); z ++)
         {
@@ -42,38 +45,31 @@ public class LevelGeneration : MonoBehaviour
 
         // Mine away solids
         List<Miner> minerList = new List<Miner>();
-        for (int i = 0; i < 5; i++)
+
+        int minerCount = Random.Range(3, 7);
+        for (int i = 0; i < minerCount; i++)
         {
             Miner miner = new Miner();
             miner.levelGen = this;
-            miner.lifetime = Random.Range(400, 1000);
             miner.posX = mapWidth / 2;
             miner.posZ = mapDepth / 2;
 
             minerList.Add(miner);
         }
 
-        for (int i=0; i < 1000; i ++)
+        int runCount = Random.Range(300, 500);
+        for (int i=0; i < runCount; i ++)
         {
-            bool exit = true;
             for (int j=0;j < minerList.Count; j ++)
             {
                 minerList[j].Update();
-
-                if (minerList[j].lifetime > 0)
-                {
-                    exit = false;
-                }
-            }
-
-            if (exit)
-            {
-                break;
             }
         }
 
         int playerSpawnX = minerList[0].posX;
         int playerSpawnZ = minerList[0].posZ;
+        CreateRoom(playerSpawnX, playerSpawnZ, 2, 2);
+
         playerSpawnPosition = new Vector3(playerSpawnX, 4, playerSpawnZ);
 
         for (int z = playerSpawnZ - 8; z < playerSpawnZ + 8; z++) {
@@ -95,6 +91,8 @@ public class LevelGeneration : MonoBehaviour
         floor.transform.localScale = new Vector3(mapWidth, 1, mapDepth);
         floor.transform.position = new Vector3(mapWidth / 2.0f, 0, mapDepth / 2.0f);
         floor.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(mapWidth, mapDepth));
+
+        Random.InitState(System.DateTime.Now.Millisecond);
 
         // Build level from arrays
         for (int z = 0; z < terrain.GetLength(1); z++)
@@ -178,13 +176,23 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
+    void CreateRoom(int posX, int posZ, int sizeX, int sizeZ) {
+        for (int x = -sizeX; x < sizeX; x++) {
+            for (int z = -sizeZ; z < sizeZ; z++) {
+                int compositeX = Mathf.Clamp(posX + x, 1, mapWidth - 2);
+                int compositeZ = Mathf.Clamp(posZ + z, 1, mapDepth - 2);
+
+                terrain[compositeX, compositeZ] = "";
+            }
+        }
+    }
+
     public void SpawnMartianBoss(Vector3 playerPosition) {
         GameObject enemyGO = Factory.instance.CreateMartianBoss();
         enemyGO.transform.parent = levelRoot;
         enemyGO.transform.position = new Vector3(playerPosition.x, 5, playerPosition.z);
         EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
     }
-
 }
 
 public class Miner
@@ -192,87 +200,93 @@ public class Miner
     public LevelGeneration levelGen;
     public int posX = 3;
     public int posZ = 3;
-    public int lifetime = 100;
-    public int roomChance = 98;
+
+    public int dirX = 1;
+    public int dirZ = 0;
 
     public void Update ()
     {
         // Movement
-        int random = Random.Range(0, 4);
-        if (random == 0)
-        {
-            posX++;
+        if (Random.Range(0, 1f) > 0.6f) {
+            // Keep same direction
+        } else {
+            int random = Random.Range(0, 4);
+
+            if (random == 0) {
+                dirX = 1;
+                dirZ = 0;
+            }
+            if (random == 1) {
+                dirX = 0;
+                dirZ = 1;
+            }
+            if (random == 2) {
+                dirX = -1;
+                dirZ = 0;
+            }
+            if (random == 3) {
+                dirX = 0;
+                dirZ = -1;
+            }
+
+            if (Random.Range(0, 1f) > 0.95f) {
+                CreateRoom(Random.Range(1, 3), Random.Range(1, 3));
+            }
         }
-        if (random == 1)
-        {
-            posX--;
-        }
-        if (random == 2)
-        {
-            posZ++;
-        }
-        if (random == 3)
-        {
-            posZ--;
-        }
-        
+
+        posX += dirX;
+        posZ += dirZ;
+
+
         // Death
-        lifetime--;
         if (posX <= 1 || posX >= levelGen.mapWidth-2 ||
             posZ <= 1 || posZ >= levelGen.mapDepth-2)
         {
-            posX = Mathf.Clamp(posX, 2, levelGen.mapWidth - 2);
-            posZ = Mathf.Clamp(posZ, 2, levelGen.mapDepth - 2);
-
-            lifetime = 0;
+            return;            
         }
 
-        if (lifetime <= 0)
-        {
-            CreateRoom(2, 2);
-            return;
-        }
+
 
         // Create empty
         levelGen.terrain[posX, posZ] = "";
 
         // Create rooms
-        if (Random.Range(0, 100) > roomChance)
+        if (Random.Range(0, 1f) > 0.990f)
         {
             CreateRoom(Random.Range(1, 5), Random.Range(1, 5));
         }
 
         // Enemies 
-        if (Random.Range(0, 1000) > 995)
+        if (Random.Range(0, 1f) > 0.99f)
         {
             levelGen.enemies[posX, posZ] = "Walker";
         }
-        if (Random.Range(0, 1000) > 995)
+        if (Random.Range(0, 1f) > 0.995f)
         {
         //    levelGen.enemies[posX, posZ] = "Martian Boss";
         }
-        if (Random.Range(0, 1000) > 995)
+        if (Random.Range(0, 1f) > 0.995f)
         {
             levelGen.enemies[posX, posZ] = "Ranged Walker";
         }
-        if (Random.Range(0, 1000) > 995)
+        if (Random.Range(0, 1f) > 0.995f)
         {
             levelGen.enemies[posX, posZ] = "Overlord Walker";
         }
         // Pickups
-        if (Random.Range(0, 10000) > 9990)
+        if (Random.Range(0, 1f) > 0.9990f)
         {
             levelGen.pickups[posX, posZ] = "Normal Chest";
         }
-        if (Random.Range(0, 10000) > 9990)
+        if (Random.Range(0, 1f) > 0.9996f)
         {
             levelGen.pickups[posX, posZ] = "Rare Chest";
         }
-        if (Random.Range(0, 10000) > 9990)
+        if (Random.Range(0, 1f) > 0.998f)
         {
             levelGen.pickups[posX, posZ] = "Medkit";
         }
-        if (Random.Range(0, 10000) > 9990)
+        if (Random.Range(0, 1f) > 0.998f)
         {
             levelGen.pickups[posX, posZ] = "Medpack";
         }
