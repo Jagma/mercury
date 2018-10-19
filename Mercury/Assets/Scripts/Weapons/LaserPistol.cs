@@ -5,9 +5,9 @@ public class LaserPistol : WeaponRanged
 {
     GameObject beam;
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
+        base.InitWeaponStats();
         damage = 75f;
         beam = Factory.instance.CreateBeamPurple();
         beam.transform.parent = transform;
@@ -19,7 +19,6 @@ public class LaserPistol : WeaponRanged
         ammoInventory = 20;
         ammoMax = 10;
         ammoCount = 10;
-
     }
 
     protected override void Use()

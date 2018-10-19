@@ -110,7 +110,7 @@ public class OverlordWalker : Enemy
         GameObject weapon;
         weapon = Factory.instance.CreateMachineGun();
         equippedWeapon = weapon.GetComponent<Weapon>();
-        equippedWeapon.SetWeaponDamage(0f);
+        equippedWeapon.SetWeaponDamage(0.5f);
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;

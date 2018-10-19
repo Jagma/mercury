@@ -112,7 +112,7 @@ public class RangedWalker : Enemy
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
-        equippedWeapon.SetWeaponDamage(0f);
+        equippedWeapon.SetWeaponDamage(0.5f);
     }
 
     public void AimAtPlayer(Vector3 direction)

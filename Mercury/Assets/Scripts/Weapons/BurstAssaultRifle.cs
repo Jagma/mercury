@@ -5,10 +5,9 @@ using UnityEngine;
 public class BurstAssaultRifle : WeaponRanged
 {
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 0.75f;
         ammoOffset = 0.6f;

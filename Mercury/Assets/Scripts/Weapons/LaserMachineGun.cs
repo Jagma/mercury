@@ -5,10 +5,9 @@ using UnityEngine;
 public class LaserMachineGun : WeaponRanged
 {
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 0.1f;
         ammoOffset = 0.6f;
@@ -19,7 +18,6 @@ public class LaserMachineGun : WeaponRanged
         ammoCount = 40;
         damage = 15f;
     }
-
     protected override void Use()
     {
         base.Use();
