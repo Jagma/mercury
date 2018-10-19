@@ -85,6 +85,11 @@ public class Weapon : MonoBehaviour
             ReloadWeapon();
         }
     }
+    public void SetMaxAmmoCount(int maxAmmoIncrease)
+    {
+        ammoMaxInventory += maxAmmoIncrease;
+        SetAmmoCount(ammoMaxInventory);// Adjusts the ammo count for next level
+    }
 
     private void ReloadWeapon()
     {
