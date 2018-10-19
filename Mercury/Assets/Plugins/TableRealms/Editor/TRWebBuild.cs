@@ -9,7 +9,7 @@ public class TRWebBuild {
 	
 	[MenuItem("Plugins/TableRealms/Build Browser")]
     public static void BuildBrowser() {
-        Build("TRBrowser");
+        Build("MercuryWebGL");
     }
 
 /*    [MenuItem("TR Web Build/Build Embedded")]

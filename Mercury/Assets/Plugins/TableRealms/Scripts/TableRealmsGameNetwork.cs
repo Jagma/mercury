@@ -7,8 +7,6 @@ using System.Globalization;
 using ZXing;
 using ZXing.QrCode;
 using tablerealms.comms.message;
-using UniWebServer;
-using ICSharpCode.SharpZipLib.Zip;
 
 public class TableRealmsGameNetwork : MonoBehaviour {
 
@@ -162,16 +160,18 @@ public class TableRealmsGameNetwork : MonoBehaviour {
                 updateModelMessage = new UpdateModelMessage(true, key, ModelType.TypeDouble.ToString(), TableRealmsModel.instance.GetData<float>(key).ToString());
             } else if (valueType == typeof(double)) {
                 updateModelMessage = new UpdateModelMessage(true, key, ModelType.TypeDouble.ToString(), TableRealmsModel.instance.GetData<double>(key).ToString());
+            } else if (valueType == typeof(int)) {
+                updateModelMessage = new UpdateModelMessage(true, key, ModelType.TypeDouble.ToString(), TableRealmsModel.instance.GetData<int>(key).ToString());
             } else if (valueType == typeof(bool)) {
                 updateModelMessage = new UpdateModelMessage(true, key, ModelType.TypeBoolean.ToString(), TableRealmsModel.instance.GetData<bool>(key).ToString());
             } else {
-                Debug.LogError("TableRealms: Global data of type '"+ valueType + "' for key '"+key+"' is not suported, only string, bool, long, and float are.");
+                Debug.LogError("TableRealms: Global data of type '"+ valueType + "' for key '"+key+"' is not suported, only string, bool, long, int, and float are.");
             }
             if (updateModelMessage != null) {
-                //Debug.LogError("Sending global "+key+"="+updateModelMessage.value);
+                Debug.LogError("Sending global "+key+"="+updateModelMessage.value);
                 tableRealmsClientConnection.SendClientMessage(updateModelMessage);
-            //}else{
-                //Debug.LogError("Not Sending global "+key+" of type "+valueType.Name);                
+            }else{
+                Debug.LogError("Not Sending global "+key+" of type "+valueType.Name);                
             }
         }
     }
@@ -271,7 +271,7 @@ public class TableRealmsGameNetwork : MonoBehaviour {
     {
         foreach (TableRealmsClientConnection connection in connections){
             TableRealmsModel.instance.SetData(connection.gameObject.name+".page", page);
-           // Debug.LogError("Setting "+ connection.gameObject.name + ".page="+ page);
+            Debug.LogError("Setting "+ connection.gameObject.name + ".page="+ page);
         }
     }
 

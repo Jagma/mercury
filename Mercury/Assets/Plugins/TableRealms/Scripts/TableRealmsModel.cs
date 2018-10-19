@@ -16,7 +16,7 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
             Tokenizer.AddTokenizerSource(this);
             GameObject.DontDestroyOnLoad(gameObject);
         } else {
-            GameObject.Destroy(gameObject);
+            GameObject.DestroyImmediate(gameObject);
         }
     }
 
@@ -101,6 +101,12 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
         if (typeof(oftype) == typeof(long) && currentObject.GetType() == typeof(double)) {
             currentObject = (long)(double)currentObject;
         }
+        if (typeof(oftype) == typeof(int) && currentObject.GetType() == typeof(double)) {
+            currentObject = (int)(double)currentObject;
+        }
+        if (typeof(oftype) == typeof(int) && currentObject.GetType() == typeof(long)) {
+            currentObject = (int)(long)currentObject;
+        }
         if (typeof(oftype) == typeof(bool) && currentObject == null) {
             currentObject = false;
         }
@@ -162,13 +168,13 @@ public class TableRealmsModel : MonoBehaviour, TokenizerDataStore {
     public void SetData(string key, object value, bool forceNew) {
         object oldvalue = null;
 
-        if (value.GetType() == typeof(Color)) {
+	    if (value.GetType() == typeof(Color) || value.GetType() == typeof(Color32)) {
             Color32 color = (Color)value;
             value = (long)((((int)(color.r)) << 24) + (((int)(color.g)) << 16) + (((int)(color.b)) << 8) + ((int)(color.a)));
         }
 
         if (!globalData.ContainsKey(key) && (key.IndexOf(".") == -1 || !TableRealmsGameNetwork.instance.IsClientConnected(key.Substring(0, key.IndexOf("."))))) {
-            globalData.Add(key, value);
+	        //globalData.Add(key, value);
             globalKeys.Add(key);
         }
 
