@@ -721,7 +721,7 @@ public class Factory : MonoBehaviour
             SpriteRenderer visual = chunk.AddComponent<SpriteRenderer>();
             visual.sprite = Resources.Load<Sprite>("Effects/Blood/Splat_" + Random.Range(1, 5));
             visual.transform.parent = rigid.transform;
-            visual.transform.rotation *= Quaternion.AngleAxis(45f, Vector3.right);
+            visual.transform.rotation = Quaternion.Euler(45, 45, 0);
             visual.enabled = false;
 
             GameObject trail = GameObject.Instantiate(Resources.Load<GameObject>("Effects/Blood/BloodTrail"));

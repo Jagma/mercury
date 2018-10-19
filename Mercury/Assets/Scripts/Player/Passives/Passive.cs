@@ -58,3 +58,14 @@ public class PassiveMovementSpeed : Passive
     public override void RecurringAffect() { }
 }
 
+public class PassiveMaxAmmoIncrease : Passive
+{
+    float AmmoIncrease = 50f;
+
+    public override void SingleAffect()
+    {
+        player.model.equippedWeapon.ammoMaxInventory *= 2;
+        player.model.secondaryWeapon.ammoMaxInventory *= 2;
+    }
+    public override void RecurringAffect() { }
+}

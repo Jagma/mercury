@@ -20,6 +20,7 @@ public class Chunk : MonoBehaviour {
                 sr.enabled = true;
                 sr.transform.position = new Vector3(rigid.transform.position.x, 0.6f, rigid.transform.position.z);
                 Destroy(rigid);
+                Destroy(gameObject, 5f);
             }
         }
 	}

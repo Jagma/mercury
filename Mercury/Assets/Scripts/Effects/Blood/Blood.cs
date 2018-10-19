@@ -38,7 +38,7 @@ public class Blood : MonoBehaviour {
             Rigidbody rigidbody = chunk.GetComponent<Rigidbody>();
             rigidbody.AddExplosionForce(power, explosionPoint, radius, upModifier, ForceMode.Impulse);
         }
-        GameObject.Destroy(gameObject, 10f);
+        GameObject.Destroy(gameObject, 5f);
     }
 	
 	void Update () {
