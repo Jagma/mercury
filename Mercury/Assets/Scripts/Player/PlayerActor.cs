@@ -95,9 +95,6 @@ public class PlayerActor : MonoBehaviour
             model.equippedWeapon = model.secondaryWeapon;
             model.secondaryWeapon = sw;
 
-
-            //      SpriteRenderer srEquiped = model.equippedWeapon.transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>();
-            //      SpriteRenderer srSecondary = model.secondaryWeapon.transform.Find("Visual").Find("Body").GetComponent<SpriteRenderer>();
             model.secondaryWeapon.transform.localEulerAngles = new Vector3(45, 90, 0);
 
         }
@@ -126,29 +123,21 @@ public class PlayerActor : MonoBehaviour
     {
         if (model.playerActive)
         {
+            float nearestDistance = float.MaxValue;
+            float distance;
+            int weaponIndex = -1;
             Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
             for (int i = 0; i < colliders.Length; i++)
             {
                 Weapon weapon = colliders[i].GetComponent<Weapon>();
-                if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon && weapon.equipped == false)
+                if (weapon != null && weapon.equipped == false)
                 {
-                    // Dequip current weapon
-                    //Both slots full
-                    if (model.equippedWeapon != null && model.secondaryWeapon != null)
-                    {
-                        SwapEquipedWeapon(weapon);
-                    }
-                    //Inventory empty
-                    if (model.equippedWeapon != null && model.secondaryWeapon == null)
-                    {
-                        PickUpSecondaryWeapon(weapon);
-                    }
+                    distance = (transform.position - weapon.transform.position).sqrMagnitude;
 
-                    // Equip new weapon
-                    if (model.equippedWeapon == null && model.secondaryWeapon == null)
+                    if(distance < nearestDistance)
                     {
-                        PickUpWeapon(weapon);
-                        AudioManager.instance.PlayAudio("dsdbload", 1, false);
+                        nearestDistance = distance;
+                        weaponIndex = i;
                     }
                 }
 
@@ -156,6 +145,28 @@ public class PlayerActor : MonoBehaviour
                 if (chest != null)
                 {
                     chest.OpenChest();
+                }
+            }
+            if( weaponIndex != -1)
+            {
+                Weapon nearestWeapon = colliders[weaponIndex].GetComponent<Weapon>();
+                // Dequip current weapon
+                //Both slots full
+                if (model.equippedWeapon != null && model.secondaryWeapon != null)
+                {
+                    SwapEquipedWeapon(nearestWeapon);
+                }
+                //Inventory empty
+                if (model.equippedWeapon != null && model.secondaryWeapon == null)
+                {
+                    PickUpSecondaryWeapon(nearestWeapon);
+                }
+
+                // Equip new weapon
+                if (model.equippedWeapon == null && model.secondaryWeapon == null)
+                {
+                    PickUpWeapon(nearestWeapon);
+                    AudioManager.instance.PlayAudio("dsdbload", 1, false);
                 }
             }
         }
