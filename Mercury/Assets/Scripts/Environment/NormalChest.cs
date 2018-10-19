@@ -25,7 +25,7 @@ public class NormalChest : Chest
 
     public GameObject ChooseRandomWeapon()
     {
-        int[] itemWeights = { 2, 2, 1, 2,3,1,1,20,20,20 };
+        int[] itemWeights = { 20000000, 2, 1, 2,3,1,1,20,20,20 };
 
         int total = 0;
         for (int i=0; i < itemWeights.Length; i ++)
