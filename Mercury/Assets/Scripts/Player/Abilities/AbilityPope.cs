@@ -33,7 +33,7 @@ public class AbilityPope : Ability
     {
         int layerId = LayerMask.NameToLayer("Player");
         int layerMask = 1 << layerId;
-        colliders = Physics.OverlapSphere(playerActor.transform.position, abilityRadius);
+        colliders = Physics.OverlapSphere(playerActor.transform.position, abilityRadius, layerMask);
 
         foreach (Collider hit in colliders)
         {

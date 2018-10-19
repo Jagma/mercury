@@ -64,8 +64,8 @@ public class PassiveMaxAmmoIncrease : Passive
 
     public override void SingleAffect()
     {
-        player.model.equippedWeapon.ammoMaxInventory *= 2;
-        player.model.secondaryWeapon.ammoMaxInventory *= 2;
+        //player.model.equippedWeapon.ammoMaxInventory *= 2;
+        //player.model.secondaryWeapon.ammoMaxInventory *= 2;
     }
     public override void RecurringAffect() { }
 }

@@ -73,9 +73,14 @@ public class AbilityOprah : Ability
                 3, // Rocket Launcher
                 1, // Pistol
                 2, // Shotgun
-                1, // Flamethrower
+                2, // Sniper Rifle 
+                2, // Lazer Machine Gun 
+                1, // Flamethrower 
+                3, // Sword 
+                1, // Revolver 
+                3 // Burst Assault Rifle 
             };
-        int[] enemyWeights = { 5, 1}; //Melee |Ranged
+        int[] enemyWeights = { 10, 5, 1}; //Melee |Ranged
         int[] chestWeights = { 5, 1 };//Normal |Rare
         int result = GetResult(categoryWeight);//Choose category
 
@@ -106,6 +111,8 @@ public class AbilityOprah : Ability
                 return Factory.instance.CreateEnemyWalker();
             if (result == 1)
                 return Factory.instance.CreateRangedWalker();
+            if (result == 2)
+                return Factory.instance.CreateOverlordWalker();
         }
         #endregion
         #region Rounds
@@ -128,11 +135,27 @@ public class AbilityOprah : Ability
             if (result == 0)
                 return Factory.instance.CreateMachineGun();
             if (result == 1)
-                return Factory.instance.CreateLaserRayGun();
+                return Factory.instance.CreateLaserPistol();
             if (result == 2)
-                return Factory.instance.CreateRocketLauncher();
+                return Factory.instance.CreateLaserRayGun();
             if (result == 3)
+                return Factory.instance.CreateRocketLauncher();
+            if (result == 4)
                 return Factory.instance.CreatePistol();
+            if (result == 5)
+                return Factory.instance.CreateShotgun();
+            if (result == 6)
+                return Factory.instance.CreateSniperRifle();
+            if (result == 7)
+                return Factory.instance.CreateLaserMachineGun();
+            if (result == 8)
+                return Factory.instance.CreateFlamethrower();
+            if (result == 9)
+                return Factory.instance.CreateSword();
+            if (result == 10)
+                return Factory.instance.CreateRevolver();
+            if (result == 11)
+                return Factory.instance.CreateBurstAssaultRifle();
         }
         #endregion
         #region Chest
