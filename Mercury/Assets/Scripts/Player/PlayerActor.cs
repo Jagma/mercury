@@ -85,9 +85,7 @@ public class PlayerActor : MonoBehaviour
             }
             Weapon sw = model.equippedWeapon;
             model.equippedWeapon.Dequip();
-            model.equippedWeapon.equipped = false;
             model.secondaryWeapon.Equip();
-            model.secondaryWeapon.equipped = true;
             model.equippedWeapon = model.secondaryWeapon;
             model.secondaryWeapon = sw;
             model.secondaryWeapon.gameObject.SetActive(false);
@@ -95,6 +93,24 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
+    private void PickUpWeapon(Weapon weapon)
+    {
+        model.equippedWeapon = weapon;
+        model.equippedWeapon.Equip();
+    }
+
+    private void SwapEquipedWeapon(Weapon weapon)
+    {
+        model.equippedWeapon.Dequip();
+        PickUpWeapon(weapon);
+    }
+
+    private void PickUpSecondaryWeapon(Weapon weapon)
+    {
+        model.secondaryWeapon = weapon;
+        model.secondaryWeapon.Dequip();
+        SwitchWeapons();
+    }
     public void Interact()
     {
         if (model.playerActive)
@@ -103,41 +119,29 @@ public class PlayerActor : MonoBehaviour
             for (int i = 0; i < colliders.Length; i++)
             {
                 Weapon weapon = colliders[i].GetComponent<Weapon>();
-                Chest chest = colliders[i].GetComponent<Chest>();
                 if (weapon != null && weapon != model.equippedWeapon && weapon != model.secondaryWeapon && weapon.equipped == false)
                 {
                     // Dequip current weapon
                     //Both slots full
                     if (model.equippedWeapon != null && model.secondaryWeapon != null)
                     {
-                        model.equippedWeapon.Dequip();
-                        model.equippedWeapon.equipped = false;
-                        weapon.Equip();
-                        weapon.equipped = true;
-                        model.equippedWeapon = weapon;
+                        SwapEquipedWeapon(weapon);
                     }
                     //Inventory empty
                     if (model.equippedWeapon != null && model.secondaryWeapon == null)
                     {
-                        model.equippedWeapon.Dequip();
-                        model.equippedWeapon.equipped = false;
-                        model.secondaryWeapon = model.equippedWeapon;
-                        weapon.Equip();
-                        weapon.equipped = true;
-                        model.equippedWeapon = weapon;
-                        model.secondaryWeapon.gameObject.SetActive(false);//Hides the secondary weapon
+                        PickUpSecondaryWeapon(weapon);
                     }
 
                     // Equip new weapon
                     if (model.equippedWeapon == null && model.secondaryWeapon == null)
                     {
-                        weapon.Equip();
-                        weapon.equipped = true;
+                        PickUpWeapon(weapon);
                         AudioManager.instance.PlayAudio("dsdbload", 1, false);
-                        model.equippedWeapon = weapon;
                     }
                 }
 
+                Chest chest = colliders[i].GetComponent<Chest>();
                 if (chest != null)
                 {
                     chest.OpenChest();
