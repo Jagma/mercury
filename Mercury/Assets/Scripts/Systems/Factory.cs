@@ -1169,10 +1169,40 @@ public class Factory : MonoBehaviour
         enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
         return enemyRangedGO;
     }
-#endregion
+    #endregion
 
-    /* New stuff
-     * ********************************************************
-     * ********************************************************
-     */
+    // Multiplayer
+    public class ObjectConstructor {
+        public string objectUniqueID = "-1";
+        public virtual GameObject Construct() {
+            return null;
+        }
+    }
+
+    public class HostPlayerConstructor : ObjectConstructor {
+        public override GameObject Construct() {
+            base.Construct();
+            GameObject player = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
+            player.name = "PlayerHost";
+
+   //         player.AddComponent<HostPlayer>();
+    //        player.GetComponent<HostPlayer>().clientUniqueID = objectUniqueID;
+            return player;
+        }
+    }
+
+    public class ClientPlayerConstructor : ObjectConstructor {
+        public override GameObject Construct() {
+            base.Construct();
+            GameObject player = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
+            player.name = "PlayerClient";
+
+        //    player.AddComponent<ClientPlayer>();
+        //    player.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
+
+            return player;
+        }
+    }
 }
