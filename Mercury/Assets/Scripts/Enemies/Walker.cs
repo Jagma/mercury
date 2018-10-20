@@ -53,4 +53,13 @@ public class Walker : Enemy
 
 
     }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        PlayerActor player = col.GetComponent<PlayerActor>();
+        if (player != null)
+        {
+            player.Damage(1f);
+        }
+    }
 }

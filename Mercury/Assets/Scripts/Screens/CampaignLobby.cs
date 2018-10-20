@@ -379,7 +379,7 @@ public class CampaignLobby : MonoBehaviour
             foreach (CharacterSelect player in characterSelectors)
             {
                 PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
-                GameProgressionManager.instance.setPlayerList(player.playerID);
+                GameProgressionManager.instance.SetPlayerList(player.playerID);
             }
             AudioManager.instance.StopAudio("Game_music_Space_loop");
             SceneManager.LoadScene("GameCOOP");

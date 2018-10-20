@@ -277,7 +277,6 @@ public class PlayerActor : MonoBehaviour
 
     private void DisplayPlayerDown()
     {
-        Debug.Log("Player is down.");
         visual.transform.parent = null;
         if (Random.Range(0, 100) >= 50)
         {
@@ -295,7 +294,6 @@ public class PlayerActor : MonoBehaviour
     public void Death()
     {
         AudioManager.instance.PlayAudio("death1", 1, false);
-        Debug.Log("Player died.");
         GameProgressionManager.instance.GameOver();
     }
 
@@ -326,7 +324,7 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerEnter(Collider col) //needs to be reworked in order to provide a "proper revive" if the player is downed.
     {
         PlayerActor player = col.GetComponent<PlayerActor>();
         if (player != null)

@@ -1,26 +1,33 @@
-﻿using System.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.IO;
+
+// The Game progression manager is a singleton
 public class GameProgressionManager : MonoBehaviour
 {
-    //private int numEnemiesLeft;
-    private int numEnemiesStart;
-    //private int numOfBulletsUsed;
-    //private int enemiesKilled;
-    //private int wallsDestroyed;
-    //private int damageTaken;
-    //private Time currentStageTime;
-    //private Time totalTimePlayed;
-    private GameObject levels;
+    private int numEnemiesLeftLevel;
+    private int numEnemiesStartLevel;
+    private int numOfBulletsUsedTotal;
+    private int numOfBulletsUsedLevel;
+    private int enemiesKilledTotal;
+    private int enemiesKilledLevel;
+    private int wallsDestroyedLevel;
+    private int wallsDestroyedTotal;
+
+    private float damageTakenTotal;
+    private float damageTakenLevel;
+
+    private Time currentStageTime;
+    private Time totalTimePlayed;
+
+    private GameObject[] levels;
     private GameObject[] players;
     private GameObject[] gunsUsed;
-    public List<string> playerActors = new List<string>();
+
+    public List<string> playerIDList = new List<string>();
     public List<bool> playerDown = new List<bool>();
-    private List<string> player;
-    // The Game progression manager is a singleton
+
+
     public static GameProgressionManager instance;
     private void Awake()
     {
@@ -28,22 +35,84 @@ public class GameProgressionManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            numEnemiesStart = 0;
         }
         else
             Destroy(gameObject);
     }
 
+    #region Init
     // Use this for initialization
     void Start()
     {
+        numOfBulletsUsedTotal = 0;
+        numOfBulletsUsedLevel = 0;
+        enemiesKilledTotal = 0;
+        enemiesKilledLevel = 0;
+        wallsDestroyedTotal = 0;
+        wallsDestroyedLevel = 0;
+        damageTakenTotal = 0;
+        damageTakenLevel = 0;
+        currentStageTime = null;
+        totalTimePlayed = null;
+        numEnemiesLeftLevel = 0;
+        numEnemiesStartLevel = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetPlayerList(string players)
     {
-  
+        playerIDList.Add(players);
+        playerDown.Add(false);
     }
+    #endregion
+
+    #region LevelComplete/Restart
+
+    public void RestartLevel()
+    {
+        numOfBulletsUsedLevel = 0;
+        enemiesKilledLevel = 0;
+        wallsDestroyedLevel = 0;
+        damageTakenLevel = 0;
+        currentStageTime = null;
+        numEnemiesLeftLevel = 0;
+        numEnemiesStartLevel = 0;
+    }
+
+    public void LevelComplete()
+    {
+        RestartLevel();
+        SceneManager.LoadScene("LevelComplete");
+    }
+
+    #endregion
+
+    #region Game Updates
+
+    public int getPlayerCount()
+    {
+        return playerIDList.Count;
+    }
+
+    public void IncreaseEnemyKills()
+    {
+        enemiesKilledLevel += 1;
+    }
+
+    public void IncreaseWallsDestroyed()
+    {
+        wallsDestroyedLevel += 1;
+    }
+
+    public void IncreaseBulletAmountUsed()
+    {
+        numOfBulletsUsedLevel += 1;
+    }
+
+    public void IncreaseEnemyCount()
+    {
+        numEnemiesStartLevel += 1;
+    }
+
 
     public bool getPlayerDownCount()
     {
@@ -64,9 +133,9 @@ public class GameProgressionManager : MonoBehaviour
 
     public void SetPlayerDown(string playerID, bool value)
     {
-        for (int i = 0; i < playerActors.Count; i++)//set player down in gameprogression manager to false.
+        for (int i = 0; i < playerIDList.Count; i++)//set player down in gameprogression manager to false.
         {
-            if (playerActors[i] == playerID)
+            if (playerIDList[i] == playerID)
             {
                 playerDown[i] = value;
                 return;
@@ -74,56 +143,42 @@ public class GameProgressionManager : MonoBehaviour
         }
 
     }
+    #endregion
 
-    public void setPlayerList(string players)
+    #region Database Updating
+    void SendDataServer()
     {
-        playerActors.Add(players);
-        playerDown.Add(false);
-        Debug.Log(playerActors.Count);
+        //send data to database.
     }
+    #endregion
 
-    public void RestartLevel()
-    {
-        numEnemiesStart = 0;
-    }
-
+    #region Game Over
     public void GameOver()
     {
-        Debug.Log("Game over.");
+        SetFinalValues();
         SceneManager.LoadScene("GameOver");
     }
 
+    void SetFinalValues()
+    {
+        numOfBulletsUsedTotal += numOfBulletsUsedLevel;
+        enemiesKilledTotal += enemiesKilledLevel;
+        wallsDestroyedTotal += wallsDestroyedLevel;
+        damageTakenTotal += damageTakenLevel;
+        //totalTimePlayed += currentStageTime;      
+    }
+
+
     public void Reset()
     {
-        for (int i = 0; i < playerActors.Count; i++)//set player down in gameprogression manager to false.
+        SendDataServer();
+        Start(); //reset variables.
+        for (int i = 0; i < playerIDList.Count; i++)//set player down in gameprogression manager to false.
         {
             playerDown[i] = false;
         }
-        numEnemiesStart = 0;
     }
 
-    public int getPlayerCount()
-    {
-        return playerActors.Count;
-    }
-    public void LevelComplete()
-    {
-        Debug.Log("Level complete.");
-        //DumpData();
-        SceneManager.LoadScene("LevelComplete");
-    }
-    
-    public void IncreaseEnemyCount()
-    {
-        numEnemiesStart += 1;
-    }
+    #endregion
 
-    //player, 64, tyd;
-    public void DumpData()
-    {
-        if (File.Exists("./DumpedData.txt"))
-            File.AppendAllText("./DumpedData.txt",player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
-        else
-            File.WriteAllText("./DumpedData.txt",player + ", " + numEnemiesStart.ToString() + ", " + Time.timeSinceLevelLoad.ToString() + Environment.NewLine);
-    }
 }
