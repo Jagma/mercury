@@ -65,7 +65,6 @@ public class Enemy : MonoBehaviour
     // Damage, health, and death
     private void OnTriggerEnter(Collider col)
     {
-
         Projectile projectile = col.GetComponent<Projectile>();
         if (projectile != null)
         {        

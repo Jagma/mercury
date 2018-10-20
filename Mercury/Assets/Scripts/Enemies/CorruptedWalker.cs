@@ -111,12 +111,12 @@ public class CorruptedWalker : Enemy
     void CreateWeapon()
     {
         GameObject weapon;
-        weapon = Factory.instance.CreateShotgun();
+        weapon = Factory.instance.CreateLaserPistol();
         equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
-        equippedWeapon.SetWeaponDamage(0.5f);
+        equippedWeapon.SetWeaponDamage(2f);
     }
 
     public void AimAtPlayer(Vector3 direction)

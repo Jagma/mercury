@@ -519,13 +519,39 @@ public class Factory : MonoBehaviour
         axeVisualGO.transform.parent = axeGO.transform;
 
         GameObject axeVisualBodyGO = new GameObject("Body");
-        axeVisualBodyGO.transform.parent = axeGO.transform;
+        axeVisualBodyGO.transform.parent = axeVisualGO.transform;
         SpriteRenderer sr = axeVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Axe");
 
         axeGO.AddComponent<Axe>();
 
         return axeGO;
+    }
+
+    public GameObject CreateSpear()
+    {
+        GameObject spearGO = new GameObject("Spear");
+
+        SphereCollider spearCollider = spearGO.AddComponent<SphereCollider>();
+        spearCollider.radius = 0.1f;
+
+        SphereCollider spearColliderT = spearGO.AddComponent<SphereCollider>();
+        spearColliderT.isTrigger = true;
+
+        Rigidbody spearRigid = spearGO.AddComponent<Rigidbody>();
+        spearRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject spearVisualGO = new GameObject("Visual");
+        spearVisualGO.transform.parent = spearGO.transform;
+
+        GameObject spearVisualBodyGO = new GameObject("Body");
+        spearVisualBodyGO.transform.parent = spearVisualGO.transform;
+        SpriteRenderer sr = spearVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Spear");
+
+        spearGO.AddComponent<Spear>();
+
+        return spearGO;
     }
 
     public GameObject CreateShotgun()

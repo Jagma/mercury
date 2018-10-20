@@ -116,7 +116,7 @@ public class ArcWalker : Enemy
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
-        equippedWeapon.SetWeaponDamage(0.5f);
+        equippedWeapon.SetWeaponDamage(0.75f);
     }
 
     public void AimAtPlayer(Vector3 direction)

@@ -66,7 +66,7 @@ public class NormalChest : Chest
                 break;
             }
         }
-
+        //Weapons.
         if (result == 0)
         {
             return Factory.instance.CreatePistol();
