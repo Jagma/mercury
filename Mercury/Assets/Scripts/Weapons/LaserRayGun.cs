@@ -10,7 +10,7 @@ public class LaserRayGun : WeaponRanged
         base.InitWeaponStats();
         beam = Factory.instance.CreateBeamNeon();
         beam.transform.parent = transform;
-
+        beam.SetActive(false);
         // Stats
         cooldown = 0f;
         ammoOffset = 0.25f;
