@@ -15,7 +15,7 @@ public class Sword : WeaponMelee
         ammoInventory = 0;
         ammoMax = 100;
         ammoCount = 100;
-        damage = 10f;
+        damage = 15f;
     }
 
     protected override void Use()

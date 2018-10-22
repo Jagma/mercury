@@ -118,7 +118,6 @@ public class RangedEnemies : Enemy
         {
             equippedWeapon.transform.right = (direction - transform.position).normalized;
         }
-
     }
 
     protected virtual void AttackPlayer()
