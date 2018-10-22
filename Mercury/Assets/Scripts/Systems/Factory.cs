@@ -167,8 +167,13 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
+    Material lazerBulletMat;
     public GameObject CreateLaserBullet()
     {
+        if (lazerBulletMat == null) {
+            lazerBulletMat = new Material(Shader.Find("Unlit/Transparent"));
+            lazerBulletMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamOrange"));
+        }
         GameObject LbulletGO = new GameObject("Laser Bullet");
 
         SphereCollider lbulletCollider = LbulletGO.AddComponent<SphereCollider>();
@@ -184,8 +189,12 @@ public class Factory : MonoBehaviour
 
         GameObject lbulletVisualBodyGO = new GameObject("Body");
         lbulletVisualBodyGO.transform.parent = lbulletVisualGO.transform;
-        SpriteRenderer sr = lbulletVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_2");
+        TrailRenderer tr = lbulletVisualBodyGO.AddComponent<TrailRenderer>();
+        tr.time = 0.5f;
+        tr.widthMultiplier = 0.2f;
+        tr.material = lazerBulletMat;
+        tr.numCapVertices = 2;
+        tr.textureMode = LineTextureMode.Tile;
 
         Projectile p = LbulletGO.AddComponent<Round>();
         p.Init();
