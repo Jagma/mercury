@@ -298,11 +298,18 @@ public class Factory : MonoBehaviour
         return rocketHit;
     }
 
+    public GameObject CreateFlameEffect() //adds an flame effect onto the flamethower
+    {
+        GameObject flame = GameObject.Instantiate(Resources.Load<GameObject>("Effects/FlameEffect"));
+        return flame;
+    }
+
     public GameObject CreateBagExplosion() //adds an explosion effect onto the rocket when it hits/collides with an object.
     {
         GameObject exlosion = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BagExplosion"));
         return exlosion;
     }
+
     public GameObject CreateRocketSmokeFlash()  //adds an smoke flash effect that travels with the rocket itself.
     {
         GameObject smokeFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketSmokeFlash"));

@@ -10,6 +10,7 @@ public class Flame : MonoBehaviour
 
     public void Init()
     {
+        visual = transform.Find("Visual");
         // Stats     
         speed = 10f;
         damage = 1f;
@@ -38,8 +39,8 @@ public class Flame : MonoBehaviour
                 wall.Damage((int)damage);
             }
         }
-        GameObject explosion = Factory.instance.CreateBagExplosion();//Explosion effect
-        //explosion.transform.position = rigid.transform.position;
+        GameObject flameEffect = Factory.instance.CreateFlameEffect();//flame effect
+        flameEffect.transform.position = transform.position;
         GameObject.Destroy(gameObject);
     }
 

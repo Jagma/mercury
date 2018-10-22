@@ -4,26 +4,42 @@ using UnityEngine;
 
 public class Flamethrower : WeaponRanged
 {
-    private GameObject flame;
+    GameObject flame;
 
     protected override void InitWeaponStats()
     {
         base.InitWeaponStats();
         // Stats
+
+        flame = Factory.instance.CreateFlame();
+        flame.transform.parent = transform;
         cooldown = 1f;
         ammoOffset = 1f;
         ammoMaxInventory = 200;
         ammoInventory = 200;
         ammoMax = 100;
         ammoCount = 100;
-        damage = 50f;
+        damage = 1f;
     }
 
     protected override void Use()
     {
         base.Use();
+        flame.SetActive(true);
+        framesSinceUse = 0;
 
-        flame = Factory.instance.CreateFlame();
+    }
+
+    int framesSinceUse = 0;
+    protected override void Update()
+    {
+        base.Update();
+        // This is to disable the flame once the weapon stops being used
+        framesSinceUse++;
+        if (framesSinceUse > 2)
+        {
+            flame.SetActive(false);
+        }
     }
 
 

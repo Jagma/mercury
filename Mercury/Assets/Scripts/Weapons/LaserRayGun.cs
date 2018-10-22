@@ -20,9 +20,6 @@ public class LaserRayGun : WeaponRanged
         ammoCount = 100;
     }
 
-
-
-
     protected override void Use()
     {
         base.Use();
