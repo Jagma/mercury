@@ -37,9 +37,4 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    private float DeterminePos(float currentHealth)
-    {
-        // return currentHealth * 0.73f - 73f;
-        return currentHealth * 1f - 150;
-    }
 }

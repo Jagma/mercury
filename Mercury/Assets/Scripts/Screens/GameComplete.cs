@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelComplete : MonoBehaviour
+public class GameComplete : MonoBehaviour
 {
     public Text titleText;
     public AnimationCurve titleCurve;
@@ -27,10 +27,11 @@ public class LevelComplete : MonoBehaviour
 
     public void RestartGame()
     {
-        GameProgressionManager.instance.RestartLevel();
+        GameProgressionManager.instance.Reset();
         DestroyInstances();
         SceneManager.LoadScene("GameCOOP");
     }
+
 
     public void MainMenu()
     {

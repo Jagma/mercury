@@ -81,6 +81,7 @@ public class Game : MonoBehaviour
     int gameStage = 0;
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Y)) {
+            GameProgressionManager.instance.StartGame();
             SceneManager.LoadScene("GameCOOP");
         }
         if (gameStage == 0 && EnemyManager.instance.GetEnemyCount() <= 0) {

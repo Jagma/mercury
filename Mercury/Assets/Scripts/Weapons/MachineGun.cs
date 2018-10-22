@@ -8,7 +8,7 @@ public class MachineGun : WeaponRanged
     {
         // Stats
         base.InitWeaponStats();
-        cooldown = 0.5f;
+        cooldown = 0.1f;
         ammoOffset = 0.2f;
         ammoMaxInventory = 60;
         ammoInventory = 60;

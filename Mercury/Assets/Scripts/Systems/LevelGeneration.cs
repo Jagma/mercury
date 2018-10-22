@@ -145,6 +145,23 @@ public class LevelGeneration : MonoBehaviour
                     EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
                 }
 
+                if (enemies[x, z] == "Arc Walker")
+                {
+                    GameObject enemyGO = Factory.instance.CreateArcWalker();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
+
+                if (enemies[x, z] == "Corrupted Walker")
+                {
+                    GameObject enemyGO = Factory.instance.CreateCorruptedWalker();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
                 if (pickups[x, z] == "Normal Chest")
                 {
                     GameObject chestGO = Factory.instance.CreateNormalChest();
@@ -274,6 +291,14 @@ public class Miner
         if (Random.Range(0, 1f) > 0.995f)
         {
             levelGen.enemies[posX, posZ] = "Overlord Walker";
+        }
+        if (Random.Range(0, 1f) > 0.995f)
+        {
+            levelGen.enemies[posX, posZ] = "Corrupted Walker";
+        }
+        if (Random.Range(0, 1f) > 0.995f)
+        {
+            levelGen.enemies[posX, posZ] = "Arc Walker";
         }
         // Pickups
         if (Random.Range(0, 1f) > 0.9990f)

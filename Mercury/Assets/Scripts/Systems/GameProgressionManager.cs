@@ -29,6 +29,8 @@ public class GameProgressionManager : MonoBehaviour
 
 
     public static GameProgressionManager instance;
+
+    bool gameStart = false;
     private void Awake()
     {
         if (instance == null)
@@ -58,10 +60,20 @@ public class GameProgressionManager : MonoBehaviour
         numEnemiesStartLevel = 0;
     }
 
+    private void Update()
+    {
+        if (gameStart && numEnemiesLeftLevel < 1)
+            LevelComplete();
+    }
     public void SetPlayerList(string players)
     {
         playerIDList.Add(players);
         playerDown.Add(false);
+    }
+
+    public void StartGame()
+    {
+        gameStart = true;
     }
     #endregion
 
@@ -111,8 +123,13 @@ public class GameProgressionManager : MonoBehaviour
     public void IncreaseEnemyCount()
     {
         numEnemiesStartLevel += 1;
+        numEnemiesLeftLevel  += 1;
     }
 
+    public void DecreaseEnemiesLeft()
+    {
+        numEnemiesLeftLevel -= 1;
+    }
 
     public bool getPlayerDownCount()
     {

@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
             {
                 cooldownRemaining = cooldown;
                 ammoCount--;
-                Debug.Log("Damage is " + damage);
+                GameProgressionManager.instance.IncreaseBulletAmountUsed();
                 Use();
             }
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
