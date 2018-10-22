@@ -24,6 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Intermission.unity
     guid: f2945e2cf12ac4c4fa10cd100ab2dd4f
   - enabled: 1
-    path: Assets/Scenes/Multiplayer.unity
+    path: Assets/Scenes/Multiplayer/MultiplayerHome.unity
     guid: c108150016929c84faa28e3781c1a879
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/LobbyManager.unity
+    guid: 883e010cd7b8b2d45b6213064d04a2eb
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/Lobby.unity
+    guid: 6d8715c72669a05469ca02c84981913d
   m_configObjects: {}
