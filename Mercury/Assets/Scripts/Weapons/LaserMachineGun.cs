@@ -10,7 +10,7 @@ public class LaserMachineGun : WeaponRanged
         base.InitWeaponStats();
         // Stats
         cooldown = 0.1f;
-        ammoOffset = 0.6f;
+        ammoOffset = 0f;
         ammoRandomness = 10f;
         ammoMaxInventory = 500;
         ammoInventory = 500;
@@ -23,7 +23,7 @@ public class LaserMachineGun : WeaponRanged
         base.Use();
 
         GameObject flash = Factory.instance.CreateLaserMuzzleFlash();
-        flash.transform.position = transform.position + transform.right * ammoOffset;
+        flash.transform.position = transform.position + transform.right* 0.7f;
         Destroy(flash, 1);
 
         GameObject bullet = Factory.instance.CreateLaserBullet();
