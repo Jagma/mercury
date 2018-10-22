@@ -1175,34 +1175,81 @@ public class Factory : MonoBehaviour
     public class ObjectConstructor {
         public string objectUniqueID = "-1";
         public virtual GameObject Construct() {
-            return null;
+            return new GameObject();
         }
     }
 
-    public class HostPlayerConstructor : ObjectConstructor {
+    public class BasePlayerConstructor : ObjectConstructor {
         public override GameObject Construct() {
-            base.Construct();
-            GameObject player = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
-            player.name = "PlayerHost";
+            GameObject playerGO = base.Construct();
+            playerGO.layer = LayerMask.NameToLayer("Player");
 
-            player.AddComponent<ServerPlayer>();
-            player.GetComponent<ServerPlayer>().clientUniqueID = objectUniqueID;
-            return player;
+            CapsuleCollider playerCollider = playerGO.AddComponent<CapsuleCollider>();
+            playerCollider.radius = 0.25f;
+            playerCollider.height = 0.8f;
+
+            PhysicMaterial pm = new PhysicMaterial();
+            pm.frictionCombine = PhysicMaterialCombine.Minimum;
+            pm.dynamicFriction = 0;
+            pm.staticFriction = 0;
+            playerCollider.material = pm;
+
+            Rigidbody playerRigid = playerGO.AddComponent<Rigidbody>();
+            playerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+            playerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+            GameObject playerDropShadowGO = Factory.instance.CreateDropShadow();
+            playerDropShadowGO.transform.parent = playerGO.transform;
+            playerDropShadowGO.transform.localPosition = new Vector3(0, 0, -0.3f);
+            playerDropShadowGO.transform.localScale = new Vector3(0.6f, 0.2f, 1);
+
+            GameObject playerVisualGO = new GameObject("Visual");
+            playerVisualGO.transform.parent = playerGO.transform;
+
+            GameObject playerVisualBodyGO = new GameObject("Body");
+            playerVisualBodyGO.transform.parent = playerVisualGO.transform;
+            SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
+            playerGO.AddComponent<SpriteRenderer>();
+
+            PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
+            playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
+            playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
+            playerActor.death = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/ded");
+
+            PlayerModel playerModel = new PlayerModel();
+            playerActor.model = playerModel;
+
+            GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
+            hud.transform.SetParent(playerGO.transform, true);
+            hud.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
+            hud.transform.Find("AmmoBar1").GetComponent<AmmoBarMag>().playerModel = playerModel;
+            hud.transform.Find("AmmoBar2").GetComponent<AmmoBarInventory>().playerModel = playerModel;
+            hud.transform.localEulerAngles = new Vector3(45, 0, 0);
+            hud.transform.position = new Vector3(0, 1.5f, 0);
+            return playerGO;
         }
     }
 
-    public class ClientPlayerConstructor : ObjectConstructor {
+    public class HostPlayerConstructor : BasePlayerConstructor {
         public override GameObject Construct() {
-            base.Construct();
-            GameObject player = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
-            player.name = "PlayerClient";
+            GameObject playerGO = base.Construct();
+            playerGO.name = "PlayerHost";
 
-            player.AddComponent<ClientPlayer>();
-            player.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
+            playerGO.AddComponent<ServerPlayer>();
+            playerGO.GetComponent<ServerPlayer>().clientUniqueID = objectUniqueID;
+            return playerGO;
+        }
+    }
 
-            return player;
+    public class ClientPlayerConstructor : BasePlayerConstructor {
+        public override GameObject Construct() {
+            GameObject playerGO =  base.Construct();
+            playerGO.name = "PlayerClient";
+
+            playerGO.AddComponent<ClientPlayer>();
+            playerGO.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
+
+            return playerGO;
         }
     }
 }
