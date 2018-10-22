@@ -14,6 +14,7 @@ public class NormalChest : Chest
     protected override GameObject GetRandomItem()
     {
         int result = Random.Range(0, 13);
+        result = 6;
 
         //Weapons.
         if (result == 0)

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Animation : MonoBehaviour {
     //TODO: Create a reusable system
+    // email  27381927@student.g.nwu.ac.za
+    // git config user.name "FIRST_NAME LAST_NAME"
+    // git config user.email "MY_NAME@example.com"
 
     public PlayerActor playerActor;
 
@@ -42,6 +45,5 @@ public class Animation : MonoBehaviour {
         }
 
         animController.SetFloat("Speed", rigid.velocity.magnitude);
-        Debug.Log(norm);
     }
 }
