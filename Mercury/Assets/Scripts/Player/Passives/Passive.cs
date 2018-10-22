@@ -109,26 +109,30 @@ public class PassiveDegenAura : Passive
     }
     public override void RecurringAffect()
     {
-        if(Time.time >= lastActivatedTime + cooldown)
+        if (player != null)
         {
-            Collider[] hits = Physics.OverlapSphere(player.transform.position, 3f);
-            int hitCount = 0;
-            foreach (Collider hit in hits)
+            if (Time.time >= lastActivatedTime + cooldown)
             {
-                Enemy enemyHit = hit.GetComponent<Enemy>();
-                if (enemyHit != null)
+                Collider[] hits = Physics.OverlapSphere(player.transform.position, 3f);
+                int hitCount = 0;
+                foreach (Collider hit in hits)
                 {
-                    enemyHit.Damage(damage);
-                    hitCount++;
+                    Enemy enemyHit = hit.GetComponent<Enemy>();
+                    if (enemyHit != null)
+                    {
+                        enemyHit.Damage(damage);
+                        hitCount++;
+                    }
+                }
+                if (hitCount != 0)
+                {
+                    lastActivatedTime = Time.time;
                 }
             }
-            if(hitCount != 0)
-            {
-                lastActivatedTime = Time.time;
-            }
-        }      
+        }
+        }
     }
-}
+
 
 public class PassiveRandomBullet : Passive
 {
