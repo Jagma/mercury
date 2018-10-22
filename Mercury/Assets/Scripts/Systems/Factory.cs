@@ -790,7 +790,7 @@ public class Factory : MonoBehaviour
         GameObject chestGO = new GameObject("Normal Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
-        chestCollider.radius = 0.1f;
+        chestCollider.radius = 0.3f;
 
         SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
         chestColliderT.isTrigger = true;
@@ -855,8 +855,9 @@ public class Factory : MonoBehaviour
         GameObject medkitVisualGO = new GameObject("Visual");
         medkitVisualGO.transform.parent = medkitGO.transform;
 
-        GameObject medkitVisualBodyGO = new GameObject("Body");
+        GameObject medkitVisualBodyGO = new GameObject("Body");        
         medkitVisualBodyGO.transform.parent = medkitVisualGO.transform;
+        medkitVisualBodyGO.transform.localPosition = new Vector3(0, 0.05f, -0.05f);
         SpriteRenderer sr = medkitVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart");
 
@@ -883,6 +884,7 @@ public class Factory : MonoBehaviour
 
         GameObject medpackVisualBodyGO = new GameObject("Body");
         medpackVisualBodyGO.transform.parent = medpackVisualGO.transform;
+        medpackVisualBodyGO.transform.localPosition = new Vector3(0, 0.05f, -0.05f);
         SpriteRenderer sr = medpackVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart1");
 
