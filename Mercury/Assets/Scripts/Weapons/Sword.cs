@@ -5,17 +5,16 @@ using UnityEngine;
 public class Sword : WeaponMelee
 {
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 0.5f;
         ammoMaxInventory = 0;
         ammoInventory = 0;
         ammoMax = 100;
         ammoCount = 100;
-        damage = 10f;
+        damage = 15f;
     }
 
     protected override void Use()

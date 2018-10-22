@@ -22,12 +22,12 @@ public class PlayerActor : MonoBehaviour
         model.equippedWeapon.Equip();
         model.secondaryWeapon = null;
         //DELETE
-        AddPassive(new PassiveDegenAura());
+        //AddPassive(new PassiveDegenAura());
         AddPassive(new PassiveHPRegen());
         AddPassive(new PassiveMovementSpeed());
         AddPassive(new PassiveIncreasedMaxHP());
         AddPassive(new PassiveIncreasedMaxHP());
-        AddPassive(new PassiveRandomBullet());
+        //AddPassive(new PassiveRandomBullet());
         //
         SingleUsePassives();//Activate passives with single affect
     }

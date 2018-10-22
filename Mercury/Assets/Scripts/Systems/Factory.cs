@@ -36,7 +36,7 @@ public class Factory : MonoBehaviour
 
     // Factory methods
     #region Characters
-    public GameObject CreatePlayerBase()
+    public GameObject CreatePlayerBase(string playerName)
     {
         GameObject playerGO = new GameObject("Player");
         playerGO.layer = LayerMask.NameToLayer("Player");
@@ -70,7 +70,7 @@ public class Factory : MonoBehaviour
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
 
         Animator animator = playerVisualBodyGO.AddComponent<Animator>();
-        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Controller_Trump");
+        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Controller_" + playerName);
 
         Animation anim = playerGO.AddComponent<Animation>();
         anim.playerActor = playerActor;
@@ -93,7 +93,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerTrump ()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Trump");
 
         AbilityTrump abilityTrump = new AbilityTrump();
         abilityTrump.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -106,7 +106,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerOprah()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Oprah");
 
         AbilityOprah abilityOprah = new AbilityOprah();
         abilityOprah.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -118,7 +118,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerBinLaden()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("BinLaden");
 
         AbilityBinLaden abilityBinLaden = new AbilityBinLaden();
         abilityBinLaden.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -130,7 +130,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerPope()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Pope");
 
         AbilityPope abilityPope = new AbilityPope();
         abilityPope.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -167,8 +167,13 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
+    Material lazerBulletMat;
     public GameObject CreateLaserBullet()
     {
+        if (lazerBulletMat == null) {
+            lazerBulletMat = new Material(Shader.Find("Unlit/Transparent"));
+            lazerBulletMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamOrange"));
+        }
         GameObject LbulletGO = new GameObject("Laser Bullet");
 
         SphereCollider lbulletCollider = LbulletGO.AddComponent<SphereCollider>();
@@ -184,8 +189,12 @@ public class Factory : MonoBehaviour
 
         GameObject lbulletVisualBodyGO = new GameObject("Body");
         lbulletVisualBodyGO.transform.parent = lbulletVisualGO.transform;
-        SpriteRenderer sr = lbulletVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_2");
+        TrailRenderer tr = lbulletVisualBodyGO.AddComponent<TrailRenderer>();
+        tr.time = 0.5f;
+        tr.widthMultiplier = 0.2f;
+        tr.material = lazerBulletMat;
+        tr.numCapVertices = 2;
+        tr.textureMode = LineTextureMode.Tile;
 
         Projectile p = LbulletGO.AddComponent<Round>();
         p.Init();
@@ -790,13 +799,13 @@ public class Factory : MonoBehaviour
         GameObject chestGO = new GameObject("Normal Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
-        chestCollider.radius = 0.1f;
+        chestCollider.radius = 0.3f;
 
         SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
         chestColliderT.isTrigger = true;
 
         Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
-        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
      
         GameObject chestVisualGO = new GameObject("Visual");
         chestVisualGO.transform.parent = chestGO.transform;
@@ -805,7 +814,6 @@ public class Factory : MonoBehaviour
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/NormalChest");
-
         chestGO.AddComponent<NormalChest>(); //makes usse of the NormalChest script which has its own functionalities.
 
         return chestGO;
@@ -816,13 +824,13 @@ public class Factory : MonoBehaviour
         GameObject chestGO = new GameObject("Rare Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
-        chestCollider.radius = 0.1f;
+        chestCollider.radius = 0.3f;
 
         SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
         chestColliderT.isTrigger = true;
 
         Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
-        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
         GameObject chestVisualGO = new GameObject("Visual");
         chestVisualGO.transform.parent = chestGO.transform;
@@ -855,8 +863,9 @@ public class Factory : MonoBehaviour
         GameObject medkitVisualGO = new GameObject("Visual");
         medkitVisualGO.transform.parent = medkitGO.transform;
 
-        GameObject medkitVisualBodyGO = new GameObject("Body");
+        GameObject medkitVisualBodyGO = new GameObject("Body");        
         medkitVisualBodyGO.transform.parent = medkitVisualGO.transform;
+        medkitVisualBodyGO.transform.localPosition = new Vector3(0, 0.05f, -0.05f);
         SpriteRenderer sr = medkitVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart");
 
@@ -883,6 +892,7 @@ public class Factory : MonoBehaviour
 
         GameObject medpackVisualBodyGO = new GameObject("Body");
         medpackVisualBodyGO.transform.parent = medpackVisualGO.transform;
+        medpackVisualBodyGO.transform.localPosition = new Vector3(0, 0.05f, -0.05f);
         SpriteRenderer sr = medpackVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart1");
 

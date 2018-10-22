@@ -7,15 +7,19 @@ public class Chest : MonoBehaviour
 {
     public float destroy =5f;
     protected Transform visual;
+    protected int result;
+    protected int[] itemWeights;
     private Vector3 targetPos;
     int count = 1;
-
-    private void Awake()
+    protected SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRendererOpen;
+    protected virtual void Awake()
     {
         visual = transform.Find("Visual");
-
         transform.position = Vector3.Lerp(transform.position, transform.position, 0.3f);
         visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+        spriteRenderer = visual.Find("Body").GetComponent<SpriteRenderer>();
+        spriteRendererOpen = spriteRenderer;
     }
 
     public void OpenChest()
@@ -42,9 +46,17 @@ public class Chest : MonoBehaviour
 
     protected virtual void Destroy()
     {
+       DisplayEmptyChest();
        Destroy(gameObject);
     }
 
+    private void DisplayEmptyChest()
+    {
+        visual.transform.parent = null;
+        visual.transform.position = new Vector3(visual.transform.position.x, 0.7f, visual.transform.position.z);
+        spriteRenderer.sprite = spriteRendererOpen.sprite;
+        Destroy(spriteRenderer, 10);
+    }
 
     protected virtual GameObject[] GetRandomObjects()
     {
@@ -76,10 +88,6 @@ public class Chest : MonoBehaviour
 
     protected virtual GameObject GetRandomItem()
     {
-        int[] itemWeights = {
-            60, 30, 30, 30, 20, 30,
-            50, 50, 50, 50, 50};
-
         int total = 0;
         for (int i = 0; i < itemWeights.Length; i++)
         {
@@ -89,7 +97,7 @@ public class Chest : MonoBehaviour
         int random = UnityEngine.Random.Range(0, total);
 
         total = 0;
-        int result = 0;
+
         for (int i = 0; i < itemWeights.Length; i++)
         {
             total += itemWeights[i];
@@ -98,66 +106,6 @@ public class Chest : MonoBehaviour
                 result = i;
                 break;
             }
-        }
-        //Weapons.
-        if (result == 0)
-        {
-            return Factory.instance.CreatePistol();
-        }
-        if (result == 1)
-        {
-            return Factory.instance.CreateMachineGun();
-        }
-        if (result == 2)
-        {
-            return Factory.instance.CreateSniperRifle();
-        }
-        if (result == 3)
-        {
-            return Factory.instance.CreateRocketLauncher();
-        }
-        if (result == 4)
-        {
-            return Factory.instance.CreateShotgun();
-        }
-        if (result == 5)
-        {
-            return Factory.instance.CreateLaserPistol();
-        }
-        if (result == 6)
-        {
-            return Factory.instance.CreateSword();
-        }
-
-        if (result == 7)
-        {
-            return Factory.instance.CreateAxe();
-        }
-
-        if (result == 8)
-        {
-            return Factory.instance.CreateSpear();
-        }
-        // Consumables
-        if (result == 9)
-        {
-            return Factory.instance.CreateMedkit();
-        }
-        if (result == 10)
-        {
-            return Factory.instance.CreateMedpack();
-        }
-        if (result == 11)
-        {
-            return Factory.instance.CreateBeamAmmoPack();
-        }
-        if (result == 12)
-        {
-            return Factory.instance.CreateBulletAmmoPack();
-        }
-        if (result == 13)
-        {
-            return Factory.instance.CreateRocketAmmoPack();
         }
         return null;
     }
