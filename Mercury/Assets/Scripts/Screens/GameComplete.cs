@@ -29,7 +29,7 @@ public class GameComplete : MonoBehaviour
     {
         GameProgressionManager.instance.Reset();
         DestroyInstances();
-        SceneManager.LoadScene("GameCOOP");
+        SceneManager.LoadScene("GameCampaign");
     }
 
 

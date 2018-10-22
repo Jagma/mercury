@@ -147,6 +147,8 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (ammoCount == 0)
+            ReloadWeapon();
         // Cooldown
         if (cooldownRemaining >= 0)
         {

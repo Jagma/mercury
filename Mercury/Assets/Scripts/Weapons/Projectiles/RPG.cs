@@ -52,6 +52,7 @@ public class RPG : Projectile
         }
     }
 
+
     private void OnTriggerEnter(Collider col)
     {
         Enemy enemyHit = col.GetComponent<Enemy>();
