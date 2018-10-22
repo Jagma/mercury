@@ -11,8 +11,6 @@ public class Flamethrower : WeaponRanged
         base.InitWeaponStats();
         // Stats
 
-        flame = Factory.instance.CreateFlame();
-        flame.transform.parent = transform;
         cooldown = 1f;
         ammoOffset = 1f;
         ammoMaxInventory = 200;
@@ -25,8 +23,6 @@ public class Flamethrower : WeaponRanged
     protected override void Use()
     {
         base.Use();
-        flame.SetActive(true);
-        framesSinceUse = 0;
 
     }
 
