@@ -12,8 +12,4 @@ public class BeamPurple : Beam
         width = 0.5f;
         damage = 35f;
     }
-    public void setDamage(float damageA)
-    {
-        damage = damageA;
-    }
 }

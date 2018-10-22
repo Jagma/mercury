@@ -27,6 +27,11 @@ public class Beam : MonoBehaviour
         CollisionCheck();
     }
 
+    public virtual void setDamage(float damageA)
+    {
+        damage = damageA;
+    }
+
     private void CollisionCheck()
     {
         RaycastHit[] hits = Physics.RaycastAll(new Ray(transform.position, transform.right));
