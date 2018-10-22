@@ -8,6 +8,7 @@ public class PlayerModel
     public float moveAcceleration = 1.2f; 
     public float moveDeceleration = 0.2f;
     public float moveMaxSpeed = 8f;
+    public Vector2 lookDirection;
 
     public float maxHealth = 100;
     public float health = 100;

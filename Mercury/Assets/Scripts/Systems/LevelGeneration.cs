@@ -33,7 +33,7 @@ public class LevelGeneration : MonoBehaviour
 
         levelRoot = new GameObject("Level Root").transform;
 
-   //     Random.InitState(91142069);
+        Random.InitState(1);
         // Fill level with solids
         for (int z=0; z < terrain.GetLength(1); z ++)
         {

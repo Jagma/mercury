@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 224744696507202696}
   - component: {fileID: 222178744603898672}
   - component: {fileID: 114429536782768982}
-  - component: {fileID: 114659842259315452}
+  - component: {fileID: 114577160584267908}
   m_Layer: 5
   m_Name: AmmoBar1
   m_TagString: Untagged
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 224773005598674262}
   - component: {fileID: 222043296800121212}
   - component: {fileID: 114362144811970126}
-  - component: {fileID: 114827357769254200}
+  - component: {fileID: 114225022482267352}
   m_Layer: 5
   m_Name: AmmoBar2
   m_TagString: Untagged
@@ -192,6 +192,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114225022482267352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1873354414824674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b1ddf209ae1da45a647f97c88449d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponIndex: 0
 --- !u!114 &114359417140594764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -314,6 +326,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114577160584267908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621144698744410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dae41b6dec3d647841a10ae2fea38c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponIndex: 0
 --- !u!114 &114632120148428090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -374,18 +398,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 128
---- !u!114 &114659842259315452
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1621144698744410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a3f7bce8ef6e7448f792662198e034, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponIndex: 1
 --- !u!114 &114666995894835066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -400,18 +412,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 10, y: -10}
   m_UseGraphicAlpha: 1
---- !u!114 &114827357769254200
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1873354414824674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a3f7bce8ef6e7448f792662198e034, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponIndex: 2
 --- !u!114 &114911009477830612
 MonoBehaviour:
   m_ObjectHideFlags: 1

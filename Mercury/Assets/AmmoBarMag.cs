@@ -13,6 +13,8 @@ public class AmmoBarMag : AmmoBar
     protected override void Update()
     {
         base.Update();
-        ammoText.text = weapon.ammoCount.ToString();
+        if (weapon != null) {
+            ammoText.text = weapon.ammoCount.ToString();
+        }
     }
 }

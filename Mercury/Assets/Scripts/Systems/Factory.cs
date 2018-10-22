@@ -65,13 +65,15 @@ public class Factory : MonoBehaviour
 
         GameObject playerVisualBodyGO = new GameObject("Body");
         playerVisualBodyGO.transform.parent = playerVisualGO.transform;
-        SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
-        playerGO.AddComponent<SpriteRenderer>();        
+        SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();     
 
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
-        playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
-        playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
-        playerActor.death = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/ded");
+
+        Animator animator = playerVisualBodyGO.AddComponent<Animator>();
+        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Controller_Trump");
+
+        Animation anim = playerGO.AddComponent<Animation>();
+        anim.playerActor = playerActor;
 
         PlayerController playerController = playerGO.AddComponent<PlayerController>();
         playerController.actor = playerActor;
@@ -99,10 +101,6 @@ public class Factory : MonoBehaviour
 
         // Set all trump specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityTrump;
-
-        playerGO.GetComponent<PlayerActor>().facing  = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
-        playerGO.GetComponent<PlayerActor>().forward  = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
-
         return playerGO;
     }
 
@@ -115,10 +113,6 @@ public class Factory : MonoBehaviour
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityOprah;
-
-        playerGO.GetComponent<PlayerActor>().facing  = Resources.Load<Sprite>("Sprites/Characters/character_Oprah");
-        playerGO.GetComponent<PlayerActor>().forward  = Resources.Load<Sprite>("Sprites/Characters/character_OprahB");
-
         return playerGO;
     }
 
@@ -131,10 +125,6 @@ public class Factory : MonoBehaviour
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityBinLaden;
-
-        playerGO.GetComponent<PlayerActor>().facing = Resources.Load<Sprite>("Sprites/Characters/character_1");
-        playerGO.GetComponent<PlayerActor>().forward = Resources.Load<Sprite>("Sprites/Characters/character_Bin_LadenB");
-
         return playerGO;
     }
 
@@ -147,10 +137,6 @@ public class Factory : MonoBehaviour
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityPope;
-
-        playerGO.GetComponent<PlayerActor>().facing = Resources.Load<Sprite>("Sprites/Characters/character_The_PopeB");
-        playerGO.GetComponent<PlayerActor>().forward = Resources.Load<Sprite>("Sprites/Characters/character_The_Pope");
-
         return playerGO;
     }
 #endregion
@@ -1212,12 +1198,10 @@ public class Factory : MonoBehaviour
             playerGO.AddComponent<SpriteRenderer>();
 
             PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
-            playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
-            playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
-            playerActor.death = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/ded");
 
             PlayerModel playerModel = new PlayerModel();
             playerActor.model = playerModel;
+            playerActor.model.playerActive = true;
 
             GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
             hud.transform.SetParent(playerGO.transform, true);

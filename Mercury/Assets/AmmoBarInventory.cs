@@ -13,6 +13,8 @@ public class AmmoBarInventory : AmmoBar
     protected override void Update()
     {
         base.Update();
-        ammoText.text = weapon.ammoInventory.ToString();
+        if (weapon != null) {
+            ammoText.text = weapon.ammoInventory.ToString();
+        }        
     }
 }

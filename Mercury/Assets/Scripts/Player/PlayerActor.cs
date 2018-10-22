@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class PlayerActor : MonoBehaviour
 {
     public PlayerModel model;
-    public Sprite forward;
-    public Sprite facing;
-    public Sprite death;
     Transform visual;
     Rigidbody rigid;
 
@@ -174,29 +171,12 @@ public class PlayerActor : MonoBehaviour
 
     public void Aim (Vector2 direction)
     {
+        model.lookDirection = direction;
         if (model.playerActive)
         {
             if (model.equippedWeapon)
             {
-                model.equippedWeapon.transform.right = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(direction.x, 0, direction.y);
-            }
-
-            // TODO: Move this to a seperate animation script
-            // This is for setting the sprites based on the aim/look direction
-            Vector3 norm = Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(direction.x, 0, direction.y);
-            if (norm.x < 0)
-            {
-                Vector3 x = Quaternion.AngleAxis(180, visual.up) * visual.forward;
-                visual.forward = x;
-            }
-
-            if (norm.z > 0)
-            {
-                visual.Find("Body").GetComponent<SpriteRenderer>().sprite = forward;
-            }
-            else
-            {
-                visual.Find("Body").GetComponent<SpriteRenderer>().sprite = facing;
+                model.equippedWeapon.transform.right = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(model.lookDirection.x, 0, model.lookDirection.y);
             }
         }
     }
@@ -310,7 +290,7 @@ public class PlayerActor : MonoBehaviour
             {
                 passive.RecurringAffect();
             }
-        } 
+        }
     }
     
     private void SingleUsePassives()// Apply passive's single affect
