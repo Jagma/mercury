@@ -372,6 +372,13 @@ public class Factory : MonoBehaviour
         return bagGO;
     }
 
+    public GameObject CreatePopeEffect()
+    {
+        GameObject popeEffectGO = GameObject.Instantiate(Resources.Load<GameObject>("Effects/PopeHeal"));
+
+        return popeEffectGO;
+    }
+
     #endregion
 
     #region Weapons
