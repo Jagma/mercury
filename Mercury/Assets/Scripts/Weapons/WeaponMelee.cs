@@ -5,9 +5,9 @@ using UnityEngine;
 public class WeaponMelee : Weapon
 {
     protected bool attack = false;
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
+        base.InitWeaponStats();
     }
 
     protected override void Use()
@@ -22,18 +22,22 @@ public class WeaponMelee : Weapon
         base.Update();
     }
 
-    public void OnDrawGizmos() {
+    public void OnDrawGizmos() 
+{
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + transform.right * 0.5f, 0.4f);
     }
 
-    protected override void UpdateVisual() {
-        if (attack==false) {
+    protected override void UpdateVisual()
+    {
+        if (attack==false)
+        {
             base.UpdateVisual();
         }
     }
 
-    IEnumerator Swing () {
+    IEnumerator Swing ()
+    {
         attack = true;
         float swingTime = 0.2f;
         float attackTime = 0.08f;
@@ -48,7 +52,8 @@ public class WeaponMelee : Weapon
                     new Vector3(angles.x, angles.y, Mathf.LerpAngle(visual.transform.localEulerAngles.z, angles.z - 120, 0.5f));
             }
 
-            if (swingTime <= attackTime) {
+            if (swingTime <= attackTime)
+            {
                 attackTime = -1f;
                 MeleeDamage();
             }
@@ -58,21 +63,23 @@ public class WeaponMelee : Weapon
         attack = false;
     }
 
-    protected void MeleeDamage () {
+    protected void MeleeDamage ()
+    {
         Collider[] hits = Physics.OverlapSphere(transform.position + transform.right * 0.5f, 0.4f);
 
-        for (int i=0; i < hits.Length; i ++) {
+        for (int i=0; i < hits.Length; i ++)
+        {
             Enemy enemy = hits[i].GetComponent<Enemy>();
             Wall wall = hits[i].GetComponent<Wall>();
-
-            if (enemy != null) {
+            PlayerActor playerA = hits[i].GetComponent<PlayerActor>();
+            if (enemy != null)
                 enemy.Damage(damage);
-            }
 
-            if (wall != null) {
+            if (wall != null)
                 wall.Damage(damage);
-            }
 
+            if (playerA != null)
+                playerA.Damage(damage);
         }
     }
 }

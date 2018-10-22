@@ -25,8 +25,8 @@ public class GameProgressionManager : MonoBehaviour
     private GameObject[] gunsUsed;
 
     public List<string> playerIDList = new List<string>();
+    public List<string> playerName = new List<string>();
     public List<bool> playerDown = new List<bool>();
-
 
     public static GameProgressionManager instance;
 
@@ -65,9 +65,10 @@ public class GameProgressionManager : MonoBehaviour
         if (gameStart && numEnemiesLeftLevel < 1)
             LevelComplete();
     }
-    public void SetPlayerList(string players)
+    public void SetPlayerList(string players,string name)
     {
         playerIDList.Add(players);
+        playerName.Add(name);
         playerDown.Add(false);
     }
 

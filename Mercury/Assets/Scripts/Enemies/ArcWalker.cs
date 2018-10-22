@@ -31,7 +31,7 @@ public class ArcWalker : RangedEnemies
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
         equippedWeapon.equipped = true;
-        equippedWeapon.SetWeaponDamage(1.75f);
+        equippedWeapon.SetWeaponDamage(0.5f);
     }
 
     protected override void AimAtPlayer(Vector3 direction)
