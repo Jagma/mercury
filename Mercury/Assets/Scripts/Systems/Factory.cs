@@ -1041,7 +1041,7 @@ public class Factory : MonoBehaviour
 
          CapsuleCollider martianBossCollider = martianBossGO.AddComponent<CapsuleCollider>();
          //Collider is double the size of a regular enemy
-         martianBossCollider.radius = 0.5f;
+         martianBossCollider.radius = 0.6f;
          martianBossCollider.height = 1.6f;
 
          Rigidbody martianBossRigid = martianBossGO.AddComponent<Rigidbody>();
