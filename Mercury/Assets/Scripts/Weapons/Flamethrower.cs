@@ -26,4 +26,5 @@ public class Flamethrower : WeaponRanged
         flame = Factory.instance.CreateFlame();
     }
 
+
 }

@@ -2,23 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flame : Projectile
+public class Flame : MonoBehaviour
 {
-    public override void Init()
+    public float speed = 20;
+    public float damage = 1;
+    Transform visual;
+
+    public void Init()
     {
-        base.Init();
-        // Stats
+        // Stats     
         speed = 10f;
-        damage = 100f;
+        damage = 1f;
     }
 
-    public override void Destroy()
+    public virtual void Destroy()
     {
-        base.Destroy();
+        Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider col)
+    //Destroying object and applying damage to colliding players ect.
+    public void Burn()
     {
+        Collider[] hits = Physics.OverlapSphere(this.transform.position, 10f);
+        foreach (Collider hit in hits)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+            {
+                Enemy enemyHit = hit.GetComponent<Enemy>();
+                enemyHit.Damage(damage);
+            }
 
+            if (hit.GetComponent<Wall>() != null)
+            {
+                Wall wall = hit.GetComponent<Wall>();
+                wall.Damage((int)damage);
+            }
+        }
+        GameObject explosion = Factory.instance.CreateBagExplosion();//Explosion effect
+        //explosion.transform.position = rigid.transform.position;
+        GameObject.Destroy(gameObject);
     }
+
 }
