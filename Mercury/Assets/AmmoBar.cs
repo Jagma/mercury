@@ -26,6 +26,6 @@ public class AmmoBar : MonoBehaviour {
             return;
         }
 
-        ammoText.text = weapon.ammoInventory.ToString();
+        ammoText.text = weapon.ammoCount.ToString();
     }
 }
