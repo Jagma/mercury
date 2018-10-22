@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AmmoBar : MonoBehaviour {
-
+public class AmmoBar : MonoBehaviour
+{
     public PlayerModel playerModel;
     public int weaponIndex = 0;
-    Text ammoText;
-    void Start () {
+    protected Text ammoText;
+    protected Weapon weapon;
+    protected virtual void Start ()
+    {
         ammoText = transform.Find("Text").GetComponent<Text>();
 	}
-	
 
-	void Update () {
-        Weapon weapon = null;
-        if (weaponIndex == 1) {
+
+    protected virtual void Update ()
+    {
+        if (weaponIndex == 1)
             weapon = playerModel.equippedWeapon;
-        } else {
+        else
             weapon = playerModel.secondaryWeapon;
-        }
-
-        if (weapon == null) {
+        if (weapon == null)
+        {
             ammoText.text = "";
             return;
         }
-
-        ammoText.text = weapon.ammoCount.ToString();
     }
 }
