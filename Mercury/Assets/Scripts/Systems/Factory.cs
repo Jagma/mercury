@@ -36,7 +36,7 @@ public class Factory : MonoBehaviour
 
     // Factory methods
     #region Characters
-    public GameObject CreatePlayerBase()
+    public GameObject CreatePlayerBase(string playerName)
     {
         GameObject playerGO = new GameObject("Player");
         playerGO.layer = LayerMask.NameToLayer("Player");
@@ -70,7 +70,7 @@ public class Factory : MonoBehaviour
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
 
         Animator animator = playerVisualBodyGO.AddComponent<Animator>();
-        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Controller_Trump");
+        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Controller_" + playerName);
 
         Animation anim = playerGO.AddComponent<Animation>();
         anim.playerActor = playerActor;
@@ -93,7 +93,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerTrump ()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Trump");
 
         AbilityTrump abilityTrump = new AbilityTrump();
         abilityTrump.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -106,7 +106,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerOprah()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Oprah");
 
         AbilityOprah abilityOprah = new AbilityOprah();
         abilityOprah.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -118,7 +118,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerBinLaden()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("BinLaden");
 
         AbilityBinLaden abilityBinLaden = new AbilityBinLaden();
         abilityBinLaden.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -130,7 +130,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerPope()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Pope");
 
         AbilityPope abilityPope = new AbilityPope();
         abilityPope.playerActor = playerGO.GetComponent<PlayerActor>();
