@@ -8,12 +8,12 @@ using UnityEngine;
 
 public class WebServiceMethods : MonoBehaviour {
 
-    private const string baseUrl = "http://ec2-34-243-14-94.eu-west-1.compute.amazonaws.com/";
-
+   // private const string baseUrl = "http://ec2-34-243-14-94.eu-west-1.compute.amazonaws.com/";
+    private const string BASE_URL = "https://webserver-itrw324.herokuapp.com/";
     //Calls a get REST request. Value is the API field
     private string restGET(string value)
     {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(baseUrl + value);
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(BASE_URL + value);
         WebResponse response = request.GetResponse();
 
         Stream stream = response.GetResponseStream();
@@ -28,7 +28,18 @@ public class WebServiceMethods : MonoBehaviour {
         using (var wb = new WebClient())
         {
             var data = new NameValueCollection();
-            var response = wb.UploadValues(baseUrl + value, "POST", data);
+            var response = wb.UploadValues(BASE_URL + value, "POST", data);
+            return Encoding.UTF8.GetString(response);
+        }
+    }
+
+    //Calls a PUT request. Value is the API field
+    private string restPUT(string value)
+    {
+        using (var wb = new WebClient())
+        {
+            var data = new NameValueCollection();
+            var response = wb.UploadValues(BASE_URL + value, "PUT", data);
             return Encoding.UTF8.GetString(response);
         }
     }
@@ -38,7 +49,7 @@ public class WebServiceMethods : MonoBehaviour {
     {
         return restPOST(string.Format("gq/addWeapon?weaponID={0}&weaponName={1}&weaponType={2}&weaponFireRate={3}&numberOfPickups={4}", weaponID, weaponName, weaponType, weaponFireRate, numberOfPickups));
     }
-    public string addUser(int userID, string userDeviceID, string userName, int userAccuracy, string favouriteCharacter)
+    public string addUser(int userID, int userDeviceID, string userName, int userAccuracy, string favouriteCharacter)
     {
         return restPOST(string.Format("gq/addUser?userID={0}&userDeviceID={1}&userName={2}&userAccuracy={3}&favouriteCharacter={4}", userID, userDeviceID, userName, userAccuracy, favouriteCharacter));
     }
@@ -50,11 +61,11 @@ public class WebServiceMethods : MonoBehaviour {
     {
         return restPOST(string.Format("gq/addEnemy?enemyID={0}&enemyName={1}&enemyType={2}&enemyHealth={3}&enemyMovementSpeed={4}&totalCharKills={5}", enemyID, enemyName, enemyType, enemyHealth, enemyMovementSpeed, totalCharKills));
     }
-    public string addSession(int sessionID, int sessionStart, int sessionEnd, string sessionUsers)
+    public string addSession(int sessionID, int sessionStart, int sessionEnd, int sessionUsers)
     {
         return restPOST(string.Format("gq/addSession?sessionID={0}&sessionStart={1}&sessionEnd={2}&sessionUsers={3}", sessionID, sessionStart, sessionEnd, sessionUsers));
     }
-    public string addSessionWeapon(int sessionWeaponID, int sessionID, int weaponID, string weaponPickups)
+    public string addSessionWeapon(int sessionWeaponID, int sessionID, int weaponID, int weaponPickups)
     {
         return restPOST(string.Format("gq/addSessionWeapon?sessionWeaponID={0}&sessionID={1}&weaponID={2}&weaponPickups={3}", sessionWeaponID, sessionID, weaponID, weaponPickups));
     }
