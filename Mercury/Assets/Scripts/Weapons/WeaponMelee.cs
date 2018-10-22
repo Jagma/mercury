@@ -5,9 +5,9 @@ using UnityEngine;
 public class WeaponMelee : Weapon
 {
     protected bool attack = false;
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
+        base.InitWeaponStats();
     }
 
     protected override void Use()
