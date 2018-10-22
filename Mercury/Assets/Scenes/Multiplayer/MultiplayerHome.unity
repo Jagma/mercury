@@ -480,7 +480,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 127.0.0.1:3000
 --- !u!222 &1010052093
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -659,7 +659,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1482644950}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 66953973}
+        m_MethodName: ConnectLocal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1482644950
@@ -782,6 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1673721375}
   - component: {fileID: 1673721376}
+  - component: {fileID: 1673721377}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -813,6 +825,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 149277a5a0de61147b3025e52b941ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1673721377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1673721374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8459005e53d8657409c05583c6818215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: global
 --- !u!1 &1765347829
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,7 +1009,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: 127.0.0.1:3000
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -1064,7 +1088,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1800600801}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 

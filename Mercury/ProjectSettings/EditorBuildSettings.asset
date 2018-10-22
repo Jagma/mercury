@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/CampaignLobby.unity
     guid: c9c8f98ecb6a42744b2f72f784650ab2
   - enabled: 1
-    path: Assets/Scenes/GameCOOP.unity
+    path: Assets/Scenes/GameCampaign.unity
     guid: 9c1c2a73154d1f64da417a522a55f81d
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Multiplayer/Lobby.unity
     guid: 6d8715c72669a05469ca02c84981913d
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/GameDeathmatch.unity
+    guid: f5ab4151084dc7e4195b2f87595ee3af
   m_configObjects: {}

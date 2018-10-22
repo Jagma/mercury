@@ -1186,8 +1186,8 @@ public class Factory : MonoBehaviour
             player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
             player.name = "PlayerHost";
 
-   //         player.AddComponent<HostPlayer>();
-    //        player.GetComponent<HostPlayer>().clientUniqueID = objectUniqueID;
+            player.AddComponent<ServerPlayer>();
+            player.GetComponent<ServerPlayer>().clientUniqueID = objectUniqueID;
             return player;
         }
     }
@@ -1199,8 +1199,8 @@ public class Factory : MonoBehaviour
             player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
             player.name = "PlayerClient";
 
-        //    player.AddComponent<ClientPlayer>();
-        //    player.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
+            player.AddComponent<ClientPlayer>();
+            player.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
 
             return player;
         }

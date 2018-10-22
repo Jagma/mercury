@@ -37,7 +37,7 @@ public class NetworkManager : MonoBehaviour {
     }
 
     public void SetServerAddress (string serverAddress) {
-
+        this.serverAddress = "ws://" + serverAddress + "/lobby";
     }
 
     public void Disconnect () {
@@ -136,12 +136,12 @@ public class NetworkManager : MonoBehaviour {
             Send(new NetworkMessages.RequestHeartbeat());
         }
 
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(5f);
 
         if (connected == true && connectionAlive == false) {
             connected = false;
             Debug.Log("Disconected");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyManager");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MultiplayerHome");
         }
 
         // TODO: Add more status such as timeout
