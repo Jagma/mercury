@@ -103,6 +103,8 @@ public class Enemy : MonoBehaviour
             DropItems();
         }
         DisplayEnemyCorpse();
+        GameProgressionManager.instance.IncreaseEnemyKills();
+        GameProgressionManager.instance.DecreaseEnemiesLeft();
         Destroy(gameObject);
     }
 
