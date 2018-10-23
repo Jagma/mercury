@@ -12,9 +12,7 @@ public class
     float knockBack;
     float lastActivatedTime;
     bool isDashing = false;
-
     Rigidbody rigidbody;
-
     protected override void Start()
     {
         base.Start();
@@ -52,7 +50,7 @@ public class
             player.Damage(damage);
             lastActivatedTime = Time.time;
             isDashing = false;
-            rigidbody.velocity = Vector3.zero;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 
