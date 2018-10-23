@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spear : WeaponMelee
+public class StrongAxe : WeaponMelee
 {
     protected override void InitWeaponStats()
     {
@@ -12,9 +12,9 @@ public class Spear : WeaponMelee
         cooldown = 0.5f;
         ammoMaxInventory = 0;
         ammoInventory = 0;
-        ammoMax = 30;
-        ammoCount = 30;
-        damage = 35f;
+        ammoMax = 20;
+        ammoCount = 20;
+        damage = 45f;
     }
 
     protected override void Use()

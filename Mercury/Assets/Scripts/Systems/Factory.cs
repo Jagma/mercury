@@ -79,8 +79,9 @@ public class Factory : MonoBehaviour
         playerController.actor = playerActor;
 
         PlayerModel playerModel = new PlayerModel();
+        playerModel.equippedWeapon = CreateSniperRifle().GetComponent<Weapon>();
+        playerModel.equippedWeapon.Equip();
         playerActor.model = playerModel;
-
         GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
         hud.transform.SetParent(playerGO.transform, true);
         hud.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
@@ -544,56 +545,56 @@ public class Factory : MonoBehaviour
         return swordGO;
     }
 
-    public GameObject CreateAxe()
+    public GameObject CreateStrongAxe()
     {
-        GameObject axeGO = new GameObject("Axe");
+        GameObject saxeGO = new GameObject("Strong Axe");
 
-        SphereCollider axeCollider = axeGO.AddComponent<SphereCollider>();
-        axeCollider.radius = 0.1f;
+        SphereCollider saxeCollider = saxeGO.AddComponent<SphereCollider>();
+        saxeCollider.radius = 0.1f;
 
-        SphereCollider axeColliderT = axeGO.AddComponent<SphereCollider>();
-        axeColliderT.isTrigger = true;
+        SphereCollider saxeColliderT = saxeGO.AddComponent<SphereCollider>();
+        saxeColliderT.isTrigger = true;
 
-        Rigidbody axeRigid = axeGO.AddComponent<Rigidbody>();
-        axeRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        Rigidbody saxeRigid = saxeGO.AddComponent<Rigidbody>();
+        saxeRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
-        GameObject axeVisualGO = new GameObject("Visual");
-        axeVisualGO.transform.parent = axeGO.transform;
+        GameObject saxeVisualGO = new GameObject("Visual");
+        saxeVisualGO.transform.parent = saxeGO.transform;
 
         GameObject axeVisualBodyGO = new GameObject("Body");
-        axeVisualBodyGO.transform.parent = axeVisualGO.transform;
+        axeVisualBodyGO.transform.parent = saxeVisualGO.transform;
         SpriteRenderer sr = axeVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Axe");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/StrongAxe");
 
-        axeGO.AddComponent<Axe>();
+        saxeGO.AddComponent<StrongAxe>();
 
-        return axeGO;
+        return saxeGO;
     }
 
-    public GameObject CreateSpear()
+    public GameObject CreateWeakAxe()
     {
-        GameObject spearGO = new GameObject("Spear");
+        GameObject waxeGO = new GameObject("Weak Axe");
 
-        SphereCollider spearCollider = spearGO.AddComponent<SphereCollider>();
-        spearCollider.radius = 0.1f;
+        SphereCollider waxeCollider = waxeGO.AddComponent<SphereCollider>();
+        waxeCollider.radius = 0.1f;
 
-        SphereCollider spearColliderT = spearGO.AddComponent<SphereCollider>();
-        spearColliderT.isTrigger = true;
+        SphereCollider waxeColliderT = waxeGO.AddComponent<SphereCollider>();
+        waxeColliderT.isTrigger = true;
 
-        Rigidbody spearRigid = spearGO.AddComponent<Rigidbody>();
-        spearRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        Rigidbody waxeRigid = waxeGO.AddComponent<Rigidbody>();
+        waxeRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
-        GameObject spearVisualGO = new GameObject("Visual");
-        spearVisualGO.transform.parent = spearGO.transform;
+        GameObject waxeVisualGO = new GameObject("Visual");
+        waxeVisualGO.transform.parent = waxeGO.transform;
 
-        GameObject spearVisualBodyGO = new GameObject("Body");
-        spearVisualBodyGO.transform.parent = spearVisualGO.transform;
-        SpriteRenderer sr = spearVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Spear");
+        GameObject waxeVisualBodyGO = new GameObject("Body");
+        waxeVisualBodyGO.transform.parent = waxeVisualGO.transform;
+        SpriteRenderer sr = waxeVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/WeakAxe");
 
-        spearGO.AddComponent<Spear>();
+        waxeGO.AddComponent<WeakAxe>();
 
-        return spearGO;
+        return waxeGO;
     }
 
     public GameObject CreateShotgun()
