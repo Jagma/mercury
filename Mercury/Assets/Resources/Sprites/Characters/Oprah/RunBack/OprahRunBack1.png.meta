@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Mercury/Assets/Resources/Sprites/Characters/Oprah/RunBack/OprahBack1.png.meta
+guid: c2ef09d3cad73b5409267dd287ca5008
+=======
 guid: 3793828f5b3c9584aa2026eb6a64f7b7
+>>>>>>> eeb04928b57264e599a0a01a0e6c0870c92abc4b:Mercury/Assets/Resources/Sprites/Characters/Oprah/RunBack/OprahRunBack1.png.meta
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}

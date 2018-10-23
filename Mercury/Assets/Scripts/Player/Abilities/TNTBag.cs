@@ -21,7 +21,7 @@ public class TNTBag : MonoBehaviour
     void Start()
     {
         Init();
-        AudioManager.instance.PlayAudio("abra", 1, false);
+        AudioManager.instance.PlayAudio("Binladen_ability", 1, false);
     }
 
     void Update()

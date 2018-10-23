@@ -10,7 +10,6 @@ public class RPG : Projectile
         base.Init();
         // Stats
         speed = 10f;
-        damage = 100f;
         blastRadius = 1f;
     }
     public void setDamage(float damageA)

@@ -70,11 +70,13 @@ public class Weapon : MonoBehaviour
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
             {
                 ReloadWeapon();
+               
             }
             else //if the weapon is completely out of ammo.
             {
+                //AudioManager.instance.PlayAudio("sfx_wpn_noammo1", .5f, false);
                 return;
-                //play sound for out of ammo..
+                
             }
         }
 
@@ -106,6 +108,7 @@ public class Weapon : MonoBehaviour
 
     private void ReloadWeapon()
     {
+        AudioManager.instance.PlayAudio("dssgcock", 1, false);
         if (ammoCount < ammoMax) //checks to see if there is less bullets in the mag of the weapon than the max it can contain.
         {
             if (ammoInventory <= ammoMax) //checks to see if the amount of ammo in the inventory is smaller or equal to the maximum amount of ammo the weapon can take in a mag.

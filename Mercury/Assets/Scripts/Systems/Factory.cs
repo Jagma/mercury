@@ -1153,13 +1153,14 @@ public class Factory : MonoBehaviour
 
         Cracker w = crackerGO.AddComponent<Cracker>();  //makes use of the Walker script which has its own functionalities.
 
-        GameObject weapon = CreateLaserRayGun();
+        GameObject weapon = CreateRocketLauncher();
         w.equippedWeapon = weapon.GetComponent<Weapon>();
         w.equippedWeapon.transform.position = transform.position;
         w.equippedWeapon.Equip();
         w.equippedWeapon.equipped = true;
         w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
-        w.equippedWeapon.SetWeaponDamage(1.5f);
+        w.equippedWeapon.SetWeaponDamage(5f);
+        w.equippedWeapon.SetMaxAmmoCount(10);
         return crackerGO;
     }
 
@@ -1192,7 +1193,7 @@ public class Factory : MonoBehaviour
         w.equippedWeapon.Equip();
         w.equippedWeapon.equipped = true;
         w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
-        w.equippedWeapon.SetWeaponDamage(5f);
+        w.equippedWeapon.SetWeaponDamage(3f);
         return diabloGO;
     }
     public GameObject CreateMartianBoss() //Creates the martian boss
