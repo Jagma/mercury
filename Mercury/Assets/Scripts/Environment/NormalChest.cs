@@ -7,7 +7,7 @@ public class NormalChest : Chest
 
     protected override GameObject GetRandomItem()
     {
-        int result = Random.Range(0, 13);
+        int result = Random.Range(0, 10);
         //Weapons.
         if (result == 0)
         {
@@ -55,18 +55,6 @@ public class NormalChest : Chest
         if (result == 10)
         {
             return Factory.instance.CreateMedpack();
-        }
-        if (result == 11)
-        {
-            return Factory.instance.CreateBeamAmmoPack();
-        }
-        if (result == 12)
-        {
-            return Factory.instance.CreateBulletAmmoPack();
-        }
-        if (result == 13)
-        {
-            return Factory.instance.CreateRocketAmmoPack();
         }
         return null;
     }
