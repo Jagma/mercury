@@ -8,7 +8,6 @@ public class MeleeEnemies : Enemy
     protected override void Start()
     {
         base.Start();
-        CreateWeapon();
         health = 25;
         moveSpeed = 2f;
     }
@@ -78,10 +77,4 @@ public class MeleeEnemies : Enemy
                 equippedWeapon.UseWeapon();
         }
     }
-
-    protected virtual void CreateWeapon()
-    {
-
-    }
-
 }

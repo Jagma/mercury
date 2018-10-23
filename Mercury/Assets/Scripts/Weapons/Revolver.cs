@@ -5,11 +5,10 @@ using UnityEngine;
 public class Revolver : WeaponRanged
 {
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
         // Stats
+        base.InitWeaponStats();
         cooldown = 0.75f;
         ammoOffset = 0.2f;
         ammoMaxInventory = 18;

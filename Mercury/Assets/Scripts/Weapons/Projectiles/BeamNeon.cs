@@ -9,8 +9,8 @@ public class BeamNeon : Beam
         base.Init();
 
         // Stats
-        width = 0.25f;
         damage = 2f;
+        width = 0.25f;
     }
 
 }

@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class SniperRifle : WeaponRanged
 {
-
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 1.2f;
         ammoOffset = 2f;
@@ -18,6 +16,7 @@ public class SniperRifle : WeaponRanged
         ammoCount = 5;
         damage = 100f;
     }
+
 
     protected override void Use()
     {
@@ -35,7 +34,7 @@ public class SniperRifle : WeaponRanged
         bullet.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
         bullet.GetComponent<Projectile>().Update();
 
-        AudioManager.instance.PlayAudio("sr_sound_effect", 1f, false);
+        AudioManager.instance.PlayAudio("sr_sound_effect", .6f, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }

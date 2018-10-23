@@ -194,7 +194,7 @@ public class CampaignLobby : MonoBehaviour
         void Browse(int i) {
             characterIndex = i;
             UpdatePortrait();
-            AudioManager.instance.PlayAudio("menu1", 1, false);
+            AudioManager.instance.PlayAudio("latch2", 1, false);
         }
 
         void Up() {
@@ -204,7 +204,7 @@ public class CampaignLobby : MonoBehaviour
             if (characterIndex == 4) {
                 characterIndex = 0;
             }
-            AudioManager.instance.PlayAudio("menu1", 1, false);
+            AudioManager.instance.PlayAudio("latch2", 1, false);
             UpdatePortrait();
         }
 
@@ -215,7 +215,7 @@ public class CampaignLobby : MonoBehaviour
             if (characterIndex == -1) {
                 characterIndex = 3;
             }
-            AudioManager.instance.PlayAudio("menu1", 1, false);
+            AudioManager.instance.PlayAudio("latch2", 1, false);
             UpdatePortrait();
         }
 

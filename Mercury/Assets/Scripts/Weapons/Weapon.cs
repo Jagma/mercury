@@ -13,12 +13,14 @@ public class Weapon : MonoBehaviour
     public int ammoMax = 12; //ammoMax is the amount of ammo the weapon is allowed to have in one mag.
 
     protected Transform visual;
+    protected Transform body;
     protected float cooldownRemaining = 0f;
-    protected float damage = 0;
+    protected float damage = 100;
 
     private void Awake()
     {
         visual = transform.Find("Visual");
+        body = visual.Find("Body");
         InitWeaponStats();
     }
 
@@ -26,6 +28,10 @@ public class Weapon : MonoBehaviour
 
     }
 
+    public float GetWeaponDamage()
+    {
+        return damage;
+    }
     protected virtual void Start()
     {
 
@@ -64,11 +70,13 @@ public class Weapon : MonoBehaviour
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
             {
                 ReloadWeapon();
+               
             }
             else //if the weapon is completely out of ammo.
             {
+                //AudioManager.instance.PlayAudio("sfx_wpn_noammo1", .5f, false);
                 return;
-                //play sound for out of ammo..
+                
             }
         }
 
@@ -99,6 +107,7 @@ public class Weapon : MonoBehaviour
 
     private void ReloadWeapon()
     {
+        AudioManager.instance.PlayAudio("dssgcock", 1, false);
         if (ammoCount < ammoMax) //checks to see if there is less bullets in the mag of the weapon than the max it can contain.
         {
             if (ammoInventory <= ammoMax) //checks to see if the amount of ammo in the inventory is smaller or equal to the maximum amount of ammo the weapon can take in a mag.
@@ -161,11 +170,20 @@ public class Weapon : MonoBehaviour
         // Visual look at camera
         visual.eulerAngles = new Vector3(45, 45, -transform.eulerAngles.y + 45);
 
-        Vector2 norm = Quaternion.AngleAxis(-45, Vector3.up) * transform.right;
+        Vector2 aim = new Vector2(transform.right.x, transform.right.z);
+        Vector3 norm = Quaternion.Euler(0, -45, 0) * new Vector3(aim.x, 0, aim.y);
+
         if (norm.x < 0) {
-            Vector3 x = Quaternion.AngleAxis(180, visual.right) * visual.forward;
-            visual.forward = x;
-            visual.eulerAngles = new Vector3(visual.eulerAngles.x, visual.eulerAngles.y, 180 + transform.eulerAngles.y - 45);
+            body.localEulerAngles = new Vector3(180, 0, 0);
+        }
+        else {
+            body.localEulerAngles = new Vector3(0, 0, 0);
+        }
+
+        if (norm.z < 0) {
+            body.localPosition = new Vector3(visual.localPosition.x, visual.localPosition.y, -0.5f);
+        } else {
+            body.localPosition = new Vector3(visual.localPosition.x, visual.localPosition.y, 0f);
         }
     }
 }

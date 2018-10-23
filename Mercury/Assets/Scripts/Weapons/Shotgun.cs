@@ -5,10 +5,9 @@ using UnityEngine;
 public class Shotgun : WeaponRanged
 {
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 0.5f;
         ammoOffset = 0.6f;
@@ -40,7 +39,7 @@ public class Shotgun : WeaponRanged
             bullet.GetComponent<Projectile>().Update();
         }
 
-        AudioManager.instance.PlayAudio("dspistol", 1, false);
+        AudioManager.instance.PlayAudio("shotgn2", 1, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }

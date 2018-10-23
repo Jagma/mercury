@@ -63,6 +63,7 @@ public class Intermission : MonoBehaviour {
         teleportCount++;
 
         if (teleportCount >= playerList.Count) {
+            AudioManager.instance.StopAudio("Game_music_Magellanic_clouds");
             ProgressionState.NextLevel();
             SceneManager.LoadScene("GameCampaign");
         }

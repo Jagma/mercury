@@ -21,18 +21,6 @@ public class OverlordWalker : RangedEnemies
         base.IdleMovement();
     }
 
-    protected override void CreateWeapon()
-    {
-        base.CreateWeapon();
-        GameObject weapon;
-        weapon = Factory.instance.CreateMachineGun();
-        equippedWeapon = weapon.GetComponent<Weapon>();
-        equippedWeapon.transform.position = transform.position;
-        equippedWeapon.Equip();
-        equippedWeapon.equipped = true;
-        equippedWeapon.SetWeaponDamage(1.5f);
-    }
-
     protected override void AimAtPlayer(Vector3 direction)
     {
         base.AimAtPlayer(direction);
