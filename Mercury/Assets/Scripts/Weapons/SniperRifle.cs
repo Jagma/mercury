@@ -11,7 +11,7 @@ public class SniperRifle : WeaponRanged
 
         // Stats
         cooldown = 1.2f;
-        ammoOffset = 0.2f;
+        ammoOffset = 2f;
         ammoMaxInventory = 15;
         ammoInventory = 15;
         ammoMax = 5;
@@ -27,7 +27,7 @@ public class SniperRifle : WeaponRanged
         flash.transform.position = transform.position + transform.right * ammoOffset;
         Destroy(flash, 1);
 
-        GameObject bullet = Factory.instance.CreateBullet();
+        GameObject bullet = Factory.instance.CreateSniperBullet();
         bullet.GetComponent<Round>().setDamage(damage);
         bullet.GetComponent<Projectile>().speed *= 2;
         bullet.transform.position = transform.position + transform.right * ammoOffset;

@@ -167,6 +167,31 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
+    public GameObject CreateSniperBullet()
+    {
+        GameObject bulletGO = new GameObject("Bullet");
+
+        SphereCollider bulletCollider = bulletGO.AddComponent<SphereCollider>();
+        bulletCollider.isTrigger = true;
+        bulletCollider.radius = 0.2f;
+
+        Rigidbody bulletRigid = bulletGO.AddComponent<Rigidbody>();
+        bulletRigid.isKinematic = true;
+        bulletRigid.useGravity = false;
+
+        GameObject bulletVisualGO = new GameObject("Visual");
+        bulletVisualGO.transform.parent = bulletGO.transform;
+
+        GameObject bulletVisualBodyGO = new GameObject("Body");
+        bulletVisualBodyGO.transform.parent = bulletVisualGO.transform;
+        SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_2");
+
+        Projectile p = bulletGO.AddComponent<Round>();
+        p.Init();
+        return bulletGO;
+    }
+
     Material lazerBulletMat;
     public GameObject CreateLaserBullet()
     {
