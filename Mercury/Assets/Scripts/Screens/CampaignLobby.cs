@@ -94,8 +94,7 @@ public class CampaignLobby : MonoBehaviour
                     if (InputManager.instance.GetDownPressed(playerID)) {
                         Down();
                     }
-                    if (InputManager.instance.GetSelectPressed(playerID)) {
-                        playCharacterSound();
+                    if (InputManager.instance.GetSelectPressed(playerID)) {                        
                         Select();
                     }
                     if (InputManager.instance.GetBackPressed(playerID)) {
@@ -116,14 +115,12 @@ public class CampaignLobby : MonoBehaviour
                     TableRealmsDevice device = TableRealmsManager.instance.GetDevice(playerID);
 
                     if (device.GetLeaveReady()) {
-                        stopCharacterSound();
                         DeSelect();
                         device.DisplayPage("CharacterSelect");
                     }
                 }
                 else {
                     if (InputManager.instance.GetBackPressed(playerID)) {
-                        stopCharacterSound();
                         DeSelect();
                     }
                 }
@@ -131,7 +128,7 @@ public class CampaignLobby : MonoBehaviour
 
         }
 
-        void playCharacterSound()
+        void PlayCharacterSound()
         {
             switch (characterIndex)
             {
@@ -150,7 +147,7 @@ public class CampaignLobby : MonoBehaviour
             }
         }
 
-        void stopCharacterSound()
+        void StopCharacterSound()
         {
             switch (characterIndex)
             {
@@ -178,14 +175,16 @@ public class CampaignLobby : MonoBehaviour
             characterSelectGO.SetActive(false);
             characterSelectedGO.SetActive(true);
             AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
+            PlayCharacterSound();
         }
 
         void DeSelect() {
             characterSelectGO.SetActive(true);
             characterSelectedGO.SetActive(false);
             AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
+            StopCharacterSound();
 
-            status = Status.Selecting;
+            status = Status.Selecting;            
         }
 
         void Leave() {
@@ -195,6 +194,7 @@ public class CampaignLobby : MonoBehaviour
         void Browse(int i) {
             characterIndex = i;
             UpdatePortrait();
+            AudioManager.instance.PlayAudio("menu1", 1, false);
         }
 
         void Up() {
@@ -261,12 +261,14 @@ public class CampaignLobby : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (InputManager.instance.GetPlayerInput("Keyboard|0001") == null) {
                 SceneManager.LoadScene("Menu");
+                AudioManager.instance.StopAudio("Game_music_Space_loop");
             }
         }
         if (InControl.InputManager.ActiveDevice.Action2.WasPressed) {
             string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
             if (InputManager.instance.GetPlayerInput(controllerID) == null) {
                 SceneManager.LoadScene("Menu");
+                AudioManager.instance.StopAudio("Game_music_Space_loop");
             }
         }
 

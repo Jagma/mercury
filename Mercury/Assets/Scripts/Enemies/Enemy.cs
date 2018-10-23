@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public double health = 100;
+    public float originalWeaponDamage;
     public float moveSpeed = 1f;
     public Weapon equippedWeapon;
     Transform visual;
@@ -101,6 +102,7 @@ public class Enemy : MonoBehaviour
         AudioManager.instance.PlayAudio("death1", .5f, false);
         if (equippedWeapon) //has a chance to drop weapon or ammo pack.
         {
+            equippedWeapon.SetWeaponDamage(originalWeaponDamage);
             DropItems();
         }
         DisplayEnemyCorpse();

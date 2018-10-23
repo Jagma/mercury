@@ -15,7 +15,6 @@ public class LaserRayGun : WeaponRanged
         ammoMax = 100;
         ammoCount = 100;
         damage = 35f;
-
         beam = Factory.instance.CreateBeamNeon();
         beam.transform.parent = transform;
 

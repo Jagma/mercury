@@ -79,8 +79,9 @@ public class Factory : MonoBehaviour
         playerController.actor = playerActor;
 
         PlayerModel playerModel = new PlayerModel();
+        playerModel.equippedWeapon = CreateRevolver().GetComponent<Weapon>();
+        playerModel.equippedWeapon.Equip();
         playerActor.model = playerModel;
-
         GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
         hud.transform.SetParent(playerGO.transform, true);
         hud.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
@@ -161,6 +162,31 @@ public class Factory : MonoBehaviour
         bulletVisualBodyGO.transform.parent = bulletVisualGO.transform;
         SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_1");
+
+        Projectile p = bulletGO.AddComponent<Round>();
+        p.Init();
+        return bulletGO;
+    }
+
+    public GameObject CreateSniperBullet()
+    {
+        GameObject bulletGO = new GameObject("Bullet");
+
+        SphereCollider bulletCollider = bulletGO.AddComponent<SphereCollider>();
+        bulletCollider.isTrigger = true;
+        bulletCollider.radius = 0.4f;
+
+        Rigidbody bulletRigid = bulletGO.AddComponent<Rigidbody>();
+        bulletRigid.isKinematic = true;
+        bulletRigid.useGravity = false;
+
+        GameObject bulletVisualGO = new GameObject("Visual");
+        bulletVisualGO.transform.parent = bulletGO.transform;
+
+        GameObject bulletVisualBodyGO = new GameObject("Body");
+        bulletVisualBodyGO.transform.parent = bulletVisualGO.transform;
+        SpriteRenderer sr = bulletVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_2");
 
         Projectile p = bulletGO.AddComponent<Round>();
         p.Init();
@@ -519,56 +545,56 @@ public class Factory : MonoBehaviour
         return swordGO;
     }
 
-    public GameObject CreateAxe()
+    public GameObject CreateStrongAxe()
     {
-        GameObject axeGO = new GameObject("Axe");
+        GameObject saxeGO = new GameObject("Strong Axe");
 
-        SphereCollider axeCollider = axeGO.AddComponent<SphereCollider>();
-        axeCollider.radius = 0.1f;
+        SphereCollider saxeCollider = saxeGO.AddComponent<SphereCollider>();
+        saxeCollider.radius = 0.1f;
 
-        SphereCollider axeColliderT = axeGO.AddComponent<SphereCollider>();
-        axeColliderT.isTrigger = true;
+        SphereCollider saxeColliderT = saxeGO.AddComponent<SphereCollider>();
+        saxeColliderT.isTrigger = true;
 
-        Rigidbody axeRigid = axeGO.AddComponent<Rigidbody>();
-        axeRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        Rigidbody saxeRigid = saxeGO.AddComponent<Rigidbody>();
+        saxeRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
-        GameObject axeVisualGO = new GameObject("Visual");
-        axeVisualGO.transform.parent = axeGO.transform;
+        GameObject saxeVisualGO = new GameObject("Visual");
+        saxeVisualGO.transform.parent = saxeGO.transform;
 
         GameObject axeVisualBodyGO = new GameObject("Body");
-        axeVisualBodyGO.transform.parent = axeVisualGO.transform;
+        axeVisualBodyGO.transform.parent = saxeVisualGO.transform;
         SpriteRenderer sr = axeVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Axe");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/StrongAxe");
 
-        axeGO.AddComponent<Axe>();
+        saxeGO.AddComponent<StrongAxe>();
 
-        return axeGO;
+        return saxeGO;
     }
 
-    public GameObject CreateSpear()
+    public GameObject CreateWeakAxe()
     {
-        GameObject spearGO = new GameObject("Spear");
+        GameObject waxeGO = new GameObject("Weak Axe");
 
-        SphereCollider spearCollider = spearGO.AddComponent<SphereCollider>();
-        spearCollider.radius = 0.1f;
+        SphereCollider waxeCollider = waxeGO.AddComponent<SphereCollider>();
+        waxeCollider.radius = 0.1f;
 
-        SphereCollider spearColliderT = spearGO.AddComponent<SphereCollider>();
-        spearColliderT.isTrigger = true;
+        SphereCollider waxeColliderT = waxeGO.AddComponent<SphereCollider>();
+        waxeColliderT.isTrigger = true;
 
-        Rigidbody spearRigid = spearGO.AddComponent<Rigidbody>();
-        spearRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        Rigidbody waxeRigid = waxeGO.AddComponent<Rigidbody>();
+        waxeRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
-        GameObject spearVisualGO = new GameObject("Visual");
-        spearVisualGO.transform.parent = spearGO.transform;
+        GameObject waxeVisualGO = new GameObject("Visual");
+        waxeVisualGO.transform.parent = waxeGO.transform;
 
-        GameObject spearVisualBodyGO = new GameObject("Body");
-        spearVisualBodyGO.transform.parent = spearVisualGO.transform;
-        SpriteRenderer sr = spearVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Spear");
+        GameObject waxeVisualBodyGO = new GameObject("Body");
+        waxeVisualBodyGO.transform.parent = waxeVisualGO.transform;
+        SpriteRenderer sr = waxeVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/WeakAxe");
 
-        spearGO.AddComponent<Spear>();
+        waxeGO.AddComponent<WeakAxe>();
 
-        return spearGO;
+        return waxeGO;
     }
 
     public GameObject CreateShotgun()
@@ -1061,10 +1087,115 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Walker");
 
-        enemyWalkerGO.AddComponent<Walker>();  //makes use of the Walker script which has its own functionalities.
+        Walker w = enemyWalkerGO.AddComponent<Walker>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateSword();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
         return enemyWalkerGO;
     }
 
+    public GameObject CreateAzagorEnemy()  //code use to create the walker enemy within the game.
+    {
+        GameObject azagorGO = new GameObject("Azagor");
+
+        CapsuleCollider azagorCollider = azagorGO.AddComponent<CapsuleCollider>();
+        azagorCollider.radius = 0.25f;
+        azagorCollider.height = 0.8f;
+
+        Rigidbody azagorRigid = azagorGO.AddComponent<Rigidbody>();
+        azagorRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        azagorRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject azagorVisualGO = new GameObject("Visual");
+        azagorVisualGO.transform.parent = azagorGO.transform;
+
+        GameObject azagorVisualBodyGO = new GameObject("Body");
+        azagorVisualBodyGO.transform.parent = azagorVisualGO.transform;
+
+        SpriteRenderer sr = azagorVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Azagor");
+
+        Azagor w = azagorGO.AddComponent<Azagor>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateStrongAxe();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        return azagorGO;
+    }
+
+    public GameObject CreateCrackerEnemy()  //code use to create the walker enemy within the game.
+    {
+        GameObject crackerGO = new GameObject("Cracker");
+
+        CapsuleCollider crackerCollider = crackerGO.AddComponent<CapsuleCollider>();
+        crackerCollider.radius = 0.25f;
+        crackerCollider.height = 0.8f;
+
+        Rigidbody crackerRigid = crackerGO.AddComponent<Rigidbody>();
+        crackerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        crackerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject crackerVisualGO = new GameObject("Visual");
+        crackerVisualGO.transform.parent = crackerGO.transform;
+
+        GameObject crackerVisualBodyGO = new GameObject("Body");
+        crackerVisualBodyGO.transform.parent = crackerVisualGO.transform;
+
+        SpriteRenderer sr = crackerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Cracker");
+
+        Cracker w = crackerGO.AddComponent<Cracker>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateRocketLauncher();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(25f);
+        w.equippedWeapon.SetMaxAmmoCount(25);
+        return crackerGO;
+    }
+
+    public GameObject CreateDiabloEnemy()  //code use to create the walker enemy within the game.
+    {
+        GameObject diabloGO = new GameObject("Diablo");
+
+        CapsuleCollider diabloCollider = diabloGO.AddComponent<CapsuleCollider>();
+        diabloCollider.radius = 0.25f;
+        diabloCollider.height = 0.8f;
+
+        Rigidbody diabloRigid = diabloGO.AddComponent<Rigidbody>();
+        diabloRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        diabloRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject diabloVisualGO = new GameObject("Visual");
+        diabloVisualGO.transform.parent = diabloGO.transform;
+
+        GameObject diabloVisualBodyGO = new GameObject("Body");
+        diabloVisualBodyGO.transform.parent = diabloVisualGO.transform;
+
+        SpriteRenderer sr = diabloVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Diablo");
+
+        Diablo w = diabloGO.AddComponent<Diablo>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateRevolver();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(3f);
+        return diabloGO;
+    }
     public GameObject CreateMartianBoss() //Creates the martian boss
     {
          GameObject martianBossGO = new GameObject("Martian Boss");
@@ -1114,7 +1245,16 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Ranged Walker");
 
-        enemyRangedGO.AddComponent<RangedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        RangedWalker w = enemyRangedGO.AddComponent<RangedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreatePistol();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(1.25f);
+
         return enemyRangedGO;
     }
 
@@ -1139,7 +1279,16 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Corrupted Walker");
 
-        enemyRangedGO.AddComponent<CorruptedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        CorruptedWalker w = enemyRangedGO.AddComponent<CorruptedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreateBurstAssaultRifle();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(2f);
+
         return enemyRangedGO;
     }
 
@@ -1165,7 +1314,17 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Arc Walker");
 
-        enemyRangedGO.AddComponent<ArcWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        ArcWalker w = enemyRangedGO.AddComponent<ArcWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreateLaserMachineGun();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(2f);
+
+
         return enemyRangedGO;
     }
     public GameObject CreateOverlordWalker() //code use to create the overlord walker enemy within the game.
@@ -1189,7 +1348,17 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Overlord Walker");
 
-        enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
+        OverlordWalker w = enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreateMachineGun();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(1.5f);
+
+
         return enemyRangedGO;
     }
     #endregion

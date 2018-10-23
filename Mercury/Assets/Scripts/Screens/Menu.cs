@@ -34,6 +34,10 @@ public class Menu : MonoBehaviour
         {
             eventSystem.SetSelectedGameObject(previousSelection);
         }
+        if (previousSelection != eventSystem.currentSelectedGameObject) {
+            AudioManager.instance.PlayAudio("menu1", 1, false);
+        }
+
         previousSelection = eventSystem.currentSelectedGameObject;
     }
 

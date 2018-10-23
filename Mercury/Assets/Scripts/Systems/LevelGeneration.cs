@@ -160,6 +160,30 @@ public class LevelGeneration : MonoBehaviour
                     GameProgressionManager.instance.IncreaseEnemyCount();
                     EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
                 }
+                if (enemies[x, z] == "Azagor")
+                {
+                    GameObject enemyGO = Factory.instance.CreateAzagorEnemy();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
+                if (enemies[x, z] == "Diablo")
+                {
+                    GameObject enemyGO = Factory.instance.CreateDiabloEnemy();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
+                if (enemies[x, z] == "Cracker")
+                {
+                    GameObject enemyGO = Factory.instance.CreateCrackerEnemy();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
                 if (pickups[x, z] == "Normal Chest")
                 {
                     GameObject chestGO = Factory.instance.CreateNormalChest();
@@ -297,6 +321,18 @@ public class Miner
         if (Random.Range(0, 1f) > 0.995f)
         {
             levelGen.enemies[posX, posZ] = "Arc Walker";
+        }
+        if (Random.Range(0, 1f) > 0.995f)
+        {
+            levelGen.enemies[posX, posZ] = "Cracker";
+        }
+        if (Random.Range(0, 1f) > 0.995f)
+        {
+            levelGen.enemies[posX, posZ] = "Diablo";
+        }
+        if (Random.Range(0, 1f) > 0.995f)
+        {
+            levelGen.enemies[posX, posZ] = "Azagor";
         }
         // Pickups
         if (Random.Range(0, 1f) > 0.9990f)

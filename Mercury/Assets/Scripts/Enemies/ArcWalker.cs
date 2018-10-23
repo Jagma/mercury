@@ -22,17 +22,6 @@ public class ArcWalker : RangedEnemies
         base.IdleMovement();
     }
 
-    protected override void CreateWeapon()
-    {
-        base.CreateWeapon();
-        GameObject weapon;
-        weapon = Factory.instance.CreateLaserMachineGun();
-        equippedWeapon = weapon.GetComponent<Weapon>();
-        equippedWeapon.transform.position = transform.position;
-        equippedWeapon.Equip();
-        equippedWeapon.equipped = true;
-        equippedWeapon.SetWeaponDamage(0.5f);
-    }
 
     protected override void AimAtPlayer(Vector3 direction)
     {

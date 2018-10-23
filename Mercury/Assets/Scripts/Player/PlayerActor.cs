@@ -18,9 +18,6 @@ public class PlayerActor : MonoBehaviour
     void Start ()
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
-        model.equippedWeapon = Factory.instance.CreateBurstAssaultRifle().GetComponent<Weapon>();
-        model.equippedWeapon.Equip();
-        model.secondaryWeapon = null;
         //DELETE
         /*AddPassive(new PassiveDegenAura());
         AddPassive(new PassiveHPRegen());
@@ -38,7 +35,7 @@ public class PlayerActor : MonoBehaviour
         {
             if (model.equippedWeapon)
             {
-                model.equippedWeapon.transform.position = transform.position + model.equippedWeapon.transform.right * 0.5f - transform.up * 0.2f;
+                model.equippedWeapon.transform.position = transform.position + model.equippedWeapon.transform.right * 0.5f - Vector3.up * 0.2f;
             }
             if (model.secondaryWeapon)
             {
@@ -176,7 +173,8 @@ public class PlayerActor : MonoBehaviour
         {
             if (model.equippedWeapon)
             {
-                model.equippedWeapon.transform.right = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(model.lookDirection.x, 0, model.lookDirection.y);
+                Vector3 norm = Quaternion.AngleAxis(45, Vector3.up) * new Vector3(direction.x, 0, direction.y);
+                model.equippedWeapon.transform.right = norm;
             }
         }
     }
