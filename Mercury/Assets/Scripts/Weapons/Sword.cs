@@ -12,8 +12,8 @@ public class Sword : WeaponMelee
         cooldown = 0.5f;
         ammoMaxInventory = 0;
         ammoInventory = 0;
-        ammoMax = 100;
-        ammoCount = 100;
+        ammoMax = 50;
+        ammoCount = 50;
         damage = 15f;
     }
 

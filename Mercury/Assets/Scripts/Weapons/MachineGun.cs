@@ -14,7 +14,7 @@ public class MachineGun : WeaponRanged
         ammoInventory = 60;
         ammoMax = 15;
         ammoCount = 15;
-        damage = 5f;
+        damage = 15f;
     }
 
     protected override void Use()
