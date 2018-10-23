@@ -5,10 +5,9 @@ using UnityEngine;
 public class Shotgun : WeaponRanged
 {
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 0.5f;
         ammoOffset = 0.6f;

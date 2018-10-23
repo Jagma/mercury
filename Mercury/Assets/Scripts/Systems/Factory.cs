@@ -1159,8 +1159,8 @@ public class Factory : MonoBehaviour
         w.equippedWeapon.Equip();
         w.equippedWeapon.equipped = true;
         w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
-        w.equippedWeapon.SetWeaponDamage(25f);
-        w.equippedWeapon.SetMaxAmmoCount(25);
+        w.equippedWeapon.SetWeaponDamage(5f);
+        w.equippedWeapon.SetMaxAmmoCount(10);
         return crackerGO;
     }
 

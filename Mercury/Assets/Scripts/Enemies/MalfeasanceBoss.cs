@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
 
-public class
-    MalfeasanceBoss : Enemy
+public class MalfeasanceBoss : Enemy
 {
     private float cooldown;
     private float damage;

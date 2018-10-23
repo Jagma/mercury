@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class SniperRifle : WeaponRanged
 {
-
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 1.2f;
         ammoOffset = 2f;
@@ -18,6 +16,7 @@ public class SniperRifle : WeaponRanged
         ammoCount = 5;
         damage = 100f;
     }
+
 
     protected override void Use()
     {
