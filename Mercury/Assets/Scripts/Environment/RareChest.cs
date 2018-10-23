@@ -7,11 +7,13 @@ public class RareChest : Chest
     protected override void Use()
     {
         base.Use();
+        spriteRendererOpen.sprite = Resources.Load<Sprite>("Sprites/Environment/chest1Open");
     }
 
     protected override GameObject GetRandomItem()
     {
-        int result = Random.Range(0, 5);
+        itemWeights = new int[] { 15, 30, 5, 35, 40};
+        base.GetRandomItem();
 
         if (result == 0)
         {

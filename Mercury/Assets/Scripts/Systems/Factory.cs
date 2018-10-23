@@ -372,6 +372,13 @@ public class Factory : MonoBehaviour
         return bagGO;
     }
 
+    public GameObject CreatePopeEffect()
+    {
+        GameObject popeEffectGO = GameObject.Instantiate(Resources.Load<GameObject>("Effects/PopeHeal"));
+
+        return popeEffectGO;
+    }
+
     #endregion
 
     #region Weapons
@@ -805,7 +812,7 @@ public class Factory : MonoBehaviour
         chestColliderT.isTrigger = true;
 
         Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
-        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
      
         GameObject chestVisualGO = new GameObject("Visual");
         chestVisualGO.transform.parent = chestGO.transform;
@@ -814,7 +821,6 @@ public class Factory : MonoBehaviour
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/NormalChest");
-
         chestGO.AddComponent<NormalChest>(); //makes usse of the NormalChest script which has its own functionalities.
 
         return chestGO;
@@ -825,13 +831,13 @@ public class Factory : MonoBehaviour
         GameObject chestGO = new GameObject("Rare Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
-        chestCollider.radius = 0.1f;
+        chestCollider.radius = 0.3f;
 
         SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
         chestColliderT.isTrigger = true;
 
         Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
-        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
         GameObject chestVisualGO = new GameObject("Visual");
         chestVisualGO.transform.parent = chestGO.transform;
@@ -1052,7 +1058,7 @@ public class Factory : MonoBehaviour
 
          CapsuleCollider martianBossCollider = martianBossGO.AddComponent<CapsuleCollider>();
          //Collider is double the size of a regular enemy
-         martianBossCollider.radius = 0.5f;
+         martianBossCollider.radius = 0.6f;
          martianBossCollider.height = 1.6f;
 
          Rigidbody martianBossRigid = martianBossGO.AddComponent<Rigidbody>();
