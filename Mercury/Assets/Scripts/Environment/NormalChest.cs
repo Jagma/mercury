@@ -40,12 +40,12 @@ public class NormalChest : Chest
 
         if (result == 7)
         {
-            return Factory.instance.CreateAxe();
+            return Factory.instance.CreateStrongAxe();
         }
 
         if (result == 8)
         {
-            return Factory.instance.CreateSpear();
+            return Factory.instance.CreateWeakAxe();
         }
         // Consumables
         if (result == 9)
