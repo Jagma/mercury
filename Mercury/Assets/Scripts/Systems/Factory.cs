@@ -172,7 +172,7 @@ public class Factory : MonoBehaviour
     {
         if (lazerBulletMat == null) {
             lazerBulletMat = new Material(Shader.Find("Unlit/Transparent"));
-            lazerBulletMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamOrange"));
+            lazerBulletMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamPurpleO"));
         }
         GameObject LbulletGO = new GameObject("Laser Bullet");
 
