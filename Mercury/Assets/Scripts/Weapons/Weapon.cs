@@ -13,12 +13,14 @@ public class Weapon : MonoBehaviour
     public int ammoMax = 12; //ammoMax is the amount of ammo the weapon is allowed to have in one mag.
 
     protected Transform visual;
+    protected Transform body;
     protected float cooldownRemaining = 0f;
     protected float damage = 100;
 
     private void Awake()
     {
         visual = transform.Find("Visual");
+        body = visual.Find("Body");
         InitWeaponStats();
     }
 
@@ -166,11 +168,20 @@ public class Weapon : MonoBehaviour
         // Visual look at camera
         visual.eulerAngles = new Vector3(45, 45, -transform.eulerAngles.y + 45);
 
-        Vector2 norm = Quaternion.AngleAxis(-45, Vector3.up) * transform.right;
+        Vector2 aim = new Vector2(transform.right.x, transform.right.z);
+        Vector3 norm = Quaternion.Euler(0, -45, 0) * new Vector3(aim.x, 0, aim.y);
+
         if (norm.x < 0) {
-            Vector3 x = Quaternion.AngleAxis(180, visual.right) * visual.forward;
-            visual.forward = x;
-            visual.eulerAngles = new Vector3(visual.eulerAngles.x, visual.eulerAngles.y, 180 + transform.eulerAngles.y - 45);
+            body.localEulerAngles = new Vector3(180, 0, 0);
+        }
+        else {
+            body.localEulerAngles = new Vector3(0, 0, 0);
+        }
+
+        if (norm.z < 0) {
+            body.localPosition = new Vector3(visual.localPosition.x, visual.localPosition.y, -0.5f);
+        } else {
+            body.localPosition = new Vector3(visual.localPosition.x, visual.localPosition.y, 0f);
         }
     }
 }

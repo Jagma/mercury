@@ -174,7 +174,7 @@ public class Factory : MonoBehaviour
 
         SphereCollider bulletCollider = bulletGO.AddComponent<SphereCollider>();
         bulletCollider.isTrigger = true;
-        bulletCollider.radius = 0.2f;
+        bulletCollider.radius = 0.4f;
 
         Rigidbody bulletRigid = bulletGO.AddComponent<Rigidbody>();
         bulletRigid.isKinematic = true;
