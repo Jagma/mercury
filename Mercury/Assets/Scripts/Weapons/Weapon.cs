@@ -95,7 +95,6 @@ public class Weapon : MonoBehaviour
     public void SetMaxAmmoCount(int maxAmmoIncrease)
     {
         ammoMaxInventory += maxAmmoIncrease;
-        SetAmmoCount(ammoMaxInventory);// Adjusts the ammo count for next level
     }
 
     private void ReloadWeapon()

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +26,9 @@ public class PlayerActor : MonoBehaviour
         AddPassive(new PassiveIncreasedMaxHP());
         AddPassive(new PassiveIncreasedMaxHP());
         //AddPassive(new PassiveRandomBullet());
+        AddPassive(new PassiveMaxAmmoIncrease());
         */
+
         SingleUsePassives();//Activate passives with single affect
     }
 
@@ -98,19 +101,39 @@ public class PlayerActor : MonoBehaviour
     {
         model.equippedWeapon = weapon;
         model.equippedWeapon.Equip();
+        foreach (Passive pas in model.passives)
+        {
+            if (pas.name.Equals("Ammo Increase"))
+            {
+                pas.SingleEffect();
+            }
+        }
     }
 
     private void SwapEquipedWeapon(Weapon weapon)
     {
+        foreach (Passive pas in model.passives)
+        {
+            if (pas.name.Equals("Ammo Increase"))
+            {
+                pas.RevertEffect();
+            }
+        }
         model.equippedWeapon.Dequip();
         PickUpWeapon(weapon);
     }
 
     private void PickUpSecondaryWeapon(Weapon weapon)
     {
-        model.secondaryWeapon = weapon;
-        model.secondaryWeapon.Equip();
-        SwitchWeapons();
+        model.secondaryWeapon = model.equippedWeapon;
+        PickUpWeapon(weapon);
+        foreach (Passive pas in model.passives)
+        {
+            if (pas.name.Equals("Ammo Increase"))
+            {
+                pas.SingleEffect();
+            }
+        }
     }
 
     public void Interact()
@@ -121,6 +144,8 @@ public class PlayerActor : MonoBehaviour
             float distance;
             int weaponIndex = -1;
             Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
+
+            //Used to find nearest weapon or chest
             for (int i = 0; i < colliders.Length; i++)
             {
                 Weapon weapon = colliders[i].GetComponent<Weapon>();
@@ -136,12 +161,14 @@ public class PlayerActor : MonoBehaviour
                 }
 
                 Chest chest = colliders[i].GetComponent<Chest>();
+
                 if (chest != null)
                 {
                     chest.OpenChest();
                 }
             }
-            if( weaponIndex != -1)
+
+            if (weaponIndex != -1)
             {
                 Weapon nearestWeapon = colliders[weaponIndex].GetComponent<Weapon>();
                 // Dequip current weapon
@@ -155,7 +182,6 @@ public class PlayerActor : MonoBehaviour
                 {
                     PickUpSecondaryWeapon(nearestWeapon);
                 }
-
                 // Equip new weapon
                 if (model.equippedWeapon == null && model.secondaryWeapon == null)
                 {
@@ -285,7 +311,7 @@ public class PlayerActor : MonoBehaviour
         {
             foreach (Passive passive in model.passives)
             {
-                passive.RecurringAffect();
+                passive.RecurringEffect();
             }
         }
     }
@@ -296,7 +322,7 @@ public class PlayerActor : MonoBehaviour
         {
             foreach (Passive passive in model.passives)
             {
-                passive.SingleAffect();
+                passive.SingleEffect();
             }
         }
     }
