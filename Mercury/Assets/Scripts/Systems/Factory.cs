@@ -36,7 +36,7 @@ public class Factory : MonoBehaviour
 
     // Factory methods
     #region Characters
-    public GameObject CreatePlayerBase()
+    public GameObject CreatePlayerBase(string playerName)
     {
         GameObject playerGO = new GameObject("Player");
         playerGO.layer = LayerMask.NameToLayer("Player");
@@ -65,13 +65,15 @@ public class Factory : MonoBehaviour
 
         GameObject playerVisualBodyGO = new GameObject("Body");
         playerVisualBodyGO.transform.parent = playerVisualGO.transform;
-        SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
-        playerGO.AddComponent<SpriteRenderer>();        
+        SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();     
 
         PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
-        playerActor.facing = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
-        playerActor.forward = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
-        playerActor.death = sr.sprite = Resources.Load<Sprite>("Sprites/Characters/ded");
+
+        Animator animator = playerVisualBodyGO.AddComponent<Animator>();
+        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Controller_" + playerName);
+
+        Animation anim = playerGO.AddComponent<Animation>();
+        anim.playerActor = playerActor;
 
         PlayerController playerController = playerGO.AddComponent<PlayerController>();
         playerController.actor = playerActor;
@@ -82,8 +84,8 @@ public class Factory : MonoBehaviour
         GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
         hud.transform.SetParent(playerGO.transform, true);
         hud.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
-        hud.transform.Find("AmmoBar1").GetComponent<AmmoBar>().playerModel = playerModel;
-        hud.transform.Find("AmmoBar2").GetComponent<AmmoBar>().playerModel = playerModel;
+        hud.transform.Find("AmmoBar1").GetComponent<AmmoBarMag>().playerModel = playerModel;
+        hud.transform.Find("AmmoBar2").GetComponent<AmmoBarInventory>().playerModel = playerModel;
         hud.transform.localEulerAngles = new Vector3(45, 0, 0);
         hud.transform.position = new Vector3(0, 1.5f, 0);
         return playerGO;
@@ -91,7 +93,7 @@ public class Factory : MonoBehaviour
 
     public GameObject CreatePlayerTrump ()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Trump");
 
         AbilityTrump abilityTrump = new AbilityTrump();
         abilityTrump.playerActor = playerGO.GetComponent<PlayerActor>();
@@ -99,58 +101,42 @@ public class Factory : MonoBehaviour
 
         // Set all trump specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityTrump;
-
-        playerGO.GetComponent<PlayerActor>().facing  = Resources.Load<Sprite>("Sprites/Characters/character_Trump");
-        playerGO.GetComponent<PlayerActor>().forward  = Resources.Load<Sprite>("Sprites/Characters/character_TrumpB");
-
         return playerGO;
     }
 
     public GameObject CreatePlayerOprah()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Oprah");
 
         AbilityOprah abilityOprah = new AbilityOprah();
         abilityOprah.playerActor = playerGO.GetComponent<PlayerActor>();
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityOprah;
-
-        playerGO.GetComponent<PlayerActor>().facing  = Resources.Load<Sprite>("Sprites/Characters/character_Oprah");
-        playerGO.GetComponent<PlayerActor>().forward  = Resources.Load<Sprite>("Sprites/Characters/character_OprahB");
-
         return playerGO;
     }
 
     public GameObject CreatePlayerBinLaden()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("BinLaden");
 
         AbilityBinLaden abilityBinLaden = new AbilityBinLaden();
         abilityBinLaden.playerActor = playerGO.GetComponent<PlayerActor>();
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityBinLaden;
-
-        playerGO.GetComponent<PlayerActor>().facing = Resources.Load<Sprite>("Sprites/Characters/character_1");
-        playerGO.GetComponent<PlayerActor>().forward = Resources.Load<Sprite>("Sprites/Characters/character_Bin_LadenB");
-
         return playerGO;
     }
 
     public GameObject CreatePlayerPope()
     {
-        GameObject playerGO = CreatePlayerBase();
+        GameObject playerGO = CreatePlayerBase("Pope");
 
         AbilityPope abilityPope = new AbilityPope();
         abilityPope.playerActor = playerGO.GetComponent<PlayerActor>();
 
         // Set all oprah specific stats
         playerGO.GetComponent<PlayerActor>().model.ability = abilityPope;
-
-        playerGO.GetComponent<PlayerActor>().facing = Resources.Load<Sprite>("Sprites/Characters/character_The_PopeB");
-        playerGO.GetComponent<PlayerActor>().forward = Resources.Load<Sprite>("Sprites/Characters/character_The_Pope");
-
         return playerGO;
     }
 #endregion
@@ -181,8 +167,13 @@ public class Factory : MonoBehaviour
         return bulletGO;
     }
 
+    Material lazerBulletMat;
     public GameObject CreateLaserBullet()
     {
+        if (lazerBulletMat == null) {
+            lazerBulletMat = new Material(Shader.Find("Unlit/Transparent"));
+            lazerBulletMat.SetTexture("_MainTex", Resources.Load<Texture>("Sprites/Weapons/laserBeamOrange"));
+        }
         GameObject LbulletGO = new GameObject("Laser Bullet");
 
         SphereCollider lbulletCollider = LbulletGO.AddComponent<SphereCollider>();
@@ -198,8 +189,20 @@ public class Factory : MonoBehaviour
 
         GameObject lbulletVisualBodyGO = new GameObject("Body");
         lbulletVisualBodyGO.transform.parent = lbulletVisualGO.transform;
-        SpriteRenderer sr = lbulletVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bullet_2");
+        TrailRenderer tr = lbulletVisualBodyGO.AddComponent<TrailRenderer>();
+        tr.time = 0.08f;
+        tr.widthMultiplier = 0.2f;
+        tr.material = lazerBulletMat;
+        tr.numCapVertices = 2;
+        tr.textureMode = LineTextureMode.Tile;
+
+        Keyframe[] keys = new Keyframe[3];
+        keys[0] = new Keyframe(0, 0.5f);
+        keys[1] = new Keyframe(0.5f, 1);
+        keys[2] = new Keyframe(1f, 0.5f);
+
+        AnimationCurve curve = new AnimationCurve(keys);
+        tr.widthCurve = curve;
 
         Projectile p = LbulletGO.AddComponent<Round>();
         p.Init();
@@ -312,11 +315,18 @@ public class Factory : MonoBehaviour
         return rocketHit;
     }
 
+    public GameObject CreateFlameEffect() //adds an flame effect onto the flamethower
+    {
+        GameObject flame = GameObject.Instantiate(Resources.Load<GameObject>("Effects/FlameEffect"));
+        return flame;
+    }
+
     public GameObject CreateBagExplosion() //adds an explosion effect onto the rocket when it hits/collides with an object.
     {
         GameObject exlosion = GameObject.Instantiate(Resources.Load<GameObject>("Effects/BagExplosion"));
         return exlosion;
     }
+
     public GameObject CreateRocketSmokeFlash()  //adds an smoke flash effect that travels with the rocket itself.
     {
         GameObject smokeFlash = GameObject.Instantiate(Resources.Load<GameObject>("Effects/RocketSmokeFlash"));
@@ -368,6 +378,13 @@ public class Factory : MonoBehaviour
 
         TNTBag bag = bagGO.AddComponent<TNTBag>();
         return bagGO;
+    }
+
+    public GameObject CreatePopeEffect()
+    {
+        GameObject popeEffectGO = GameObject.Instantiate(Resources.Load<GameObject>("Effects/PopeHeal"));
+
+        return popeEffectGO;
     }
 
     #endregion
@@ -797,23 +814,25 @@ public class Factory : MonoBehaviour
         GameObject chestGO = new GameObject("Normal Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
-        chestCollider.radius = 0.1f;
+        chestCollider.radius = 0.3f;
 
         SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
         chestColliderT.isTrigger = true;
 
         Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
         chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
-     
+
         GameObject chestVisualGO = new GameObject("Visual");
         chestVisualGO.transform.parent = chestGO.transform;
 
         GameObject chestVisualBodyGO = new GameObject("Body");
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/NormalChest");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Chest1Closed");
 
-        chestGO.AddComponent<NormalChest>(); //makes usse of the NormalChest script which has its own functionalities.
+        Chest chest = chestGO.AddComponent<NormalChest>(); //makes usse of the NormalChest script which has its own functionalities.
+        chest.openSprite = Resources.Load<Sprite>("Sprites/Environment/Chest1Open");
+        chest.closedSprite = Resources.Load<Sprite>("Sprites/Environment/Chest1Closed");
 
         return chestGO;
     }
@@ -823,7 +842,7 @@ public class Factory : MonoBehaviour
         GameObject chestGO = new GameObject("Rare Chest");
 
         SphereCollider chestCollider = chestGO.AddComponent<SphereCollider>();
-        chestCollider.radius = 0.1f;
+        chestCollider.radius = 0.3f;
 
         SphereCollider chestColliderT = chestGO.AddComponent<SphereCollider>();
         chestColliderT.isTrigger = true;
@@ -837,9 +856,11 @@ public class Factory : MonoBehaviour
         GameObject chestVisualBodyGO = new GameObject("Body");
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/RareChest");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Chest2Closed");
 
-        chestGO.AddComponent<RareChest>();  //makes usse of the RareCgest script which has its own functionalities.
+        Chest chest = chestGO.AddComponent<RareChest>(); //makes usse of the NormalChest script which has its own functionalities.
+        chest.openSprite = Resources.Load<Sprite>("Sprites/Environment/Chest2Open");
+        chest.closedSprite = Resources.Load<Sprite>("Sprites/Environment/Chest2Closed");
 
         return chestGO;
     }
@@ -862,8 +883,9 @@ public class Factory : MonoBehaviour
         GameObject medkitVisualGO = new GameObject("Visual");
         medkitVisualGO.transform.parent = medkitGO.transform;
 
-        GameObject medkitVisualBodyGO = new GameObject("Body");
+        GameObject medkitVisualBodyGO = new GameObject("Body");        
         medkitVisualBodyGO.transform.parent = medkitVisualGO.transform;
+        medkitVisualBodyGO.transform.localPosition = new Vector3(0, 0.05f, -0.05f);
         SpriteRenderer sr = medkitVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart");
 
@@ -890,6 +912,7 @@ public class Factory : MonoBehaviour
 
         GameObject medpackVisualBodyGO = new GameObject("Body");
         medpackVisualBodyGO.transform.parent = medpackVisualGO.transform;
+        medpackVisualBodyGO.transform.localPosition = new Vector3(0, 0.05f, -0.05f);
         SpriteRenderer sr = medpackVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Environment/heart1");
 
@@ -1048,7 +1071,7 @@ public class Factory : MonoBehaviour
 
          CapsuleCollider martianBossCollider = martianBossGO.AddComponent<CapsuleCollider>();
          //Collider is double the size of a regular enemy
-         martianBossCollider.radius = 0.5f;
+         martianBossCollider.radius = 0.6f;
          martianBossCollider.height = 1.6f;
 
          Rigidbody martianBossRigid = martianBossGO.AddComponent<Rigidbody>();
@@ -1175,34 +1198,79 @@ public class Factory : MonoBehaviour
     public class ObjectConstructor {
         public string objectUniqueID = "-1";
         public virtual GameObject Construct() {
-            return null;
+            return new GameObject();
         }
     }
 
-    public class HostPlayerConstructor : ObjectConstructor {
+    public class BasePlayerConstructor : ObjectConstructor {
         public override GameObject Construct() {
-            base.Construct();
-            GameObject player = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
-            player.name = "PlayerHost";
+            GameObject playerGO = base.Construct();
+            playerGO.layer = LayerMask.NameToLayer("Player");
 
-   //         player.AddComponent<HostPlayer>();
-    //        player.GetComponent<HostPlayer>().clientUniqueID = objectUniqueID;
-            return player;
+            CapsuleCollider playerCollider = playerGO.AddComponent<CapsuleCollider>();
+            playerCollider.radius = 0.25f;
+            playerCollider.height = 0.8f;
+
+            PhysicMaterial pm = new PhysicMaterial();
+            pm.frictionCombine = PhysicMaterialCombine.Minimum;
+            pm.dynamicFriction = 0;
+            pm.staticFriction = 0;
+            playerCollider.material = pm;
+
+            Rigidbody playerRigid = playerGO.AddComponent<Rigidbody>();
+            playerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+            playerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+            GameObject playerDropShadowGO = Factory.instance.CreateDropShadow();
+            playerDropShadowGO.transform.parent = playerGO.transform;
+            playerDropShadowGO.transform.localPosition = new Vector3(0, 0, -0.3f);
+            playerDropShadowGO.transform.localScale = new Vector3(0.6f, 0.2f, 1);
+
+            GameObject playerVisualGO = new GameObject("Visual");
+            playerVisualGO.transform.parent = playerGO.transform;
+
+            GameObject playerVisualBodyGO = new GameObject("Body");
+            playerVisualBodyGO.transform.parent = playerVisualGO.transform;
+            SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
+            playerGO.AddComponent<SpriteRenderer>();
+
+            PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
+
+            PlayerModel playerModel = new PlayerModel();
+            playerActor.model = playerModel;
+            playerActor.model.playerActive = true;
+
+            GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
+            hud.transform.SetParent(playerGO.transform, true);
+            hud.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
+            hud.transform.Find("AmmoBar1").GetComponent<AmmoBarMag>().playerModel = playerModel;
+            hud.transform.Find("AmmoBar2").GetComponent<AmmoBarInventory>().playerModel = playerModel;
+            hud.transform.localEulerAngles = new Vector3(45, 0, 0);
+            hud.transform.position = new Vector3(0, 1.5f, 0);
+            return playerGO;
         }
     }
 
-    public class ClientPlayerConstructor : ObjectConstructor {
+    public class HostPlayerConstructor : BasePlayerConstructor {
         public override GameObject Construct() {
-            base.Construct();
-            GameObject player = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            player.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
-            player.name = "PlayerClient";
+            GameObject playerGO = base.Construct();
+            playerGO.name = "PlayerHost";
 
-        //    player.AddComponent<ClientPlayer>();
-        //    player.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
+            playerGO.AddComponent<ServerPlayer>();
+            playerGO.GetComponent<ServerPlayer>().clientUniqueID = objectUniqueID;
+            return playerGO;
+        }
+    }
 
-            return player;
+    public class ClientPlayerConstructor : BasePlayerConstructor {
+        public override GameObject Construct() {
+            GameObject playerGO =  base.Construct();
+            playerGO.name = "PlayerClient";
+
+            playerGO.AddComponent<ClientPlayer>();
+            playerGO.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
+
+            return playerGO;
         }
     }
 }

@@ -11,7 +11,7 @@ public class LaserPistol : WeaponRanged
         damage = 75f;
         beam = Factory.instance.CreateBeamPurple();
         beam.transform.parent = transform;
-
+        beam.SetActive(false);
         // Stats
         cooldown = 1f;
         ammoOffset = 0.25f;

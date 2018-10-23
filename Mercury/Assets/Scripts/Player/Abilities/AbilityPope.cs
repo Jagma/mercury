@@ -28,6 +28,13 @@ public class AbilityPope : Ability
         Revive();
     }
 
+    private void CreateEffect(PlayerActor playerHit)
+    {
+        GameObject effect = Factory.instance.CreatePopeEffect();
+        effect.transform.parent = playerHit.transform;
+        effect.transform.position = new Vector3(playerHit.transform.position.x, 0.6f, playerHit.transform.position.z);
+        GameObject.Destroy(effect, 2f);
+    }
     Collider[] colliders;
     private void Revive()
     {
@@ -42,6 +49,7 @@ public class AbilityPope : Ability
             if (playerHit != null && playerHit.model.playerActive == true)
             {
                 playerHit.HealPlayer(healHP);
+                CreateEffect(playerHit);
             }
             //Revive players that is downed
             if (playerHit != null && playerHit.model.playerActive == false)
@@ -50,9 +58,14 @@ public class AbilityPope : Ability
                 {
                     reviveCount++;
                     playerHit.HealPlayer(reviveHP);
+                    CreateEffect(playerHit);
                 }  
                 if (reviveCount > 0)
+                {
                     playerHit.HealPlayer(reviveHP);
+                    CreateEffect(playerHit);
+                }
+                    
                 
             }
         }

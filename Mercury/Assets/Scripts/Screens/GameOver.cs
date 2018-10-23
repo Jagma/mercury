@@ -27,7 +27,7 @@ public class GameOver : MonoBehaviour
         DestroyInstances();
         AudioManager.instance.StopAllAudio();
         AudioManager.instance.PlayAudio("sfx_sounds_button5", .7f, false);
-        SceneManager.LoadScene("GameCOOP");
+        SceneManager.LoadScene("GameCampaign");
     }
 
     public void MainMenu()

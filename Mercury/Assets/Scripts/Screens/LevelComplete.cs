@@ -32,12 +32,6 @@ public class LevelComplete : MonoBehaviour
         SceneManager.LoadScene("GameCOOP");
     }
 
-    public void ContinueGame()
-    {
-        DestroyInstances();
-        //SceneManager.LoadScene("Menu");
-    }
-
     public void MainMenu()
     {
         DestroyInstances();

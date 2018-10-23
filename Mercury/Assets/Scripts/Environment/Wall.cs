@@ -14,7 +14,8 @@ public class Wall : MonoBehaviour
         {
             Destroy(gameObject);
             GameObject wallBreak = Factory.instance.CreateWallBreak(ProgressionState.environmentName);
-            wallBreak.transform.position = gameObject.transform.position; 
+            wallBreak.transform.position = gameObject.transform.position;
+            GameProgressionManager.instance.IncreaseWallsDestroyed();
             Destroy(wallBreak, 2f);
         }
     }

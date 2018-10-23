@@ -8,20 +8,21 @@ public class LaserRayGun : WeaponRanged
     protected override void InitWeaponStats()
     {
         base.InitWeaponStats();
-        beam = Factory.instance.CreateBeamNeon();
-        beam.transform.parent = transform;
-
-        // Stats
         cooldown = 0f;
         ammoOffset = 0.25f;
         ammoMaxInventory = 200;
         ammoInventory = 200;
         ammoMax = 100;
         ammoCount = 100;
+        damage = 35f;
+
+        beam = Factory.instance.CreateBeamNeon();
+        beam.transform.parent = transform;
+
+        beam.SetActive(false);
+        // Stats
+
     }
-
-
-
 
     protected override void Use()
     {

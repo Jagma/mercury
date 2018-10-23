@@ -12,9 +12,9 @@ public class Axe : WeaponMelee
         cooldown = 0.5f;
         ammoMaxInventory = 0;
         ammoInventory = 0;
-        ammoMax = 150;
-        ammoCount = 150;
-        damage = 25;
+        ammoMax = 25;
+        ammoCount = 25;
+        damage = 45;
     }
 
     protected override void Use()
@@ -22,18 +22,4 @@ public class Axe : WeaponMelee
         base.Use();
     }
 
-    private void OnTriggerEnter(Collider col)
-    {
-        Wall wall = col.GetComponent<Wall>();
-        if (wall != null)
-        {
-            wall.Damage(damage);
-        }
-
-        Enemy enemy = col.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            enemy.Damage(damage);
-        }
-    }
 }

@@ -29,8 +29,7 @@ public class NetworkModel : MonoBehaviour {
         }
         return null;
     }
-
-
+    
     private void LateUpdate() {
         Dictionary<string, object> diffDictionary = new Dictionary<string, object>();
         foreach (KeyValuePair<string, object> kvp in updateDictionary) {

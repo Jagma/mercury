@@ -761,8 +761,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 90}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 0, y: 100}
+  m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1126612860
 MonoBehaviour:
@@ -783,9 +783,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3ed175b7796cb8840beeba0638dc4369, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6938a41a14bb1434e9be990504d19487, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -5824,17 +5824,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1528343319}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1472207859}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -90}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1528343321
 MonoBehaviour:
@@ -5855,9 +5855,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 503336aafc6309e498c07396778af4e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6938a41a14bb1434e9be990504d19487, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -5976,7 +5976,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 892476194}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -6035,6 +6035,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321dd6a58ef09374fbb1f2ca48a110fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIDList: []
+  playerName: []
+  playerDown: 
 --- !u!4 &1671389799
 Transform:
   m_ObjectHideFlags: 0
@@ -6169,10 +6172,10 @@ MonoBehaviour:
   - Oprah
   - The Pope
   characterPortraits:
-  - {fileID: 21300000, guid: 0ee23801e28195f498c626f048b2bd89, type: 3}
-  - {fileID: 21300000, guid: 583565cae0f8bb84b8cd643ae8ba7a5e, type: 3}
-  - {fileID: 21300000, guid: 08944c64062c1f1488f917cf3024f440, type: 3}
-  - {fileID: 21300000, guid: 283b0358c9dd49340bf20c54a751c479, type: 3}
+  - {fileID: 21300000, guid: 434611f76df8b104da53de066bfb6a59, type: 3}
+  - {fileID: 21300000, guid: d93faa665535e314c987a341e39c273c, type: 3}
+  - {fileID: 21300000, guid: c80ad9ac135cf7242af4ea59ef52660a, type: 3}
+  - {fileID: 21300000, guid: e8e21955405f2e848980014e9fd7c21d, type: 3}
 --- !u!114 &1757443749
 MonoBehaviour:
   m_ObjectHideFlags: 0

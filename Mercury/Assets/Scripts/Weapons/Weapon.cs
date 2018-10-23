@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
             {
                 cooldownRemaining = cooldown;
                 ammoCount--;
-                Debug.Log("Damage is " + damage);
+                GameProgressionManager.instance.IncreaseBulletAmountUsed();
                 Use();
             }
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
@@ -147,22 +147,26 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (ammoCount == 0)
+            ReloadWeapon();
         // Cooldown
         if (cooldownRemaining >= 0)
         {
             cooldownRemaining -= Time.deltaTime;
         }
 
+        UpdateVisual();
+    }
 
+    protected virtual void UpdateVisual () {
         // Visual look at camera
         visual.eulerAngles = new Vector3(45, 45, -transform.eulerAngles.y + 45);
 
         Vector2 norm = Quaternion.AngleAxis(-45, Vector3.up) * transform.right;
-        if (norm.x < 0)
-        {
+        if (norm.x < 0) {
             Vector3 x = Quaternion.AngleAxis(180, visual.right) * visual.forward;
             visual.forward = x;
-            visual.eulerAngles = new Vector3(visual.eulerAngles.x, visual.eulerAngles.y, 180+ transform.eulerAngles.y -45);
+            visual.eulerAngles = new Vector3(visual.eulerAngles.x, visual.eulerAngles.y, 180 + transform.eulerAngles.y - 45);
         }
     }
 }

@@ -25,10 +25,12 @@ public class GameProgressionManager : MonoBehaviour
     private GameObject[] gunsUsed;
 
     public List<string> playerIDList = new List<string>();
+    public List<string> playerName = new List<string>();
     public List<bool> playerDown = new List<bool>();
 
-
     public static GameProgressionManager instance;
+
+    bool gameStart = false;
     private void Awake()
     {
         if (instance == null)
@@ -58,10 +60,21 @@ public class GameProgressionManager : MonoBehaviour
         numEnemiesStartLevel = 0;
     }
 
-    public void SetPlayerList(string players)
+    private void Update()
+    {
+        if (gameStart && numEnemiesLeftLevel < 1)
+            LevelComplete();
+    }
+    public void SetPlayerList(string players,string name)
     {
         playerIDList.Add(players);
+        playerName.Add(name);
         playerDown.Add(false);
+    }
+
+    public void StartGame()
+    {
+        gameStart = true;
     }
     #endregion
 
@@ -111,8 +124,13 @@ public class GameProgressionManager : MonoBehaviour
     public void IncreaseEnemyCount()
     {
         numEnemiesStartLevel += 1;
+        numEnemiesLeftLevel  += 1;
     }
 
+    public void DecreaseEnemiesLeft()
+    {
+        numEnemiesLeftLevel -= 1;
+    }
 
     public bool getPlayerDownCount()
     {

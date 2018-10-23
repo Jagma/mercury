@@ -2,24 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RareChest : NormalChest
+public class RareChest : Chest
 {
-    protected override GameObject GetRandomItem() {
-        int result = Random.Range(0, 5);
+    protected override void Use()
+    {
+        base.Use();
+    }
 
-        if (result == 0) {
+    protected override GameObject GetRandomItem()
+    {
+        itemWeights = new int[] { 15, 30, 5, 35, 40};
+        base.GetRandomItem();
+
+        if (result == 0)
+        {
             return Factory.instance.CreateLaserPistol();
         }
-        if (result == 1) {
+        if (result == 1)
+        {
             return Factory.instance.CreateLaserRayGun();
         }
-        if (result == 2) {
+        if (result == 2)
+        {
             return Factory.instance.CreateFlamethrower();
         }
-        if (result == 3) {
+        if (result == 3)
+        {
             return Factory.instance.CreateLaserMachineGun();
         }
-        if (result == 4) {
+        if (result == 4)
+        {
             return Factory.instance.CreateShotgun();
         }
         return null;

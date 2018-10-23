@@ -374,15 +374,15 @@ public class CampaignLobby : MonoBehaviour
     }
 
     void StartGame() {
-        PlayerData.ClearDictionary(); //Prevent restart bug
+        PlayerData.ClearDictionary(); //Prevents restart bug
         if (InputManager.instance.GetPlayerInputDictionary().Count >= 1) {
             foreach (CharacterSelect player in characterSelectors)
             {
                 PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
-                GameProgressionManager.instance.SetPlayerList(player.playerID);
+                GameProgressionManager.instance.SetPlayerList(player.playerID, characterNames[player.characterIndex]);
             }
             AudioManager.instance.StopAudio("Game_music_Space_loop");
-            SceneManager.LoadScene("GameCOOP");
+            SceneManager.LoadScene("GameCampaign");
         }
     }
 

@@ -4,68 +4,20 @@ using UnityEngine;
 
 public class NormalChest : Chest
 {
-    int count = 1;
 
     protected override void Use()
     {
-        if (count >= 1)
-        {
-            count--;
-
-            GameObject[] chestObjects = GetRandomObjects();
-
-            for (int i=0; i < chestObjects.Length; i ++) {
-                chestObjects[i].transform.position = transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f));
-                chestObjects[i].GetComponent<Rigidbody>().AddForce(Vector3.up * 5 + Random.onUnitSphere * 2, ForceMode.Impulse);
-            }
-        }
+        base.Use();
     }
 
-    protected virtual GameObject[] GetRandomObjects () {
-        int objectCount = 1;
-
-        if (Random.Range(0, 100) > 30) {
-            objectCount += 1;
-        } else
-        if (Random.Range(0, 100) > 50) {
-            objectCount += 2;
-        } else
-        if (Random.Range(0, 100) > 80) {
-            objectCount += 3;
-        }
-
-        List<GameObject> objectList = new List<GameObject>();
-        for (int i=0; i < objectCount; i ++) {
-            objectList.Add(GetRandomItem());
-        }
-
-        return objectList.ToArray();
-    }
-
-    protected virtual GameObject GetRandomItem()
+    protected override GameObject GetRandomItem()
     {
-        int[] itemWeights = {
-            60, 30, 30, 30, 20, 30,
-            50, 50, 50, 50, 50};
+        itemWeights = new int[]{
+            10, 30, 30, 30, 20, 30,
+            40, 50, 50, 50, 50, 50,
+            50};
+        base.GetRandomItem();
 
-        int total = 0;
-        for (int i=0; i < itemWeights.Length; i ++)
-        {
-            total += itemWeights[i];
-        }
-
-        int random = Random.Range(0, total);
-
-        total = 0;
-        int result = 0;
-        for (int i=0; i < itemWeights.Length; i ++)
-        {
-            total += itemWeights[i];
-            if (random >= total) {
-                result = i;
-                break;
-            }
-        }
         //Weapons.
         if (result == 0)
         {
@@ -75,7 +27,7 @@ public class NormalChest : Chest
         {
             return Factory.instance.CreateMachineGun();
         }
-        if (result == 2) 
+        if (result == 2)
         {
             return Factory.instance.CreateSniperRifle();
         }
@@ -96,20 +48,34 @@ public class NormalChest : Chest
             return Factory.instance.CreateSword();
         }
 
+        if (result == 7)
+        {
+            return Factory.instance.CreateAxe();
+        }
+
+        if (result == 8)
+        {
+            return Factory.instance.CreateSpear();
+        }
         // Consumables
-        if (result == 7) {
+        if (result == 9)
+        {
             return Factory.instance.CreateMedkit();
         }
-        if (result == 8) {
+        if (result == 10)
+        {
             return Factory.instance.CreateMedpack();
         }
-        if (result == 9) {
+        if (result == 11)
+        {
             return Factory.instance.CreateBeamAmmoPack();
         }
-        if (result == 10) {
+        if (result == 12)
+        {
             return Factory.instance.CreateBulletAmmoPack();
         }
-        if (result == 11) {
+        if (result == 13)
+        {
             return Factory.instance.CreateRocketAmmoPack();
         }
         return null;
