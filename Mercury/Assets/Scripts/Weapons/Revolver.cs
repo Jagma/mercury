@@ -16,7 +16,7 @@ public class Revolver : WeaponRanged
         ammoInventory = 18;
         ammoMax = 6;
         ammoCount = 6;
-        damage = 9f;
+        damage = 35f;
     }
 
     protected override void Use()

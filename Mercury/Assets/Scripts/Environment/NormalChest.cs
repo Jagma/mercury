@@ -5,19 +5,9 @@ using UnityEngine;
 public class NormalChest : Chest
 {
 
-    protected override void Use()
-    {
-        base.Use();
-    }
-
     protected override GameObject GetRandomItem()
     {
-        itemWeights = new int[]{
-            10, 30, 30, 30, 20, 30,
-            40, 50, 50, 50, 50, 50,
-            50};
-        base.GetRandomItem();
-
+        int result = Random.Range(0, 13);
         //Weapons.
         if (result == 0)
         {

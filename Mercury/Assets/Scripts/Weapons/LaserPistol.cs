@@ -8,15 +8,15 @@ public class LaserPistol : WeaponRanged
     protected override void InitWeaponStats()
     {
         base.InitWeaponStats();
-        damage = 75f;
+        damage = 45f;
         beam = Factory.instance.CreateBeamPurple();
         beam.transform.parent = transform;
         beam.SetActive(false);
         // Stats
         cooldown = 1f;
         ammoOffset = 0.25f;
-        ammoMaxInventory = 20;
-        ammoInventory = 20;
+        ammoMaxInventory = 10;
+        ammoInventory = 10;
         ammoMax = 10;
         ammoCount = 10;
     }

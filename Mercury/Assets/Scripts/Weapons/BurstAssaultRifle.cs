@@ -16,7 +16,7 @@ public class BurstAssaultRifle : WeaponRanged
         ammoInventory = 120;
         ammoMax = 31;
         ammoCount = 31;
-        damage = 25f;
+        damage = 20f;
     }
 
     protected override void Use()

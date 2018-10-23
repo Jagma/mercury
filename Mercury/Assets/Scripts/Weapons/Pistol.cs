@@ -13,7 +13,7 @@ public class Pistol : WeaponRanged
         ammoInventory = 60;
         ammoMax = 15;
         ammoCount = 15;
-        damage = 5f;
+        damage = 10f;
     }
 
     protected override void Use()

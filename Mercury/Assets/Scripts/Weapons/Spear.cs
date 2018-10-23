@@ -14,7 +14,7 @@ public class Spear : WeaponMelee
         ammoInventory = 0;
         ammoMax = 30;
         ammoCount = 30;
-        damage = 35;
+        damage = 35f;
     }
 
     protected override void Use()

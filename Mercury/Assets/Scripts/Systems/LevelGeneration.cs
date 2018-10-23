@@ -32,8 +32,7 @@ public class LevelGeneration : MonoBehaviour
         pickups = new string[mapWidth, mapDepth];
 
         levelRoot = new GameObject("Level Root").transform;
-
-        Random.InitState(1);
+        
         // Fill level with solids
         for (int z=0; z < terrain.GetLength(1); z ++)
         {
@@ -74,16 +73,15 @@ public class LevelGeneration : MonoBehaviour
 
         for (int z = playerSpawnZ - 8; z < playerSpawnZ + 8; z++) {
             for (int x = playerSpawnX - 8; x < playerSpawnX + 8; x++) {
-                x = Mathf.Clamp(x, 0, terrain.GetLength(0)-1);
-                z = Mathf.Clamp(z, 0, terrain.GetLength(1)-1);
+                int xpos = Mathf.Clamp(x, 0, terrain.GetLength(0)-1);
+                int zpos = Mathf.Clamp(z, 0, terrain.GetLength(1)-1);
 
-                enemies[x, z] = "";
+                enemies[xpos, zpos] = "";
             }
         }
 
 
         pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
-        pickups[minerList[0].posX, minerList[0].posZ+4] = "Rare Chest";
 
         // Build floor
         GameObject floor = Factory.instance.CreateFloor(ProgressionState.environmentName, 0);

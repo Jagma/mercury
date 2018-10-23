@@ -10,7 +10,6 @@ public class Chest : MonoBehaviour
 
     protected Transform visual;
     protected int result;
-    protected int[] itemWeights;
     private Vector3 targetPos;
     int count = 1;
     protected SpriteRenderer spriteRenderer;
@@ -26,7 +25,6 @@ public class Chest : MonoBehaviour
     public void OpenChest()
     {
        Use();
-   //    Destroy();
     }
 
     protected virtual void Use()
@@ -44,19 +42,6 @@ public class Chest : MonoBehaviour
             }
         }
 
-        spriteRenderer.sprite = openSprite;
-    }
-
-    protected virtual void Destroy()
-    {
-       DisplayEmptyChest();
-       Destroy(gameObject);
-    }
-
-    private void DisplayEmptyChest()
-    {
-        visual.transform.parent = null;
-        visual.transform.position = new Vector3(visual.transform.position.x, 0.7f, visual.transform.position.z);
         spriteRenderer.sprite = openSprite;
     }
 
@@ -90,25 +75,6 @@ public class Chest : MonoBehaviour
 
     protected virtual GameObject GetRandomItem()
     {
-        int total = 0;
-        for (int i = 0; i < itemWeights.Length; i++)
-        {
-            total += itemWeights[i];
-        }
-
-        int random = UnityEngine.Random.Range(0, total);
-
-        total = 0;
-
-        for (int i = 0; i < itemWeights.Length; i++)
-        {
-            total += itemWeights[i];
-            if (random >= total)
-            {
-                result = i;
-                break;
-            }
-        }
         return null;
     }
 }
