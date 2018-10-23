@@ -27,7 +27,7 @@ public class LaserPistol : WeaponRanged
         beam.transform.position = transform.position + transform.right * ammoOffset;
         beam.transform.right = transform.right;
 
-        AudioManager.instance.PlayAudio("dsplasma", 0.05f, false);
+        AudioManager.instance.PlayAudio("sfx_wpn_laser 10", 0.95f, false);
         beam.SetActive(true);
         framesSinceUse = 0;
     }

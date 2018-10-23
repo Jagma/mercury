@@ -40,7 +40,7 @@ public class Shotgun : WeaponRanged
             bullet.GetComponent<Projectile>().Update();
         }
 
-        AudioManager.instance.PlayAudio("dspistol", 1, false);
+        AudioManager.instance.PlayAudio("shotgn2", 1, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }

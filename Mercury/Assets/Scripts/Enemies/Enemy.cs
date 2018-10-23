@@ -98,6 +98,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Death()
     {
+        AudioManager.instance.PlayAudio("death1", .5f, false);
         if (equippedWeapon) //has a chance to drop weapon or ammo pack.
         {
             DropItems();
