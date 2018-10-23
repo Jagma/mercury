@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
 
     protected Transform visual;
     protected float cooldownRemaining = 0f;
-    protected float damage = 0;
+    protected float damage = 100;
 
     private void Awake()
     {
@@ -26,6 +26,10 @@ public class Weapon : MonoBehaviour
 
     }
 
+    public float GetWeaponDamage()
+    {
+        return damage;
+    }
     protected virtual void Start()
     {
 

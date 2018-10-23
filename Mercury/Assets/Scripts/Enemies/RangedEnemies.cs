@@ -7,7 +7,6 @@ public class RangedEnemies : Enemy
     protected override void Start()
     {
         base.Start();
-        CreateWeapon();
         health = 100;
         moveSpeed = 1f;
 
@@ -106,10 +105,6 @@ public class RangedEnemies : Enemy
         {
             base.MoveForward();
         }
-    }
-
-    protected virtual void CreateWeapon()
-    {
     }
 
     protected virtual void AimAtPlayer(Vector3 direction)
