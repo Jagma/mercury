@@ -42,7 +42,10 @@ public class NetworkManager : MonoBehaviour {
 
     public void Disconnect () {
         StopCoroutine(EHeartbeat());
-        webSocket.Close();
+        if (webSocket != null) {
+            webSocket.Close();
+        }
+        
         webSocket = null;
         connected = false;
     }

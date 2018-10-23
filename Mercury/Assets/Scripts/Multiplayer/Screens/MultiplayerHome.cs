@@ -12,12 +12,14 @@ public class MultiplayerHome : MonoBehaviour {
 
     public void ConnectGlobal () {
         NetworkManager.instance.SetServerAddress("mercury-multiplayer.herokuapp.com");
+        NetworkManager.instance.Disconnect();
         NetworkManager.instance.Connect();        
     }
 
     public void ConnectLocal () {
         string address = GameObject.Find("InputField").GetComponent<InputField>().text;
         NetworkManager.instance.SetServerAddress(address);
+        NetworkManager.instance.Disconnect();
         NetworkManager.instance.Connect();
     }
 
@@ -25,5 +27,10 @@ public class MultiplayerHome : MonoBehaviour {
         if (message.GetType() == typeof(NetworkMessages.ConnectionEstablished)) {
             SceneManager.LoadScene("LobbyManager");
         }
+    }
+
+    public void Back () {
+        NetworkManager.instance.Disconnect();
+        SceneManager.LoadScene("Menu");
     }
 }
