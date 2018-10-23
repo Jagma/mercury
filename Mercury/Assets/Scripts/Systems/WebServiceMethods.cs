@@ -44,6 +44,45 @@ public class WebServiceMethods : MonoBehaviour {
         }
     }
 
+    #region updates data in the DB
+    public string UpdateWeapon(int weaponID, string weaponName, string weaponType, int weaponFireRate, int numberOfPickups)
+    {
+        return restPUT(string.Format("gq/updateWeapon?weaponID={0}&weaponName={1}&weaponType={2}&weaponFireRate={3}&numberOfPickups={4}", weaponID, weaponName, weaponType, weaponFireRate, numberOfPickups));
+    }
+    public string UpdateUser(int userID, int userDeviceID, string userName, int userAccuracy, string favouriteCharacter)
+    {
+        return restPUT(string.Format("gq/updateUser?userID={0}&userDeviceID={1}&userName={2}&userAccuracy={3}&favouriteCharacter={4}", userID, userDeviceID, userName, userAccuracy, favouriteCharacter));
+    }
+    public string UpdateCharacter(int charID, string charName, int charHealth, string charSpecialAbility, int charMovementSpeed, int totalCharDeaths, int totalCharKills, int amountOfSpecialUses)
+    {
+        return restPUT(string.Format("gq/updateCharacter?charID={0}&charName={1}&charHealth={2}&charSpecialAbility={3}&charMovementSpeed={4}&totalCharDeaths={5}&totalCharKills={6}&amountOfSpecialUses={7}", charID, charName, charHealth, charSpecialAbility, charMovementSpeed, totalCharDeaths, totalCharKills, amountOfSpecialUses));
+    }
+    public string UpdateEnemy(int enemyID, string enemyName, string enemyType, int enemyHealth, int enemyMovementSpeed, int totalCharKills)
+    {
+        return restPUT(string.Format("gq/updateEnemy?enemyID={0}&enemyName={1}&enemyType={2}&enemyHealth={3}&enemyMovementSpeed={4}&totalCharKills={5}", enemyID, enemyName, enemyType, enemyHealth, enemyMovementSpeed, totalCharKills));
+    }
+    public string UpdateSession(int sessionID, int sessionStart, int sessionEnd, int sessionUsers)
+    {
+        return restPUT(string.Format("gq/updateSession?sessionID={0}&sessionStart={1}&sessionEnd={2}&sessionUsers={3}", sessionID, sessionStart, sessionEnd, sessionUsers));
+    }
+    public string UpdateSessionWeapon(int sessionWeaponID, int sessionID, int weaponID, int weaponPickups)
+    {
+        return restPUT(string.Format("gq/updateSessionWeapon?sessionWeaponID={0}&sessionID={1}&weaponID={2}&weaponPickups={3}", sessionWeaponID, sessionID, weaponID, weaponPickups));
+    }
+    public string UpdateSessionUser(int sessionUserID, int sessionID, int userID, int sessionUserKills, int sessionUserDeaths, int sessionUserAccuracy, int sessionCharID)
+    {
+        return restPUT(string.Format("gq/updateSessionUser?sessionUserID={0}&sessionID={1}&userID={2}&sessionUserKills={3}&sessionUserDeaths={4}&sessionUserAccuracy={5}&sessionCharID={6}", sessionUserID, sessionID, userID, sessionUserKills, sessionUserDeaths, sessionUserAccuracy, sessionCharID));
+    }
+    public string UpdateSessionCharacter(int sessionCharID, int sessionID, int charID, int sessionCharKills, int sessionCharDeaths, int sessionCharSpecialUses)
+    {
+        return restPUT(string.Format("gq/updateSessionCharacter?sessionCharID={0}&sessionID={1}&charID={2}&sessionCharKills={3}&sessionCharDeaths={4}&sessionCharSpecialUses={5}", sessionCharID, sessionID, charID, sessionCharKills, sessionCharDeaths, sessionCharSpecialUses));
+    }
+    public string UpdateSessionEnemy(int sessionEnemyID, int sessionID, int enemyID, int sessionCharKills)
+    {
+        return restPUT(string.Format("gq/updateSessionEnemy?sessionEnemyID={0}&sessionID={1}&enemyID={2}&sessionCharKills={3}", sessionEnemyID, sessionID, enemyID, sessionCharKills));
+    }
+    #endregion
+
     #region Insert into the DB
     public string addWeapon(int weaponID, string weaponName, string weaponType, int weaponFireRate, int numberOfPickups)
     {
@@ -53,9 +92,10 @@ public class WebServiceMethods : MonoBehaviour {
     {
         return restPOST(string.Format("gq/addUser?userID={0}&userDeviceID={1}&userName={2}&userAccuracy={3}&favouriteCharacter={4}", userID, userDeviceID, userName, userAccuracy, favouriteCharacter));
     }
-    public string addCharacter(int charID, string charName, string charDescription, int charHealth, string charSpecialAbility, int charMovementSpeed, int totalCharDeaths, int totalCharKills, int amountOfSpecialUses)
+    //update description by removing chardescriptions
+    public string addCharacter(int charID, string charName, int charHealth, string charSpecialAbility, int charMovementSpeed, int totalCharDeaths, int totalCharKills, int amountOfSpecialUses)
     {
-        return restPOST(string.Format("gq/addCharacter?charID={0}&charName={1}&charDescription={2}&charHealth={3}&charSpecialAbility={4}&charMovementSpeed={5}&totalCharDeaths={6}&totalCharKills={7}&amountOfSpecialUses={8}", charID, charName, charDescription, charHealth, charSpecialAbility, charMovementSpeed, totalCharDeaths, totalCharKills, amountOfSpecialUses));
+        return restPOST(string.Format("gq/addCharacter?charID={0}&charName={1}&charHealth={2}&charSpecialAbility={3}&charMovementSpeed={4}&totalCharDeaths={5}&totalCharKills={6}&amountOfSpecialUses={7}", charID, charName, charHealth, charSpecialAbility, charMovementSpeed, totalCharDeaths, totalCharKills, amountOfSpecialUses));
     }
     public string addEnemy(int enemyID, string enemyName, string enemyType, int enemyHealth, int enemyMovementSpeed, int totalCharKills)
     {
@@ -82,6 +122,8 @@ public class WebServiceMethods : MonoBehaviour {
         return restPOST(string.Format("gq/addSessionEnemy?sessionEnemyID={0}&sessionID={1}&enemyID={2}&sessionCharKills={3}", sessionEnemyID, sessionID, enemyID, sessionCharKills));
     }
     #endregion
+
+
 
     #region The following REST methods return the entire DB tables
     public string getCharacterTable() { return restGET("table/Character"); }
