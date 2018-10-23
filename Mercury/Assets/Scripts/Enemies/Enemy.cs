@@ -131,36 +131,21 @@ public class Enemy : MonoBehaviour
 
     private void DropItems()
     {
-        int randomNum = ran.Next(0, 100);
-        if (randomNum >= 20 && randomNum < 61)
-        {
-            GameObject randomAmmoPack;
-            randomNum = ran.Next(0, 100);
-            if (randomNum >= 0 && randomNum < 11)//10% Laser Rifle ammo
-            {
-                randomAmmoPack = Factory.instance.CreateBeamAmmoPack();
-            }
-            else if (randomNum > 20 && randomNum < 61) //40% rocket launcher ammo
-            {
-                randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
-            }
-            else //if the random value is else.
-            {
-                randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
-            }
-            randomAmmoPack.transform.position = transform.position;
+        GameObject randomAmmoPack = null;
+        int randomNum = ran.Next(0, 2);
+        if (randomNum == 0)
+            randomAmmoPack = Factory.instance.CreateBeamAmmoPack();
+        if (randomNum == 1)
+            randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
+        if (randomNum == 2)
+            randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
 
-            //removes weapon from being used.
-            equippedWeapon.Dequip();
-            equippedWeapon.equipped = false;
-            equippedWeapon = null;
-        }
-        else
-        {
-            equippedWeapon.Dequip();
-            equippedWeapon.equipped = false;
-            equippedWeapon = null;
-        }
+        randomAmmoPack.transform.position = transform.position;
+
+        //removes weapon from being used.
+        equippedWeapon.Dequip();
+        equippedWeapon.equipped = false;
+        equippedWeapon = null;
 
     }
 }
