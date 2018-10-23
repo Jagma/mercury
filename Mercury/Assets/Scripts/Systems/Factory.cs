@@ -190,11 +190,19 @@ public class Factory : MonoBehaviour
         GameObject lbulletVisualBodyGO = new GameObject("Body");
         lbulletVisualBodyGO.transform.parent = lbulletVisualGO.transform;
         TrailRenderer tr = lbulletVisualBodyGO.AddComponent<TrailRenderer>();
-        tr.time = 0.5f;
+        tr.time = 0.08f;
         tr.widthMultiplier = 0.2f;
         tr.material = lazerBulletMat;
         tr.numCapVertices = 2;
         tr.textureMode = LineTextureMode.Tile;
+
+        Keyframe[] keys = new Keyframe[3];
+        keys[0] = new Keyframe(0, 0.5f);
+        keys[1] = new Keyframe(0.5f, 1);
+        keys[2] = new Keyframe(1f, 0.5f);
+
+        AnimationCurve curve = new AnimationCurve(keys);
+        tr.widthCurve = curve;
 
         Projectile p = LbulletGO.AddComponent<Round>();
         p.Init();
@@ -812,16 +820,19 @@ public class Factory : MonoBehaviour
         chestColliderT.isTrigger = true;
 
         Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
-        chestRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-     
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
         GameObject chestVisualGO = new GameObject("Visual");
         chestVisualGO.transform.parent = chestGO.transform;
 
         GameObject chestVisualBodyGO = new GameObject("Body");
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/NormalChest");
-        chestGO.AddComponent<NormalChest>(); //makes usse of the NormalChest script which has its own functionalities.
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Chest1Closed");
+
+        Chest chest = chestGO.AddComponent<NormalChest>(); //makes usse of the NormalChest script which has its own functionalities.
+        chest.openSprite = Resources.Load<Sprite>("Sprites/Environment/Chest1Open");
+        chest.closedSprite = Resources.Load<Sprite>("Sprites/Environment/Chest1Closed");
 
         return chestGO;
     }
@@ -837,7 +848,7 @@ public class Factory : MonoBehaviour
         chestColliderT.isTrigger = true;
 
         Rigidbody chestRigid = chestGO.AddComponent<Rigidbody>();
-        chestRigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        chestRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
         GameObject chestVisualGO = new GameObject("Visual");
         chestVisualGO.transform.parent = chestGO.transform;
@@ -845,9 +856,11 @@ public class Factory : MonoBehaviour
         GameObject chestVisualBodyGO = new GameObject("Body");
         chestVisualBodyGO.transform.parent = chestVisualGO.transform;
         SpriteRenderer sr = chestVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/RareChest");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Environment/Chest2Closed");
 
-        chestGO.AddComponent<RareChest>();  //makes usse of the RareCgest script which has its own functionalities.
+        Chest chest = chestGO.AddComponent<RareChest>(); //makes usse of the NormalChest script which has its own functionalities.
+        chest.openSprite = Resources.Load<Sprite>("Sprites/Environment/Chest2Open");
+        chest.closedSprite = Resources.Load<Sprite>("Sprites/Environment/Chest2Closed");
 
         return chestGO;
     }

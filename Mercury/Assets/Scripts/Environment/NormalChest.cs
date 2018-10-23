@@ -8,7 +8,6 @@ public class NormalChest : Chest
     protected override void Use()
     {
         base.Use();
-        spriteRendererOpen.sprite = Resources.Load<Sprite>("Sprites/Environment/chest2Open");
     }
 
     protected override GameObject GetRandomItem()

@@ -5,27 +5,28 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    public float destroy =5f;
+    public Sprite openSprite;
+    public Sprite closedSprite;
+
     protected Transform visual;
     protected int result;
     protected int[] itemWeights;
     private Vector3 targetPos;
     int count = 1;
     protected SpriteRenderer spriteRenderer;
-    protected SpriteRenderer spriteRendererOpen;
+
     protected virtual void Awake()
     {
         visual = transform.Find("Visual");
         transform.position = Vector3.Lerp(transform.position, transform.position, 0.3f);
         visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
         spriteRenderer = visual.Find("Body").GetComponent<SpriteRenderer>();
-        spriteRendererOpen = spriteRenderer;
     }
 
     public void OpenChest()
     {
        Use();
-       Destroy();
+   //    Destroy();
     }
 
     protected virtual void Use()
@@ -42,6 +43,8 @@ public class Chest : MonoBehaviour
                 chestObjects[i].GetComponent<Rigidbody>().AddForce(Vector3.up * 5 + UnityEngine.Random.onUnitSphere * 2, ForceMode.Impulse);
             }
         }
+
+        spriteRenderer.sprite = openSprite;
     }
 
     protected virtual void Destroy()
@@ -54,8 +57,7 @@ public class Chest : MonoBehaviour
     {
         visual.transform.parent = null;
         visual.transform.position = new Vector3(visual.transform.position.x, 0.7f, visual.transform.position.z);
-        spriteRenderer.sprite = spriteRendererOpen.sprite;
-        Destroy(spriteRenderer, 10);
+        spriteRenderer.sprite = openSprite;
     }
 
     protected virtual GameObject[] GetRandomObjects()
