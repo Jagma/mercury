@@ -1159,6 +1159,7 @@ public class Factory : MonoBehaviour
         w.equippedWeapon.Equip();
         w.equippedWeapon.equipped = true;
         w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(1.5f);
         return crackerGO;
     }
 
@@ -1191,6 +1192,7 @@ public class Factory : MonoBehaviour
         w.equippedWeapon.Equip();
         w.equippedWeapon.equipped = true;
         w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(5f);
         return diabloGO;
     }
     public GameObject CreateMartianBoss() //Creates the martian boss
