@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
 
     public Vector3 forwardDirection = Vector3.forward;
-    System.Random ran = new System.Random(85466248);
+    System.Random ran = new System.Random();
 
     SpriteRenderer spriteRenderer;
     Material hitMaterial;
