@@ -82,7 +82,7 @@ public class Game : MonoBehaviour
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Y)) {
             GameProgressionManager.instance.StartGame();
-            SceneManager.LoadScene("GameCOOP");
+            SceneManager.LoadScene("GameCampaign");
         }
         if (gameStage == 0 && EnemyManager.instance.GetEnemyCount() <= 0) {
             gameStage++;
