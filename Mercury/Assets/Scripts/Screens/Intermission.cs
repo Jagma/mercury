@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Intermission : MonoBehaviour {
 
@@ -9,8 +10,6 @@ public class Intermission : MonoBehaviour {
     public static void SetPlayers (List<PlayerModel> playerList) {
         Intermission.playerList = playerList;
     }
-
-
 
     public static Intermission instance;
     private void Awake() {
@@ -56,6 +55,16 @@ public class Intermission : MonoBehaviour {
                     wallGO.transform.localEulerAngles = new Vector3(0, Random.Range(1, 4) * 90, 0);
                 }
             }
+        }
+    }
+
+    int teleportCount = 0;
+    public void PlayerTeleport (PlayerActor actor) {
+        teleportCount++;
+
+        if (teleportCount >= playerList.Count) {
+            ProgressionState.NextLevel();
+            SceneManager.LoadScene("GameCampaign");
         }
     }
 

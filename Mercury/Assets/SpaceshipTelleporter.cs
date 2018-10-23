@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceshipTelleporter : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+    
     private void OnTriggerEnter(Collider col) {
-        PlayerActor actor = col.GetComponent<PlayerActor>();
+        PlayerActor actor = col.GetComponent<PlayerActor>();        
         if (actor != null) {
-        //    Intermission.instance
+            CameraSystem.instance.UnsubscribeFromTracking(actor.transform);
+            Intermission.instance.PlayerTeleport(actor);
+
+            Destroy(actor.gameObject);
         }
     }
 }

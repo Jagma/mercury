@@ -33,7 +33,7 @@ public class CameraSystem : MonoBehaviour
         for (int i=0; i < trackedList.Count; i ++)
         {
             targetPos += trackedList[i].position;          
-        }        
+        }
         targetPos /= trackedList.Count;
 
         // adjust camera backwards
