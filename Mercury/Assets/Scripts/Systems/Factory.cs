@@ -1087,7 +1087,14 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Walker");
 
-        enemyWalkerGO.AddComponent<Walker>();  //makes use of the Walker script which has its own functionalities.
+        Walker w = enemyWalkerGO.AddComponent<Walker>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateSword();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
         return enemyWalkerGO;
     }
 
@@ -1140,7 +1147,16 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Ranged Walker");
 
-        enemyRangedGO.AddComponent<RangedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        RangedWalker w = enemyRangedGO.AddComponent<RangedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreatePistol();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(1.25f);
+
         return enemyRangedGO;
     }
 
@@ -1165,7 +1181,16 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Corrupted Walker");
 
-        enemyRangedGO.AddComponent<CorruptedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        CorruptedWalker w = enemyRangedGO.AddComponent<CorruptedWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreateBurstAssaultRifle();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(2f);
+
         return enemyRangedGO;
     }
 
@@ -1191,7 +1216,17 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Arc Walker");
 
-        enemyRangedGO.AddComponent<ArcWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+        ArcWalker w = enemyRangedGO.AddComponent<ArcWalker>();  //makes use of the RangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreateLaserMachineGun();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(2f);
+
+
         return enemyRangedGO;
     }
     public GameObject CreateOverlordWalker() //code use to create the overlord walker enemy within the game.
@@ -1215,7 +1250,17 @@ public class Factory : MonoBehaviour
         SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Overlord Walker");
 
-        enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
+        OverlordWalker w = enemyRangedGO.AddComponent<OverlordWalker>();  //makes use of the OverlordRangedWalker script which has its own functionalities.
+
+        GameObject weapon = CreateMachineGun();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(1.5f);
+
+
         return enemyRangedGO;
     }
     #endregion

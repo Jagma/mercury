@@ -22,18 +22,6 @@ public class RangedWalker : RangedEnemies
         base.IdleMovement();
     }
 
-    protected override void CreateWeapon()
-    {
-        base.CreateWeapon();
-        GameObject weapon;
-        weapon = Factory.instance.CreatePistol();
-        equippedWeapon = weapon.GetComponent<Weapon>();
-        equippedWeapon.transform.position = transform.position;
-        equippedWeapon.Equip();
-        equippedWeapon.equipped = true;
-        equippedWeapon.SetWeaponDamage(1.25f);
-    }
-
     protected override void AimAtPlayer(Vector3 direction)
     {
         base.AimAtPlayer(direction);
