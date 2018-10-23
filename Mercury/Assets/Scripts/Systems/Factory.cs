@@ -1224,6 +1224,34 @@ public class Factory : MonoBehaviour
          return martianBossGO;
     }
 
+    public GameObject CreateMalfeasanceBoss() //Creates the malfeasance boss
+    {
+        GameObject malfeasanceBossGO = new GameObject("Malfeasance Boss");
+
+        CapsuleCollider malfeasanceCollider = malfeasanceBossGO.AddComponent<CapsuleCollider>();
+        //Collider is double the size of a regular enemy
+        malfeasanceCollider.radius = 0.6f;
+        malfeasanceCollider.height = 1.6f;
+
+        Rigidbody malfeasanceRigid = malfeasanceBossGO.AddComponent<Rigidbody>();
+        malfeasanceRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        malfeasanceRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject malfeasanceBossVisualGO = new GameObject("Visual");
+        malfeasanceBossVisualGO.transform.parent = malfeasanceBossGO.transform;
+
+        GameObject malfeasanceBossVisualBodyGO = new GameObject("Body");
+        malfeasanceBossVisualBodyGO.transform.parent = malfeasanceBossVisualGO.transform;
+        //Boss is double the size of a regular enemy 64x64
+        malfeasanceBossVisualBodyGO.transform.localScale = new Vector3(2, 2);
+
+        SpriteRenderer sr = malfeasanceBossVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MartianBoss");
+
+        malfeasanceBossGO.AddComponent<MalfeasanceBoss>();
+        return malfeasanceBossGO;
+    }
+
     public GameObject CreateRangedWalker() //code use to create the ranged walker enemy within the game.
     {
         GameObject enemyRangedGO = new GameObject("Ranged Enemy");
