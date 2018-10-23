@@ -78,9 +78,20 @@ public class AbilityOprah : Ability
                 1, // Flamethrower 
                 3, // Sword 
                 1, // Revolver 
-                3 // Burst Assault Rifle 
+                3, // Burst Assault Rifle
+                1, // Strong Axe
+                1  // Weak Axe
             };
-        int[] enemyWeights = { 10, 5, 1}; //Melee |Ranged
+        int[] enemyWeights = { 10, //Walker
+                                5, //Ranged Walker
+                                1, //Overlord Walker
+                                1, //Arc Walker
+                                1, //Azagor Enemy
+                                2, //Corrupted Walker
+                                3, //Cracker Enemy
+                                1  //Diabl0 Enemy
+                                };
+
         int[] chestWeights = { 5, 1 };//Normal |Rare
         int result = GetResult(categoryWeight);//Choose category
 
@@ -113,6 +124,17 @@ public class AbilityOprah : Ability
                 return Factory.instance.CreateRangedWalker();
             if (result == 2)
                 return Factory.instance.CreateOverlordWalker();
+            if (result == 3)
+                return Factory.instance.CreateArcWalker();
+            if (result == 4)
+                return Factory.instance.CreateAzagorEnemy();
+            if (result == 5)
+                return Factory.instance.CreateCorruptedWalker();
+            if (result == 6)
+                return Factory.instance.CreateCrackerEnemy();
+            if (result == 7)
+                return Factory.instance.CreateDiabloEnemy();
+
         }
         #endregion
         #region Rounds
@@ -156,6 +178,10 @@ public class AbilityOprah : Ability
                 return Factory.instance.CreateRevolver();
             if (result == 11)
                 return Factory.instance.CreateBurstAssaultRifle();
+            if (result == 12)
+                return Factory.instance.CreateStrongAxe();
+            if (result == 13)
+                return Factory.instance.CreateWeakAxe();
         }
         #endregion
         #region Chest
