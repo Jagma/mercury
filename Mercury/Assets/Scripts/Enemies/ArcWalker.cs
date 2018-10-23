@@ -7,7 +7,7 @@ public class ArcWalker : RangedEnemies
     protected override void Start()
     {
         base.Start();
-        health = 75f;
+        health = 45f;
         moveSpeed = 2f;
     }
 

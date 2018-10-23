@@ -126,7 +126,7 @@ public class Enemy : MonoBehaviour
         deadColor *= 0.6f;
         deadColor.a = 1;
         spriteRenderer.color = deadColor;
-        Destroy(spriteRenderer, 10);
+        //Destroy(spriteRenderer, 10);
     }
 
     private void DropItems()

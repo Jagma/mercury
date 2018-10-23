@@ -12,11 +12,11 @@ public class LaserMachineGun : WeaponRanged
         cooldown = 0.1f;
         ammoOffset = 0f;
         ammoRandomness = 10f;
-        ammoMaxInventory = 500;
-        ammoInventory = 500;
+        ammoMaxInventory = 120;
+        ammoInventory = 120;
         ammoMax = 40;
         ammoCount = 40;
-        damage = 15f;
+        damage = 20f;
     }
     protected override void Use()
     {

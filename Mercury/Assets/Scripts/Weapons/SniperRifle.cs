@@ -16,7 +16,7 @@ public class SniperRifle : WeaponRanged
         ammoInventory = 15;
         ammoMax = 5;
         ammoCount = 5;
-        damage = 50f;
+        damage = 100f;
     }
 
     protected override void Use()

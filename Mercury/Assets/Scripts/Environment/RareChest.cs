@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class RareChest : Chest
 {
-    protected override void Use()
-    {
-        base.Use();
-    }
-
     protected override GameObject GetRandomItem()
     {
-        itemWeights = new int[] { 15, 30, 5, 35, 40};
-        base.GetRandomItem();
+        result = Random.Range(0, 4);
 
         if (result == 0)
         {

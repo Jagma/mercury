@@ -7,7 +7,7 @@ public class CorruptedWalker : RangedEnemies
     protected override void Start()
     {
         base.Start();
-        health = 65f;
+        health = 45f;
         moveSpeed = 1f;
     }
 
@@ -26,7 +26,7 @@ public class CorruptedWalker : RangedEnemies
     {
         base.CreateWeapon();
         GameObject weapon;
-        weapon = Factory.instance.CreateLaserPistol();
+        weapon = Factory.instance.CreateBurstAssaultRifle();
         equippedWeapon = weapon.GetComponent<Weapon>();
         equippedWeapon.transform.position = transform.position;
         equippedWeapon.Equip();
