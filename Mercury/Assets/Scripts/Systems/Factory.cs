@@ -79,8 +79,9 @@ public class Factory : MonoBehaviour
         playerController.actor = playerActor;
 
         PlayerModel playerModel = new PlayerModel();
+        playerModel.equippedWeapon = CreateSniperRifle().GetComponent<Weapon>();
+        playerModel.equippedWeapon.Equip();
         playerActor.model = playerModel;
-
         GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
         hud.transform.SetParent(playerGO.transform, true);
         hud.transform.Find("HealthBar").GetComponent<HealthBar>().playerModel = playerModel;
