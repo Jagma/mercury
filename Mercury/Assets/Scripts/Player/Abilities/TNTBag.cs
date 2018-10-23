@@ -7,11 +7,17 @@ public class TNTBag : MonoBehaviour
     Rigidbody rigid;
     float blastRadius;
     float damage;
+    float explodeTime;
+    float timer;
+    bool explode;
 
     private void Init()
     {
+        explodeTime = 0f;
         blastRadius = 2f;
         damage = 100;
+        timer = 0.5f;
+        explode = false;
     }
 
     private void Awake()
@@ -26,9 +32,19 @@ public class TNTBag : MonoBehaviour
 
     void Update()
     {
-        if( rigid.transform.position.y <= 0.6f)
+        if( rigid.transform.position.y <= 0.7f && !explode)
+        {
+            rigid.velocity = Vector3.zero;
+            rigid.position = new Vector3(rigid.position.x, 0.7f, rigid.position.z);
+            rigid.useGravity = false;
+            explodeTime = Time.time + timer;
+            explode = true;
+        }
+        Debug.Log("Time " + Time.time + " EXLODE TIME " + explodeTime);
+        if(Time.time >= explodeTime && explode)
         {
             Explode();
+            Debug.Log("Exploded");
         }
     }
 
