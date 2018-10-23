@@ -96,11 +96,11 @@ public class WebServiceMethods : MonoBehaviour {
     #region Insert into the DB
     public string addWeapon(int weaponID, string weaponName, string weaponType, int weaponFireRate, int numberOfPickups)
     {
-        return restPOST(string.Format("gq/addWeapon?weaponID={0}&weaponName={1}&weaponType={2}&weaponFireRate={3}&numberOfPickups={4}", weaponID, weaponName, weaponType, weaponFireRate, numberOfPickups));
+        return RestPOST(string.Format("gq/addWeapon?weaponID={0}&weaponName={1}&weaponType={2}&weaponFireRate={3}&numberOfPickups={4}", weaponID, weaponName, weaponType, weaponFireRate, numberOfPickups));
     }
     public string addUser(int userID, int userDeviceID, string userName, int userAccuracy, string favouriteCharacter)
     {
-        return restPOST(string.Format("gq/addUser?userID={0}&userDeviceID={1}&userName={2}&userAccuracy={3}&favouriteCharacter={4}", userID, userDeviceID, userName, userAccuracy, favouriteCharacter));
+        return RestPOST(string.Format("gq/addUser?userID={0}&userDeviceID={1}&userName={2}&userAccuracy={3}&favouriteCharacter={4}", userID, userDeviceID, userName, userAccuracy, favouriteCharacter));
     }
     //update description by removing chardescriptions
     public string addCharacter(int charID, string charName, int charHealth, string charSpecialAbility, int charMovementSpeed, int totalCharDeaths, int totalCharKills, int amountOfSpecialUses)
