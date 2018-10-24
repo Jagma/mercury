@@ -171,12 +171,12 @@ public class GameProgressionManager : MonoBehaviour
         WebServiceMethods wsm = new WebServiceMethods();
 
         wsm.AddSessions(totalTimePlayed);
-        currentSession = int.Parse(wsm.GetLatestSession());
+        //currentSession = int.Parse(wsm.GetLatestSession());
 
-        wsm.AddSessionEnemies(currentSession, enemiesKilledLevel);
-        wsm.AddSessionEnvironment(currentSession, wallsDestroyedTotal);
-        wsm.AddSessionWeapons(currentSession, numOfBulletsUsedTotal);
-        wsm.AddSessionPlayers(currentSession, damageTakenTotal);
+        //wsm.AddSessionEnemies(currentSession, enemiesKilledLevel);
+        //wsm.AddSessionEnvironment(currentSession, wallsDestroyedTotal);
+        //wsm.AddSessionWeapons(currentSession, numOfBulletsUsedTotal);
+        //wsm.AddSessionPlayers(currentSession, damageTakenTotal);
     }
     #endregion
 
