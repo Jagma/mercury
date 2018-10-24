@@ -19,24 +19,7 @@ public class WeakAxe : WeaponMelee
 
     protected override void Use()
     {
-        int weaponIndex = UnityEngine.Random.Range(0, 4);
-        switch (weaponIndex)
-        {
-            case 0:
-                AudioManager.instance.PlayAudio("sword1", 1, false);
-                break;
-            case 1:
-                AudioManager.instance.PlayAudio("sword2", 1, false);
-                break;
-            case 2:
-                AudioManager.instance.PlayAudio("slash1", 1, false);
-                break;
-            case 3:
-                AudioManager.instance.PlayAudio("ax1", 1 , false);
-                break;
-        }
         base.Use();
-
     }
 
 }

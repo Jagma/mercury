@@ -17,7 +17,6 @@ public class SniperRifle : WeaponRanged
         damage = 100f;
     }
 
-
     protected override void Use()
     {
         base.Use();

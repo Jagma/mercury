@@ -22,8 +22,8 @@ public class WeaponMelee : Weapon
         base.Update();
     }
 
-    public void OnDrawGizmos() 
-{
+    public void OnDrawGizmos()
+    { 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + transform.right * 0.5f, 0.4f);
     }
@@ -36,6 +36,25 @@ public class WeaponMelee : Weapon
         }
     }
 
+    void PlayMeleeSwingAudio()
+    {
+        int weaponIndex = Random.Range(0, 4);
+        switch (weaponIndex)
+        {
+            case 0:
+                AudioManager.instance.PlayAudio("sword1", 1, false);
+                break;
+            case 1:
+                AudioManager.instance.PlayAudio("sword2", 1, false);
+                break;
+            case 2:
+                AudioManager.instance.PlayAudio("slash1", 1, false);
+                break;
+            case 3:
+                AudioManager.instance.PlayAudio("ax1", 1, false);
+                break;
+        }
+    }
     IEnumerator Swing ()
     {
         attack = true;
@@ -44,7 +63,7 @@ public class WeaponMelee : Weapon
         Vector3 angles = visual.transform.localEulerAngles;
 
         visual.transform.localEulerAngles += new Vector3(0, 0, 10);
-
+        PlayMeleeSwingAudio();
         while (swingTime > 0) {
             swingTime -= Time.deltaTime;
             if (swingTime > 0.05) {
@@ -60,6 +79,7 @@ public class WeaponMelee : Weapon
 
             yield return new WaitForEndOfFrame ();
         }
+
         attack = false;
     }
 
@@ -75,7 +95,7 @@ public class WeaponMelee : Weapon
             if (enemy != null)
             {                
                 enemy.Damage(damage);
-                randomClipInt = UnityEngine.Random.Range(0, 1);
+                randomClipInt = Random.Range(0, 1);
                 switch (randomClipInt)
                 {
                     case 0:
@@ -91,7 +111,7 @@ public class WeaponMelee : Weapon
 
             if (wall != null)
             {
-                randomClipInt = UnityEngine.Random.Range(0, 1);
+                randomClipInt = Random.Range(0, 1);
                 switch (randomClipInt)
                 {
                     case 0:
