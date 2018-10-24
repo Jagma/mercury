@@ -13,6 +13,17 @@ public class Menu : MonoBehaviour
 
     void Start ()
     {
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
+            GameObject a = buttonList[0];
+            GameObject b = buttonList[1];
+
+            Destroy(buttonList[2]);
+
+            buttonList = new GameObject[2];
+            buttonList[0] = a;
+            buttonList[1] = b;
+        }
+
         AudioManager.instance.PlayAudio("main_menu_loop", 1, true);
         InputManager.instance.GetPlayerInputDictionary().Clear();
     }

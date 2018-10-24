@@ -20,7 +20,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
     static private bool initialized = false;
 
     private Func<IClientConnection, bool> callback;
-    private string serviceUrl = "dev.red-oxygen.com";
+    private string serviceUrl = "dev.tablerealms.com";
     private string serverUrl = null;
     private string sessionId = null;
     private string gameName = null;
@@ -59,7 +59,7 @@ public class ClientConnectionListenerWebSocket : MonoBehaviour, IClientConnectio
 
     private void PollForConnections() {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        TableRealmsProxyList(gameObject.name, sessionId, "http://"+serviceUrl);
+        TableRealmsProxyList(gameObject.name, sessionId, "https://"+serviceUrl); 
 #endif
     }
 

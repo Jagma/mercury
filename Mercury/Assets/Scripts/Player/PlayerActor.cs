@@ -35,11 +35,21 @@ public class PlayerActor : MonoBehaviour
         {
             if (model.equippedWeapon)
             {
+                model.equippedWeapon.transform.localScale = new Vector3(1, 1, 1);
                 model.equippedWeapon.transform.position = transform.position + model.equippedWeapon.transform.right * 0.5f - Vector3.up * 0.2f;
             }
             if (model.secondaryWeapon)
             {
-                model.secondaryWeapon.transform.position = transform.position + new Vector3(0.4f, 0, 0.5f);
+                model.secondaryWeapon.transform.localEulerAngles = new Vector3(45, 45, 0);
+                model.secondaryWeapon.transform.Find("Visual").Find("Body").localPosition = Vector3.zero;
+                if (model.lookDirection.y < 0) {
+                    model.secondaryWeapon.transform.position = transform.position + new Vector3(0.6f, -0.2f, 0.6f);                                    
+                    model.secondaryWeapon.transform.localScale = new Vector3(1, 1, 1);
+                } else {
+                    model.secondaryWeapon.transform.position = transform.position + new Vector3(-0.1f, 0, -0.1f);
+                    model.secondaryWeapon.transform.localScale = new Vector3(-1, 1, 1);
+                }
+                
             }
             
             // Visual look at camera
@@ -88,9 +98,6 @@ public class PlayerActor : MonoBehaviour
 
             model.equippedWeapon = model.secondaryWeapon;
             model.secondaryWeapon = sw;
-
-            model.secondaryWeapon.transform.localEulerAngles = new Vector3(45, 90, 0);
-
         }
     }
 
