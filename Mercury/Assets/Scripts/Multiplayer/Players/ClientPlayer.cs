@@ -15,17 +15,19 @@ public class ClientPlayer : MonoBehaviour {
         }
     }
 
+    Vector3 targetPos = Vector3.zero;
+    Vector3 targetAim = Vector3.up;
     void Update() {
         // Position
         if (NetworkModel.instance.GetModel(clientUniqueID + "Position") != null) {
             NetworkVector3 v3 = (NetworkVector3)NetworkModel.instance.GetModel(clientUniqueID + "Position");
-            transform.position = v3.ToVector3();
+            targetPos = v3.ToVector3();
         }
 
         // Look direction
         if (NetworkModel.instance.GetModel(clientUniqueID + "LookDirection") != null) {
             NetworkVector3 v3 = (NetworkVector3)NetworkModel.instance.GetModel(clientUniqueID + "LookDirection");
-            playerActor.Aim(v3.ToVector3());
+            targetAim = v3.ToVector3();
         }
 
         // Attack
@@ -35,5 +37,13 @@ public class ClientPlayer : MonoBehaviour {
                 playerActor.Attack();
             }
         }
+
+        // Interpolation
+        if (Vector3.Distance(transform.position, targetPos) > 1) {
+            transform.position = targetPos;
+        }
+        transform.position = Vector3.Lerp(transform.position, targetPos, 0.4f);
+
+        playerActor.Aim(Vector3.Lerp(playerActor.model.lookDirection, targetAim, 0.4f));
     }
 }
