@@ -17,9 +17,9 @@ public class
     {
         base.Start();
         health = 1000;
-        moveSpeed = 10f;
-        lineOfSight = 6f;
-        cooldown = 3f;
+        moveSpeed = 2f;
+        lineOfSight = 8f;
+        cooldown = 2f;
         knockBack = 10f;
         lastActivatedTime = Time.time;
         damage = 50;
@@ -32,10 +32,15 @@ public class
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (Time.time >= lastActivatedTime + cooldown)
+        if (Time.time >= lastActivatedTime + cooldown && !isDashing)
         {
             isDashing = true;
             Dash();
+            lastActivatedTime = Time.time;
+        }
+        if(Time.time >= lastActivatedTime + cooldown && isDashing)
+        {
+            isDashing = false;
         }
     }
 
@@ -50,7 +55,7 @@ public class
             player.Damage(damage);
             lastActivatedTime = Time.time;
             isDashing = false;
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            rigidbody.velocity = Vector3.zero;
         }
     }
 
@@ -63,20 +68,21 @@ public class
             if (IsPossibleToHit(dir))
             {
                 forwardDirection = target.transform.position - transform.position;
-                gameObject.GetComponent<Rigidbody>().velocity = forwardDirection * moveSpeed;
+
+                gameObject.GetComponent<Rigidbody>().velocity = forwardDirection * moveSpeed;// Distance x movement speed
             }
         }
     }
 
     private void CreateArena()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, lineOfSight);
+        Collider[] hits = Physics.OverlapSphere(transform.position, lineOfSight - 3f);
         foreach(Collider hit in hits)
         {
             Wall wall = hit.GetComponent<Wall>();
             if (wall != null)
             {
-                GameObject.Destroy(wall.gameObject);
+                wall.Damage(500);
             }
         }
     }
