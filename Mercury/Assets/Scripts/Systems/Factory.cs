@@ -310,6 +310,35 @@ public class Factory : MonoBehaviour
         beam.Init();
         return purpleBeamGO;
     }
+
+    public GameObject CreateSkulls()
+    {
+        GameObject skullGO = new GameObject("Skull");
+
+
+        GameObject skullVisualGO = new GameObject("Visual");
+        skullVisualGO.transform.parent = skullGO.transform;
+
+        GameObject skullVisualMainGO = new GameObject("Body");
+        skullVisualMainGO.transform.parent = skullVisualGO.transform;
+
+        SpriteRenderer sr = skullVisualMainGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MalfeasanceSpell");
+        sr.transform.rotation = Quaternion.Euler(45, 45, 0);
+
+        SphereCollider skullCollider = skullGO.AddComponent<SphereCollider>();
+        skullCollider.isTrigger = true;
+        skullCollider.radius = 0.2f;
+
+        Rigidbody bulletRigid = skullGO.AddComponent<Rigidbody>();
+        bulletRigid.isKinematic = true;
+
+
+
+        Projectile skull = skullGO.AddComponent<Skull>();
+        skull.Init();
+        return skullGO;
+    }
 #endregion
 
     #region Effects & Abilities
@@ -1342,7 +1371,7 @@ public class Factory : MonoBehaviour
         malfeasanceBossVisualBodyGO.transform.localScale = new Vector3(2, 2);
 
         SpriteRenderer sr = malfeasanceBossVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MartianBoss");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MalfeasanceBoss");
 
         malfeasanceBossGO.AddComponent<MalfeasanceBoss>();
         return malfeasanceBossGO;
