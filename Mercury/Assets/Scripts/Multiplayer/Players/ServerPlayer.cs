@@ -13,23 +13,28 @@ public class ServerPlayer : MonoBehaviour {
 
 	void Update () {
         // Movement
-        if (NetworkModel.instance.GetModel(clientUniqueID + "Move") != null) {
-            NetworkVector3 v3 = (NetworkVector3)NetworkModel.instance.GetModel(clientUniqueID + "Move");
+        if (NetworkModel.instance.GetModel(clientUniqueID + "Input_Move") != null) {
+            NetworkVector3 v3 = (NetworkVector3)NetworkModel.instance.GetModel(clientUniqueID + "Input_Move");
             playerActor.Move(v3.ToVector3());
         }
 
-        // Aim
-        if (NetworkModel.instance.GetModel(clientUniqueID + "Aim") != null) {
-            NetworkVector3 v3 = (NetworkVector3)NetworkModel.instance.GetModel(clientUniqueID + "Aim");
+        // Look
+        if (NetworkModel.instance.GetModel(clientUniqueID + "Input_Look") != null) {
+            NetworkVector3 v3 = (NetworkVector3)NetworkModel.instance.GetModel(clientUniqueID + "Input_Look");
             playerActor.Aim(v3.ToVector3());
         }
 
         // Attack
-        if (NetworkModel.instance.GetModel(clientUniqueID + "Attack") != null) {
-            bool attack = (bool)NetworkModel.instance.GetModel(clientUniqueID + "Attack");
+        if (NetworkModel.instance.GetModel(clientUniqueID + "Input_Attack") != null) {
+            bool attack = (bool)NetworkModel.instance.GetModel(clientUniqueID + "Input_Attack");
             playerActor.Attack();
+            NetworkModel.instance.SetModel(clientUniqueID + "Attack", attack);
+        } else {
+            NetworkModel.instance.SetModel(clientUniqueID + "Attack", false);
         }
 
         NetworkModel.instance.SetModel(clientUniqueID + "Position", NetworkVector3.FromVector3(transform.position));
+        NetworkModel.instance.SetModel(clientUniqueID + "LookDirection", NetworkVector3.FromVector3(playerActor.model.lookDirection));
+        
     }
 }

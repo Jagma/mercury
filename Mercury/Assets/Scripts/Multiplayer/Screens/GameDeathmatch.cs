@@ -100,6 +100,7 @@ public class GameDeathmatch : MonoBehaviour {
                     GameObject wallGO = Factory.instance.CreateWall("Spaceship", 0); // Wall
                     wallGO.transform.parent = levelRoot;
                     wallGO.transform.position = new Vector3(x, 1, z);
+                    wallGO.GetComponent<Wall>().health = int.MaxValue;
                 }
             }
         }
