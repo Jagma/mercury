@@ -1399,7 +1399,7 @@ public class Factory : MonoBehaviour
         martianBossVisualBodyGO.transform.localScale = new Vector3(2, 2);
 
         SpriteRenderer sr = martianBossVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MercuryBoss");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MecuryBoss");
 
         martianBossGO.AddComponent<MercuryBoss>();
         return martianBossGO;
