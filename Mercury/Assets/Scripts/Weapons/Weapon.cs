@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public float cooldown = 0.1f;
     public bool equipped = false;
-
+    bool empty = false;
     public int ammoMaxInventory = 120; //ammoMMaxInventory is the maximum ammount of ammo a weapon can have in the player's inventory.
     public int ammoInventory = 120; //ammoInventory is the amount of ammo for the weapon in the player's inventory.
     public int ammoCount = 120; //ammoCount is the amount of ammo currently in the weapon's mag.
@@ -62,6 +62,7 @@ public class Weapon : MonoBehaviour
         {
             if (ammoCount > 0) //if there is still ammo left in the mag.
             {
+                empty = false;
                 cooldownRemaining = cooldown;
                 ammoCount--;
                 GameProgressionManager.instance.IncreaseBulletAmountUsed();
@@ -69,14 +70,15 @@ public class Weapon : MonoBehaviour
             }
             else if (ammoInventory > 0) //if there is still ammo in the inventory.
             {
+                empty = false;
                 ReloadWeapon();
                
             }
             else //if the weapon is completely out of ammo.
             {
+                empty = true;
                 AudioManager.instance.PlayAudio("sfx_wpn_noammo1", .25f, false);
-                return;
-                
+                return;            
             }
         }
 
@@ -107,43 +109,46 @@ public class Weapon : MonoBehaviour
 
     private void ReloadWeapon()
     {
-        AudioManager.instance.PlayAudio("dssgcock", 1, false);
-        if (ammoCount < ammoMax) //checks to see if there is less bullets in the mag of the weapon than the max it can contain.
+        if (!empty)
         {
-            if (ammoInventory <= ammoMax) //checks to see if the amount of ammo in the inventory is smaller or equal to the maximum amount of ammo the weapon can take in a mag.
+            AudioManager.instance.PlayAudio("dssgcock", 1, false);
+            if (ammoCount < ammoMax) //checks to see if there is less bullets in the mag of the weapon than the max it can contain.
             {
-                if (ammoCount == 0)  //checks to see if the weapon's mag is empty.
+                if (ammoInventory <= ammoMax) //checks to see if the amount of ammo in the inventory is smaller or equal to the maximum amount of ammo the weapon can take in a mag.
                 {
-                    ammoCount = ammoInventory;
-                    ammoInventory = 0;
-                }
-                else //if weapon mag is not empty.
-                {
-                    int temp = ammoMax - ammoCount; //amount of bullets not in weapon mag.
-                    if (ammoInventory < temp) //if there is less ammo left in inventory than needed.
+                    if (ammoCount == 0)  //checks to see if the weapon's mag is empty.
                     {
-                        ammoCount += ammoInventory;
+                        ammoCount = ammoInventory;
                         ammoInventory = 0;
                     }
-                    else
+                    else //if weapon mag is not empty.
                     {
+                        int temp = ammoMax - ammoCount; //amount of bullets not in weapon mag.
+                        if (ammoInventory < temp) //if there is less ammo left in inventory than needed.
+                        {
+                            ammoCount += ammoInventory;
+                            ammoInventory = 0;
+                        }
+                        else
+                        {
+                            ammoInventory -= temp;
+                            ammoCount += temp;
+                        }
+                    }
+                }
+                else if (ammoInventory > ammoMax) //checks to see if the amount of ammo in the inventory is more than the maximum amount of ammo the weapon can take in a mag.
+                {
+                    if (ammoCount == 0) //checks to see if the weapon's mag is empty.
+                    {
+                        ammoCount = ammoMax;
+                        ammoInventory -= ammoMax;
+                    }
+                    else //if weapon mag is not empty.
+                    {
+                        int temp = ammoMax - ammoCount; //amount of bullets not in weapon mag.
                         ammoInventory -= temp;
                         ammoCount += temp;
                     }
-                }
-            }
-            else if (ammoInventory > ammoMax) //checks to see if the amount of ammo in the inventory is more than the maximum amount of ammo the weapon can take in a mag.
-            {
-                if (ammoCount == 0) //checks to see if the weapon's mag is empty.
-                {
-                    ammoCount = ammoMax;
-                    ammoInventory -= ammoMax;
-                }
-                else //if weapon mag is not empty.
-                {
-                    int temp = ammoMax - ammoCount; //amount of bullets not in weapon mag.
-                    ammoInventory -= temp;
-                    ammoCount += temp;
                 }
             }
         }
