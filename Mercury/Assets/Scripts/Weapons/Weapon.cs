@@ -77,7 +77,7 @@ public class Weapon : MonoBehaviour
             else //if the weapon is completely out of ammo.
             {
                 empty = true;
-                AudioManager.instance.PlayAudio("sfx_wpn_noammo1", .25f, false);
+                AudioManager.instance.PlayAudio("Weapon_noAmmo", .25f, false);
                 return;            
             }
         }
@@ -111,7 +111,7 @@ public class Weapon : MonoBehaviour
     {
         if (!empty)
         {
-            AudioManager.instance.PlayAudio("dssgcock", 1, false);
+            AudioManager.instance.PlayAudio("Weapon_reload", 1, false);
             if (ammoCount < ammoMax) //checks to see if there is less bullets in the mag of the weapon than the max it can contain.
             {
                 if (ammoInventory <= ammoMax) //checks to see if the amount of ammo in the inventory is smaller or equal to the maximum amount of ammo the weapon can take in a mag.
@@ -153,7 +153,7 @@ public class Weapon : MonoBehaviour
             }
         }
         else
-            AudioManager.instance.StopAudio("dssgcock");
+            AudioManager.instance.StopAudio("Weapon_reload");
     }
     protected virtual void Use()
     {

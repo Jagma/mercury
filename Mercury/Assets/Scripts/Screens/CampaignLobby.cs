@@ -308,7 +308,7 @@ public class CampaignLobby : MonoBehaviour
             countdownPanel.transform.Find("Timer_Text").GetComponent<Text>().text = countdown.ToString("F1");
             if (countdown <= 0.0f)
             {
-                AudioManager.instance.PlayAudio("sfx_menu_select4", 1, false);
+                AudioManager.instance.PlayAudio("Menu_transmission", 1, false);
                 StartGame();
             }
         } else {

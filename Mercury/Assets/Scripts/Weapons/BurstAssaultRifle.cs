@@ -45,7 +45,7 @@ public class BurstAssaultRifle : WeaponRanged
         StartCoroutine(BulletWaitTime());
 
 
-        AudioManager.instance.PlayAudio("BurstAR_sound_effect", 1, false);
+        AudioManager.instance.PlayAudio("Weapon_burstAR", 1, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }
