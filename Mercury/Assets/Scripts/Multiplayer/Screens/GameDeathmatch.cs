@@ -20,7 +20,7 @@ public class GameDeathmatch : MonoBehaviour {
         instance = this;
     }
 
-    PlayerActor myActor;
+    public PlayerActor myActor;
     public PlayerActor GetPlayerActor(string playerID) {
         return myActor;
     }

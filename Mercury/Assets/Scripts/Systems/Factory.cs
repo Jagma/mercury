@@ -1481,8 +1481,9 @@ public class Factory : MonoBehaviour
             GameObject playerGO =  base.Construct();
             playerGO.name = "PlayerClient";
 
-            playerGO.AddComponent<ClientPlayer>();
-            playerGO.GetComponent<ClientPlayer>().clientUniqueID = objectUniqueID;
+            ClientPlayer cp = playerGO.AddComponent<ClientPlayer>();
+            cp.clientUniqueID = objectUniqueID;
+            cp.playerActor = playerGO.GetComponent<PlayerActor>();
 
             return playerGO;
         }
