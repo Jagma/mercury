@@ -7,7 +7,7 @@ using UnityEngine;
 public class Passive
 {
     public PlayerActor player;
-
+    public String name;
     public float cooldown;
     public float lastActivatedTime;
 
@@ -15,13 +15,17 @@ public class Passive
     {
         
     }
-    public virtual void SingleAffect()
+    public virtual void SingleEffect()
     {
 
     }
-    public virtual void RecurringAffect()
+    public virtual void RecurringEffect()
     {
         
+    }
+    public virtual void RevertEffect()
+    {
+
     }
 }
 
@@ -36,13 +40,13 @@ public class PassiveHPRegen : Passive
         hpRegen = 10f;
         lastActivatedTime = 0f;
     }
-    public override void SingleAffect()
+    public override void SingleEffect()
     {
-        base.SingleAffect();
+        base.SingleEffect();
         Init();
     }
 
-    public override void RecurringAffect()
+    public override void RecurringEffect()
     {
         if (Time.time >= lastActivatedTime + cooldown)
         {
@@ -60,36 +64,42 @@ public class PassiveIncreasedMaxHP : Passive
 {
     float hpIncrease = 50f;
 
-    public override void SingleAffect()
+    public override void SingleEffect()
     {
         player.model.maxHealth += hpIncrease;
         player.model.health = player.model.maxHealth;
     }
-    public override void RecurringAffect() {}
+    public override void RecurringEffect() {}
 
 }
 
 public class PassiveMovementSpeed : Passive
 {
     float maxMovementSpeedIncrease = 0.5f;
-    public override void SingleAffect()
+    public override void SingleEffect()
     {
         player.model.moveMaxSpeed += player.model.moveMaxSpeed * maxMovementSpeedIncrease;
         player.model.moveAcceleration += 0.5f;
     }
-    public override void RecurringAffect() { }
+    public override void RecurringEffect() { }
 }
 
 public class PassiveMaxAmmoIncrease : Passive
 {
+    
     int ammoIncrease = 50;
 
-    public override void SingleAffect()
+    public override void SingleEffect()
     {
+        name = "Ammo Increase";
         player.model.equippedWeapon.SetMaxAmmoCount(ammoIncrease);
-        player.model.secondaryWeapon.SetMaxAmmoCount(ammoIncrease);
     }
-    public override void RecurringAffect() { }
+
+    public override void RevertEffect()
+    {
+        player.model.equippedWeapon.SetMaxAmmoCount(-ammoIncrease);
+    }
+    public override void RecurringEffect() { }
 }
 
 public class PassiveDegenAura : Passive
@@ -103,11 +113,11 @@ public class PassiveDegenAura : Passive
         damage = 5f;
         lastActivatedTime = 0f;
     }
-    public override void SingleAffect()
+    public override void SingleEffect()
     {
         Init();
     }
-    public override void RecurringAffect()
+    public override void RecurringEffect()
     {
         if (player != null)
         {
@@ -133,7 +143,6 @@ public class PassiveDegenAura : Passive
         }
     }
 
-
 public class PassiveRandomBullet : Passive
 {
     GameObject bullet;
@@ -145,13 +154,13 @@ public class PassiveRandomBullet : Passive
         radius = 5f;
         lastActivatedTime = 0f;
     }
-    public override void SingleAffect()
+    public override void SingleEffect()
     {
-        base.SingleAffect();
+        base.SingleEffect();
         Init();
     }
 
-    public override void RecurringAffect()
+    public override void RecurringEffect()
     {
         if (Time.time >= lastActivatedTime + cooldown)
         {

@@ -6,10 +6,9 @@ public class RocketLauncher : WeaponRanged
 {
     private GameObject rocket;
 
-    protected override void Start()
+    protected override void InitWeaponStats()
     {
-        base.Start();
-
+        base.InitWeaponStats();
         // Stats
         cooldown = 1f;
         ammoOffset = 1f;
