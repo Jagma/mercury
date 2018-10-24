@@ -114,7 +114,7 @@ public class Game : MonoBehaviour
 
         Intermission.SetPlayers(modelList);
 
-        AudioManager.instance.StopAudio("Game_music_Moon_garden");
+        AudioManager.instance.StopAllAudio();
         SceneManager.LoadScene("Intermission");
     }
 }
