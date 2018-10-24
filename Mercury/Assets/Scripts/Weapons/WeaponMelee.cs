@@ -66,20 +66,50 @@ public class WeaponMelee : Weapon
     protected void MeleeDamage ()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position + transform.right * 0.5f, 0.4f);
-
+        int randomClipInt;
         for (int i=0; i < hits.Length; i ++)
         {
             Enemy enemy = hits[i].GetComponent<Enemy>();
             Wall wall = hits[i].GetComponent<Wall>();
             PlayerActor playerA = hits[i].GetComponent<PlayerActor>();
             if (enemy != null)
+            {                
                 enemy.Damage(damage);
+                randomClipInt = UnityEngine.Random.Range(0, 1);
+                switch (randomClipInt)
+                {
+                    case 0:
+                        AudioManager.instance.PlayAudio("Melee_enemy_hit1", 1f, false);
+                        break;
+
+                    case 1:
+                        AudioManager.instance.PlayAudio("Melee_enemy_hit2", 1f, false);
+                        break;
+                }
+            }
+
 
             if (wall != null)
-                wall.Damage(damage);
+            {
+                randomClipInt = UnityEngine.Random.Range(0, 1);
+                switch (randomClipInt)
+                {
+                    case 0:
+                        AudioManager.instance.PlayAudio("Melee_wall_hit1", 1f, false);
+                        break;
 
-            if (playerA != null)
-                playerA.Damage(damage);
+                    case 1:
+                        AudioManager.instance.PlayAudio("Melee_wall_hit2", 1f, false);
+                        break;
+                }
+
+                wall.Damage(damage);
+            }
+            
+                if (playerA != null)
+                { 
+                    playerA.Damage(damage);
+                }
         }
     }
 }

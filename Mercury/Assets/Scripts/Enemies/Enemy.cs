@@ -99,7 +99,18 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Death()
     {
-        AudioManager.instance.PlayAudio("death1", .5f, false);
+        int randomClipInt;
+        randomClipInt = UnityEngine.Random.Range(0, 1);
+        switch (randomClipInt)
+        {
+            case 0:
+                AudioManager.instance.PlayAudio("Mob_death1", 1f, false);
+                break;
+
+            case 1:
+                AudioManager.instance.PlayAudio("Mob_death2", 1f, false);
+                break;
+        }
         if (equippedWeapon) //has a chance to drop weapon or ammo pack.
         {
             equippedWeapon.SetWeaponDamage(originalWeaponDamage);
