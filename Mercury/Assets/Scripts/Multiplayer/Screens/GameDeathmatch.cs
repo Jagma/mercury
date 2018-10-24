@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameDeathmatch : MonoBehaviour {
+
+    public static GameDeathmatch instance;
 
     public static string gameUniqueID;
     public static string clientUniqueID = "-1";
@@ -14,6 +17,12 @@ public class GameDeathmatch : MonoBehaviour {
 
     private void Awake() {
         NetworkManager.instance.Subscribe(ReceiveMessage);
+        instance = this;
+    }
+
+    PlayerActor myActor;
+    public PlayerActor GetPlayerActor(string playerID) {
+        return myActor;
     }
 
     void Start () {
@@ -29,6 +38,9 @@ public class GameDeathmatch : MonoBehaviour {
 	
 
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene("MultiplayerHome");
+        }
 	}
 
     public void ReceiveMessage (NetworkMessages.MessageBase message) {
@@ -44,6 +56,10 @@ public class GameDeathmatch : MonoBehaviour {
                     Factory.HostPlayerConstructor hostPlayerConstructor = new Factory.HostPlayerConstructor();
                     hostPlayerConstructor.objectUniqueID = gameStarted.clientUniqueIDs[i];
                     GameObject player = hostPlayerConstructor.Construct();
+
+                    if (gameStarted.clientUniqueIDs[i] == gameStarted.thisClientID) {
+                        myActor = player.GetComponent<PlayerActor>();
+                    }
 
                     SpawnNextPlayer(player);
 

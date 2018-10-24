@@ -80,4 +80,8 @@ public class LobbyManager : MonoBehaviour {
 
         NetworkManager.instance.Send(hostLobby);
     }
+
+    public void Back () {
+        SceneManager.LoadScene("MultiplayerHome");
+    }
 }

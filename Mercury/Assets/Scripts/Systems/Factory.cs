@@ -1471,6 +1471,7 @@ public class Factory : MonoBehaviour
             ServerPlayer sp = playerGO.AddComponent<ServerPlayer>();
             sp.clientUniqueID = objectUniqueID;
             sp.playerActor = playerGO.GetComponent<PlayerActor>();
+
             return playerGO;
         }
     }

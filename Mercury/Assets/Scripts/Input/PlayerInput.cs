@@ -158,6 +158,12 @@ public class PlayerInput {
                 playerPosition = Intermission.instance.GetPlayerActor(playerID).transform.position;
             }
 
+            if (GameDeathmatch.instance != null) {
+                if (GameDeathmatch.instance.GetPlayerActor(playerID) != null) {
+                    playerPosition = GameDeathmatch.instance.GetPlayerActor(playerID).transform.position;
+                }                
+            }
+
             // Get world position of mouse
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, playerPosition);

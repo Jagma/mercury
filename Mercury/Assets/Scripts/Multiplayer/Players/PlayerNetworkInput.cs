@@ -3,25 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerNetworkInput : MonoBehaviour {
-
-	void Update () {
-        Vector2 moveDir = Vector3.zero;
-
-        if (Input.GetKey(KeyCode.W)) {
-            moveDir += Vector2.up;
-        }
-        if (Input.GetKey(KeyCode.S)) {
-            moveDir += Vector2.down;
-        }
-        if (Input.GetKey(KeyCode.A)) {
-            moveDir += Vector2.left;
-        }
-        if (Input.GetKey(KeyCode.D)) {
-            moveDir += Vector2.right;
-        }
-
-        moveDir.Normalize();
-
+    private void Awake() {
+        PlayerInput pi = new PlayerInput("Keyboard|0001", PlayerInput.InputType.Keyboard);
+        InputManager.instance.AddPlayerInput(pi);
+    }
+    void Update () {
+        // Movement
+        Vector2 moveDir = InputManager.instance.GetMoveDirection("Keyboard|0001");
         NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Move", NetworkVector3.FromVector3(moveDir));
+
+        // Aim
+        Vector2 aimDir = InputManager.instance.GetAimDirection("Keyboard|0001");
+        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Aim", NetworkVector3.FromVector3(aimDir));
+
+        // Attack
+        bool attack = InputManager.instance.GetAttack("Keyboard|0001");
+        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Attack", attack);
     }
 }
