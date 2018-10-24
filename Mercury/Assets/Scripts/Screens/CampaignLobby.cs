@@ -133,16 +133,16 @@ public class CampaignLobby : MonoBehaviour
             switch (characterIndex)
             {
                 case 0:
-                    AudioManager.instance.PlayAudio("Trump - BingBingBong", 1, false);
+                    AudioManager.instance.PlayAudio("Trump_character_select", 1, false);
                     break;
                 case 1:
-                    AudioManager.instance.PlayAudio("abra", 1, false);
+                    AudioManager.instance.PlayAudio("Binladen_character_selection", 1, false);
                     break;
                 case 2:
-                    AudioManager.instance.PlayAudio("Oprah - Building", 1, false);
+                    AudioManager.instance.PlayAudio("Oprah_character_select", 1, false);
                     break;
                 case 3:
-                    AudioManager.instance.PlayAudio("Pope_peace", 1, false);
+                    AudioManager.instance.PlayAudio("Pope_character_select", 1, false);
                     break;
             }
         }
@@ -152,16 +152,16 @@ public class CampaignLobby : MonoBehaviour
             switch (characterIndex)
             {
                 case 0:
-                    AudioManager.instance.StopAudio("Trump - BingBingBong");
+                    AudioManager.instance.StopAudio("Trump_character_select");
                     break;
                 case 1:
-                    AudioManager.instance.StopAudio("abra");
+                    AudioManager.instance.StopAudio("Binladen_character_selection");
                     break;
                 case 2:
-                    AudioManager.instance.StopAudio("Oprah - Building");
+                    AudioManager.instance.StopAudio("Oprah_character_select");
                     break;
                 case 3:
-                    AudioManager.instance.StopAudio("Pope_peace");
+                    AudioManager.instance.StopAudio("Pope_character_select");
                     break;
             }
         }
@@ -174,14 +174,14 @@ public class CampaignLobby : MonoBehaviour
             status = Status.Ready;
             characterSelectGO.SetActive(false);
             characterSelectedGO.SetActive(true);
-            AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
+            AudioManager.instance.PlayAudio("Menu_select", .4f, false);
             PlayCharacterSound();
         }
 
         void DeSelect() {
             characterSelectGO.SetActive(true);
             characterSelectedGO.SetActive(false);
-            AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
+            AudioManager.instance.PlayAudio("Menu_select", .4f, false);
             StopCharacterSound();
 
             status = Status.Selecting;            
@@ -194,7 +194,7 @@ public class CampaignLobby : MonoBehaviour
         void Browse(int i) {
             characterIndex = i;
             UpdatePortrait();
-            AudioManager.instance.PlayAudio("latch2", 1, false);
+            AudioManager.instance.PlayAudio("Menu_character_switch", 1, false);
         }
 
         void Up() {
@@ -204,7 +204,7 @@ public class CampaignLobby : MonoBehaviour
             if (characterIndex == 4) {
                 characterIndex = 0;
             }
-            AudioManager.instance.PlayAudio("latch2", 1, false);
+            AudioManager.instance.PlayAudio("Menu_character_switch", 1, false);
             UpdatePortrait();
         }
 
@@ -215,7 +215,7 @@ public class CampaignLobby : MonoBehaviour
             if (characterIndex == -1) {
                 characterIndex = 3;
             }
-            AudioManager.instance.PlayAudio("latch2", 1, false);
+            AudioManager.instance.PlayAudio("Menu_character_switch", 1, false);
             UpdatePortrait();
         }
 
@@ -252,7 +252,7 @@ public class CampaignLobby : MonoBehaviour
         portraitPrefab.SetActive(false);
         countdown = 5;
 
-        AudioManager.instance.PlayAudio("Game_music_Space_loop", .6f, true);
+        AudioManager.instance.PlayAudio("Background_campaignlobby", .6f, true);
     }
 
 
@@ -261,14 +261,14 @@ public class CampaignLobby : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (InputManager.instance.GetPlayerInput("Keyboard|0001") == null) {
                 SceneManager.LoadScene("Menu");
-                AudioManager.instance.StopAudio("Game_music_Space_loop");
+                AudioManager.instance.StopAudio("Background_campaignlobby");
             }
         }
         if (InControl.InputManager.ActiveDevice.Action2.WasPressed) {
             string controllerID = ControllerManger.instance.GetDeviceID(InControl.InputManager.ActiveDevice);
             if (InputManager.instance.GetPlayerInput(controllerID) == null) {
                 SceneManager.LoadScene("Menu");
-                AudioManager.instance.StopAudio("Game_music_Space_loop");
+                AudioManager.instance.StopAudio("Background_campaignlobby");
             }
         }
 

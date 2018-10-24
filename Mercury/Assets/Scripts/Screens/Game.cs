@@ -16,7 +16,7 @@ public class Game : MonoBehaviour
 
 	void Start ()
     {
-        AudioManager.instance.PlayAudio("Game_music_Moon_garden", .5f, true);
+        AudioManager.instance.PlayAudio("Background_level1", .5f, true);
 
         if (InputManager.instance == null)
         {

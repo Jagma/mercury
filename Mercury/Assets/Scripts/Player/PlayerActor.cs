@@ -309,7 +309,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Death()
     {
-        AudioManager.instance.PlayAudio("death1", 1, false);
+        AudioManager.instance.PlayAudio("Player_death", 1, false);
         GameProgressionManager.instance.GameOver();
     }
 
