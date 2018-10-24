@@ -26,6 +26,7 @@ public class Game : MonoBehaviour
 
 
 
+
         Dictionary<string, PlayerInput> playerDictionary = InputManager.instance.GetPlayerInputDictionary();
         foreach(KeyValuePair<string, PlayerInput> playerInputKVP in playerDictionary)
         {
@@ -114,7 +115,7 @@ public class Game : MonoBehaviour
 
         Intermission.SetPlayers(modelList);
 
-        AudioManager.instance.StopAudio("Game_music_Moon_garden");
+        AudioManager.instance.StopAllAudio();
         SceneManager.LoadScene("Intermission");
     }
 }
