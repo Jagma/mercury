@@ -224,8 +224,7 @@ public class LevelGeneration : MonoBehaviour
             enemyGO = Factory.instance.CreateMartianBoss();
         }
         if (ProgressionState.environmentName == "Venus") {
-            // Replace with create venus boss in factory
-            enemyGO = Factory.instance.CreateMartianBoss();
+            enemyGO = Factory.instance.CreateMalfeasanceBoss();
         }
         if (ProgressionState.environmentName == "Mercury") {
             // Replace with create mercury boss in factory
@@ -301,44 +300,57 @@ public class Miner
         }
 
         // Enemies 
-        if (Random.Range(0, 1f) > 0.99f)
+        if (ProgressionState.environmentName == "Mars" && Random.Range(0, 1f) > 0.99f)
         {
             levelGen.enemies[posX, posZ] = "Walker";
         }
-        if (Random.Range(0, 1f) > 0.995f)
+        if (ProgressionState.environmentName == "Mars" && Random.Range(0, 1f) > 0.995f)
         {
             levelGen.enemies[posX, posZ] = "Ranged Walker";
         }
-        if (Random.Range(0, 1f) > 0.995f)
+        if (ProgressionState.environmentName == "Mars" && Random.Range(0, 1f) > 0.995f)
         {
             levelGen.enemies[posX, posZ] = "Overlord Walker";
         }
-        if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.994f)
+        if (ProgressionState.environmentName == "Mars" && Random.Range(0, 1f) > 0.994f)
+        {
+            levelGen.enemies[posX, posZ] = "Arc Walker";
+        }
+        if (ProgressionState.environmentName == "Mars" && Random.Range(0, 1f) > 0.994f)
         {
             levelGen.enemies[posX, posZ] = "Corrupted Walker";
         }
         if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.994f)
         {
-            levelGen.enemies[posX, posZ] = "Arc Walker";
+            levelGen.enemies[posX, posZ] = "Azagor";
+        }
+        if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.994f)
+        {
+            levelGen.enemies[posX, posZ] = "Diablo";
         }
         if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.993f)
         {
             levelGen.enemies[posX, posZ] = "Cracker";
         }
+        
         if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
         {
-            levelGen.enemies[posX, posZ] = "Diablo";
+            levelGen.enemies[posX, posZ] = "Diablo"; //replaced with enemy that needs to spawn on mercury.
         }
         if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
         {
-            levelGen.enemies[posX, posZ] = "Azagor";
+            levelGen.enemies[posX, posZ] = "Azagor"; //replaced with enemy that needs to spawn on mercury.
+        }
+        if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
+        {
+            levelGen.enemies[posX, posZ] = "Arc Walker"; //replaced with enemy that needs to spawn on mercury.
         }
         // Pickups
         if (Random.Range(0, 1f) > 0.9990f)
         {
             levelGen.pickups[posX, posZ] = "Normal Chest";
         }
-        if (Random.Range(0, 1f) > 0.9996f)
+        if (Random.Range(0, 1f) > 0.9996f && (ProgressionState.environmentName == "Mercury" || ProgressionState.environmentName == "Venus"))
         {
             levelGen.pickups[posX, posZ] = "Rare Chest";
         }
