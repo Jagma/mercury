@@ -49,7 +49,7 @@ public class AbilityOprah : Ability
             isProjectile = false;
         }
         int randomClipInt;
-        randomClipInt = UnityEngine.Random.Range(0, 2);
+        randomClipInt = UnityEngine.Random.Range(0, 1);
         switch (randomClipInt)
         {
             case 0:

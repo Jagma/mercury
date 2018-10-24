@@ -58,7 +58,7 @@ public class AbilityTrump : Ability {
 
 
         int randomClipInt;
-        randomClipInt = UnityEngine.Random.Range(0,4);
+        randomClipInt = UnityEngine.Random.Range(0,3);
         switch (randomClipInt)
             {
                 case 0:
