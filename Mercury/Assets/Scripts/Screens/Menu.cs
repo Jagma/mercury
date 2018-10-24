@@ -68,6 +68,7 @@ public class Menu : MonoBehaviour
     public void NavigateTeamDeathmatch ()
     {
         AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
+        AudioManager.instance.StopAudio("main_menu_loop");
         SceneManager.LoadScene("MultiplayerHome");
     }
 
