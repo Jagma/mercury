@@ -79,7 +79,7 @@ public class Factory : MonoBehaviour
         playerController.actor = playerActor;
 
         PlayerModel playerModel = new PlayerModel();
-        playerModel.equippedWeapon = CreateRevolver().GetComponent<Weapon>();
+        playerModel.equippedWeapon = CreatePistol().GetComponent<Weapon>();
         playerModel.equippedWeapon.Equip();
         playerActor.model = playerModel;
         GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));

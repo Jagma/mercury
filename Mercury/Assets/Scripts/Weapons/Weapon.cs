@@ -74,7 +74,7 @@ public class Weapon : MonoBehaviour
             }
             else //if the weapon is completely out of ammo.
             {
-                //AudioManager.instance.PlayAudio("sfx_wpn_noammo1", .5f, false);
+                AudioManager.instance.PlayAudio("sfx_wpn_noammo1", .25f, false);
                 return;
                 
             }
