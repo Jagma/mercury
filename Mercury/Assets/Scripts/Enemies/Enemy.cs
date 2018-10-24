@@ -135,13 +135,31 @@ public class Enemy : MonoBehaviour
     private void DropItems()
     {
         GameObject randomAmmoPack = null;
-        int randomNum = ran.Next(0, 2);
-        if (randomNum == 0)
-            randomAmmoPack = Factory.instance.CreateBeamAmmoPack();
-        if (randomNum == 1)
+        int randomNum;
+        if (ProgressionState.environmentName == "Mars")
+        {
             randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
-        if (randomNum == 2)
-            randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
+        }
+
+        if (ProgressionState.environmentName == "Venus")
+        {
+            randomNum = ran.Next(1, 2);
+            if (randomNum == 1)
+                randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
+            if (randomNum == 2)
+                randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
+        }
+
+        if (ProgressionState.environmentName == "Mercury")
+        {
+            randomNum = ran.Next(0, 2);
+            if (randomNum == 0)
+                randomAmmoPack = Factory.instance.CreateBeamAmmoPack();
+            if (randomNum == 1)
+                randomAmmoPack = Factory.instance.CreateBulletAmmoPack();
+            if (randomNum == 2)
+                randomAmmoPack = Factory.instance.CreateRocketAmmoPack();
+        }
 
         randomAmmoPack.transform.position = transform.position;
 
