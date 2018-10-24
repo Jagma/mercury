@@ -152,6 +152,8 @@ public class Weapon : MonoBehaviour
                 }
             }
         }
+        else
+            AudioManager.instance.StopAudio("dssgcock");
     }
     protected virtual void Use()
     {
