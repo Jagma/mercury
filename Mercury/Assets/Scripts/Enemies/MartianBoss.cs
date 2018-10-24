@@ -25,7 +25,7 @@ public class
         damage = 20;
 
         rigidbody = GetComponent<Rigidbody>();
-
+        AudioManager.instance.PlayAudio("Boss_Mars_spawn" ,1,false);
         CreateArena();// This is to prevent boss from getting stuck and adding a boss fight feel.
     }
 
