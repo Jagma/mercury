@@ -39,6 +39,7 @@ public class GameDeathmatch : MonoBehaviour {
 
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Escape)) {
+            AudioManager.instance.StopAudio("Background_deathmatch");
             SceneManager.LoadScene("MultiplayerHome");
         }
 	}
@@ -76,7 +77,7 @@ public class GameDeathmatch : MonoBehaviour {
 
     public void GenerateLevel () {
         Transform levelRoot = new GameObject("LevelRoot").transform;
-        AudioManager.instance.PlayAudio("Game_music_Magellanic_clouds", .4f, true);
+        AudioManager.instance.PlayAudio("Background_deathmatch", 1, true);
         for (int z = 0; z < deathmatchDesign.height; z++) {
             for (int x = 0; x < deathmatchDesign.width; x++) {
                 Color col = deathmatchDesign.GetPixel(x, z);

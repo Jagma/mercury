@@ -69,6 +69,6 @@ public class AbilityPope : Ability
                 
             }
         }
-        AudioManager.instance.PlayAudio("Pope_peace", 1, false);
+        AudioManager.instance.PlayAudio("Pope_ability1", 1, false);
     }
 }

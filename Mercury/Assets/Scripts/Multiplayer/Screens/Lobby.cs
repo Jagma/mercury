@@ -43,6 +43,7 @@ public class Lobby : MonoBehaviour {
             NetworkMessages.LobbyExecuted lobbyExecuted = (NetworkMessages.LobbyExecuted)message;
             GameDeathmatch.gameUniqueID = lobbyExecuted.lobbyUniqueID;
             NetworkModel.instance.uniqueID = GameDeathmatch.gameUniqueID;
+            AudioManager.instance.StopAllAudio();
             SceneManager.LoadScene("GameDeathmatch");
         }
     }
