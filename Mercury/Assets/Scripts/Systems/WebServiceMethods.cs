@@ -209,6 +209,7 @@ public class WebServiceMethods : MonoBehaviour {
     public string GetWeaponTable() { return RestGET("table/Weapon"); }
 
     public string GetSessionsTable() { return RestGET("table/Sessions"); }
+    public string GetLatestSession() { return RestGET("table/LatestSession"); }
     public string GetSessionEnvironmentTable() { return RestGET("table/SessionEnvironment"); }
     public string GetSessionEnemiesTable() { return RestGET("table/SessionEnemies"); }
     public string GetSessionWeaponsTable() { return RestGET("table/SessionWeapons"); }

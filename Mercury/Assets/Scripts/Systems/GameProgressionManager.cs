@@ -165,7 +165,18 @@ public class GameProgressionManager : MonoBehaviour
     #region Database Updating
     void SendDataServer()
     {
+        int currentSession = 0;
+
         //send data to database.
+        WebServiceMethods wsm = new WebServiceMethods();
+
+        wsm.AddSessions(totalTimePlayed);
+        currentSession = int.Parse(wsm.GetLatestSession());
+
+        wsm.AddSessionEnemies(currentSession, enemiesKilledLevel);
+        wsm.AddSessionEnvironment(currentSession, wallsDestroyedTotal);
+        wsm.AddSessionWeapons(currentSession, numOfBulletsUsedTotal);
+        wsm.AddSessionPlayers(currentSession, damageTakenTotal);
     }
     #endregion
 
