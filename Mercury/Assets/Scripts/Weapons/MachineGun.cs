@@ -36,7 +36,7 @@ public class MachineGun : WeaponRanged
         AudioManager.instance.PlayAudio("Weapon_pistol", 1f, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
-        AudioManager.instance.PlayAudio("Weapon_machingun", .4f, false);
+        AudioManager.instance.PlayAudio("Weapon_machinegun", .4f, false);
     }
 
 }
