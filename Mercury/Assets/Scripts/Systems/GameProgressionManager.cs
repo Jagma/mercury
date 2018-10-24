@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 // The Game progression manager is a singleton
 public class GameProgressionManager : MonoBehaviour
 {
+    public WebServiceMethods wsm;
+
     private int numEnemiesLeftLevel;
     private int numEnemiesStartLevel;
     private int numOfBulletsUsedTotal;
