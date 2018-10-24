@@ -26,11 +26,12 @@ public class ServerPlayer : MonoBehaviour {
 
         // Attack
         if (NetworkModel.instance.GetModel(clientUniqueID + "Input_Attack") != null) {
-            bool attack = (bool)NetworkModel.instance.GetModel(clientUniqueID + "Input_Attack");
-            playerActor.Attack();
+            NetworkBool attack = (NetworkBool)NetworkModel.instance.GetModel(clientUniqueID + "Input_Attack");
+            if (attack.ToBool() == true) {
+                playerActor.Attack();
+            }
+            
             NetworkModel.instance.SetModel(clientUniqueID + "Attack", attack);
-        } else {
-            NetworkModel.instance.SetModel(clientUniqueID + "Attack", false);
         }
 
         NetworkModel.instance.SetModel(clientUniqueID + "Position", NetworkVector3.FromVector3(transform.position));

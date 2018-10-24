@@ -33,7 +33,7 @@ public class ClientPlayer : MonoBehaviour {
             bool attack = (bool)NetworkModel.instance.GetModel(clientUniqueID + "Attack");
             if (attack) {
                 playerActor.Attack();
-            }            
+            }
         }
     }
 }

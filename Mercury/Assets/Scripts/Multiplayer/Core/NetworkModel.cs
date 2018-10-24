@@ -7,6 +7,7 @@ public class NetworkModel : MonoBehaviour {
     public string uniqueID = "global";
     Dictionary<string, object> modelDictionary = new Dictionary<string, object>();
     Dictionary<string, object> updateDictionary = new Dictionary<string, object>();
+    
 
     public static NetworkModel instance;
     private void Awake() {
@@ -48,6 +49,7 @@ public class NetworkModel : MonoBehaviour {
             updateModel.model = diffDictionary;
 
             NetworkManager.instance.Send(updateModel);
+
         }
 
         updateDictionary = new Dictionary<string, object>();

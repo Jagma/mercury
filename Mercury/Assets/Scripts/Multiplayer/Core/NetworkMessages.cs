@@ -134,9 +134,9 @@ public class NetworkVector3 {
     public float z = 0;
 
     public NetworkVector3(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.x = Mathf.Round(x * 100) / 100;
+        this.y = Mathf.Round(y * 100) / 100;
+        this.z = Mathf.Round(z * 100) / 100;
     }
 
     public Vector3 ToVector3() {
@@ -158,6 +158,32 @@ public class NetworkVector3 {
         }
 
 
+        return false;
+    }
+}
+
+public class NetworkBool {
+    public bool b = false;
+
+    public NetworkBool(bool b) {
+        this.b = b;
+    }
+
+    public bool ToBool() {
+        return b;
+    }
+
+    public static NetworkBool FromBool(bool b) {
+        return new NetworkBool(b);
+    }
+
+    public override bool Equals(object obj) {
+        if (obj.GetType() == typeof(NetworkBool)) {
+            NetworkBool nb = (NetworkBool)obj;
+            if (this.b == nb.b) {
+                return true;
+            }
+        }
         return false;
     }
 }

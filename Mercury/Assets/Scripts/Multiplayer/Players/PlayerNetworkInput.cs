@@ -18,6 +18,6 @@ public class PlayerNetworkInput : MonoBehaviour {
 
         // Attack
         bool attack = InputManager.instance.GetAttack("Keyboard|0001");
-        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Input_Attack", attack);
+        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Input_Attack", new NetworkBool(attack));
     }
 }
