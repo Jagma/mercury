@@ -7,7 +7,8 @@ public class NetworkModel : MonoBehaviour {
     public string uniqueID = "global";
     Dictionary<string, object> modelDictionary = new Dictionary<string, object>();
     Dictionary<string, object> updateDictionary = new Dictionary<string, object>();
-    
+
+    Dictionary<string, object> dirtyDictionary = new Dictionary<string, object>();
 
     public static NetworkModel instance;
     private void Awake() {
@@ -34,12 +35,20 @@ public class NetworkModel : MonoBehaviour {
     private void LateUpdate() {
         Dictionary<string, object> diffDictionary = new Dictionary<string, object>();
         foreach (KeyValuePair<string, object> kvp in updateDictionary) {
-            if (modelDictionary.ContainsKey(kvp.Key) == false) {
+
+            if (dirtyDictionary.ContainsKey(kvp.Key) == false) {
                 diffDictionary[kvp.Key] = kvp.Value;
+                dirtyDictionary[kvp.Key] = kvp.Value;
+
+                continue;
+            }            
+
+            if (kvp.Value.Equals(dirtyDictionary[kvp.Key])) {
+                continue;
             }
-            else if (kvp.Value.Equals(modelDictionary[kvp.Key]) == false) {
-                diffDictionary[kvp.Key] = kvp.Value;
-            }
+
+            diffDictionary[kvp.Key] = kvp.Value;
+            dirtyDictionary[kvp.Key] = kvp.Value;
         }
 
         if (diffDictionary.Count > 0) {
@@ -49,7 +58,6 @@ public class NetworkModel : MonoBehaviour {
             updateModel.model = diffDictionary;
 
             NetworkManager.instance.Send(updateModel);
-
         }
 
         updateDictionary = new Dictionary<string, object>();
