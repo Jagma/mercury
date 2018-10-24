@@ -293,7 +293,7 @@ public class PlayerActor : MonoBehaviour
     private void DisplayPlayerDown()
     {
         temp = visual.transform.localEulerAngles;
-        visual.transform.parent = null;
+        //visual.transform.parent = null;
         if (Random.Range(0, 100) >= 50)
         {
             visual.transform.localEulerAngles = new Vector3(45, 45, -90);
