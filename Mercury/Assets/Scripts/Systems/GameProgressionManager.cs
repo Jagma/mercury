@@ -24,7 +24,6 @@ public class GameProgressionManager : MonoBehaviour
     public List<string> playerIDList = new List<string>();
     public List<string> playerName = new List<string>();
     public List<bool> playerDown = new List<bool>();
-
     public static GameProgressionManager instance;
 
     bool gameStart = false;
@@ -66,7 +65,6 @@ public class GameProgressionManager : MonoBehaviour
         playerIDList.Add(players);
         playerName.Add(name);
         playerDown.Add(false);
-        playerDeathCount.Add(0);
     }
 
     public void StartGame()
