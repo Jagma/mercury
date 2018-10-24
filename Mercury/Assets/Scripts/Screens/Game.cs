@@ -94,7 +94,7 @@ public class Game : MonoBehaviour
 
             playerMid /= playerActorList.Count;
 
-            LevelGeneration.instance.SpawnMartianBoss(playerMid);
+            LevelGeneration.instance.SpawnBoss(playerMid);
         }
         if (gameStage == 1 && EnemyManager.instance.GetEnemyCount() <= 0) {
             NavigateIntermission();

@@ -108,14 +108,6 @@ public class LevelGeneration : MonoBehaviour
                         wallGO.GetComponent<Wall>().health = int.MaxValue;
                 }
 
-                if (enemies[x, z] == "Martian Boss")
-                {
-                   GameObject enemyGO = Factory.instance.CreateMartianBoss();
-                   enemyGO.transform.parent = levelRoot;
-                   enemyGO.transform.position = new Vector3(x, 2, z);
-                   GameProgressionManager.instance.IncreaseEnemyCount();
-                }
-
                 if (enemies[x, z] == "Walker")
                 {
                     GameObject enemyGO = Factory.instance.CreateEnemyWalker();
@@ -226,8 +218,19 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
-    public void SpawnMartianBoss(Vector3 playerPosition) {
-        GameObject enemyGO = Factory.instance.CreateMartianBoss();
+    public void SpawnBoss(Vector3 playerPosition) {
+        GameObject enemyGO = null;
+        if (ProgressionState.environmentName == "Mars") {
+            enemyGO = Factory.instance.CreateMartianBoss();
+        }
+        if (ProgressionState.environmentName == "Venus") {
+            // Replace with create venus boss in factory
+            enemyGO = Factory.instance.CreateMartianBoss();
+        }
+        if (ProgressionState.environmentName == "Mercury") {
+            // Replace with create mercury boss in factory
+            enemyGO = Factory.instance.CreateMartianBoss();
+        }
         enemyGO.transform.parent = levelRoot;
         enemyGO.transform.position = new Vector3(playerPosition.x, 5, playerPosition.z);
         EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
@@ -304,33 +307,29 @@ public class Miner
         }
         if (Random.Range(0, 1f) > 0.995f)
         {
-        //    levelGen.enemies[posX, posZ] = "Martian Boss";
-        }
-        if (Random.Range(0, 1f) > 0.995f)
-        {
             levelGen.enemies[posX, posZ] = "Ranged Walker";
         }
         if (Random.Range(0, 1f) > 0.995f)
         {
             levelGen.enemies[posX, posZ] = "Overlord Walker";
         }
-        if (Random.Range(0, 1f) > 0.995f)
+        if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.994f)
         {
             levelGen.enemies[posX, posZ] = "Corrupted Walker";
         }
-        if (Random.Range(0, 1f) > 0.995f)
+        if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.994f)
         {
             levelGen.enemies[posX, posZ] = "Arc Walker";
         }
-        if (Random.Range(0, 1f) > 0.995f)
+        if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.993f)
         {
             levelGen.enemies[posX, posZ] = "Cracker";
         }
-        if (Random.Range(0, 1f) > 0.995f)
+        if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
         {
             levelGen.enemies[posX, posZ] = "Diablo";
         }
-        if (Random.Range(0, 1f) > 0.995f)
+        if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
         {
             levelGen.enemies[posX, posZ] = "Azagor";
         }
