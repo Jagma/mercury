@@ -21,19 +21,19 @@ public class NormalChest : Chest
 
         if (ProgressionState.environmentName == "Venus")
         {
-            result = Random.Range(3, 6);
+            result = Random.Range(3, 5);
             if (result == 3)
                 return Factory.instance.CreateRocketLauncher();
             if (result == 4)
                 return Factory.instance.CreateShotgun();
-            if (result == 6)
+            if (result == 5)
                 return Factory.instance.CreateSword();
         }
 
         if (ProgressionState.environmentName == "Mercury")
         {
-            result = Random.Range(5, 8);
-            if (result == 5)
+            result = Random.Range(6, 8);
+            if (result == 6)
                 return Factory.instance.CreateLaserPistol();
             if (result == 7)
                 return Factory.instance.CreateStrongAxe();

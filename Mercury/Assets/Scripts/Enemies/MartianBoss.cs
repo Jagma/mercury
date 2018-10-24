@@ -22,10 +22,10 @@ public class
         cooldown = 2f;
         knockBack = 10f;
         lastActivatedTime = Time.time;
-        damage = 50;
+        damage = 20;
 
         rigidbody = GetComponent<Rigidbody>();
-
+        Fightsounds();
         CreateArena();// This is to prevent boss from getting stuck and adding a boss fight feel.
     }
 
@@ -72,6 +72,13 @@ public class
                 gameObject.GetComponent<Rigidbody>().velocity = forwardDirection * moveSpeed;// Distance x movement speed
             }
         }
+    }
+
+    private void Fightsounds()
+    {
+        AudioManager.instance.StopAllAudio();
+        AudioManager.instance.PlayAudio("Background_Mars_bossfight", 1, true);
+        AudioManager.instance.PlayAudio("Boss_Mars_spawn", 1, false);
     }
 
     private void CreateArena()

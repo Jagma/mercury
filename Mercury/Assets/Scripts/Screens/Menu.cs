@@ -24,7 +24,7 @@ public class Menu : MonoBehaviour
             buttonList[1] = b;
         }
 
-        AudioManager.instance.PlayAudio("main_menu_loop", 1, true);
+        AudioManager.instance.PlayAudio("Background_main_menu_loop", 1, true);
         InputManager.instance.GetPlayerInputDictionary().Clear();
     }
 
@@ -46,7 +46,7 @@ public class Menu : MonoBehaviour
             eventSystem.SetSelectedGameObject(previousSelection);
         }
         if (previousSelection != eventSystem.currentSelectedGameObject) {
-            AudioManager.instance.PlayAudio("menu1", 1, false);
+            AudioManager.instance.PlayAudio("Menu_button_switch", 1, false);
         }
 
         previousSelection = eventSystem.currentSelectedGameObject;
@@ -59,21 +59,22 @@ public class Menu : MonoBehaviour
 
     public void NavigateCampaign ()
     {
-        AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
-        AudioManager.instance.StopAudio("main_menu_loop");
+        AudioManager.instance.PlayAudio("Menu_select", .4f, false);
+        AudioManager.instance.StopAudio("Background_main_menu_loop");
 
         SceneManager.LoadScene("CampaignLobby");
     }
 
     public void NavigateTeamDeathmatch ()
     {
-        AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
+        AudioManager.instance.PlayAudio("Menu_select", .4f, false);
+        AudioManager.instance.StopAudio("Background_main_menu_loop");
         SceneManager.LoadScene("MultiplayerHome");
     }
 
     public void NavigateExit ()
     {
-        AudioManager.instance.PlayAudio("sfx_sounds_button5", .4f, false);
+        AudioManager.instance.PlayAudio("Menu_select", .4f, false);
         Application.Quit();
     }
 }

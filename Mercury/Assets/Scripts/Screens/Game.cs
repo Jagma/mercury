@@ -16,13 +16,14 @@ public class Game : MonoBehaviour
 
 	void Start ()
     {
-        AudioManager.instance.PlayAudio("Game_music_Moon_garden", .5f, true);
+        AudioManager.instance.PlayAudio("Background_level1", .5f, true);
 
         if (InputManager.instance == null)
         {
             return;
         }
         LevelGeneration.instance.Generate();
+
 
 
 
@@ -114,7 +115,7 @@ public class Game : MonoBehaviour
 
         Intermission.SetPlayers(modelList);
 
-        AudioManager.instance.StopAudio("Game_music_Moon_garden");
+        AudioManager.instance.StopAllAudio();
         SceneManager.LoadScene("Intermission");
     }
 }

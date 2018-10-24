@@ -18,16 +18,16 @@ public class RareChest : Chest
         }
         if (result == 2)
         {
-            return Factory.instance.CreateFlamethrower();
+            return Factory.instance.CreateLaserMachineGun();
         }
         if (result == 3)
         {
-            return Factory.instance.CreateLaserMachineGun();
-        }
-        if (result == 4)
-        {
             return Factory.instance.CreateShotgun();
         }
+        /*if (result == 4)
+        {
+            return Factory.instance.CreateFlamethrower();
+        }*/
         return null;
     }
 }

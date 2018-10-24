@@ -131,6 +131,27 @@ public class WebServiceMethods : MonoBehaviour {
     {
         return RestPOST(string.Format("gq/addSessionEnemy?sessionID={0}&enemyID={1}&sessionCharKills={2}", sessionID, enemyID, sessionCharKills));
     }
+
+    public string AddSessions(float sessionPlayTime)
+    {
+        return RestPOST(string.Format("gq/addSessions?sessionPlayTime={0}", sessionPlayTime));
+    }
+    public string AddSessionEnvironment(int sessionID, int sessionWallsDestroyed)
+    {
+        return RestPOST(string.Format("gq/addSessionEnvironment?sessionID={0}&sessionWallsDestroyed={1}", sessionID, sessionWallsDestroyed));
+    }
+    public string AddSessionEnemies(int sessionID, int sessionEnemiesKilled)
+    {
+        return RestPOST(string.Format("gq/addSessionEnemies?sessionID={0}&sessionEnemiesKilled={1}", sessionID, sessionEnemiesKilled));
+    }
+    public string AddSessionWeapons(int sessionID, int sessionBulletsFired)
+    {
+        return RestPOST(string.Format("gq/addSessionWeapons?sessionID={0}&sessionBulletsFired={1}", sessionID, sessionBulletsFired));
+    }
+    public string AddSessionPlayers(int sessionID, float sessionDamageTaken)
+    {
+        return RestPOST(string.Format("gq/addSessionPlayers?sessionID={0}&sessionDamageTaken={1}", sessionID, sessionDamageTaken));
+    }
     #endregion
 
     #region The following rest methods delete a value from the DB
@@ -177,12 +198,21 @@ public class WebServiceMethods : MonoBehaviour {
     public string GetCharacterTable() { return RestGET("table/Character"); }
     public string GetEnemyTable() { return RestGET("table/Enemy"); }
     public string GetSessionTable() { return RestGET("table/Session"); }
+    public string GetSpecificSession() { return RestGET("table/getSession"); } 
     public string GetSessionCharacterTable() { return RestGET("table/SessionCharacter"); }
+    public string GetSpecificCharacter() { return RestGET("table/getSessionCharacter"); }
     public string GetSessionEnemyTable() { return RestGET("table/SessionEnemy"); }
     public string GetSessionUserTable() { return RestGET("table/SessionUser"); }
     public string GetSessionWeaponTable() { return RestGET("table/SessionWeapon"); }
     public string GetTableList() { return RestGET("table/TableList"); }
     public string GetUserTable() { return RestGET("table/User"); }
     public string GetWeaponTable() { return RestGET("table/Weapon"); }
+
+    public string GetSessionsTable() { return RestGET("table/Sessions"); }
+    public string GetLatestSession() { return RestGET("table/LatestSession"); }
+    public string GetSessionEnvironmentTable() { return RestGET("table/SessionEnvironment"); }
+    public string GetSessionEnemiesTable() { return RestGET("table/SessionEnemies"); }
+    public string GetSessionWeaponsTable() { return RestGET("table/SessionWeapons"); }
+    public string GetSessionsPlayersTable() { return RestGET("table/SessionPlayers"); }
     #endregion
 }

@@ -251,8 +251,7 @@ public class LevelGeneration : MonoBehaviour
             enemyGO = Factory.instance.CreateMalfeasanceBoss();
         }
         if (ProgressionState.environmentName == "Mercury") {
-            // Replace with create mercury boss in factory
-            enemyGO = Factory.instance.CreateMartianBoss();
+            enemyGO = Factory.instance.CreateMercuryBoss();
         }
         enemyGO.transform.parent = levelRoot;
         enemyGO.transform.position = new Vector3(playerPosition.x, 5, playerPosition.z);

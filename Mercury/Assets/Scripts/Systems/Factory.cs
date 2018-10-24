@@ -1377,6 +1377,33 @@ public class Factory : MonoBehaviour
         return malfeasanceBossGO;
     }
 
+    public GameObject CreateMercuryBoss() //Creates the mercury boss
+    {
+        GameObject martianBossGO = new GameObject("Mercury Boss");
+
+        CapsuleCollider martianBossCollider = martianBossGO.AddComponent<CapsuleCollider>();
+        //Collider is double the size of a regular enemy
+        martianBossCollider.radius = 0.6f;
+        martianBossCollider.height = 1.6f;
+
+        Rigidbody martianBossRigid = martianBossGO.AddComponent<Rigidbody>();
+        martianBossRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        martianBossRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject martianBossrVisualGO = new GameObject("Visual");
+        martianBossrVisualGO.transform.parent = martianBossGO.transform;
+
+        GameObject martianBossVisualBodyGO = new GameObject("Body");
+        martianBossVisualBodyGO.transform.parent = martianBossrVisualGO.transform;
+        //Boss is double the size of a regular enemy 64x64
+        martianBossVisualBodyGO.transform.localScale = new Vector3(2, 2);
+
+        SpriteRenderer sr = martianBossVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MercuryBoss");
+
+        martianBossGO.AddComponent<MercuryBoss>();
+        return martianBossGO;
+    }
     public GameObject CreateRangedWalker() //code use to create the ranged walker enemy within the game.
     {
         GameObject enemyRangedGO = new GameObject("Ranged Enemy");

@@ -32,7 +32,7 @@ public class Pistol : WeaponRanged
         bullet.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
         bullet.GetComponent<Projectile>().Update();
 
-        AudioManager.instance.PlayAudio("dspistol", 1f, false);
+        AudioManager.instance.PlayAudio("Weapon_pistol", 1f, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }

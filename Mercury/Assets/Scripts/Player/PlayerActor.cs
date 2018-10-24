@@ -9,6 +9,7 @@ public class PlayerActor : MonoBehaviour
     public PlayerModel model;
     Transform visual;
     Rigidbody rigid;
+    Vector3 temp;
 
     private void Awake()
     {
@@ -69,9 +70,10 @@ public class PlayerActor : MonoBehaviour
             Vector3 velocityMinusY = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
             velocityMinusY = Vector3.ClampMagnitude(velocityMinusY, model.moveMaxSpeed);
             rigid.velocity = new Vector3(velocityMinusY.x, rigid.velocity.y, velocityMinusY.z);
-
             rigid.velocity = Vector3.Lerp(rigid.velocity, new Vector3(0, rigid.velocity.y, 0), model.moveDeceleration);
         }
+        else
+            PlayerCollisionDetection();
     }
 
     public Weapon GetPlayerEquippedWeapon()
@@ -281,6 +283,7 @@ public class PlayerActor : MonoBehaviour
             rigid.constraints = RigidbodyConstraints.FreezeRotation;
             visual.transform.parent = transform;
             visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+            visual.transform.localEulerAngles = temp;
             GameProgressionManager.instance.SetPlayerDown(model.playerID, false);
         }
 
@@ -289,7 +292,8 @@ public class PlayerActor : MonoBehaviour
 
     private void DisplayPlayerDown()
     {
-        visual.transform.parent = null;
+        temp = visual.transform.localEulerAngles;
+        //visual.transform.parent = null;
         if (Random.Range(0, 100) >= 50)
         {
             visual.transform.localEulerAngles = new Vector3(45, 45, -90);
@@ -305,7 +309,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Death()
     {
-        AudioManager.instance.PlayAudio("death1", 1, false);
+        AudioManager.instance.PlayAudio("Player_death", 1, false);
         GameProgressionManager.instance.GameOver();
     }
 
@@ -336,13 +340,26 @@ public class PlayerActor : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider col) //needs to be reworked in order to provide a "proper revive" if the player is downed.
+
+
+    Collider[] colliders;
+    protected virtual void PlayerCollisionDetection()
     {
-        PlayerActor player = col.GetComponent<PlayerActor>();
-        if (player != null)
+        int playerLayerID = LayerMask.NameToLayer("Player");
+        int playerLayerMask = 1 << playerLayerID;
+        colliders = Physics.OverlapSphere(transform.position, 0.25f, playerLayerMask);
+
+        PlayerActor playerActor = null;
+        for (int i = 1; i < colliders.Length; i++)
         {
-            Debug.Log("Player collided with another player.");
-            HealPlayer(100);
+            playerActor = colliders[i].GetComponent<PlayerActor>();
+
+            // Is this collider a player
+            if (playerActor != null)
+            {
+                Debug.Log("Player revived.");
+                HealPlayer(50);
+            }
         }
     }
 }
