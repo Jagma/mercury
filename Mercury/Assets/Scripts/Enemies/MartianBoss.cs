@@ -22,7 +22,7 @@ public class
         cooldown = 3f;
         knockBack = 10f;
         lastActivatedTime = Time.time;
-        damage = 50;
+        damage = 20;
 
         rigidbody = GetComponent<Rigidbody>();
         Fightsounds();
