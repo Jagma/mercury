@@ -14,15 +14,12 @@ public class GameProgressionManager : MonoBehaviour
     private int wallsDestroyedLevel;
     private int wallsDestroyedTotal;
 
+    
     private float damageTakenTotal;
     private float damageTakenLevel;
 
-    private Time currentStageTime;
-    private Time totalTimePlayed;
-
-    private GameObject[] levels;
-    private GameObject[] players;
-    private GameObject[] gunsUsed;
+    private float currentStageTime;
+    private float totalTimePlayed;
 
     public List<string> playerIDList = new List<string>();
     public List<string> playerName = new List<string>();
@@ -54,22 +51,22 @@ public class GameProgressionManager : MonoBehaviour
         wallsDestroyedLevel = 0;
         damageTakenTotal = 0;
         damageTakenLevel = 0;
-        currentStageTime = null;
-        totalTimePlayed = null;
+        currentStageTime = 0;
+        totalTimePlayed = 0;
         numEnemiesLeftLevel = 0;
         numEnemiesStartLevel = 0;
     }
 
     private void Update()
     {
-        if (gameStart && numEnemiesLeftLevel < 1)
-            LevelComplete();
+
     }
     public void SetPlayerList(string players,string name)
     {
         playerIDList.Add(players);
         playerName.Add(name);
         playerDown.Add(false);
+        playerDeathCount.Add(0);
     }
 
     public void StartGame()
@@ -86,7 +83,7 @@ public class GameProgressionManager : MonoBehaviour
         enemiesKilledLevel = 0;
         wallsDestroyedLevel = 0;
         damageTakenLevel = 0;
-        currentStageTime = null;
+        currentStageTime = 0;
         numEnemiesLeftLevel = 0;
         numEnemiesStartLevel = 0;
     }
@@ -121,6 +118,10 @@ public class GameProgressionManager : MonoBehaviour
         numOfBulletsUsedLevel += 1;
     }
 
+    public void IncreasePlayerDamageTaken(float damage)
+    {
+        damageTakenLevel += damage;
+    }
     public void IncreaseEnemyCount()
     {
         numEnemiesStartLevel += 1;
@@ -183,7 +184,8 @@ public class GameProgressionManager : MonoBehaviour
         enemiesKilledTotal += enemiesKilledLevel;
         wallsDestroyedTotal += wallsDestroyedLevel;
         damageTakenTotal += damageTakenLevel;
-        //totalTimePlayed += currentStageTime;      
+        currentStageTime = Time.timeSinceLevelLoad;
+        totalTimePlayed += currentStageTime;      
     }
 
 
