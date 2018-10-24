@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 // The Game progression manager is a singleton
@@ -169,8 +172,10 @@ public class GameProgressionManager : MonoBehaviour
 
         //send data to database.
         WebServiceMethods wsm = new WebServiceMethods();
-
-        wsm.AddSessions(totalTimePlayed);
+        var data = new NameValueCollection();
+        UnityWebRequest request = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessions?sessionPlayTime=" + totalTimePlayed.ToString(),data.ToString());
+        request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+       // wsm.AddSessions(totalTimePlayed);
         //currentSession = int.Parse(wsm.GetLatestSession());
 
         //wsm.AddSessionEnemies(currentSession, enemiesKilledLevel);
@@ -210,4 +215,19 @@ public class GameProgressionManager : MonoBehaviour
 
     #endregion
 
+}
+
+class AcceptAllCertificatesSignedWithASpecificKeyPublicKey : CertificateHandler
+{
+
+    // Encoded RSAPublicKey
+    private static string PUB_KEY = "mypublickey";
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        X509Certificate2 certificate = new X509Certificate2(certificateData);
+        string pk = certificate.GetPublicKeyString();
+        if (pk.ToLower().Equals(PUB_KEY.ToLower()))
+            return true;
+        return true;
+    }
 }
