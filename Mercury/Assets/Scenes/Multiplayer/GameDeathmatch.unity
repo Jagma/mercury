@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df039e7b84a421d40a9f1d1bad0e1825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathmatchDesign: {fileID: 2800000, guid: b85698073daffb1438ba68a9c503bc19, type: 3}
 --- !u!114 &1244943646
 MonoBehaviour:
   m_ObjectHideFlags: 0

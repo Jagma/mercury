@@ -83,7 +83,7 @@ public class PlayerActor : MonoBehaviour
     {
         if (model.playerActive)
         {
-            Vector2 moveDir = InputManager.instance.GetMoveDirection(model.playerID);
+            Vector2 moveDir = direction;
             rigid.velocity += transform.forward * moveDir.y * model.moveAcceleration;
             rigid.velocity += transform.right * moveDir.x * model.moveAcceleration;
         }

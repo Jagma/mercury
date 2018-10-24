@@ -1401,7 +1401,8 @@ public class Factory : MonoBehaviour
 
     public class BasePlayerConstructor : ObjectConstructor {
         public override GameObject Construct() {
-            GameObject playerGO = base.Construct();
+
+            GameObject playerGO = new GameObject("Player");
             playerGO.layer = LayerMask.NameToLayer("Player");
 
             CapsuleCollider playerCollider = playerGO.AddComponent<CapsuleCollider>();
@@ -1429,13 +1430,19 @@ public class Factory : MonoBehaviour
             GameObject playerVisualBodyGO = new GameObject("Body");
             playerVisualBodyGO.transform.parent = playerVisualGO.transform;
             SpriteRenderer sr = playerVisualBodyGO.AddComponent<SpriteRenderer>();
-            playerGO.AddComponent<SpriteRenderer>();
 
             PlayerActor playerActor = playerGO.AddComponent<PlayerActor>();
 
+            Animator animator = playerVisualBodyGO.AddComponent<Animator>();
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Controller_Trump");
+
+            Animation anim = playerGO.AddComponent<Animation>();
+            anim.playerActor = playerActor;
+
             PlayerModel playerModel = new PlayerModel();
+            playerModel.equippedWeapon = Factory.instance.CreateRevolver().GetComponent<Weapon>();
+            playerModel.equippedWeapon.Equip();
             playerActor.model = playerModel;
-            playerActor.model.playerActive = true;
 
             GameObject hud = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerHUD"));
             hud.transform.SetParent(playerGO.transform, true);
@@ -1444,6 +1451,14 @@ public class Factory : MonoBehaviour
             hud.transform.Find("AmmoBar2").GetComponent<AmmoBarInventory>().playerModel = playerModel;
             hud.transform.localEulerAngles = new Vector3(45, 0, 0);
             hud.transform.position = new Vector3(0, 1.5f, 0);
+
+            AbilityTrump abilityTrump = new AbilityTrump();
+            abilityTrump.playerActor = playerGO.GetComponent<PlayerActor>();
+            abilityTrump.Init();
+
+            // Set all trump specific stats
+            playerGO.GetComponent<PlayerActor>().model.ability = abilityTrump;
+
             return playerGO;
         }
     }
@@ -1453,8 +1468,9 @@ public class Factory : MonoBehaviour
             GameObject playerGO = base.Construct();
             playerGO.name = "PlayerHost";
 
-            playerGO.AddComponent<ServerPlayer>();
-            playerGO.GetComponent<ServerPlayer>().clientUniqueID = objectUniqueID;
+            ServerPlayer sp = playerGO.AddComponent<ServerPlayer>();
+            sp.clientUniqueID = objectUniqueID;
+            sp.playerActor = playerGO.GetComponent<PlayerActor>();
             return playerGO;
         }
     }
