@@ -1098,6 +1098,102 @@ public class Factory : MonoBehaviour
         return enemyWalkerGO;
     }
 
+    public GameObject CreateClankerEnemy()  //code use to create the clanker enemy within the game.
+    {
+        GameObject enemyWalkerGO = new GameObject("Clanker");
+
+        CapsuleCollider enemyWalkerCollider = enemyWalkerGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyWalkerGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyWalkerGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Clanker");
+
+        Clanker w = enemyWalkerGO.AddComponent<Clanker>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateShotgun();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(10f);
+        return enemyWalkerGO;
+    }
+    public GameObject CreateRatchetEnemy()  //code use to create the ratchet enemy within the game.
+    {
+        GameObject enemyWalkerGO = new GameObject("Ratchet");
+
+        CapsuleCollider enemyWalkerCollider = enemyWalkerGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyWalkerGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyWalkerGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/Ratchet");
+
+        Ratchet w = enemyWalkerGO.AddComponent<Ratchet>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateSniperRifle();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        w.equippedWeapon.SetWeaponDamage(10f);
+        return enemyWalkerGO;
+    }
+
+    public GameObject CreateWallEEnemy()  //code use to create the wall-e enemy within the game.
+    {
+        GameObject enemyWalkerGO = new GameObject("WallE");
+
+        CapsuleCollider enemyWalkerCollider = enemyWalkerGO.AddComponent<CapsuleCollider>();
+        enemyWalkerCollider.radius = 0.25f;
+        enemyWalkerCollider.height = 0.8f;
+
+        Rigidbody enemyWalkerRigid = enemyWalkerGO.AddComponent<Rigidbody>();
+        enemyWalkerRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        enemyWalkerRigid.constraints = RigidbodyConstraints.FreezeRotation;
+
+        GameObject enemyWalkerVisualGO = new GameObject("Visual");
+        enemyWalkerVisualGO.transform.parent = enemyWalkerGO.transform;
+
+        GameObject enemyWalkerVisualBodyGO = new GameObject("Body");
+        enemyWalkerVisualBodyGO.transform.parent = enemyWalkerVisualGO.transform;
+
+        SpriteRenderer sr = enemyWalkerVisualBodyGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/WallE");
+
+        WallE w = enemyWalkerGO.AddComponent<WallE>();  //makes use of the Walker script which has its own functionalities.
+
+        GameObject weapon = CreateWeakAxe();
+        w.equippedWeapon = weapon.GetComponent<Weapon>();
+        w.equippedWeapon.transform.position = transform.position;
+        w.equippedWeapon.Equip();
+        w.equippedWeapon.equipped = true;
+        w.originalWeaponDamage = w.equippedWeapon.GetWeaponDamage();
+        return enemyWalkerGO;
+    }
     public GameObject CreateAzagorEnemy()  //code use to create the walker enemy within the game.
     {
         GameObject azagorGO = new GameObject("Azagor");

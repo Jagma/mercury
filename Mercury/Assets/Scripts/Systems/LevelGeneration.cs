@@ -176,6 +176,30 @@ public class LevelGeneration : MonoBehaviour
                     GameProgressionManager.instance.IncreaseEnemyCount();
                     EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
                 }
+                if (enemies[x, z] == "Clanker")
+                {
+                    GameObject enemyGO = Factory.instance.CreateClankerEnemy();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
+                if (enemies[x, z] == "Ratchet")
+                {
+                    GameObject enemyGO = Factory.instance.CreateRatchetEnemy();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
+                if (enemies[x, z] == "WallE")
+                {
+                    GameObject enemyGO = Factory.instance.CreateWallEEnemy();
+                    enemyGO.transform.parent = levelRoot;
+                    enemyGO.transform.position = new Vector3(x, 2, z);
+                    GameProgressionManager.instance.IncreaseEnemyCount();
+                    EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());
+                }
                 if (pickups[x, z] == "Normal Chest")
                 {
                     GameObject chestGO = Factory.instance.CreateNormalChest();
@@ -332,18 +356,26 @@ public class Miner
         {
             levelGen.enemies[posX, posZ] = "Cracker";
         }
-        
+        if (ProgressionState.environmentName == "Venus" && Random.Range(0, 1f) > 0.994f)
+        {
+            levelGen.enemies[posX, posZ] = "Arc Walker";
+        }
+
         if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
         {
-            levelGen.enemies[posX, posZ] = "Diablo"; //replaced with enemy that needs to spawn on mercury.
+            levelGen.enemies[posX, posZ] = "Clanker";
         }
         if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
         {
-            levelGen.enemies[posX, posZ] = "Azagor"; //replaced with enemy that needs to spawn on mercury.
+            levelGen.enemies[posX, posZ] = "Ratchet";
         }
         if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.993f)
         {
-            levelGen.enemies[posX, posZ] = "Arc Walker"; //replaced with enemy that needs to spawn on mercury.
+            levelGen.enemies[posX, posZ] = "WallE";
+        }
+        if (ProgressionState.environmentName == "Mercury" && Random.Range(0, 1f) > 0.994f)
+        {
+            levelGen.enemies[posX, posZ] = "Arc Walker";
         }
         // Pickups
         if (Random.Range(0, 1f) > 0.9990f)
