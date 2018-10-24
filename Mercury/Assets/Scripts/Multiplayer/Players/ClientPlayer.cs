@@ -8,9 +8,9 @@ public class ClientPlayer : MonoBehaviour {
 
     public PlayerActor playerActor;
 
-    private void Start() {
-        CameraSystem.instance.SubscribeToTracking(transform);
+    private void Start() {        
         if (GameDeathmatch.clientUniqueID == clientUniqueID) {
+            CameraSystem.instance.SubscribeToTracking(transform);
             GameDeathmatch.instance.myActor = playerActor;
         }
     }

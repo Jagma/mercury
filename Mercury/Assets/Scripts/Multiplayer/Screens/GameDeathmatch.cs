@@ -57,10 +57,6 @@ public class GameDeathmatch : MonoBehaviour {
                     hostPlayerConstructor.objectUniqueID = gameStarted.clientUniqueIDs[i];
                     GameObject player = hostPlayerConstructor.Construct();
 
-                    if (gameStarted.clientUniqueIDs[i] == gameStarted.thisClientID) {
-                        myActor = player.GetComponent<PlayerActor>();
-                    }
-
                     SpawnNextPlayer(player);
 
                     // Client player
@@ -114,8 +110,6 @@ public class GameDeathmatch : MonoBehaviour {
         player.transform.position = spawn.position + Vector3.up;
         playerActorList.Add(player.GetComponent<PlayerActor>());
         playerNum++;
-
-        CameraSystem.instance.SubscribeToTracking(player.transform);
     }
 
 }

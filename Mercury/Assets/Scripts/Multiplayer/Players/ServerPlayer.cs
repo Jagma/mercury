@@ -8,8 +8,11 @@ public class ServerPlayer : MonoBehaviour {
     public PlayerActor playerActor;
 
 	void Start () {
-		
-	}
+        if (GameDeathmatch.clientUniqueID == clientUniqueID) {
+            CameraSystem.instance.SubscribeToTracking(transform);
+            GameDeathmatch.instance.myActor = playerActor;
+        }
+    }
 
 	void Update () {
         // Movement
