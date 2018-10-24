@@ -383,7 +383,7 @@ public class CampaignLobby : MonoBehaviour
                 PlayerData.AddPlayer(player.playerID, characterNames[player.characterIndex]);
                 GameProgressionManager.instance.SetPlayerList(player.playerID, characterNames[player.characterIndex]);
             }
-            AudioManager.instance.StopAudio("Game_music_Space_loop");
+            AudioManager.instance.StopAudio("Background_campaignlobby");
             ProgressionState.Reset();
             SceneManager.LoadScene("GameCampaign");
         }
