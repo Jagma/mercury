@@ -7,17 +7,17 @@ public class PlayerNetworkInput : MonoBehaviour {
         PlayerInput pi = new PlayerInput("Keyboard|0001", PlayerInput.InputType.Keyboard);
         InputManager.instance.AddPlayerInput(pi);
     }
-    void Update () {
+    void Update() {
         // Movement
         Vector2 moveDir = InputManager.instance.GetMoveDirection("Keyboard|0001");
-        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Move", NetworkVector3.FromVector3(moveDir));
+        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Input_Move", NetworkVector3.FromVector3(moveDir));
 
-        // Aim
+        // Look
         Vector2 aimDir = InputManager.instance.GetAimDirection("Keyboard|0001");
-        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Aim", NetworkVector3.FromVector3(aimDir));
+        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Input_Look", NetworkVector3.FromVector3(aimDir));
 
         // Attack
         bool attack = InputManager.instance.GetAttack("Keyboard|0001");
-        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Attack", attack);
+        NetworkModel.instance.SetModel(GameDeathmatch.clientUniqueID + "Input_Attack", attack);
     }
 }
