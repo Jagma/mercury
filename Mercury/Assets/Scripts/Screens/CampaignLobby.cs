@@ -139,7 +139,7 @@ public class CampaignLobby : MonoBehaviour
                     AudioManager.instance.PlayAudio("abra", 1, false);
                     break;
                 case 2:
-                    AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
+                    AudioManager.instance.PlayAudio("Oprah - Building", 1, false);
                     break;
                 case 3:
                     AudioManager.instance.PlayAudio("Pope_peace", 1, false);
@@ -158,7 +158,7 @@ public class CampaignLobby : MonoBehaviour
                     AudioManager.instance.StopAudio("abra");
                     break;
                 case 2:
-                    AudioManager.instance.StopAudio("Oprah You Get A Car");
+                    AudioManager.instance.StopAudio("Oprah - Building");
                     break;
                 case 3:
                     AudioManager.instance.StopAudio("Pope_peace");

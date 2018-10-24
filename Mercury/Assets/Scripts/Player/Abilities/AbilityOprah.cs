@@ -48,7 +48,18 @@ public class AbilityOprah : Ability
             freeItem.GetComponent<Projectile>().Update();
             isProjectile = false;
         }
-        AudioManager.instance.PlayAudio("Oprah You Get A Car", 1, false);
+        int randomClipInt;
+        randomClipInt = UnityEngine.Random.Range(0, 2);
+        switch (randomClipInt)
+        {
+            case 0:
+                AudioManager.instance.PlayAudio("Oprah_ability1", 1f, false);
+                break;
+
+            case 1:
+                AudioManager.instance.PlayAudio("Oprah_ability2", 1f, false);
+                break;
+        }
     }
 
     private GameObject ChooseRandomItem()
