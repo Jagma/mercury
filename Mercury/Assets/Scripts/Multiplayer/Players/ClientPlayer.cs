@@ -30,8 +30,8 @@ public class ClientPlayer : MonoBehaviour {
 
         // Attack
         if (NetworkModel.instance.GetModel(clientUniqueID + "Attack") != null) {
-            bool attack = (bool)NetworkModel.instance.GetModel(clientUniqueID + "Attack");
-            if (attack) {
+            NetworkBool attack = (NetworkBool)NetworkModel.instance.GetModel(clientUniqueID + "Attack");
+            if (attack.ToBool() == true) {
                 playerActor.Attack();
             }
         }
