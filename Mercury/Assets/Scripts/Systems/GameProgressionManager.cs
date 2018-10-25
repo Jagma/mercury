@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.IO;
+using System;
 
 // The Game progression manager is a singleton
 public class GameProgressionManager : MonoBehaviour
@@ -171,39 +172,60 @@ public class GameProgressionManager : MonoBehaviour
     }
     #endregion
 
+    private IEnumerator<WaitForSecondsRealtime> IFuckme()
+    {
+        int currentSession = 0;
+        //asdas
+        var data = new NameValueCollection();
+        UnityWebRequest request = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessions?sessionPlayTime=" + totalTimePlayed.ToString(), data.ToString());
+        request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request.SendWebRequest();
+
+        UnityWebRequest request2 = UnityWebRequest.Get("https://webserver-itrw324.herokuapp.com/table/LatestSession");
+        request2.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request2.SendWebRequest();
+        LatestSession ls = JsonConvert.DeserializeObject<LatestSession>(request2.downloadHandler.text);
+        //int i = ls.results[0].max;
+        counter = int.Parse(Readf());
+        currentSession = counter;
+        //Debug.Log(counter.ToString());
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request3 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionEnvironment?sessionID=" + currentSession.ToString() + "&sessionWallsDestroyed=" + wallsDestroyedTotal.ToString(), data.ToString());
+        request3.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request3.SendWebRequest();
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request4 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionEnemies?sessionID=" + currentSession.ToString() + "&sessionEnemiesKilled=" + enemiesKilledTotal.ToString(), data.ToString());
+        request4.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request4.SendWebRequest();
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request5 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionWeapons?sessionID=" + currentSession.ToString() + "&sessionBulletsFired=" + numOfBulletsUsedTotal.ToString(), data.ToString());
+        request5.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request5.SendWebRequest();
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request6 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionPlayers?sessionID=" + currentSession.ToString() + "&sessionDamageTaken=" + damageTakenTotal.ToString(), data.ToString());
+        request6.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request6.SendWebRequest();
+
+        Writef();
+     //   yield return new WaitForSecondsRealtime(0.5f);
+
+        //asd
+    }
+
     #region Database Updating
     void SendDataServer()
     {
         int currentSession = 0;
-        string temp = "";
 
         //send data to database.
         ////WebServiceMethods wsm = new WebServiceMethods();
-        var data = new NameValueCollection();
-        UnityWebRequest request = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessions?sessionPlayTime=" + totalTimePlayed.ToString(), data.ToString());
-        request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
-
-
-        //UnityWebRequest request2 = UnityWebRequest.Get("https://webserver-itrw324.herokuapp.com/table/LatestSession");
-        //request2.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
-        //LatestSession ls = JsonConvert.DeserializeObject<LatestSession>(request2.downloadHandler.text);
-        //int i = int.Parse(ls.results[0].max.ToString());
-        counter = int.Parse(Readf());
-        currentSession = counter;
-        //Debug.Log(counter.ToString());
-        UnityWebRequest request3 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionEnvironment?sessionID=" + currentSession.ToString() + "&sessionWallsDestroyed=" + wallsDestroyedTotal.ToString(), data.ToString());
-        request3.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
-
-        UnityWebRequest request4 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionEnemies?sessionID=" + currentSession.ToString() + "&sessionEnemiesKilled=" + enemiesKilledTotal.ToString(), data.ToString());
-        request4.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
-
-        UnityWebRequest request5 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionWeapons?sessionID=" + currentSession.ToString() + "&sessionBulletsFired=" + numOfBulletsUsedTotal.ToString(), data.ToString());
-        request5.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
-
-        UnityWebRequest request6 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionPlayers?sessionID=" + currentSession.ToString() + "&sessionDamageTaken=" + damageTakenTotal.ToString(), data.ToString());
-        request6.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
-        counter++;
-        Writef();
+        StartCoroutine(  IFuckme());
+        //Debug.Log(counter);
     }
     #endregion
 
@@ -255,9 +277,7 @@ public class GameProgressionManager : MonoBehaviour
         string path = "Assets/Resources/counter.txt";
 
         //Write some text to the test.txt file
-        StreamWriter writer = new StreamWriter(path,true);
-        writer.WriteLine(counter.ToString());
-        writer.Close();
+        System.IO.File.WriteAllText(path, counter.ToString());
 
     }
     #endregion
