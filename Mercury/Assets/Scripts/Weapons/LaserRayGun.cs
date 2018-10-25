@@ -29,7 +29,7 @@ public class LaserRayGun : WeaponRanged
         beam.transform.position = transform.position + transform.right * ammoOffset;
         beam.transform.right = transform.right;
 
-        AudioManager.instance.PlayAudio("dsplasma", 0.05f, false);
+        AudioManager.instance.PlayAudio("Weapon_laserRay", 0.05f, false);
 
         beam.SetActive(true);
         framesSinceUse = 0;

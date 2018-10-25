@@ -34,7 +34,7 @@ public class Revolver : WeaponRanged
         bullet.transform.localEulerAngles += new Vector3(0, Random.Range(-ammoRandomness, ammoRandomness), 0);
         bullet.GetComponent<Projectile>().Update();
 
-        AudioManager.instance.PlayAudio("rev_sound_effect", 1f, false);
+        AudioManager.instance.PlayAudio("Weapon_revolver", 1f, false);
 
         CameraSystem.instance.ShakePosition(-transform.right * 0.2f);
     }

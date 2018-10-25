@@ -11,7 +11,7 @@ public class GameOver : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        AudioManager.instance.PlayAudio("Game_music_Unknown_planet", .4f, true);
+   //     AudioManager.instance.PlayAudio("Game_music_Unknown_planet", .4f, true);
     }
 
     void Update()

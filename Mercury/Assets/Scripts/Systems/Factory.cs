@@ -7,16 +7,6 @@ using UnityEngine;
  * The factory class was created in order to help reduce any merging problems that may occur when multiple members of our team works on the same classes and scenes in this project.
  * The factory class is a singleton class, it contains most if not all of the code to create our objects manually through code, as we encountered previous problems within
  * GitHub that will merge different member's work together and causes it to break.
- * 
- * In order to prevent comment "redundancy", the following in-built unity components that are used various time in our code will be explained below:
- * > SpriteRenderer: Use to...
- * > RigidBody: Use to...
- * > LineRenderer: Use to...
- * > Capsule Collider: Use to...
- * > PhysicMaterial: Use to...
- * > Material: Use to...
- * > ParticleSystem: Use to...
- * > SphereCollider: Use to...
  */
 
 public class Factory : MonoBehaviour
@@ -309,6 +299,34 @@ public class Factory : MonoBehaviour
         Beam beam = purpleBeamGO.AddComponent<BeamPurple>(); //the beam makes use of the BeamNeon script which has its own functionalities.
         beam.Init();
         return purpleBeamGO;
+    }
+
+    public GameObject CreateSkulls()
+    {
+        GameObject skullGO = new GameObject("Skull");
+
+
+        GameObject skullVisualGO = new GameObject("Visual");
+        skullVisualGO.transform.parent = skullGO.transform;
+
+        GameObject skullVisualMainGO = new GameObject("Body");
+        skullVisualMainGO.transform.parent = skullVisualGO.transform;
+
+        SpriteRenderer sr = skullVisualMainGO.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MalfeasanceSpell");
+
+        SphereCollider skullCollider = skullGO.AddComponent<SphereCollider>();
+        skullCollider.isTrigger = true;
+        skullCollider.radius = 0.2f;
+
+        Rigidbody bulletRigid = skullGO.AddComponent<Rigidbody>();
+        bulletRigid.isKinematic = true;
+
+
+
+        Projectile skull = skullGO.AddComponent<Skull>();
+        skull.Init();
+        return skullGO;
     }
 #endregion
 
@@ -1342,7 +1360,7 @@ public class Factory : MonoBehaviour
         malfeasanceBossVisualBodyGO.transform.localScale = new Vector3(2, 2);
 
         SpriteRenderer sr = malfeasanceBossVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MartianBoss");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MalfeasanceBoss");
 
         malfeasanceBossGO.AddComponent<MalfeasanceBoss>();
         return malfeasanceBossGO;
@@ -1370,7 +1388,7 @@ public class Factory : MonoBehaviour
         martianBossVisualBodyGO.transform.localScale = new Vector3(2, 2);
 
         SpriteRenderer sr = martianBossVisualBodyGO.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MercuryBoss");
+        sr.sprite = Resources.Load<Sprite>("Sprites/Enemies/MecuryBoss");
 
         martianBossGO.AddComponent<MercuryBoss>();
         return martianBossGO;

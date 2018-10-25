@@ -1,10 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using System.IO;
+using System;
 
 // The Game progression manager is a singleton
 public class GameProgressionManager : MonoBehaviour
 {
+    public WebServiceMethods wsm;
+
+    private int counter;
     private int numEnemiesLeftLevel;
     private int numEnemiesStartLevel;
     private int numOfBulletsUsedTotal;
@@ -162,10 +172,60 @@ public class GameProgressionManager : MonoBehaviour
     }
     #endregion
 
+    private IEnumerator<WaitForSecondsRealtime> IFuckme()
+    {
+        int currentSession = 0;
+        //asdas
+        var data = new NameValueCollection();
+        UnityWebRequest request = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessions?sessionPlayTime=" + totalTimePlayed.ToString(), data.ToString());
+        request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request.SendWebRequest();
+
+        UnityWebRequest request2 = UnityWebRequest.Get("https://webserver-itrw324.herokuapp.com/table/LatestSession");
+        request2.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request2.SendWebRequest();
+        LatestSession ls = JsonConvert.DeserializeObject<LatestSession>(request2.downloadHandler.text);
+        //int i = ls.results[0].max;
+        counter = int.Parse(Readf());
+        currentSession = counter;
+        //Debug.Log(counter.ToString());
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request3 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionEnvironment?sessionID=" + currentSession.ToString() + "&sessionWallsDestroyed=" + wallsDestroyedTotal.ToString(), data.ToString());
+        request3.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request3.SendWebRequest();
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request4 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionEnemies?sessionID=" + currentSession.ToString() + "&sessionEnemiesKilled=" + enemiesKilledTotal.ToString(), data.ToString());
+        request4.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request4.SendWebRequest();
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request5 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionWeapons?sessionID=" + currentSession.ToString() + "&sessionBulletsFired=" + numOfBulletsUsedTotal.ToString(), data.ToString());
+        request5.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request5.SendWebRequest();
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        UnityWebRequest request6 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionPlayers?sessionID=" + currentSession.ToString() + "&sessionDamageTaken=" + damageTakenTotal.ToString(), data.ToString());
+        request6.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request6.SendWebRequest();
+
+        Writef();
+     //   yield return new WaitForSecondsRealtime(0.5f);
+
+        //asd
+    }
+
     #region Database Updating
     void SendDataServer()
     {
+        int currentSession = 0;
+
         //send data to database.
+        ////WebServiceMethods wsm = new WebServiceMethods();
+        StartCoroutine(  IFuckme());
+        //Debug.Log(counter);
     }
     #endregion
 
@@ -199,4 +259,52 @@ public class GameProgressionManager : MonoBehaviour
 
     #endregion
 
+    #region Files
+    public static string Readf()
+    {
+        string path = "Assets/Resources/counter.txt";
+
+        //Read the text from directly from the test.txt file
+        StreamReader reader = new StreamReader(path);
+        string s  =reader.ReadLine();
+        reader.Close();
+        return s;
+    }
+
+    public void Writef()
+    {
+        counter++;
+        string path = "Assets/Resources/counter.txt";
+
+        //Write some text to the test.txt file
+        System.IO.File.WriteAllText(path, counter.ToString());
+
+    }
+    #endregion
+
+}
+
+public class LatestSession
+{
+    public Result[] results { get; set; }
+}
+
+public class Result
+{
+    public int max { get; set; }
+}
+
+class AcceptAllCertificatesSignedWithASpecificKeyPublicKey : CertificateHandler
+{
+
+    // Encoded RSAPublicKey
+    private static string PUB_KEY = "mypublickey";
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        X509Certificate2 certificate = new X509Certificate2(certificateData);
+        string pk = certificate.GetPublicKeyString();
+        if (pk.ToLower().Equals(PUB_KEY.ToLower()))
+            return true;
+        return true;
+    }
 }

@@ -42,16 +42,16 @@ public class WeaponMelee : Weapon
         switch (weaponIndex)
         {
             case 0:
-                AudioManager.instance.PlayAudio("sword1", 1, false);
+                AudioManager.instance.PlayAudio("Melee_use1", 1, false);
                 break;
             case 1:
-                AudioManager.instance.PlayAudio("sword2", 1, false);
+                AudioManager.instance.PlayAudio("Melee_use2", 1, false);
                 break;
             case 2:
-                AudioManager.instance.PlayAudio("slash1", 1, false);
+                AudioManager.instance.PlayAudio("Melee_use3", 1, false);
                 break;
             case 3:
-                AudioManager.instance.PlayAudio("ax1", 1, false);
+                AudioManager.instance.PlayAudio("Melee_use4", 1, false);
                 break;
         }
     }

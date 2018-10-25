@@ -62,19 +62,19 @@ public class AbilityTrump : Ability {
         switch (randomClipInt)
             {
                 case 0:
-                    AudioManager.instance.PlayAudio("Trump - Great wall", .4f, false);
+                    AudioManager.instance.PlayAudio("Trump_ability1", .4f, false);
                     break;
 
                 case 1:
-                    AudioManager.instance.PlayAudio("Trump - Need a wall", .4f, false);
+                    AudioManager.instance.PlayAudio("Trump_ability2", .4f, false);
                     break;
 
                 case 2:
-                    AudioManager.instance.PlayAudio("Trump - Great great wall", .4f, false);
+                    AudioManager.instance.PlayAudio("Trump_ability3", .4f, false);
                     break;
 
                 case 3:
-                    AudioManager.instance.PlayAudio("Trump - Wall", .6f, false);
+                    AudioManager.instance.PlayAudio("Trump_ability4", .6f, false);
                     break;
         }
             

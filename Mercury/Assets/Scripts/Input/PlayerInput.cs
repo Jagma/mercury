@@ -241,7 +241,8 @@ public class PlayerInput {
         }
         if (inputType == InputType.Controller)
         {
-            Debug.LogError("Not implemented");
+            InControl.InputDevice d = ControllerManger.instance.GetDevice(playerID);
+            return d.Action3.IsPressed;
         }
         if (inputType == InputType.Keyboard)
         {

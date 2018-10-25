@@ -9,7 +9,6 @@ public class PlayerActor : MonoBehaviour
     public PlayerModel model;
     Transform visual;
     Rigidbody rigid;
-    Vector3 temp;
 
     private void Awake()
     {
@@ -20,6 +19,7 @@ public class PlayerActor : MonoBehaviour
     void Start ()
     {
         transform.eulerAngles = new Vector3(0, 45, 0);
+        
         //DELETE
         /*AddPassive(new PassiveDegenAura());
         AddPassive(new PassiveHPRegen());
@@ -285,7 +285,6 @@ public class PlayerActor : MonoBehaviour
             rigid.constraints = RigidbodyConstraints.FreezeRotation;
             visual.transform.parent = transform;
             visual.eulerAngles = new Vector3(45, 45, 0);
-            visual.transform.localEulerAngles = temp;
             GameProgressionManager.instance.SetPlayerDown(model.playerID, false);
         }
 
@@ -294,6 +293,7 @@ public class PlayerActor : MonoBehaviour
 
     private void DisplayPlayerDown()
     {
+        //visual.transform.parent = null;
         if (Random.Range(0, 100) >= 50)
         {
             visual.transform.localEulerAngles = new Vector3(45, 45, -90);
@@ -309,7 +309,7 @@ public class PlayerActor : MonoBehaviour
 
     public void Death()
     {
-        AudioManager.instance.PlayAudio("death1", 1, false);
+        AudioManager.instance.PlayAudio("Player_death", 1, false);
         GameProgressionManager.instance.GameOver();
     }
 

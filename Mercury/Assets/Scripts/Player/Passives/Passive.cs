@@ -54,7 +54,6 @@ public class PassiveHPRegen : Passive
             {
                 player.HealPlayer(hpRegen);
                 lastActivatedTime = Time.time;
-                Debug.Log(Time.time);
             }
         }
     }
