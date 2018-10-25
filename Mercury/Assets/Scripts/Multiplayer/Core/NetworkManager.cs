@@ -16,7 +16,9 @@ public class NetworkManager : MonoBehaviour {
     WebSocket webSocket;
     string serverAddress = "ws://127.0.0.1:3000/lobby";
     ConnectionStatus connectionStatus = ConnectionStatus.Disconnected;
-    
+
+    public bool allowConnection = false;
+
     JsonSerializerSettings jsonSettings;
 
     public static NetworkManager instance;
@@ -45,12 +47,15 @@ public class NetworkManager : MonoBehaviour {
         if (webSocket != null) {
             webSocket.Close();
         }
-        
+
+        allowConnection = false;
+        connectionStatus = ConnectionStatus.Disconnected;
         webSocket = null;
         connected = false;
     }
 
     public void Connect () {
+        allowConnection = true;
         StartCoroutine(EHeartbeat());
     }
 
@@ -75,7 +80,7 @@ public class NetworkManager : MonoBehaviour {
 
     public void Send (object messageObject) {
         string messageJson = JsonConvert.SerializeObject(messageObject, jsonSettings);
-        Debug.Log("Client message : " + messageJson);
+    //    Debug.Log("Client message : " + messageJson);
         webSocket.SendString(messageJson);
     }
 
@@ -101,12 +106,12 @@ public class NetworkManager : MonoBehaviour {
                 break;
             }
             if (message != null) {
-                Debug.Log("Server message : " + message);
+         //       Debug.Log("Server message : " + message);
                 Receive(message);
             }
 
             if (webSocket.error != null) {
-                Debug.LogError("Error: " + webSocket.error);
+         //       Debug.LogError("Error: " + webSocket.error);
             }
         }
     }
@@ -128,32 +133,35 @@ public class NetworkManager : MonoBehaviour {
     }
 
     IEnumerator EHeartbeat() {
-        if (connected == false) {
-            webSocket = new WebSocket(new System.Uri(serverAddress));
-            StartCoroutine(webSocket.Connect());
-            Debug.Log("Attempt connection");
-        }
+        if (allowConnection) {
+            if (connected == false) {
+                webSocket = new WebSocket(new System.Uri(serverAddress));
+                StartCoroutine(webSocket.Connect());
+                Debug.Log("Attempt connection");
+            }
 
-        if (connected == true) {
-            connectionAlive = false;
-            Send(new NetworkMessages.RequestHeartbeat());
-        }
+            if (connected == true) {
+                connectionAlive = false;
+                Send(new NetworkMessages.RequestHeartbeat());
+            }
 
-        yield return new WaitForSecondsRealtime(5f);
+            yield return new WaitForSecondsRealtime(5f);
 
-        if (connected == true && connectionAlive == false) {
-            connected = false;
-            Debug.Log("Disconected");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("MultiplayerHome");
-        }
+            if (connected == true && connectionAlive == false) {
+                connected = false;
+                Debug.Log("Disconected");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("MultiplayerHome");
+            }
 
-        // TODO: Add more status such as timeout
-        if (connected == true) {
-            connectionStatus = ConnectionStatus.Connected;
-        } else {
-            connectionStatus = ConnectionStatus.Disconnected;
-        }
+            // TODO: Add more status such as timeout
+            if (connected == true) {
+                connectionStatus = ConnectionStatus.Connected;
+            }
+            else {
+                connectionStatus = ConnectionStatus.Disconnected;
+            }
 
-        StartCoroutine(EHeartbeat());
+            StartCoroutine(EHeartbeat());
+        }        
     }
 }

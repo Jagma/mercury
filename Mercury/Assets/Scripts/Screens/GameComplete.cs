@@ -16,7 +16,9 @@ public class GameComplete : MonoBehaviour
 
     void Update()
     {
-        titleText.transform.localScale = Vector3.one * titleCurve.Evaluate(Time.time);
+        if (titleText) {
+            titleText.transform.localScale = Vector3.one * titleCurve.Evaluate(Time.time);
+        }        
     }
 
     private void DestroyInstances()
@@ -36,6 +38,7 @@ public class GameComplete : MonoBehaviour
     public void MainMenu()
     {
         DestroyInstances();
+        GameProgressionManager.instance.Reset();
         SceneManager.LoadScene("Menu");
     }
 

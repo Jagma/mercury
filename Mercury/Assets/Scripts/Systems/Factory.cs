@@ -1514,6 +1514,11 @@ public class Factory : MonoBehaviour
     }
     #endregion
 
+    // Intermission
+    public GameObject CreatePowerup () {
+        return null;
+    }
+
     // Multiplayer
     public class ObjectConstructor {
         public string objectUniqueID = "-1";
@@ -1563,7 +1568,11 @@ public class Factory : MonoBehaviour
             anim.playerActor = playerActor;
 
             PlayerModel playerModel = new PlayerModel();
-            playerModel.equippedWeapon = Factory.instance.CreateRevolver().GetComponent<Weapon>();
+            playerModel.health = 500;
+            playerModel.maxHealth = 500;
+            playerModel.equippedWeapon = Factory.instance.CreateShotgun().GetComponent<Weapon>();
+            playerModel.equippedWeapon.SetMaxAmmoCount(500);
+            playerModel.equippedWeapon.SetAmmoCount(500);
             playerModel.equippedWeapon.Equip();
             playerActor.model = playerModel;
 

@@ -13,6 +13,7 @@ public class
     float lastActivatedTime;
     bool isDashing = false;
     Rigidbody rigidbody;
+
     protected override void Start()
     {
         base.Start();
@@ -83,7 +84,7 @@ public class
             Wall wall = hit.GetComponent<Wall>();
             if (wall != null)
             {
-                GameObject.Destroy(wall.gameObject);
+                wall.Damage(1000);
             }
         }
     }

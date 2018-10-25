@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
-
     public static LevelGeneration instance;
     private void Awake()
     {
@@ -81,7 +80,7 @@ public class LevelGeneration : MonoBehaviour
         }
 
 
-        pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
+      //  pickups[minerList[0].posX, minerList[0].posZ] = "Normal Chest";
 
         // Build floor
         GameObject floor = Factory.instance.CreateFloor(ProgressionState.environmentName, 0);
@@ -244,13 +243,13 @@ public class LevelGeneration : MonoBehaviour
 
     public void SpawnBoss(Vector3 playerPosition) {
         GameObject enemyGO = null;
-        if (ProgressionState.environmentName == "Mars") {
+        if (ProgressionState.environmentName == "Mars" && ProgressionState.level == 1) {
             enemyGO = Factory.instance.CreateMartianBoss();
         }
-        if (ProgressionState.environmentName == "Venus") {
+        if (ProgressionState.environmentName == "Venus" && ProgressionState.level == 3) {
             enemyGO = Factory.instance.CreateMalfeasanceBoss();
         }
-        if (ProgressionState.environmentName == "Mercury") {
+        if (ProgressionState.environmentName == "Mercury" && ProgressionState.level == 5) {
             enemyGO = Factory.instance.CreateMercuryBoss();
         }
         enemyGO.transform.parent = levelRoot;

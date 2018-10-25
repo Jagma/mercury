@@ -241,7 +241,9 @@ public class PlayerActor : MonoBehaviour
 
         if (model.health <= 0)
         {
-            Down();
+            if (model.playerActive == true) {
+                Down();
+            }            
         }
 
         GameObject blood = Factory.instance.CreateBlood();
@@ -282,7 +284,7 @@ public class PlayerActor : MonoBehaviour
             model.health = hp;
             rigid.constraints = RigidbodyConstraints.FreezeRotation;
             visual.transform.parent = transform;
-            visual.eulerAngles = new Vector3(45, 45, visual.eulerAngles.z);
+            visual.eulerAngles = new Vector3(45, 45, 0);
             visual.transform.localEulerAngles = temp;
             GameProgressionManager.instance.SetPlayerDown(model.playerID, false);
         }
@@ -292,8 +294,6 @@ public class PlayerActor : MonoBehaviour
 
     private void DisplayPlayerDown()
     {
-        temp = visual.transform.localEulerAngles;
-        visual.transform.parent = null;
         if (Random.Range(0, 100) >= 50)
         {
             visual.transform.localEulerAngles = new Vector3(45, 45, -90);

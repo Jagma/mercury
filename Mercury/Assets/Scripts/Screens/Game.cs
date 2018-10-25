@@ -55,7 +55,7 @@ public class Game : MonoBehaviour
                 playerGO = Factory.instance.CreatePlayerBinLaden();
             }
 
-            playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition;
+            playerGO.transform.position = LevelGeneration.instance.playerSpawnPosition + Random.onUnitSphere;
 
             PlayerActor playerActor = playerGO.GetComponent<PlayerActor>();
             playerActor.model.playerID = playerInputKVP.Value.playerID;
@@ -81,10 +81,17 @@ public class Game : MonoBehaviour
 
     int gameStage = 0;
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Y)) {
+        if (Input.GetKeyDown(KeyCode.I)) {
             GameProgressionManager.instance.StartGame();
             SceneManager.LoadScene("GameCampaign");
         }
+        if (Input.GetKeyDown(KeyCode.O)) {
+            NavigateIntermission();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene("Menu");
+        }
+
         if (gameStage == 0 && EnemyManager.instance.GetEnemyCount() <= 0) {
             gameStage++;
 
@@ -98,10 +105,6 @@ public class Game : MonoBehaviour
             LevelGeneration.instance.SpawnBoss(playerMid);
         }
         if (gameStage == 1 && EnemyManager.instance.GetEnemyCount() <= 0) {
-            NavigateIntermission();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)) {
             NavigateIntermission();
         }
     }

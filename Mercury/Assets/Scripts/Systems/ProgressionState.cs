@@ -10,14 +10,14 @@ public class ProgressionState : MonoBehaviour {
 
     public static void NextLevel () {
         level++;
-        if (level <= 0) {
+        if (level <= 1) {
             environmentName = "Mars";
         }
-        else if (level <= 2)
+        else if (level <= 3)
         {
             environmentName = "Venus";
         }
-        else if (level <= 4) {
+        else if (level <= 5) {
             environmentName = "Mercury";
         }
     }
