@@ -6,12 +6,14 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using System.IO;
 
 // The Game progression manager is a singleton
 public class GameProgressionManager : MonoBehaviour
 {
     public WebServiceMethods wsm;
 
+    private int counter;
     private int numEnemiesLeftLevel;
     private int numEnemiesStartLevel;
     private int numOfBulletsUsedTotal;
@@ -176,17 +178,19 @@ public class GameProgressionManager : MonoBehaviour
         string temp = "";
 
         //send data to database.
-        //WebServiceMethods wsm = new WebServiceMethods();
+        ////WebServiceMethods wsm = new WebServiceMethods();
         var data = new NameValueCollection();
-        UnityWebRequest request = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessions?sessionPlayTime=" + totalTimePlayed.ToString(),data.ToString());
+        UnityWebRequest request = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessions?sessionPlayTime=" + totalTimePlayed.ToString(), data.ToString());
         request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
 
 
-        UnityWebRequest request2 = UnityWebRequest.Get("https://webserver-itrw324.herokuapp.com/table/LatestSession");
-        request2.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
-        LatestSession ls = JsonConvert.DeserializeObject<LatestSession>(request2.downloadHandler.text);
-        int i = int.Parse(ls.results[0].max.ToString());
-
+        //UnityWebRequest request2 = UnityWebRequest.Get("https://webserver-itrw324.herokuapp.com/table/LatestSession");
+        //request2.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        //LatestSession ls = JsonConvert.DeserializeObject<LatestSession>(request2.downloadHandler.text);
+        //int i = int.Parse(ls.results[0].max.ToString());
+        counter = int.Parse(Readf());
+        currentSession = counter;
+        //Debug.Log(counter.ToString());
         UnityWebRequest request3 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionEnvironment?sessionID=" + currentSession.ToString() + "&sessionWallsDestroyed=" + wallsDestroyedTotal.ToString(), data.ToString());
         request3.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
 
@@ -198,6 +202,8 @@ public class GameProgressionManager : MonoBehaviour
 
         UnityWebRequest request6 = UnityWebRequest.Post("https://webserver-itrw324.herokuapp.com/gq/addSessionPlayers?sessionID=" + currentSession.ToString() + "&sessionDamageTaken=" + damageTakenTotal.ToString(), data.ToString());
         request6.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        counter++;
+        Writef();
     }
     #endregion
 
@@ -229,6 +235,31 @@ public class GameProgressionManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Files
+    public static string Readf()
+    {
+        string path = "Assets/Resources/counter.txt";
+
+        //Read the text from directly from the test.txt file
+        StreamReader reader = new StreamReader(path);
+        string s  =reader.ReadLine();
+        reader.Close();
+        return s;
+    }
+
+    public void Writef()
+    {
+        counter++;
+        string path = "Assets/Resources/counter.txt";
+
+        //Write some text to the test.txt file
+        StreamWriter writer = new StreamWriter(path,true);
+        writer.WriteLine(counter.ToString());
+        writer.Close();
+
+    }
     #endregion
 
 }
