@@ -101,8 +101,10 @@ public class Game : MonoBehaviour
             }
 
             playerMid /= playerActorList.Count;
-
-            LevelGeneration.instance.SpawnBoss(playerMid);
+            if (ProgressionState.level == 1 || ProgressionState.level == 3 || ProgressionState.level == 5) {
+                LevelGeneration.instance.SpawnBoss(playerMid);
+            }
+            
         }
         if (gameStage == 1 && EnemyManager.instance.GetEnemyCount() <= 0) {
             NavigateIntermission();

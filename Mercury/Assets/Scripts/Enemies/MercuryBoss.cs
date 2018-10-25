@@ -12,8 +12,8 @@ public class
     protected override void Start()
     {
         base.Start();
-        lineOfSight = 7f;
-        health = 800;
+        lineOfSight = 10f;
+        health = 6000;
         moveSpeed = 1f;
         equippedWeapon = Factory.instance.CreateLaserMachineGun().GetComponent<Weapon>();
         equippedWeapon.SetMaxAmmoCount(100000);

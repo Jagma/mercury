@@ -26,7 +26,7 @@ public class MalfeasanceBoss : Enemy
     protected override void Start()
     {
         base.Start();
-        health = 1000;
+        health = 5000;
         moveSpeed = 2f;
 
         shotSpeed = 2;

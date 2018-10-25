@@ -241,17 +241,19 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
+    public static int nextBoss = 0;
     public void SpawnBoss(Vector3 playerPosition) {
         GameObject enemyGO = null;
-        if (ProgressionState.environmentName == "Mars" && ProgressionState.level == 1) {
+        if (nextBoss == 0) {
             enemyGO = Factory.instance.CreateMartianBoss();
         }
-        if (ProgressionState.environmentName == "Venus" && ProgressionState.level == 3) {
+        if (nextBoss == 1) {
             enemyGO = Factory.instance.CreateMalfeasanceBoss();
         }
-        if (ProgressionState.environmentName == "Mercury" && ProgressionState.level == 5) {
+        if (nextBoss == 2) {
             enemyGO = Factory.instance.CreateMercuryBoss();
         }
+        nextBoss++;
         enemyGO.transform.parent = levelRoot;
         enemyGO.transform.position = new Vector3(playerPosition.x, 5, playerPosition.z);
         EnemyManager.instance.AddEnemy(enemyGO.GetComponent<Enemy>());

@@ -17,7 +17,7 @@ public class
     protected override void Start()
     {
         base.Start();
-        health = 1000;
+        health = 4000;
         moveSpeed = 2f;
         lineOfSight = 8f;
         cooldown = 2f;
