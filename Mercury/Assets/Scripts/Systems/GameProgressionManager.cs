@@ -212,8 +212,13 @@ public class GameProgressionManager : MonoBehaviour
         request6.SendWebRequest();
 
         Writef();
-     //   yield return new WaitForSecondsRealtime(0.5f);
-
+        //   yield return new WaitForSecondsRealtime(0.5f);
+        ///Resets Game
+        Start(); //reset variables.
+        for (int i = 0; i < playerIDList.Count; i++)//set player down in gameprogression manager to false.
+        {
+            playerDown[i] = false;
+        }
         //asd
     }
 
@@ -250,11 +255,6 @@ public class GameProgressionManager : MonoBehaviour
     public void Reset()
     {
         SendDataServer();
-        Start(); //reset variables.
-        for (int i = 0; i < playerIDList.Count; i++)//set player down in gameprogression manager to false.
-        {
-            playerDown[i] = false;
-        }
     }
 
     #endregion
